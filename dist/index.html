@@ -46,9 +46,10 @@
           <div class="scan-line" id="scanLine" aria-hidden="true">
             <span></span>
           </div>
+          <div class="region-grid" id="regionGrid" aria-label="图片声音区域"></div>
           <div class="stage-topline">
             <span id="stageLabel">等待图像</span>
-            <span id="stepLabel">00 / 16</span>
+            <span id="stepLabel">00 / 24</span>
           </div>
           <div class="note-rail" id="noteRail" aria-hidden="true"></div>
         </div>
@@ -101,10 +102,10 @@
           <h2 id="method-title">每一个声音<br />都有图像出处。</h2>
         </div>
         <ol>
-          <li><span>01</span><div><strong>横向位置决定时间</strong><p>图片被分成 16 个片段，从左向右依次演奏。</p></div></li>
-          <li><span>02</span><div><strong>明暗与高度决定音高</strong><p>明亮区域抬高旋律，暗部形成低音与停顿。</p></div></li>
+          <li><span>01</span><div><strong>横向位置决定时间</strong><p>图片被划分为 24 列，从左向右依次演奏。</p></div></li>
+          <li><span>02</span><div><strong>120 个区域各有一音</strong><p>每列五个纵向区域形成琶音；点击任一区域，可以单独听见它。</p></div></li>
           <li><span>03</span><div><strong>颜色与纹理塑造性格</strong><p>色相选择调式，边缘密度改变节奏与音符数量。</p></div></li>
-          <li><span>04</span><div><strong>像素指纹固定细节</strong><p>同一张规范化图片，在 PixelMusic 0.1 中永远得到同一旋律。</p></div></li>
+          <li><span>04</span><div><strong>像素指纹固定细节</strong><p>同一张规范化图片，在 PixelMusic 0.2 中永远得到同一旋律。</p></div></li>
         </ol>
       </section>
 
