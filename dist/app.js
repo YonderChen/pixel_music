@@ -38,8 +38,65 @@ let composition = null;
 let isPlaying = false;
 let scheduledNodes = [];
 let animationId = 0;
-let playStartedAt = 0;
 let currentSource = null;
+let audioBus = null;
+let playbackStart = 0;
+
+// Two image columns form a four-beat bar; every region still owns one melody event.
+function arrangeRegions(columns, root, mode) {
+  const minor = mode === MODES.deep;
+  const harmonyScale = minor ? [0, 2, 3, 5, 7, 8, 10] : [0, 2, 4, 5, 7, 9, 11];
+  const progression = [0, 5, 3, 4, 0, 5, 3, 4, 3, 1, 4, 0];
+  const raw = columns.flatMap((column, col) => col % 2 ? column.notes.slice().reverse() : column.notes);
+  const phraseContour = [0, 2, 4, 3, 2, 1, 2, 4, 3, 1];
+  const motif = raw.slice(0, 10).map((note, index) =>
+    phraseContour[index] + Math.round((note.light - .5) * 2 + (note.hue - .5) * 2)
+  );
+  const rhythm = [.5, .25, .25, .5, .5, .25, .25, .5, .5, .5];
+  const closingRhythm = [.5, .25, .25, .5, .25, .25, .25, .25, .5, 1];
+  const tonic = 60 + root;
+  const allowed = [];
+  for (let octave = -1; octave <= 2; octave++) {
+    for (const degree of mode.notes) {
+      const midi = tonic + octave * 12 + degree;
+      if (midi >= tonic - 5 && midi <= tonic + 14) allowed.push(midi);
+    }
+  }
+  let previous = tonic + 4;
+  let beat = 0;
+  const bars = progression.map((degree, index) => {
+    const chord = [degree, degree + 2, degree + 4].map(d => harmonyScale[d % 7] + Math.floor(d / 7) * 12);
+    return { index, beat: index * 4, chord, bass: 36 + root + harmonyScale[degree] };
+  });
+  const melody = raw.map((region, index) => {
+    const barIndex = Math.floor(index / 10), position = index % 10;
+    const bar = bars[barIndex];
+    const beats = (barIndex === 11 ? closingRhythm : rhythm)[position];
+    const strong = Math.abs(beat - Math.round(beat)) < .001;
+    const pitchClasses = bar.chord.map(pitch => pitch % 12);
+    const contour = clamp(motif[position] + (barIndex >= 4 && barIndex < 8 ? 1 : 0), 0, mode.notes.length);
+    const motifPitch = mode.notes[contour % mode.notes.length] + Math.floor(contour / mode.notes.length) * 12;
+    const regionalOffset = (region.light - .5) * 3 + (2 - region.row) * .35 + region.density * .6 + (region.signature ?? 0) * .5;
+    const closing = index >= raw.length - 4;
+    const target = closing ? tonic + Math.max(0, 3 - (index - (raw.length - 4))) : tonic + motifPitch + regionalOffset;
+    const harmonicCandidates = allowed.filter(midi =>
+      (!strong || pitchClasses.includes((midi - tonic + 12) % 12)) && (!closing || midi <= tonic + 7)
+    );
+    const nearby = harmonicCandidates.filter(midi => Math.abs(midi - previous) <= 7);
+    const candidates = nearby.length ? nearby : harmonicCandidates;
+    const last = index === raw.length - 1;
+    const midi = last ? tonic : candidates.reduce((best, value) => {
+      const score = pitch => Math.abs(pitch - target) + Math.abs(pitch - previous) * .3 + Math.max(0, Math.abs(pitch - previous) - 5) * 5;
+      return score(value) < score(best) ? value : best;
+    }, candidates[0]);
+    previous = midi;
+    const event = { ...region, midi, noteName: midiToName(midi), index, beat, beats, bar: barIndex, strong };
+    Object.assign(region, { midi, noteName: event.noteName, sequence: index });
+    beat += beats;
+    return event;
+  });
+  return { melody, bars, totalBeats: beat };
+}
 
 function clamp(value, min, max) { return Math.max(min, Math.min(max, value)); }
 
@@ -163,27 +220,28 @@ async function analyzeSource(source, name) {
       let regionHue = Math.atan2(region.hy, region.hx) / (Math.PI * 2); if (regionHue < 0) regionHue += 1;
       const hashIndex = (row * STEPS + col) % 56;
       const hashValue = parseInt(hash.slice(hashIndex, hashIndex + 2), 16);
-      const hueDegree = Math.floor(regionHue * mode.notes.length);
-      const lightDegree = Math.floor(l * 3);
-      const degree = (hueDegree + lightDegree + hashValue % 2) % mode.notes.length;
-      const octaveBase = [72, 67, 60, 53, 43][row];
-      const midi = octaveBase + root + mode.notes[degree] + (l > .68 ? 12 : 0);
       const density = clamp(region.edge / region.count * 12, 0, 1);
       return {
-        midi,
-        noteName: midiToName(midi),
         velocity: .025 + l * .035 + s * .025 + density * .018,
         density,
+        light: l,
+        hue: regionHue,
+        signature: hashValue / 255 - .5,
         row,
         col,
       };
     });
-    const averageMidi = notes.reduce((sum, note) => sum + note.midi, 0) / notes.length;
-    return { notes, height: clamp(8 + (averageMidi - 48) * 1.5, 8, 48) };
+    return { notes };
   });
 
-  const stepDuration = 60 / bpm;
-  composition = { name, hash, root, mode, bpm, avgL, avgS, edgeRatio, columns, duration: STEPS * stepDuration };
+  const arrangement = arrangeRegions(columns, root, mode);
+  const secondsPerBeat = 60 / bpm;
+  const melodyDuration = arrangement.totalBeats * secondsPerBeat;
+  composition = { name, hash, root, mode, bpm, avgL, avgS, edgeRatio, columns, ...arrangement, secondsPerBeat, melodyDuration, duration: melodyDuration + 1.8 };
+  columns.forEach(column => {
+    const averageMidi = column.notes.reduce((sum, note) => sum + note.midi, 0) / REGION_ROWS;
+    column.height = clamp(10 + (averageMidi - 58) * 2, 8, 48);
+  });
   renderComposition();
 }
 
@@ -196,13 +254,16 @@ function renderComposition() {
   els.color.textContent = c.avgS > .5 ? "浓郁" : c.avgS > .27 ? "柔和" : "低饱和";
   els.texture.textContent = c.edgeRatio > .12 ? "繁复" : c.edgeRatio > .065 ? "适中" : "平静";
   els.fingerprint.textContent = c.hash.slice(0, 16).toUpperCase().match(/.{1,4}/g).join(" ");
-  els.stageLabel.textContent = `${STEPS * REGION_ROWS} REGIONS · 点击区域试听`;
+  els.stageLabel.textContent = `120 音 · 12 小节 · ${Math.round(c.duration)} 秒`;
   els.uploadLabel.textContent = "更换图片";
   els.play.disabled = false;
   els.empty.classList.add("hidden"); els.dropZone.classList.add("has-image");
   els.noteRail.innerHTML = c.columns.map((column, i) => `<i class="note-bar" data-step="${i}" style="height:${column.height}px"></i>`).join("");
   els.regionGrid.innerHTML = c.columns.flatMap((column, col) =>
-    column.notes.map((note, row) => `<button class="region-cell" type="button" style="grid-column:${col + 1};grid-row:${row + 1}" data-col="${col}" data-row="${row}" data-note="${note.noteName}" aria-label="第 ${col + 1} 列第 ${row + 1} 区域，音符 ${note.noteName}"></button>`)
+    column.notes.map((note, row) => {
+      const sequence = note.sequence;
+      return `<button class="region-cell" type="button" style="grid-column:${col + 1};grid-row:${row + 1}" data-col="${col}" data-row="${row}" data-sequence="${sequence}" data-note="${note.noteName}" aria-label="第 ${col + 1} 列第 ${row + 1} 区域，音符 ${note.noteName}"></button>`;
+    })
   ).join("");
 }
 
@@ -238,15 +299,39 @@ function midiToName(midi) {
 
 function currentTone() { return document.querySelector('input[name="tone"]:checked').value; }
 
-function makeVoice(freq, start, duration, gainValue, tone) {
+function prepareAudio() {
+  audioContext ||= new (window.AudioContext || window.webkitAudioContext)();
+  if (audioBus) return;
+  audioBus = audioContext.createGain();
+  const compressor = audioContext.createDynamicsCompressor();
+  compressor.threshold.value = -18;
+  compressor.ratio.value = 3;
+  const delay = audioContext.createDelay(1);
+  const feedback = audioContext.createGain();
+  const wet = audioContext.createGain();
+  const damp = audioContext.createBiquadFilter();
+  delay.delayTime.value = .24;
+  feedback.gain.value = .18;
+  wet.gain.value = .14;
+  damp.type = "lowpass"; damp.frequency.value = 2200;
+  audioBus.connect(compressor);
+  audioBus.connect(delay); delay.connect(damp); damp.connect(wet); wet.connect(compressor);
+  damp.connect(feedback); feedback.connect(delay);
+  compressor.connect(audioContext.destination);
+}
+
+function makeVoice(freq, start, duration, gainValue, tone, attackOverride = null) {
   const master = audioContext.createGain();
   const filter = audioContext.createBiquadFilter();
   filter.type = "lowpass";
   filter.frequency.setValueAtTime(tone === "glass" ? 5200 : tone === "warm" ? 1900 : 1100, start);
+  const attack = attackOverride ?? (tone === "mist" ? .18 : .025);
+  const peak = Math.max(.001, gainValue);
   master.gain.setValueAtTime(0.0001, start);
-  master.gain.exponentialRampToValueAtTime(Math.max(.001, gainValue), start + (tone === "mist" ? .18 : .025));
+  master.gain.exponentialRampToValueAtTime(peak, start + Math.min(attack, duration * .2));
+  master.gain.exponentialRampToValueAtTime(peak * .68, start + duration * .7);
   master.gain.exponentialRampToValueAtTime(.0001, start + duration);
-  master.connect(filter); filter.connect(audioContext.destination);
+  master.connect(filter); filter.connect(audioBus);
 
   const types = tone === "glass" ? ["sine", "triangle"] : tone === "warm" ? ["triangle", "sine"] : ["sawtooth", "sine"];
   types.forEach((type, index) => {
@@ -258,30 +343,44 @@ function makeVoice(freq, start, duration, gainValue, tone) {
     osc.connect(mix); mix.connect(master);
     osc.start(start); osc.stop(start + duration + .05);
     scheduledNodes.push(osc);
+    osc.onended = () => {
+      osc.disconnect(); mix.disconnect();
+      if (index === types.length - 1) { master.disconnect(); filter.disconnect(); }
+      scheduledNodes = scheduledNodes.filter(node => node !== osc);
+    };
   });
 }
 
 function scheduleComposition() {
   const c = composition, tone = currentTone();
-  const stepDuration = 60 / c.bpm;
   const start = audioContext.currentTime + .08;
-  const bassRoot = 36 + c.root;
-  c.columns.forEach((column, index) => {
-    const t = start + index * stepDuration;
-    const spread = stepDuration * .68 / REGION_ROWS;
-    column.notes.slice().reverse().forEach((note, noteIndex) => {
-      makeVoice(midiToFreq(note.midi), t + noteIndex * spread, stepDuration * (tone === "mist" ? 1.7 : .72), note.velocity, tone);
-    });
-    if (index % 4 === 0) makeVoice(midiToFreq(bassRoot + (index % 8 === 4 ? 7 : 0)), t, stepDuration * 3.4, .065, tone);
+  c.melody.forEach(note => {
+    const noteDuration = note.beats * c.secondsPerBeat;
+    const t = start + note.beat * c.secondsPerBeat;
+    makeVoice(
+      midiToFreq(note.midi),
+      t,
+      noteDuration + Math.min(.16, noteDuration * .32),
+      (.09 + note.velocity * .65) * (note.strong ? 1 : .82),
+      tone,
+      Math.min(.05, noteDuration * .12)
+    );
   });
-  playStartedAt = performance.now() + 80;
+  c.bars.forEach(bar => {
+    const t = start + bar.beat * c.secondsPerBeat;
+    makeVoice(midiToFreq(bar.bass), t, c.secondsPerBeat * 4.15, .035, "warm", .08);
+    bar.chord.forEach((pitch, index) => {
+      makeVoice(midiToFreq(48 + c.root + pitch), t + index * .025, c.secondsPerBeat * 4.2, .016, "mist", .24);
+    });
+  });
+  playbackStart = start;
   animatePlayback();
 }
 
 async function togglePlayback() {
   if (!composition) return;
   if (isPlaying) return stopPlayback();
-  audioContext ||= new (window.AudioContext || window.webkitAudioContext)();
+  prepareAudio();
   if (audioContext.state === "suspended") await audioContext.resume();
   isPlaying = true;
   els.play.classList.add("is-playing"); els.playLabel.textContent = "停止演奏";
@@ -291,31 +390,36 @@ async function togglePlayback() {
 
 function animatePlayback() {
   if (!isPlaying || !composition) return;
-  const elapsed = Math.max(0, (performance.now() - playStartedAt) / 1000);
-  const progress = clamp(elapsed / composition.duration, 0, 1);
-  const step = Math.min(STEPS - 1, Math.floor(progress * STEPS));
+  const elapsed = Math.max(0, audioContext.currentTime - playbackStart);
+  const totalNotes = STEPS * REGION_ROWS;
+  let noteIndex = 0;
+  while (noteIndex < totalNotes - 1 && composition.melody[noteIndex + 1].beat * composition.secondsPerBeat <= elapsed) noteIndex++;
+  const note = composition.melody[noteIndex];
+  const step = note.col;
+  const columnStart = composition.melody[step * REGION_ROWS].beat;
+  const nextColumn = composition.melody[(step + 1) * REGION_ROWS]?.beat ?? composition.totalBeats;
+  const columnProgress = clamp((elapsed / composition.secondsPerBeat - columnStart) / (nextColumn - columnStart), 0, 1);
   els.scanLine.classList.add("active");
-  els.scanLine.style.transform = `translateX(${progress * els.dropZone.clientWidth}px)`;
-  els.scanLine.firstElementChild.textContent = String(step + 1).padStart(2, "0");
-  els.stepLabel.textContent = `${String(step + 1).padStart(2, "0")} / ${STEPS}`;
+  els.scanLine.style.transform = `translateX(${(step + columnProgress) / STEPS * els.dropZone.clientWidth}px)`;
+  els.scanLine.firstElementChild.textContent = note.noteName;
+  els.stepLabel.textContent = `${String(noteIndex + 1).padStart(3, "0")} / ${totalNotes}`;
   document.querySelectorAll(".note-bar").forEach((bar, index) => bar.classList.toggle("active", index === step));
-  document.querySelectorAll(".region-cell").forEach(cell => cell.classList.toggle("active", Number(cell.dataset.col) === step));
-  if (progress >= 1) return stopPlayback(false);
+  document.querySelectorAll(".region-cell").forEach(cell => cell.classList.toggle("active", Number(cell.dataset.sequence) === noteIndex));
+  if (elapsed >= composition.duration) return stopPlayback();
   animationId = requestAnimationFrame(animatePlayback);
 }
 
-function stopPlayback(resetAudio = true) {
+function stopPlayback() {
   cancelAnimationFrame(animationId);
   scheduledNodes.forEach(node => { try { node.stop(); } catch (_) {} });
   scheduledNodes = [];
   isPlaying = false;
   els.play.classList.remove("is-playing"); els.playLabel.textContent = "开始听画";
   els.scanLine.classList.remove("active"); els.scanLine.style.transform = "translateX(0)";
-  els.stepLabel.textContent = `00 / ${STEPS}`;
+  els.stepLabel.textContent = `000 / ${STEPS * REGION_ROWS}`;
   document.querySelectorAll(".note-bar").forEach(bar => bar.classList.remove("active"));
   document.querySelectorAll(".region-cell").forEach(cell => cell.classList.remove("active"));
   if (composition) { els.status.textContent = "可以演奏"; els.status.className = "status-pill ready"; }
-  if (resetAudio && audioContext?.state === "running") audioContext.suspend();
 }
 
 function showToast(message) {
@@ -329,7 +433,7 @@ els.sample.addEventListener("click", loadSample);
 els.regionGrid.addEventListener("click", async event => {
   const cell = event.target.closest(".region-cell");
   if (!cell || !composition) return;
-  audioContext ||= new (window.AudioContext || window.webkitAudioContext)();
+  prepareAudio();
   if (audioContext.state === "suspended") await audioContext.resume();
   const note = composition.columns[Number(cell.dataset.col)].notes[Number(cell.dataset.row)];
   makeVoice(midiToFreq(note.midi), audioContext.currentTime + .02, .65, .12, currentTone());
