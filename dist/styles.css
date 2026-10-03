@@ -72,6 +72,7 @@ button, label { -webkit-tap-highlight-color: transparent; }
 .stage-topline { position: absolute; z-index: 6; top: 18px; left: 18px; right: 18px; color: white; display: flex; justify-content: space-between; font: 600 .68rem/1 ui-monospace, SFMono-Regular, monospace; letter-spacing: .1em; text-transform: uppercase; text-shadow: 0 1px 5px black; pointer-events: none; }
 .scan-line { position: absolute; z-index: 5; top: 0; bottom: 0; left: 0; width: 2px; background: var(--acid); box-shadow: 0 0 24px rgba(215,255,72,.9); opacity: 0; transform: translateX(0); pointer-events: none; }
 .scan-line.active { opacity: 1; }
+.scan-line.breathing { opacity: .45; box-shadow: none; }
 .scan-line span { position: absolute; top: 48px; left: 8px; padding: 4px 7px; color: var(--ink); background: var(--acid); font: 700 .62rem/1 ui-monospace, monospace; }
 .region-grid { position: absolute; z-index: 3; inset: 0; display: grid; grid-template-columns: repeat(24, 1fr); grid-template-rows: repeat(5, 1fr); opacity: 0; pointer-events: none; }
 .visual-stage.has-image .region-grid { opacity: 1; pointer-events: auto; }
@@ -100,6 +101,13 @@ button, label { -webkit-tap-highlight-color: transparent; }
 .fingerprint { padding: 22px 0; border-bottom: 1px solid var(--ink); }
 .fingerprint span { display: block; color: var(--muted); font: 600 .66rem/1 ui-monospace, monospace; letter-spacing: .13em; margin-bottom: 10px; }
 .fingerprint code { font-size: clamp(.88rem, 1.5vw, 1.05rem); letter-spacing: .12em; overflow-wrap: anywhere; }
+.fingerprint .score-signature-label { margin-top: 15px; font-size: .6rem; }
+.fingerprint .score-signature { font-size: .68rem; letter-spacing: .06em; color: var(--muted); }
+.phrase-tracker { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding-top: 18px; }
+.phrase-tracker span { border-bottom: 3px solid var(--line); padding: 5px 0 8px; font-size: .72rem; color: var(--muted); text-align: center; }
+.phrase-tracker span.active { color: var(--ink); border-color: var(--accent); }
+.phrase-label { margin: 9px 0 0; color: var(--muted); font-size: .68rem; min-height: 1.5em; }
+.comparison-link { align-self: center; font-size: .68rem; color: var(--muted); margin-top: 12px; text-underline-offset: 4px; }
 
 .tone-picker { border: 0; margin: 0; padding: 22px 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .tone-picker legend { padding: 0 0 12px; color: var(--muted); font-size: .76rem; }

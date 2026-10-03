@@ -1,0 +1,23 @@
+{
+  "version": "0.4.0",
+  "createdAt": "2026-10-03T15:42:44.268Z",
+  "environment": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+  "origin": "Local Chromium browser OfflineAudioContext; summary transcribed from tests/listen.html DOM report",
+  "status": "passed",
+  "caseCount": 108,
+  "passedCount": 108,
+  "maxPeak": 0.18920102715492249,
+  "minRms": 0.022181388030088487,
+  "maxTailPeak": 0.000002042334699581261,
+  "invalidSamples": 0,
+  "clippedSamples": 0,
+  "scoreHashes": [
+    "196379c8078da100", "f34b2a8ab4aad5fe", "850659e2d5bc348e",
+    "8fb0646adbf28ca0", "9a965b83a87983f9", "9b7eb3ad24d20f09",
+    "09f653b2d42e4864", "058f78a4b1b418ea", "0d43fe987f245840",
+    "e203b7db2ccb214d", "e6396c515ace075f", "024df9c170ad44a3"
+  ],
+  "sameCanonicalPixelScoreHashesMatchNode": true,
+  "listening": "not-assessed",
+  "fileProtocolAutomation": "not-verified; browser automation permits http/https only"
+}

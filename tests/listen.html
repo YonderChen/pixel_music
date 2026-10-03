@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>图鸣 · 本地对照试听</title>
+  <style>
+    * { box-sizing: border-box; } body { margin: 0; background: #f2f0e8; color: #171713; font: 15px/1.7 system-ui, sans-serif; }
+    main { max-width: 1000px; margin: auto; padding: 28px 24px 80px; } h1 { font-size: 32px; margin: 24px 0 10px; } h2 { font-size: 21px; }
+    a { color: inherit; } .muted { color: #6e6b61; } label { display: inline-flex; gap: 8px; align-items: center; margin: 7px 18px 7px 0; }
+    select, button, input { font: inherit; } button, select { padding: 9px 13px; border: 1px solid #444; background: #fffdf7; } button { cursor: pointer; }
+    button:disabled { opacity: .45; cursor: wait; } .primary { background: #ff6542; color: white; } canvas { display: block; width: min(100%, 480px); image-rendering: auto; border: 1px solid #555; margin: 14px 0; }
+    .cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; } article { border: 1px solid #aaa79e; padding: 18px; background: #fffdf7; }
+    article h3 { margin: 0 0 12px; } article audio { width: 100%; } .ratings { display: grid; gap: 4px; } .ratings label { display: flex; justify-content: space-between; margin-right: 0; }
+    .ratings select { padding: 4px; } pre { white-space: pre-wrap; overflow-wrap: anywhere; background: #e5e2d8; padding: 14px; max-height: 500px; overflow: auto; font-size: 12px; }
+    .notice { border-left: 4px solid #ff6542; padding-left: 14px; } .section { margin-top: 36px; border-top: 1px solid #bbb; padding-top: 20px; } #progress { min-height: 30px; }
+    @media(max-width:760px) { .cards { grid-template-columns: 1fr; } main { padding: 18px 14px 60px; } }
+  </style>
+</head>
+<body><main>
+  <a href="../dist/index.html">← 返回听画工作台</a>
+  <h1>先听，再看版本。</h1>
+  <p class="muted">12 张原创程序测试图、三组内部对照。全部在本机渲染；不上传图片、不请求在线音源。</p>
+  <p class="notice">自动回归只验证音频安全和规则。主题是否好记、是否更好听，以及耳机和手机外放的舒适度，需要真实试听。这里不会自动替你填评分。</p>
+  <label>测试图片 <select id="fixtureSelect" aria-label="测试图片"></select></label>
+  <label>演奏材质 <select id="toneSelect" aria-label="演奏材质"><option value="warm">暖键</option><option value="glass">晶体</option><option value="mist">弦雾</option></select></label>
+  <label>片段长度 <select id="lengthSelect" aria-label="片段长度"><option value="16">前 16 秒</option><option value="full">完整曲目</option></select></label>
+  <canvas id="fixtureCanvas" width="192" height="120" aria-label="原创测试图"></canvas>
+  <button class="primary" id="renderButton">生成同图盲听对照</button>
+  <button id="revealButton" disabled>揭晓版本</button>
+  <p class="muted">三组均使用同图、同 BPM、同音色。音频已匹配 RMS 响度并限制峰值；旧版是 12 小节，新版是 16 小节，完整试听长度不同。A/B/C 每轮重新排列。</p>
+  <p id="progress" role="status">选择一张图，生成后按 A/B/C 顺序或任意顺序试听。</p>
+  <div id="cards" class="cards"></div>
+  <div class="section">
+    <label>最喜欢 <select id="preferred" aria-label="最喜欢的版本"><option value="">未选择</option><option>A</option><option>B</option><option>C</option></select></label>
+    <label>播放设备 <select id="device" aria-label="播放设备"><option value="headphones">普通耳机</option><option value="phone-speaker">手机外放</option><option value="computer-speaker">电脑外放</option></select></label>
+    <button id="saveRating" disabled>保存本轮评分</button>
+    <button id="exportRatings">导出试听记录</button>
+    <p id="ratingSummary" class="muted">还没有真实试听评分。</p>
+    <p class="muted">评分暂存在本页内存中；关闭或刷新前请导出试听记录。若不方便打分，也可以直接反馈图片、版本和有问题的时间点。</p>
+  </div>
+  <details class="section"><summary>自动化音频回归与跨环境乐谱快照</summary>
+    <p>覆盖 12 张图 × 3 个对照档 × 3 种音色，共 108 次离线渲染；检查非有限样本、峰值、尾音和实际响度。不会声称通过后一定更好听。</p>
+    <button id="regressionButton">运行 108 组离线回归</button>
+    <button id="downloadReport" disabled>下载回归报告</button>
+    <pre id="report">尚未运行</pre>
+  </details>
+  <script src="../dist/music.js"></script><script src="../dist/image-analysis.js"></script>
+  <script src="../dist/legacy.js"></script><script src="../dist/audio.js"></script>
+  <script src="./fixtures.js"></script><script src="./listen.js"></script>
+</main></body></html>

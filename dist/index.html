@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#11110f" />
     <meta
       name="description"
-      content="图鸣 PixelMusic：把图片的像素、颜色与纹理确定性地映射成一段独一无二的旋律。"
+      content="图鸣 PixelMusic：把图片的像素、颜色与纹理确定性地映射成一段可复现的旋律。"
     />
     <link
       rel="icon"
@@ -73,12 +73,19 @@
           <div class="fingerprint">
             <span>IMAGE SIGNATURE</span>
             <code id="fingerprintValue">–––– –––– –––– ––––</code>
+            <span class="score-signature-label">SCORE SIGNATURE · 乐谱版本</span>
+            <code class="score-signature" id="scoreHashValue">0.4.0 · 等待图像</code>
           </div>
+
+          <div class="phrase-tracker" id="phraseTracker" aria-label="乐曲结构">
+            <span>主题</span><span>回应</span><span>发展</span><span>回归</span>
+          </div>
+          <p class="phrase-label" id="phraseLabel">主题 · 回应 · 发展 · 回归</p>
 
           <fieldset class="tone-picker">
             <legend>演奏材质</legend>
-            <label><input type="radio" name="tone" value="glass" checked /><span>晶体</span></label>
-            <label><input type="radio" name="tone" value="warm" /><span>暖键</span></label>
+            <label><input type="radio" name="tone" value="glass" /><span>晶体</span></label>
+            <label><input type="radio" name="tone" value="warm" checked /><span>暖键</span></label>
             <label><input type="radio" name="tone" value="mist" /><span>弦雾</span></label>
           </fieldset>
 
@@ -93,6 +100,7 @@
             </button>
           </div>
           <button class="sample-button" id="sampleButton" type="button">先用示例图体验</button>
+          <a class="comparison-link" href="../tests/listen.html">新旧版本 · 本地对照试听</a>
         </div>
       </section>
 
@@ -103,9 +111,9 @@
         </div>
         <ol>
           <li><span>01</span><div><strong>横向位置决定时间</strong><p>图片被划分为 24 列，从左向右依次演奏。</p></div></li>
-          <li><span>02</span><div><strong>120 个区域组成乐句</strong><p>每列五个区域逐音展开，主题反复与长短节奏将它们串成连续旋律。</p></div></li>
+          <li><span>02</span><div><strong>120 个区域，16 小节</strong><p>每列五个区域逐音展开，主题、回应、发展与回归串成一首有呼吸的小曲。</p></div></li>
           <li><span>03</span><div><strong>图像塑造旋律走向</strong><p>颜色、明暗与纹理决定旋律起伏，和声与低音陪伴每个乐句，最后落回主音。</p></div></li>
-          <li><span>04</span><div><strong>像素指纹固定细节</strong><p>同一张规范化图片，在 PixelMusic 0.3 中永远得到同一旋律；点击区域可听对应音符。</p></div></li>
+          <li><span>04</span><div><strong>图像与乐谱，各有指纹</strong><p>相同规范化像素与设置，在 PixelMusic 0.4 中生成相同乐谱；点击区域可听对应音符。</p></div></li>
         </ol>
       </section>
 
@@ -116,6 +124,9 @@
     </main>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="./music.js"></script>
+    <script src="./image-analysis.js"></script>
+    <script src="./audio.js"></script>
     <script src="./app.js"></script>
   </body>
 </html>
