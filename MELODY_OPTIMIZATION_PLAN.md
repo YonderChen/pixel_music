@@ -2,7 +2,7 @@
 
 日期：2026-10-03  
 基线：当前 PixelMusic 0.3  
-状态：0.4.0 的 P1／P2／P3 技术实现与自动验证已完成；真实试听验收待用户反馈。本文保留原设计论证，实施结果见 [IMPLEMENTATION_REPORT.md](./IMPLEMENTATION_REPORT.md)。
+状态：0.4.0 的 P1／P2／P3 技术实现与自动验证已完成。用户于 2026-10-04 明确改为由开发者按作曲与节奏判断定稿，不再以用户主观评分作为完成条件；下文保留原设计论证及可选试听方法，实施结果见 [IMPLEMENTATION_REPORT.md](./IMPLEMENTATION_REPORT.md)。
 
 ## 1. 结论与目标
 

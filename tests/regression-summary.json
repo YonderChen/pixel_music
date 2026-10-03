@@ -19,5 +19,6 @@
   ],
   "sameCanonicalPixelScoreHashesMatchNode": true,
   "listening": "not-assessed",
+  "subjectiveGate": "waived by user on 2026-10-04; use compositional judgment and technical verification",
   "fileProtocolAutomation": "not-verified; browser automation permits http/https only"
 }

@@ -42,6 +42,14 @@ for (const profile of ['legacy', 'plain', 'expressive']) for (const tone of ['wa
   const firstFrequency = oscillators[0].frequency.events[0].value;
   const fundamental = 440 * 2 ** ((selected.melody[0].midi - 69) / 12);
   assert.ok(Math.abs(firstFrequency / fundamental - 1) <= .002);
+  const partialCount = profile === 'expressive' && tone !== 'mist' ? 3 : 2;
+  selected.melody.forEach((note, index) => {
+    const partials = oscillators.slice(index * partialCount, (index + 1) * partialCount);
+    assert.equal(partials.length, partialCount, 'all 120 regions must actually schedule a voice');
+    partials.forEach(osc => assert.ok(Math.abs(osc.started - (.08 + note.beat * selected.secondsPerBeat)) < 1e-9));
+    const expectedFrequency = 440 * 2 ** ((note.midi - 69) / 12);
+    assert.ok(Math.abs(partials[0].frequency.events[0].value / expectedFrequency - 1) <= .002, 'scheduled region pitch must match its score');
+  });
   session.stop();
   assert.ok(oscillators.every(osc => osc.stops.at(-1) === .03), 'stop must cancel future notes as well');
   session.dispose(); assert.equal(session.sourceCount, 0); assert.ok(context.nodes.every(node => node.disconnected));

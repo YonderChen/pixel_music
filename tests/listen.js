@@ -1,7 +1,7 @@
 'use strict';
 const $ = id => document.getElementById(id);
 const Music = window.PixelMusic, ImageAnalysis = window.PixelMusicImage, Legacy = window.PixelMusicLegacy, Audio = window.PixelMusicAudio, Fixtures = window.PixelMusicFixtures;
-const dimensions = ['连贯性', '主题记忆感', '节奏舒适度', '整体好听程度', '图片关联感'];
+const Listening = window.PixelMusicListening, dimensions = Listening.dimensions;
 const ratings = []; let urls = [], currentRound = null, reportData = null, busy = false;
 $('fixtureSelect').innerHTML = Fixtures.names.map((name, i) => `<option value="${i}">${i + 1}. ${name}</option>`).join('');
 $('fixtureSelect').value = '5';
@@ -64,14 +64,7 @@ $('revealButton').addEventListener('click', () => {
   currentRound.ordered.forEach((item, i) => { $(`variant${i}`).textContent = `${String.fromCharCode(65 + i)} · ${item.title}`; });
 });
 function summarizeRatings() {
-  const blind = ratings.filter(r => !r.revealed), byFixture = new Map();
-  blind.forEach(r => { if (!byFixture.has(r.fixture)) byFixture.set(r.fixture, []); byFixture.get(r.fixture).push(r); });
-  const full = blind.filter(r => r.length === 'full'), deviceSet = new Set(blind.map(r => r.device));
-  const wins = blind.filter(r => r.preferredId !== 'legacy').length;
-  const improvements = blind.map(r => r.scores.find(s => s.id === 'expressive').values[3] - r.scores.find(s => s.id === 'legacy').values[3]).sort((a, b) => a - b);
-  const median = improvements.length ? (improvements[Math.floor((improvements.length - 1) / 2)] + improvements[Math.floor(improvements.length / 2)]) / 2 : null;
-  const associationLoss = blind.filter(r => r.scores.find(s => s.id === 'expressive').values[4] < r.scores.find(s => s.id === 'legacy').values[4]).length;
-  return { totalRounds: ratings.length, blindRounds: blind.length, distinctFixtures: byFixture.size, fullRounds: full.length, headphones: deviceSet.has('headphones'), phoneSpeaker: deviceSet.has('phone-speaker'), newerPreference: blind.length ? wins / blind.length : null, medianEnjoymentImprovement: median, associationLossRounds: associationLoss, acceptance: blind.length >= 12 && byFixture.size === 12 && full.length >= 12 && deviceSet.has('headphones') && deviceSet.has('phone-speaker') && wins / blind.length >= .7 && median >= 1 && associationLoss === 0 };
+  return Listening.summarize(ratings);
 }
 $('saveRating').addEventListener('click', () => {
   if (!currentRound || !$('preferred').value) { $('progress').textContent = '请先选择最喜欢的版本并完成全部评分。'; return; }
@@ -80,7 +73,7 @@ $('saveRating').addEventListener('click', () => {
   const preferredIndex = $('preferred').value.charCodeAt(0) - 65;
   ratings.push({ fixture: currentRound.fixture, fixtureName: Fixtures.names[currentRound.fixture], tone: currentRound.tone, length: currentRound.length, device: $('device').value, revealed: currentRound.revealed, preferredId: currentRound.ordered[preferredIndex].id, scores, recordedAt: new Date().toISOString() });
   $('saveRating').disabled = true;
-  const summary = summarizeRatings(); $('ratingSummary').textContent = `已保存 ${summary.totalRounds} 轮，其中 ${summary.blindRounds} 轮为未揭晓盲听；覆盖 ${summary.distinctFixtures} / 12 张图。${summary.acceptance ? '达到方案试验门槛（仍属小样本）。' : '听感验收尚未完成。'}`;
+  const summary = summarizeRatings(); $('ratingSummary').textContent = `已保存 ${summary.totalRounds} 轮，其中 ${summary.blindRounds} 轮为未揭晓盲听；暖键短片段与完整曲目均已覆盖 ${summary.completeWarmFixtures} / 12 张图。${summary.acceptance ? '达到可选试听试验门槛（仍属小样本）。' : '可选试听数据尚不完整，不影响本轮技术交付。'}`;
 });
 function download(name, value) {
   const url = URL.createObjectURL(new Blob([JSON.stringify(value, null, 2)], { type: 'application/json' }));

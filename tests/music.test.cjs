@@ -73,13 +73,19 @@ function check(score) {
   assert.equal(Music.playbackPosition(score, score.melodyDuration + .3).tail, true);
   assert.equal(Music.playbackPosition(score, score.duration).finished, true);
 }
-const started = performance.now(); let count = 0, maxMs = 0, fallbackCount = 0;
+const started = performance.now(); let count = 0, maxMs = 0, fallbackCount = 0, syntheticFallbackCases = 0;
 for (const mode of Object.values(Music.MODES)) for (let root = 0; root < 12; root++) for (let seed = 1; seed <= 12; seed++) {
   const analysis = { columns: imageRegions(seed), root, modeId: mode.id, bpm: 88 };
   const before = JSON.stringify(analysis), start = performance.now(), score = Music.compose(analysis);
   maxMs = Math.max(maxMs, performance.now() - start); fallbackCount += score.diagnostics.fallbacks;
   check(score); assert.equal(JSON.stringify(analysis), before, 'composer must not mutate analysis');
   assert.deepEqual(score, Music.compose(analysis)); count++;
+  if (seed === 1) {
+    const fallback = Music.compose(analysis, { forceFallback: true }); check(fallback);
+    assert.equal(fallback.diagnostics.fallbacks, 4);
+    assert.deepEqual(fallback, Music.compose(analysis, { forceFallback: true }), 'fallback must be deterministic in every key and mode');
+    syntheticFallbackCases++;
+  }
   const oldColumns = imageRegions(seed), old = Legacy.arrangeRegions(oldColumns, root, mode);
   assert.equal(old.melody.length, 120); assert.equal(old.totalBeats, 48); assert.equal(old.melody.at(-1).midi, 60 + root);
   assert.ok(old.melody.every((note, i) => !i || Math.abs(note.midi - old.melody[i - 1].midi) <= 7));
@@ -140,4 +146,4 @@ for (const shade of [0, 255]) {
   assert.equal(analysis.root, 0, 'achromatic input has no arbitrary colour-derived key');
   assert.equal(score.mode.id, shade === 0 ? 'deep' : 'soft');
 }
-console.log(JSON.stringify({ status: 'passed', syntheticCases: count, legacyCases: count, pixelFixtures: fixtureScores.length, fallbackCases: fixtureScores.length, fallbackCount, maxComposeMs: Math.round(maxMs), elapsedMs: Math.round(performance.now() - started), localEditChangedByPhrase: changedInPhrase, spatialEdits, fixtureHashes: fixtureScores.map(f => ({ name: f.name, scoreHash: f.score.scoreHash, mode: f.score.mode.id, root: f.score.root })) }, null, 2));
+console.log(JSON.stringify({ status: 'passed', syntheticCases: count, legacyCases: count, pixelFixtures: fixtureScores.length, fallbackCases: fixtureScores.length, syntheticFallbackCases, fallbackCount, maxComposeMs: Math.round(maxMs), elapsedMs: Math.round(performance.now() - started), localEditChangedByPhrase: changedInPhrase, spatialEdits, fixtureHashes: fixtureScores.map(f => ({ name: f.name, scoreHash: f.score.scoreHash, mode: f.score.mode.id, root: f.score.root })) }, null, 2));

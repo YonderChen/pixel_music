@@ -20,7 +20,7 @@
   <a href="../dist/index.html">← 返回听画工作台</a>
   <h1>先听，再看版本。</h1>
   <p class="muted">12 张原创程序测试图、三组内部对照。全部在本机渲染；不上传图片、不请求在线音源。</p>
-  <p class="notice">自动回归只验证音频安全和规则。主题是否好记、是否更好听，以及耳机和手机外放的舒适度，需要真实试听。这里不会自动替你填评分。</p>
+  <p class="notice">本轮按作曲结构、演奏设计和技术检查定稿，不以主观评分作为交付条件。这里保留可选的新旧对照；主题是否好记、实际设备是否舒适，仍可以之后真实试听。不会自动替你填评分。</p>
   <label>测试图片 <select id="fixtureSelect" aria-label="测试图片"></select></label>
   <label>演奏材质 <select id="toneSelect" aria-label="演奏材质"><option value="warm">暖键</option><option value="glass">晶体</option><option value="mist">弦雾</option></select></label>
   <label>片段长度 <select id="lengthSelect" aria-label="片段长度"><option value="16">前 16 秒</option><option value="full">完整曲目</option></select></label>
@@ -37,6 +37,7 @@
     <button id="exportRatings">导出试听记录</button>
     <p id="ratingSummary" class="muted">还没有真实试听评分。</p>
     <p class="muted">评分暂存在本页内存中；关闭或刷新前请导出试听记录。若不方便打分，也可以直接反馈图片、版本和有问题的时间点。</p>
+    <p class="muted">如以后做完整试验，按暖键盲听统计：每张图分别覆盖短片段和完整曲目，并包含耳机与手机外放。重复同一图的轮数不会替代其他图的覆盖；其他音色作为补充记录。你不必完成整组才能先反馈。</p>
   </div>
   <details class="section"><summary>自动化音频回归与跨环境乐谱快照</summary>
     <p>覆盖 12 张图 × 3 个对照档 × 3 种音色，共 108 次离线渲染；检查非有限样本、峰值、尾音和实际响度。不会声称通过后一定更好听。</p>
@@ -46,5 +47,5 @@
   </details>
   <script src="../dist/music.js"></script><script src="../dist/image-analysis.js"></script>
   <script src="../dist/legacy.js"></script><script src="../dist/audio.js"></script>
-  <script src="./fixtures.js"></script><script src="./listen.js"></script>
+  <script src="./fixtures.js"></script><script src="./listening-metrics.js"></script><script src="./listen.js"></script>
 </main></body></html>
