@@ -49,8 +49,9 @@ node tests/music.test.cjs
 node tests/audio.test.cjs
 node tests/legacy.test.cjs
 node tests/listening.test.cjs
+node tests/local-bundle.test.cjs
 ```
 
 覆盖 432 组新作曲参数、432 组旧算法参数、12 张规范化像素测试图、强制回退、播放位置与音频调度／清理，以及旧版 12 张金标准快照。`tests/listen.html` 还可运行 12 图 × 3 对照档 × 3 音色的 108 次真实离线音频渲染，并下载环境、乐谱与音频指标报告。
 
-无需 Node 即可使用主页面和试听页。实现详情、已验证范围与仍待验收的项目见 [IMPLEMENTATION_REPORT.md](./IMPLEMENTATION_REPORT.md)。
+无需 Node 即可使用主页面和试听页。实现详情、验证范围与可选试听方法见 [IMPLEMENTATION_REPORT.md](./IMPLEMENTATION_REPORT.md)。

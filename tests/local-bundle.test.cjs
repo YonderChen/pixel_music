@@ -1,0 +1,47 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const vm = require('node:vm');
+const Fixtures = require('./fixtures.js');
+const Snapshot = require('./regression-summary.json');
+const projectRoot = path.resolve(__dirname, '..');
+
+function localAsset(page, source) {
+  assert.ok(!/^(?:[a-z][a-z\d+.-]*:|\/\/|\/)/i.test(source), 'assets must use relative local paths');
+  const resolved = path.resolve(path.dirname(page), source);
+  assert.ok(!path.relative(projectRoot, resolved).startsWith('..'), 'assets must remain inside this project');
+  assert.ok(fs.statSync(resolved).isFile(), `missing asset: ${source}`);
+  return resolved;
+}
+for (const relativePage of ['dist/index.html', 'tests/listen.html']) {
+  const page = path.join(projectRoot, relativePage), html = fs.readFileSync(page, 'utf8');
+  const sandbox = {}; sandbox.window = sandbox;
+  const context = vm.createContext(sandbox);
+  const scriptTags = [...html.matchAll(/<script\b([^>]*)>/gi)];
+  assert.ok(scriptTags.length > 0);
+  for (const [, attributes] of scriptTags) {
+    assert.ok(!/\btype\s*=\s*["']module["']/i.test(attributes), 'direct-file entry points must not require module fetching');
+    const source = attributes.match(/\bsrc\s*=\s*["']([^"']+)["']/i)?.[1];
+    assert.ok(source, 'entry points must use inspectable local script files');
+    const asset = localAsset(page, source), code = fs.readFileSync(asset, 'utf8');
+    assert.ok(!/\b(?:fetch|XMLHttpRequest|WebSocket|EventSource|importScripts)\s*\(/.test(code), 'no network-dependent runtime loading');
+    assert.ok(!/\bimport\s*\(/.test(code), 'no dynamic module loading');
+    const script = new vm.Script(code, { filename: source });
+    // Load the actual browser UMD branches in the HTML order. DOM entry scripts are syntax-checked only.
+    if (!['app.js', 'listen.js'].includes(path.basename(asset))) script.runInContext(context);
+  }
+  for (const [, attributes] of html.matchAll(/<link\b([^>]*)>/gi)) {
+    if (!/\brel\s*=\s*["']stylesheet["']/i.test(attributes)) continue;
+    const source = attributes.match(/\bhref\s*=\s*["']([^"']+)["']/i)?.[1];
+    const css = fs.readFileSync(localAsset(page, source), 'utf8');
+    assert.ok(!/@import\b|url\(\s*["']?(?:https?:)?\/\//i.test(css), 'no remote CSS or font loading');
+  }
+  assert.ok(context.PixelMusic && context.PixelMusicImage && context.PixelMusicAudio);
+  const score = context.PixelMusic.compose(context.PixelMusicImage.analyzePixels(Fixtures.pixels(5)));
+  assert.equal(score.scoreHash, Snapshot.scoreHashes[5], 'classic browser exports must produce the canonical score');
+  if (relativePage.startsWith('tests/')) {
+    assert.ok(context.PixelMusicLegacy && context.PixelMusicFixtures && context.PixelMusicListening);
+    assert.equal(context.PixelMusicListening.summarize([]).acceptance, false);
+  }
+}
+console.log('Passed both local HTML resource graphs, classic-script exports/order and canonical score checks. This is not a live file-protocol browser test.');
