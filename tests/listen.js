@@ -1,6 +1,6 @@
 'use strict';
 const $ = id => document.getElementById(id);
-const Music = window.PixelMusic, ImageAnalysis = window.PixelMusicImage, Legacy = window.PixelMusicLegacy, Audio = window.PixelMusicAudio, Fixtures = window.PixelMusicFixtures;
+const Music = window.PixelMusicV04, ImageAnalysis = window.PixelMusicImageV04, Legacy = window.PixelMusicLegacy, Audio = window.PixelMusicAudioV04, Fixtures = window.PixelMusicFixtures;
 const Listening = window.PixelMusicListening, dimensions = Listening.dimensions;
 const ratings = []; let urls = [], currentRound = null, reportData = null, busy = false;
 $('fixtureSelect').innerHTML = Fixtures.names.map((name, i) => `<option value="${i}">${i + 1}. ${name}</option>`).join('');

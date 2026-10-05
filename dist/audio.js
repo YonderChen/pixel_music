@@ -1,8 +1,8 @@
 (function (root, factory) {
-  const api = factory();
+  const api = factory(typeof module === 'object' && module.exports ? require('./timing.js') : root.PixelMusicTiming);
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.PixelMusicAudio = api;
-})(typeof globalThis === 'object' ? globalThis : this, function () {
+})(typeof globalThis === 'object' ? globalThis : this, function (Timing) {
   'use strict';
   const freq = midi => 440 * 2 ** ((midi - 69) / 12);
   const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
@@ -55,22 +55,31 @@
       });
     }
     function schedule(score, start = context.currentTime + .08, tone = 'warm', fromBeat = 0) {
-      const spb = score.secondsPerBeat;
+      const spb = score.secondsPerBeat, time = beat => Timing.beatToTime(score, beat);
       score.melody.forEach((note, index) => {
         const expressive = profile === 'expressive';
-        const nominal = note.beats * spb;
-        let duration = expressive ? note.durationBeats * spb : nominal + Math.min(.16, nominal * .32);
+        const nominal = time(note.beat + note.beats) - time(note.beat);
+        let endTime = expressive ? time(note.beat + note.durationBeats) : time(note.beat + note.beats) + Math.min(.16, nominal * .32);
         if (profile === 'plain') {
-          const rest = score.rests.find(r => r.bar === note.bar);
-          if (rest && note.beat + note.beats === rest.beat) duration = nominal * .92;
+          const rest = score.rests.find(r => r.beat >= note.beat && time(r.beat) < endTime);
+          if (rest) endTime = Math.min(endTime, time(rest.beat));
         }
-        if (note.beat + duration / spb <= fromBeat) return;
+        if (endTime <= time(fromBeat)) return;
         const onset = Math.max(note.beat, fromBeat);
-        duration -= Math.max(0, fromBeat - note.beat) * spb;
+        const duration = endTime - time(onset);
         const gain = expressive ? note.velocity : profile === 'legacy' ? (.09 + note.velocity * .65) * (note.strong ? 1 : .82) : .12 * (note.weight === 1 ? 1 : .82);
-        voice(note.midi, start + onset * spb, duration, gain, tone, 'melody', note.send, Math.min(.05, nominal * .12));
+        voice(note.midi, start + time(onset), duration, gain, tone, 'melody', note.send, Math.min(.05, nominal * .12));
       });
-      score.bars.forEach(bar => {
+      if (score.bassEvents && profile !== 'legacy') {
+        for (const event of score.bassEvents) {
+          const onset = Math.max(event.beat, fromBeat), duration = time(event.beat + event.durationBeats) - time(onset);
+          voice(event.midi, start + time(onset), duration, event.velocity, 'warm', 'bass', event.send);
+        }
+        for (const event of score.padEvents) {
+          const onset = Math.max(event.beat, fromBeat), duration = time(event.beat + event.durationBeats) - time(onset);
+          event.midi.forEach((pitch, index) => voice(pitch, start + time(onset) + index * .012, duration - index * .012, event.velocity, 'mist', 'pad', event.send));
+        }
+      } else score.bars.forEach(bar => {
         if (bar.beat + 4.2 <= fromBeat) return;
         const offset = Math.max(0, fromBeat - bar.beat), t = start + (bar.beat + offset) * spb;
         if (profile === 'legacy') {

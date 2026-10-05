@@ -4,6 +4,7 @@ const Music = require('../dist/music.js');
 const Image = require('../dist/image-analysis.js');
 const Legacy = require('../dist/legacy.js');
 const Fixtures = require('./fixtures.js');
+const Extended = require('./rhythm-fixtures.js');
 class Param {
   constructor(value = 0) { this.value = value; this.events = []; }
   record(type, value, time) { assert.ok(Number.isFinite(value) && Number.isFinite(time) && time >= 0); this.events.push({ type, value, time }); }
@@ -46,7 +47,7 @@ for (const profile of ['legacy', 'plain', 'expressive']) for (const tone of ['wa
   selected.melody.forEach((note, index) => {
     const partials = oscillators.slice(index * partialCount, (index + 1) * partialCount);
     assert.equal(partials.length, partialCount, 'all 120 regions must actually schedule a voice');
-    partials.forEach(osc => assert.ok(Math.abs(osc.started - (.08 + note.beat * selected.secondsPerBeat)) < 1e-9));
+    partials.forEach(osc => assert.ok(Math.abs(osc.started - (.08 + Music.beatToTime(selected, note.beat))) < 1e-9));
     const expectedFrequency = 440 * 2 ** ((note.midi - 69) / 12);
     assert.ok(Math.abs(partials[0].frequency.events[0].value / expectedFrequency - 1) <= .002, 'scheduled region pitch must match its score');
   });
@@ -54,10 +55,36 @@ for (const profile of ['legacy', 'plain', 'expressive']) for (const tone of ['wa
   assert.ok(oscillators.every(osc => osc.stops.at(-1) === .03), 'stop must cancel future notes as well');
   session.dispose(); assert.equal(session.sourceCount, 0); assert.ok(context.nodes.every(node => node.disconnected));
 }
+let scheduledCases = 0, scheduledRegions = 0;
+for (let fixture = 0; fixture < 60; fixture++) {
+  const selected = Music.compose(Image.analyzePixels(fixture < 12 ? Fixtures.pixels(fixture) : Extended.pixels(fixture - 12)));
+  for (const tone of ['warm', 'glass', 'mist']) {
+    const context = new Context(), session = Audio.createSession(context, { bpm: selected.bpm });
+    session.schedule(selected, .08, tone);
+    const oscillators = context.nodes.filter(n => n.oscillator); let cursor = 0;
+    function verify(pitch, partialCount, start, end) {
+      const voices = oscillators.slice(cursor, cursor + partialCount); cursor += partialCount;
+      assert.equal(voices.length, partialCount);
+      voices.forEach(voice => {
+        assert.ok(Math.abs(voice.started - start) < 1e-9);
+        assert.ok(Math.abs(voice.stops[0] - (end + .04)) < 1e-9);
+      });
+      const fundamental = 440 * 2 ** ((pitch - 69) / 12);
+      assert.ok(Math.abs(voices[0].frequency.events[0].value / fundamental - 1) <= .002);
+    }
+    selected.melody.forEach(note => {
+      verify(note.midi, tone === 'mist' ? 2 : 3, .08 + Music.beatToTime(selected, note.beat), .08 + Music.beatToTime(selected, note.beat + note.durationBeats)); scheduledRegions++;
+    });
+    selected.bassEvents.forEach(event => verify(event.midi, 3, .08 + Music.beatToTime(selected, event.beat), .08 + Music.beatToTime(selected, event.beat + event.durationBeats)));
+    selected.padEvents.forEach(event => event.midi.forEach((pitch, index) => verify(pitch, 2, .08 + Music.beatToTime(selected, event.beat) + index * .012, .08 + Music.beatToTime(selected, event.beat + event.durationBeats))));
+    assert.equal(cursor, oscillators.length, 'all accompaniment voices must come from explicit score events');
+    session.dispose(); scheduledCases++;
+  }
+}
 for (const fromBeat of [3.75, 17, 32.25, 63.5]) {
   const context = new Context(); context.currentTime = 10;
   const session = Audio.createSession(context, { bpm: score.bpm });
-  session.schedule(score, context.currentTime + .035 - fromBeat * score.secondsPerBeat, 'glass', fromBeat);
+  session.schedule(score, context.currentTime + .035 - Music.beatToTime(score, fromBeat), 'glass', fromBeat);
   assert.ok(context.nodes.filter(n => n.oscillator).every(n => n.started >= 10.0349), 'tone switch must never replay old notes in the past');
   session.dispose();
 }
@@ -71,4 +98,4 @@ const metrics = Audio.inspectBuffer(buffer); assert.equal(metrics.invalid, 0); a
 const wav = new DataView(Audio.wavBytes(buffer));
 assert.equal(wav.byteLength, 52); assert.equal(wav.getUint32(40, true), 8);
 assert.equal(String.fromCharCode(...new Uint8Array(wav.buffer, 0, 4)), 'RIFF');
-console.log('Passed: nine audio profiles/tones, scheduled starts/stops, tone-change continuity, resource cleanup, metrics and WAV encoding.');
+console.log(`Passed: nine compatibility profiles/tones plus ${scheduledCases} image/tone schedules (${scheduledRegions} region events), explicit bass/pads, tempo-aware starts/ends, tone-change continuity, cleanup, metrics and WAV encoding.`);

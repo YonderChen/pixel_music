@@ -1,0 +1,17 @@
+{
+  "version": "0.5.0",
+  "origin": "Chromium 154, tests/rhythm-listen.html scoreReport; all 60 entries inspected against Node after precision stabilization",
+  "imageBundleHash": "3be02e30c6b40c8a",
+  "scoreHashes": [
+    "1f33d76ad30bb8f0", "0853af7bf72a3073", "87b87e43c7054655", "70d65a53699fea3b", "2fb84b2a3fc67c56", "b129a410776b6ec8",
+    "204b17a525252531", "0cdc019da1f67eb5", "f7c399e5084ae067", "e7656aa92abbcc37", "0053b6c3d822a563", "a9f39c8ef873e4b0",
+    "87d0ed6fa051dbe1", "ebc9a8a29d1f0630", "78f910e8a0025fd8", "aaf9213a2c1aa6a8", "1d3c4ab3f38e79cd", "31972a2d33bf275d",
+    "4b668108b9d7aa54", "c148b1a6ba1a7ce2", "891b84d4802eeeb0", "6d829abeb4cf191a", "6b5a956a7b3fa1b8", "63dbe08dadcaa00b",
+    "d40f4a4c73f79360", "6d0da808a0fdcb56", "0e74185167d1ea8d", "6d6d341d29c5b8bb", "455256acb85ab906", "9609f0e67076a3da",
+    "e30c5406f21b030a", "c4c0354a2def4a9e", "41ed76c7a61aa987", "a785d1f7c9b4643b", "6a815955db5e58bb", "ff1fe76e144d8f4e",
+    "33a5c3090ddfc17b", "580290853491b523", "d6b60f3a5c0d5f74", "7037180d23866341", "74fa966e04475e2e", "2a543a466b80b010",
+    "10be57780a09b894", "900d9d5a6354b96a", "89e47a66e520f082", "8e1abda7fc8aa2a7", "2f794e27c32a1991", "cbea397a7701e578",
+    "40b8680cce8d51b2", "eb162df4b27fe20c", "44698780397576f4", "525d892dc769d765", "7e6109aeef4df980", "d2d8484f1b35d73b",
+    "07141e59839da34f", "c2ab1e5098aa5766", "4daf61d75b281e4d", "0ec5061b8e8baae9", "7e5392bdc70c88d3", "f2f419e46c35a5e8"
+  ]
+}

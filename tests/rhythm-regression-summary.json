@@ -1,0 +1,143 @@
+{
+  "version": "0.5.0",
+  "status": "passed",
+  "verifiedDate": "2026-10-05",
+  "subjectiveListening": "not-assessed; waived as completion gate by user",
+  "published": false,
+  "rhythm": {
+    "imageCount": 60,
+    "fixedDiagnosticBpm": 88,
+    "baselineFixturePatterns": 1,
+    "newFixturePatterns": 12,
+    "extendedImageCount": 48,
+    "extendedPatterns": 47,
+    "simplifiedFixturePatterns": 12,
+    "distinctAllImages": 58,
+    "contrastingOnsetDistances": [
+      {
+        "pair": "纯色／黑白棋盘",
+        "distance": 0.32167832167832167
+      },
+      {
+        "pair": "明暗渐变／抽象图案",
+        "distance": 0.5093167701863355
+      },
+      {
+        "pair": "几何人像／噪声",
+        "distance": 0.38926174496644295
+      }
+    ],
+    "localEditOnsetDistance": 0.06451612903225812,
+    "crossFamilyOnsetDistances": {
+      "pairs": 1008,
+      "min": 0,
+      "median": 0.2978723404255319,
+      "max": 0.4713375796178344
+    },
+    "designBpmRange": [
+      76,
+      104
+    ],
+    "actualBpms": [
+      76,
+      78,
+      80,
+      82,
+      84,
+      86,
+      88,
+      90,
+      92,
+      94
+    ]
+  },
+  "automated": {
+    "allNineSuitesPassed": true,
+    "suites": [
+      "music",
+      "rhythm",
+      "audio",
+      "timing",
+      "baseline",
+      "legacy",
+      "listening",
+      "local-bundle",
+      "browser-snapshot"
+    ],
+    "newSyntheticCases": 432,
+    "legacySyntheticCases": 432,
+    "syntheticForcedPitchFallbackCases": 36,
+    "fixtureForcedPitchFallbackCases": 12,
+    "audioScheduleCases": 180,
+    "regionAudioEvents": 21600,
+    "frozenV03Scores": 12,
+    "frozenV04Scores": 12,
+    "realBrowserScoreSnapshots": 60,
+    "browserImageBundleHash": "3be02e30c6b40c8a",
+    "allFinalAudioScoresMatchBrowserSnapshot": true
+  },
+  "localEdits": {
+    "controlledColumns": [
+      2,
+      8,
+      14,
+      20
+    ],
+    "controlledRegionRgbIncrease": 5,
+    "controlledChangesEach": 3,
+    "controlledChangesStayInOwnPhrase": true,
+    "sunsetEditChangesByPhrase": [
+      0,
+      4,
+      4,
+      0
+    ],
+    "sunsetEditCrossedGlobalRhythmAnchorBoundary": true
+  },
+  "realAudio": {
+    "createdAt": "2026-10-05T15:23:12.807Z",
+    "environment": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+    "total": 276,
+    "passed": 276,
+    "failed": 0,
+    "groups": {
+      "newComplete": 180,
+      "frozenV04Complete": 36,
+      "newFixedTempoMelody": 36,
+      "pitchlessRhythmVersions": 24
+    },
+    "sampleRate": 22050,
+    "maxPeak": 0.19159625470638275,
+    "minRms": 0.02885133924117594,
+    "maxTailPeak": 0.000003979583652835572,
+    "invalidSamples": 0,
+    "clippedSamples": 0,
+    "newCompleteSecondsRange": [
+      43.11034013605442,
+      52.82331065759637
+    ],
+    "fullReportArtifact": "tests/artifacts/pixelmusic-0.5-audio-regression.json"
+  },
+  "browserUi": {
+    "protocol": "http://127.0.0.1",
+    "finalSampleRegions": 120,
+    "comparisonAudioCards": 4,
+    "consoleErrors": 0,
+    "consoleWarnings": 0,
+    "nativeReportDownloadEvent": "timed-out; not counted as passed",
+    "screenshot": "tests/artifacts/pixelmusic-0.5-workbench.jpg"
+  },
+  "directHtml": {
+    "automatedLiveFileProtocol": false,
+    "staticResourceGraphs": 3,
+    "userConfirmedGeneration": true,
+    "userConfirmedPlayback": true,
+    "userConfirmedWavSave": true
+  },
+  "limitations": [
+    "Normalized pixels must match; image decoding and color management may differ.",
+    "Only current Chromium and Node were compared; not every browser.",
+    "Rhythm collisions are allowed; summary fingerprints are not cryptographic.",
+    "Safety and structural tests do not prove subjective preference or byte-identical WAV across browsers."
+  ]
+}

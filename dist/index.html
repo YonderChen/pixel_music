@@ -74,7 +74,9 @@
             <span>IMAGE SIGNATURE</span>
             <code id="fingerprintValue">–––– –––– –––– ––––</code>
             <span class="score-signature-label">SCORE SIGNATURE · 乐谱版本</span>
-            <code class="score-signature" id="scoreHashValue">0.4.0 · 等待图像</code>
+            <code class="score-signature" id="scoreHashValue">0.5.0 · 等待图像</code>
+            <span class="score-signature-label">RHYTHM SIGNATURE · 图片节奏</span>
+            <code class="score-signature" id="rhythmHashValue">等待图像</code>
           </div>
 
           <div class="phrase-tracker" id="phraseTracker" aria-label="乐曲结构">
@@ -100,7 +102,8 @@
             </button>
           </div>
           <button class="sample-button" id="sampleButton" type="button">先用示例图体验</button>
-          <a class="comparison-link" href="../tests/listen.html">新旧版本 · 本地对照试听</a>
+          <button class="sample-button" id="exportButton" type="button" disabled>保存这张图的音乐 · WAV</button>
+          <a class="comparison-link" href="../tests/rhythm-listen.html">图片节奏 · 本地对照试听</a>
         </div>
       </section>
 
@@ -112,8 +115,8 @@
         <ol>
           <li><span>01</span><div><strong>横向位置决定时间</strong><p>图片被划分为 24 列，从左向右依次演奏。</p></div></li>
           <li><span>02</span><div><strong>120 个区域，16 小节</strong><p>每列五个区域逐音展开，主题、回应、发展与回归串成一首有呼吸的小曲。</p></div></li>
-          <li><span>03</span><div><strong>图像塑造旋律走向</strong><p>颜色、明暗与纹理决定旋律起伏，和声与低音陪伴每个乐句，最后落回主音。</p></div></li>
-          <li><span>04</span><div><strong>图像与乐谱，各有指纹</strong><p>相同规范化像素与设置，在 PixelMusic 0.4 中生成相同乐谱；点击区域可听对应音符。</p></div></li>
+          <li><span>03</span><div><strong>图片也决定自己的节奏</strong><p>空间变化与纹理组织塑造长短音、疏密、停顿和速度，伴奏跟随乐句，而非固定循环。</p></div></li>
+          <li><span>04</span><div><strong>同图同版本，可以重现</strong><p>相同规范化像素与设置，在 PixelMusic 0.5 中生成相同乐谱；节奏另有指纹，点击区域可听对应音符。</p></div></li>
         </ol>
       </section>
 
@@ -124,9 +127,11 @@
     </main>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="./music.js"></script>
-    <script src="./image-analysis.js"></script>
-    <script src="./audio.js"></script>
-    <script src="./app.js"></script>
+    <script src="./timing.js?v=0.5.0-r2"></script>
+    <script src="./rhythm.js?v=0.5.0-r2"></script>
+    <script src="./music.js?v=0.5.0-r2"></script>
+    <script src="./image-analysis.js?v=0.5.0-r2"></script>
+    <script src="./audio.js?v=0.5.0-r2"></script>
+    <script src="./app.js?v=0.5.0-r2"></script>
   </body>
 </html>
