@@ -70,6 +70,7 @@ button, label { -webkit-tap-highlight-color: transparent; }
 .upload-glyph { width: 64px; height: 64px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.5); border-radius: 50%; font-size: 2rem; font-weight: 200; margin-bottom: 10px; }
 
 .stage-topline { position: absolute; z-index: 6; top: 18px; left: 18px; right: 18px; color: white; display: flex; justify-content: space-between; font: 600 .68rem/1 ui-monospace, SFMono-Regular, monospace; letter-spacing: .1em; text-transform: uppercase; text-shadow: 0 1px 5px black; pointer-events: none; }
+.stage-topline span { padding: 6px 8px; background: rgba(17,17,15,.68); border-radius: 2px; text-shadow: none; }
 .scan-line { position: absolute; z-index: 5; top: 0; bottom: 0; left: 0; width: 2px; background: var(--acid); box-shadow: 0 0 24px rgba(215,255,72,.9); opacity: 0; transform: translateX(0); pointer-events: none; }
 .scan-line.active { opacity: 1; }
 .scan-line.breathing { opacity: .45; box-shadow: none; }
@@ -83,6 +84,8 @@ button, label { -webkit-tap-highlight-color: transparent; }
 .note-rail { position: absolute; z-index: 6; bottom: 18px; left: 18px; right: 18px; height: 52px; display: grid; grid-template-columns: repeat(24, 1fr); align-items: end; gap: 3px; pointer-events: none; }
 .note-bar { background: rgba(255,255,255,.52); min-height: 5px; transition: .12s ease; box-shadow: 0 0 0 1px rgba(17,17,15,.12); }
 .note-bar.active { background: var(--acid); transform: translateY(-5px); }
+.visual-stage.light-image .note-bar { background: rgba(17,17,15,.42); }
+.visual-stage.light-image .note-bar.active { background: var(--acid); }
 
 .control-panel { background: var(--paper); padding: 32px; display: flex; flex-direction: column; }
 .control-heading { display: flex; justify-content: space-between; gap: 20px; align-items: flex-start; border-bottom: 1px solid var(--ink); padding-bottom: 22px; }

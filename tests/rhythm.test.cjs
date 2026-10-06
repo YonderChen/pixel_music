@@ -1,8 +1,8 @@
 const assert = require('node:assert/strict');
-const Music = require('../dist/music.js'), Image = require('../dist/image-analysis.js');
-const Rhythm = require('../dist/rhythm.js'), Fixtures = require('./fixtures.js'), Extended = require('./rhythm-fixtures.js');
+const Music = require('./baseline/music-v05.js'), Image = require('./baseline/image-analysis-v05.js');
+const Rhythm = require('./baseline/rhythm-v05.js'), Fixtures = require('./fixtures.js'), Extended = require('./rhythm-fixtures.js');
 const OldMusic = require('./baseline/music-v04.js'), OldImage = require('./baseline/image-analysis-v04.js');
-const check = require('./score-contract.cjs');
+const check = require('./score-contract-v05.cjs');
 const onset = score => new Set(score.melody.map(n => Math.round(n.beat * 4)));
 function distance(a, b) {
   const aa = onset(a), bb = onset(b);

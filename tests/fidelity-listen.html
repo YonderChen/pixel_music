@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>图鸣 · 图像忠实性对照</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f2f0e8;color:#24231f;font:15px/1.7 system-ui,sans-serif}main{max-width:1080px;margin:auto;padding:28px 24px 70px}a{color:inherit}h1{font-size:30px}.muted{color:#706d63}label{display:inline-flex;align-items:center;gap:8px;margin:8px 16px 8px 0}select,button{font:inherit;padding:8px 12px;border:1px solid #69665f;background:#fffdf7}button{cursor:pointer}button:disabled{opacity:.5}.pictures,.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.pictures canvas{width:100%;max-width:384px;border:1px solid #9a968a}article{padding:18px;border:1px solid #aaa69a;background:#fffdf7}article h3{margin:0 0 10px}audio{width:100%}pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:460px;overflow:auto;background:#e6e3d9;padding:15px;font-size:12px}details{border-top:1px solid #bbb5a8;margin-top:28px;padding-top:15px}#progress{min-height:30px}.primary{background:#ef6547;color:white;border-color:#ef6547}@media(max-width:700px){.pictures,.cards{grid-template-columns:1fr}main{padding:18px 14px}}
+</style></head><body><main>
+<a href="../dist/index.html">← 返回听画工作台</a>
+<h1>图片没有变化，音乐还会自己起伏吗？</h1>
+<p class="muted">冻结 0.5 与图像忠实的 0.6。默认比较纯白与渐变；120 个区域仍完整，实际起音不必有 120 次。全部本机计算，无需评分。</p>
+<div class="pictures"><div><label>图片 A <select id="imageA" aria-label="图片 A"></select></label><canvas id="canvasA" width="192" height="120"></canvas><p id="statsA"></p></div><div><label>图片 B <select id="imageB" aria-label="图片 B"></select></label><canvas id="canvasB" width="192" height="120"></canvas><p id="statsB"></p></div></div>
+<label>对照方式 <select id="comparisonMode"><option value="complete">完整表达 · 图片自己的速度与包络</option><option value="fixed">固定 88 BPM · 原音高与伴奏</option><option value="rhythm">仅起音结构 · 同音高 / 无伴奏 / 88 BPM</option></select></label>
+<label>音色 <select id="tone"><option value="warm">暖键</option><option value="glass">晶体</option><option value="mist">弦雾</option></select></label>
+<label>长度 <select id="length"><option value="16">前 16 秒</option><option value="full">完整曲目</option></select></label>
+<button id="renderComparison" class="primary">生成四段对照</button><p id="progress" role="status">同一图的新旧版，以及两张图之间的对照；试听响度匹配不改正式作品。</p><div id="cards" class="cards"></div>
+<details><summary>实际声音事件与 120 区域的映射</summary><button id="inspectMapping">查看图片 A 的映射</button><pre id="mappingReport">尚未查看</pre></details>
+<details><summary>84 图的跨环境乐谱快照</summary><button id="checkScores">生成 84 图快照</button><pre id="scoreReport">尚未运行</pre></details>
+<details><summary>本地 PNG、JPG、WEBP 的真实解码与渲染</summary><p>在本机将纯白与夕阳程序测试图编码成三种真实格式，检查 MIME 与文件头，再复用工作台同一个规范化函数解码。PNG 比对金标准，压缩格式保留各自像素；共 18 次三音色渲染，不依赖外部文件。</p><button id="checkDecode">检查三种文件解码</button><pre id="decodeReport">尚未运行</pre></details>
+<details><summary>324 组真实音频安全与长音回归</summary><p>84 图 × 3 音色新版完整表达；原 12 图 × 3 音色冻结旧版；6 张关键图 × 2 版本 × 3 音色的同音高诊断。检查格式、安全、持续段稳定度；不代表主观评分。</p><button id="runRegression">运行 324 组回归</button><button id="saveReport" disabled>下载报告</button><pre id="report">尚未运行</pre></details>
+<p class="muted"><a href="./rhythm-listen.html">历史 0.4 → 0.5 对照</a> · <a href="./listen.html">历史 0.3 → 0.4 对照</a></p>
+<script src="../dist/timing.js?v=0.6.0-r2"></script><script src="../dist/rhythm.js?v=0.6.0-r2"></script><script src="../dist/music.js?v=0.6.0-r2"></script><script src="../dist/image-analysis.js?v=0.6.0-r2"></script><script src="../dist/audio.js?v=0.6.0-r2"></script>
+<script src="./baseline/timing-v05.js"></script><script src="./baseline/rhythm-v05.js"></script><script src="./baseline/music-v05.js"></script><script src="./baseline/image-analysis-v05.js"></script><script src="./baseline/audio-v05.js"></script>
+<script src="./fixtures.js"></script><script src="./rhythm-fixtures.js"></script><script src="./fidelity-fixtures.js?v=0.6.0-r2"></script><script src="./fidelity-listen.js?v=0.6.0-r2"></script>
+</main></body></html>

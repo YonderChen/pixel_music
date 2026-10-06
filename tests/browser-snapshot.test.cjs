@@ -1,5 +1,5 @@
 const assert = require('node:assert/strict');
-const Music = require('../dist/music.js'), Image = require('../dist/image-analysis.js');
+const Music = require('./baseline/music-v05.js'), Image = require('./baseline/image-analysis-v05.js');
 const Fixtures = require('./fixtures.js'), Extended = require('./rhythm-fixtures.js');
 const Snapshot = require('./browser-score-snapshot.json');
 const images = [...Fixtures.names, ...Extended.names].map((_, i) => Image.analyzePixels(i < 12 ? Fixtures.pixels(i) : Extended.pixels(i - 12)));

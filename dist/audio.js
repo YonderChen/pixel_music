@@ -24,21 +24,33 @@
     damp.type = 'lowpass'; damp.frequency.value = 2100;
     delay.connect(damp); damp.connect(wet); wet.connect(compressor); damp.connect(feedback); feedback.connect(delay);
     let stopped = false;
-    function voice(midi, start, duration, velocity, tone, role = 'melody', send = .055, legacyAttack = null) {
+    function voice(midi, start, duration, velocity, tone, role = 'melody', send = .055, legacyAttack = null, performance = null) {
       if (stopped || duration <= 0) return;
       const gain = make('createGain'), filter = make('createBiquadFilter'), sendGain = make('createGain');
       const frequency = freq(midi), expressive = profile === 'expressive';
       const peak = Math.max(.001, velocity) * (expressive ? clamp((440 / frequency) ** .1, .84, 1.15) : 1);
       const attack = expressive ? Math.min(duration * .16, role === 'pad' ? .16 : tone === 'mist' ? .038 : .009) : Math.min(duration * .2, legacyAttack ?? (tone === 'mist' ? .18 : .025));
       filter.type = 'lowpass'; filter.frequency.setValueAtTime(expressive ? (tone === 'glass' ? 3600 : tone === 'warm' ? 2600 : 1400) : (tone === 'glass' ? 5200 : tone === 'warm' ? 1900 : 1100), start);
-      gain.gain.setValueAtTime(.0001, start);
-      gain.gain.exponentialRampToValueAtTime(peak, start + attack);
-      if (expressive && role !== 'pad') gain.gain.exponentialRampToValueAtTime(peak * .72, start + Math.max(attack + .001, duration * .25));
-      gain.gain.exponentialRampToValueAtTime(peak * (expressive ? role === 'pad' ? .7 : .42 : .68), start + duration * .7);
-      gain.gain.exponentialRampToValueAtTime(.0001, start + duration);
+      if (performance?.sustain) {
+        const full = performance.fullDuration ?? duration, offset = performance.offsetSeconds || 0;
+        const originalAttack = Math.min(full * .18, role === 'pad' ? .16 : tone === 'mist' ? .055 : .025), release = Math.min(.35, full * .18);
+        const levelAt = time => time < originalAttack ? .0001 * (peak / .0001) ** (time / originalAttack) : time > full - release ? peak * (.0001 / peak) ** ((time - full + release) / release) : peak;
+        const fade = Math.min(duration * .18, offset ? .025 : originalAttack), holdEnd = Math.max(fade, full - release - offset);
+        gain.gain.setValueAtTime(.0001, start);
+        gain.gain.exponentialRampToValueAtTime(Math.max(.0001, levelAt(offset + fade)), start + fade);
+        if (holdEnd > fade && holdEnd < duration) gain.gain.setValueAtTime(peak, start + holdEnd);
+        gain.gain.exponentialRampToValueAtTime(.0001, start + duration);
+      } else {
+        gain.gain.setValueAtTime(.0001, start);
+        gain.gain.exponentialRampToValueAtTime(peak, start + attack);
+        if (expressive && role !== 'pad') gain.gain.exponentialRampToValueAtTime(peak * .72, start + Math.max(attack + .001, duration * .25));
+        gain.gain.exponentialRampToValueAtTime(peak * (expressive ? role === 'pad' ? .7 : .42 : .68), start + duration * .7);
+        gain.gain.exponentialRampToValueAtTime(.0001, start + duration);
+      }
       gain.connect(filter); filter.connect(dry); filter.connect(sendGain); sendGain.connect(delay);
       sendGain.gain.value = expressive ? send : 1;
-      const partials = !expressive ? (tone === 'glass' ? [['sine', 1, .72], ['triangle', 2, .2]] : tone === 'warm' ? [['triangle', 1, .72], ['sine', 1.003, .2]] : [['sawtooth', 1, .32], ['sine', 1.003, .2]])
+      const partials = performance?.sustain ? (tone === 'glass' ? [['sine',1,.76],['sine',2,.12],['sine',4,.025]] : tone === 'warm' ? [['sine',1,.75],['triangle',1,.15],['sine',2,.055]] : [['triangle',1,.35],['sine',1,.52]])
+        : !expressive ? (tone === 'glass' ? [['sine', 1, .72], ['triangle', 2, .2]] : tone === 'warm' ? [['triangle', 1, .72], ['sine', 1.003, .2]] : [['sawtooth', 1, .32], ['sine', 1.003, .2]])
         : tone === 'glass' ? [['sine', 1, .76], ['sine', 2, .12], ['sine', 3.99, .025]]
           : tone === 'warm' ? [['sine', 1, .75], ['triangle', 1, .15], ['sine', 2, .055]]
             : [['triangle', .999, .35], ['sine', 1.001, .52]];
@@ -56,6 +68,17 @@
     }
     function schedule(score, start = context.currentTime + .08, tone = 'warm', fromBeat = 0) {
       const spb = score.secondsPerBeat, time = beat => Timing.beatToTime(score, beat);
+      if (score.regionMap) {
+        function eventVoice(event, pitch, selectedTone, role, stagger = 0) {
+          const fullStart = time(event.beat) + stagger, fullEnd = time(event.beat + event.durationBeats), onset = Math.max(fullStart, time(fromBeat));
+          if (fullEnd <= onset) return;
+          voice(pitch, start + onset, fullEnd - onset, event.velocity, selectedTone, role, event.send, null, { sustain: true, fullDuration: fullEnd - fullStart, offsetSeconds: onset - fullStart });
+        }
+        score.melody.forEach(event => eventVoice(event, event.midi, tone, 'melody'));
+        score.bassEvents.forEach(event => eventVoice(event, event.midi, 'warm', 'bass'));
+        score.padEvents.forEach(event => event.midi.forEach((pitch,index) => eventVoice(event,pitch,'mist','pad',index*.012)));
+        return { start, end: start + score.duration };
+      }
       score.melody.forEach((note, index) => {
         const expressive = profile === 'expressive';
         const nominal = time(note.beat + note.beats) - time(note.beat);
@@ -127,14 +150,18 @@
     });
     return { peak, rms: Math.sqrt(energy / samples.length), invalid, clipped, tailPeak, seconds: samples.length / rate };
   }
-  function wavBytes(buffer, gain = 1, seconds = buffer.duration) {
+  function wavBytes(buffer, gain = 1, seconds = buffer.duration, { fadeOutSeconds = 0 } = {}) {
     const source = buffer.getChannelData(0), length = Math.min(source.length, Math.round(seconds * buffer.sampleRate));
     const bytes = new ArrayBuffer(44 + length * 2), view = new DataView(bytes);
     const write = (offset, text) => { for (let i = 0; i < text.length; i++) view.setUint8(offset + i, text.charCodeAt(i)); };
     write(0, 'RIFF'); view.setUint32(4, 36 + length * 2, true); write(8, 'WAVE'); write(12, 'fmt ');
     view.setUint32(16, 16, true); view.setUint16(20, 1, true); view.setUint16(22, 1, true); view.setUint32(24, buffer.sampleRate, true);
     view.setUint32(28, buffer.sampleRate * 2, true); view.setUint16(32, 2, true); view.setUint16(34, 16, true); write(36, 'data'); view.setUint32(40, length * 2, true);
-    for (let i = 0; i < length; i++) view.setInt16(44 + i * 2, Math.round(clamp(source[i] * gain, -1, 1) * 32767), true);
+    const fadeSamples = Math.max(0, Math.round(fadeOutSeconds * buffer.sampleRate));
+    for (let i = 0; i < length; i++) {
+      const fade = fadeSamples ? Math.min(1, Math.max(0, (length - 1 - i) / fadeSamples)) : 1;
+      view.setInt16(44 + i * 2, Math.round(clamp(source[i] * gain * fade, -1, 1) * 32767), true);
+    }
     return bytes;
   }
   return { createSession, renderOffline, inspectBuffer, wavBytes };

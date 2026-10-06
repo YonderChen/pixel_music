@@ -1,7 +1,7 @@
 const assert = require('node:assert/strict');
 const { performance } = require('node:perf_hooks');
-const Music = require('../dist/music.js');
-const Image = require('../dist/image-analysis.js');
+const Music = require('./baseline/music-v05.js');
+const Image = require('./baseline/image-analysis-v05.js');
 const Legacy = require('../dist/legacy.js');
 const Fixtures = require('./fixtures.js');
 const pc = n => (n % 12 + 12) % 12;
@@ -13,7 +13,7 @@ function imageRegions(seed) {
     col, row, light: random(), hue: random(), density: random(), velocity: .04 + random() * .04, saturation: random(), signature: random() - .5, localSeed: state >>> 0,
   })) }));
 }
-const check = require('./score-contract.cjs');
+const check = require('./score-contract-v05.cjs');
 const started = performance.now(); let count = 0, maxMs = 0, fallbackCount = 0, syntheticFallbackCases = 0;
 for (const mode of Object.values(Music.MODES)) for (let root = 0; root < 12; root++) for (let seed = 1; seed <= 12; seed++) {
   const analysis = { columns: imageRegions(seed), root, modeId: mode.id, bpm: 88 };

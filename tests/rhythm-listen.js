@@ -1,6 +1,6 @@
 'use strict';
 const $ = id => document.getElementById(id);
-const Music = window.PixelMusic, Analysis = window.PixelMusicImage, Audio = window.PixelMusicAudio;
+const Music = window.PixelMusicV05, Analysis = window.PixelMusicImageV05, Audio = window.PixelMusicAudioV05;
 const OldMusic = window.PixelMusicV04, OldAnalysis = window.PixelMusicImageV04, OldAudio = window.PixelMusicAudioV04;
 const Fixtures = window.PixelMusicFixtures, Extended = window.PixelMusicRhythmFixtures;
 const names = [...Fixtures.names, ...Extended.names], pixels = i => i < 12 ? Fixtures.pixels(i) : Extended.pixels(i - 12);

@@ -1,0 +1,763 @@
+{
+  "version": "0.6.0",
+  "origin": "Actual Chromium DOM scoreReport from tests/fidelity-listen.html",
+  "imageBundleHash": "8a64685de659c9cf",
+  "scores": [
+    {
+      "index": 0,
+      "name": "纯色",
+      "imageHash": "9a5fb5c591d8ca6b3c162e35723c2b2fd82e8fb152ff1f617f9a7cb53526b2c1",
+      "scoreHash": "1a78cd61bec844eb",
+      "mappingFingerprint": "cf72da1365a622ef",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "onsets": 1
+    },
+    {
+      "index": 1,
+      "name": "黑白棋盘",
+      "imageHash": "137641c59228fa6bee99ce35abd52b2f06793bb19b89ef61c6af94b5c60af2c1",
+      "scoreHash": "baa6a22bbd54e9fb",
+      "mappingFingerprint": "c4f0e04fb1e20c5f",
+      "rhythmFingerprint": "d982753d95e02dbf",
+      "onsets": 60
+    },
+    {
+      "index": 2,
+      "name": "明暗渐变",
+      "imageHash": "61bbd9c5ec09486b36b1dc3561d2852f3d3941b144e6db614be594b5ec2436c1",
+      "scoreHash": "bbcd984dcc2e0d4f",
+      "mappingFingerprint": "89f4537ad9c4d1e0",
+      "rhythmFingerprint": "404fd80628cc8514",
+      "onsets": 11
+    },
+    {
+      "index": 3,
+      "name": "彩色渐变",
+      "imageHash": "8f68ff15dcfe1e8be2c1a485325292ef9898080132f17641f1fd6885e18549c1",
+      "scoreHash": "3d86ba53c0120921",
+      "mappingFingerprint": "cd7c802db77282d5",
+      "rhythmFingerprint": "09b662553eb91cdb",
+      "onsets": 24
+    },
+    {
+      "index": 4,
+      "name": "低饱和风景",
+      "imageHash": "7176d6c5bbee526b30022b35803f332f2a63a4b1762ea361d48eabb56c7782c1",
+      "scoreHash": "bf9c23dbb3d56c29",
+      "mappingFingerprint": "d3332acb897569ed",
+      "rhythmFingerprint": "61f368a581d8e19b",
+      "onsets": 25
+    },
+    {
+      "index": 5,
+      "name": "夕阳",
+      "imageHash": "bc6037a81904b3525daf3718f940cd565999786488e93fe8be0fa608fbbfe558",
+      "scoreHash": "205c2d2d77f4a459",
+      "mappingFingerprint": "be64ec61eca17383",
+      "rhythmFingerprint": "016638227eab7f9e",
+      "onsets": 87
+    },
+    {
+      "index": 6,
+      "name": "高对比建筑",
+      "imageHash": "362aa9756e488f8b4579c22507d21cef401875e116f6de410ff222e5615802c1",
+      "scoreHash": "982056bcac3837d2",
+      "mappingFingerprint": "01b65b3f0b823fa9",
+      "rhythmFingerprint": "34286a6036660356",
+      "onsets": 54
+    },
+    {
+      "index": 7,
+      "name": "几何人像",
+      "imageHash": "bc55e2227549f4f4d8ee210ac9fcf7b8d6ecb1de1729e1deb9f6a83206910726",
+      "scoreHash": "d2a813afe6404639",
+      "mappingFingerprint": "e0a7e78c1e50369c",
+      "rhythmFingerprint": "882d3518687acefe",
+      "onsets": 68
+    },
+    {
+      "index": 8,
+      "name": "抽象图案",
+      "imageHash": "24dfcd2fe4b0e949ae9dfc37006a802dc1391c7b03bd9b332f2d44775f6faf13",
+      "scoreHash": "11a5186e1722217e",
+      "mappingFingerprint": "50002acd0e29bd8b",
+      "rhythmFingerprint": "4daf7883a7b86de7",
+      "onsets": 114
+    },
+    {
+      "index": 9,
+      "name": "密集纹理",
+      "imageHash": "cd10a9f5889c3e1ba919c815206ccf6fa3b6c391cf5585914da4ab45f6df05c1",
+      "scoreHash": "76aed5a089154a5e",
+      "mappingFingerprint": "4a36447225377a9c",
+      "rhythmFingerprint": "6c9f9174efd1d054",
+      "onsets": 14
+    },
+    {
+      "index": 10,
+      "name": "噪声",
+      "imageHash": "a6909493f7f99a7928ee8c9782c54d25f6209c4ff376cbfbd8c95027d512839b",
+      "scoreHash": "973c191cbaa033ee",
+      "mappingFingerprint": "7ea5119af596fa52",
+      "rhythmFingerprint": "d7699247a37fec79",
+      "onsets": 30
+    },
+    {
+      "index": 11,
+      "name": "局部变化对照",
+      "imageHash": "6720d0163b2830500d4f9122d481b34ca1e614ca546feb72f02a101ad7703392",
+      "scoreHash": "bafe8065cc6eb4dd",
+      "mappingFingerprint": "ad4107c0fb641c1e",
+      "rhythmFingerprint": "016638227eab7f9e",
+      "onsets": 87
+    },
+    {
+      "index": 12,
+      "name": "方向渐变 1",
+      "imageHash": "2884e8c59e3b126b1a2600f586f1042f092dfb313826e661d8319c75c10e1ec1",
+      "scoreHash": "ad8cd5f973749407",
+      "mappingFingerprint": "7e605c79b1c159eb",
+      "rhythmFingerprint": "78e326558a9a3685",
+      "onsets": 8
+    },
+    {
+      "index": 13,
+      "name": "方向渐变 2",
+      "imageHash": "9c21f6c56b06036bb64159352281632f190a68b1c85fda615e2a03b5ab720ac1",
+      "scoreHash": "9e50ce74882c319a",
+      "mappingFingerprint": "1bde82fb9b276037",
+      "rhythmFingerprint": "4e1d4e8ab08440ec",
+      "onsets": 97
+    },
+    {
+      "index": 14,
+      "name": "方向渐变 3",
+      "imageHash": "f73636c5ae41556b3e7d9475d3af1f2fc2a1ffb15aa0cf613ffbf5750f11d6c1",
+      "scoreHash": "68844aadb1c5916b",
+      "mappingFingerprint": "6740303010a49304",
+      "rhythmFingerprint": "68c18df6c423b22a",
+      "onsets": 8
+    },
+    {
+      "index": 15,
+      "name": "方向渐变 4",
+      "imageHash": "434b26c53337f56bca5e793595f9512fa297c9b1848a8c61385932b55388a2c1",
+      "scoreHash": "b75c4b0b28b43d33",
+      "mappingFingerprint": "ff445901e29c38b3",
+      "rhythmFingerprint": "f30ba8c05dfa56d4",
+      "onsets": 97
+    },
+    {
+      "index": 16,
+      "name": "方向渐变 5",
+      "imageHash": "9c90b1a56a2c6a6b752855d52ba6462fd5848b51ca2193612f3e96554a6b70c1",
+      "scoreHash": "d80fb8a61cd801d8",
+      "mappingFingerprint": "e97860f81a139938",
+      "rhythmFingerprint": "f681b40be9c1fdab",
+      "onsets": 9
+    },
+    {
+      "index": 17,
+      "name": "方向渐变 6",
+      "imageHash": "af2841c5bfe47d6b3b88a73548c3132fa6a83ab16eeb7a61b39feeb5bf541ac1",
+      "scoreHash": "53b23334bde256ec",
+      "mappingFingerprint": "edc9a8032947a66f",
+      "rhythmFingerprint": "d328ee03d4203a67",
+      "onsets": 97
+    },
+    {
+      "index": 18,
+      "name": "周期条纹 1",
+      "imageHash": "f161e3c52d78726b7726fc3532e4232f0d87edb1a4a33f61015ccab5caaa72c1",
+      "scoreHash": "73a52bdf48aff5b9",
+      "mappingFingerprint": "118afa99f472189b",
+      "rhythmFingerprint": "0aa7924053c1944a",
+      "onsets": 24
+    },
+    {
+      "index": 19,
+      "name": "周期条纹 2",
+      "imageHash": "b69dd9456783026b0eee3cb5cc7cd12f21f25b31775b3761706471359a2eb2c1",
+      "scoreHash": "c59fb0ea28047706",
+      "mappingFingerprint": "a5c55317d3487dd7",
+      "rhythmFingerprint": "fa98c8eaf5f81486",
+      "onsets": 49
+    },
+    {
+      "index": 20,
+      "name": "周期条纹 3",
+      "imageHash": "38c7ebc5d1a5826bac001c35eea3232fee3ad5b1b089af61ea43cab57d9fb2c1",
+      "scoreHash": "6cf6684d997174a3",
+      "mappingFingerprint": "0df90d2f676144bf",
+      "rhythmFingerprint": "bf4c22074615f585",
+      "onsets": 12
+    },
+    {
+      "index": 21,
+      "name": "周期条纹 4",
+      "imageHash": "43d3d245416ec26b5186d9b5cd9c252f28c8143126f3d7619eb0ae355528b2c1",
+      "scoreHash": "84f24cce9ca4d2e4",
+      "mappingFingerprint": "2d29010fa2f42559",
+      "rhythmFingerprint": "36c4bf5e38ea33ba",
+      "onsets": 73
+    },
+    {
+      "index": 22,
+      "name": "周期条纹 5",
+      "imageHash": "785b5945ea35926b59e79eb5430d112fb31b9b319b2a5d610d2b6735f86fc2c1",
+      "scoreHash": "25ea4dcff4ac339b",
+      "mappingFingerprint": "9232d7507b4e35a0",
+      "rhythmFingerprint": "ee4a97688f5b5652",
+      "onsets": 14
+    },
+    {
+      "index": 23,
+      "name": "周期条纹 6",
+      "imageHash": "d5d4f2c5ad64a26b519d7f35fb4bcf2f94cc1cb19840276144af8db572a5b2c1",
+      "scoreHash": "414da14a393bcf3e",
+      "mappingFingerprint": "8b987991bde052c3",
+      "rhythmFingerprint": "d958d1887861ecae",
+      "onsets": 97
+    },
+    {
+      "index": 24,
+      "name": "棋盘尺度 1",
+      "imageHash": "42d809c535e26a6b96e8a235f8f10b2fb987c7b11d9fb761958c94b58e85f2c1",
+      "scoreHash": "30034a2bb3d2770d",
+      "mappingFingerprint": "5f543188170926f4",
+      "rhythmFingerprint": "bf8bc51617d27a3a",
+      "onsets": 13
+    },
+    {
+      "index": 25,
+      "name": "棋盘尺度 2",
+      "imageHash": "d1cb09c5dba91a6b1b28423543190b2f9afc47b16528f76150bc5cb57285f2c1",
+      "scoreHash": "7624baff6ca1573d",
+      "mappingFingerprint": "ba2bfced7a7d8f43",
+      "rhythmFingerprint": "2514ca330350e3e1",
+      "onsets": 56
+    },
+    {
+      "index": 26,
+      "name": "棋盘尺度 3",
+      "imageHash": "8080c9c5ca99da6bb4c2a235f8f10b2f7987c7b1a919b7617371e4b58e85f2c1",
+      "scoreHash": "949af89229697a94",
+      "mappingFingerprint": "980d81d3ee5f55f1",
+      "rhythmFingerprint": "d247ea0bfc99f50b",
+      "onsets": 108
+    },
+    {
+      "index": 27,
+      "name": "棋盘尺度 4",
+      "imageHash": "736be845ec0e7a6bec82c5b58a2abf2fba404bb1c24ec26190f3adb5416d72c1",
+      "scoreHash": "f374a5bb5433d907",
+      "mappingFingerprint": "f5be7461933395a5",
+      "rhythmFingerprint": "05b3e9d6da2f71ee",
+      "onsets": 91
+    },
+    {
+      "index": 28,
+      "name": "棋盘尺度 5",
+      "imageHash": "592109c5e4ea6a6b70eaa235d3810b2faa0fc7b12f19b761ce057cb55685f2c1",
+      "scoreHash": "2b78b78636756ab8",
+      "mappingFingerprint": "b08c13ce51b67f2c",
+      "rhythmFingerprint": "cf7f93e203fe71da",
+      "onsets": 104
+    },
+    {
+      "index": 29,
+      "name": "棋盘尺度 6",
+      "imageHash": "5a95d84578ec226b3d708db51ddebf2f1ef24bb16a8b42614c3939b5bb6d72c1",
+      "scoreHash": "6241639a7cd9047c",
+      "mappingFingerprint": "69575730d7cc97c2",
+      "rhythmFingerprint": "40dad68d2c2605db",
+      "onsets": 73
+    },
+    {
+      "index": 30,
+      "name": "彩色波形 1",
+      "imageHash": "19ff385d6daafe8b59047579e174e57f6b7ef511102fcbb951321791e7a19181",
+      "scoreHash": "b92100a4647ce400",
+      "mappingFingerprint": "535ba580ba198b46",
+      "rhythmFingerprint": "40eeebca67fa25f4",
+      "onsets": 99
+    },
+    {
+      "index": 31,
+      "name": "彩色波形 2",
+      "imageHash": "47013750381bf9062f06d690a512d12ad7f7cfa49e66bddc8c10a31038f02254",
+      "scoreHash": "500ea1df0b87c7c7",
+      "mappingFingerprint": "6e64a2d6e8597dc6",
+      "rhythmFingerprint": "a9ca4f07d4e4c69b",
+      "onsets": 109
+    },
+    {
+      "index": 32,
+      "name": "彩色波形 3",
+      "imageHash": "f067a4fbb576a0bd69801ebf1ed490d1b65e52b7cdfdd87fbd0a99676ab79c1f",
+      "scoreHash": "963303fc17725bca",
+      "mappingFingerprint": "cdd6977c263808fe",
+      "rhythmFingerprint": "1e16a6dc4cf4fe78",
+      "onsets": 110
+    },
+    {
+      "index": 33,
+      "name": "彩色波形 4",
+      "imageHash": "5d68081df730dacb8e17341536b7f7270eed979141a0940198094d3d03106bd9",
+      "scoreHash": "4648bc9bdee4e6e1",
+      "mappingFingerprint": "82a23fbd81c9ec55",
+      "rhythmFingerprint": "1f482f405d358488",
+      "onsets": 115
+    },
+    {
+      "index": 34,
+      "name": "彩色波形 5",
+      "imageHash": "f5d3679349f02ad125758eef89df71b554320737c5fe1e33ff0621373d76abfb",
+      "scoreHash": "2f8696a9940d1bd3",
+      "mappingFingerprint": "f301eb3f01a3ec07",
+      "rhythmFingerprint": "aa89f3c54659c305",
+      "onsets": 118
+    },
+    {
+      "index": 35,
+      "name": "彩色波形 6",
+      "imageHash": "3adfde493cba54df28ec1ea99ecf229b96e277ed4f1df595bf72419918e42f45",
+      "scoreHash": "a5c3fe8c4dc40814",
+      "mappingFingerprint": "5d683d648915daa8",
+      "rhythmFingerprint": "623de4089be99814",
+      "onsets": 117
+    },
+    {
+      "index": 36,
+      "name": "几何圆形 1",
+      "imageHash": "691140fd1ecc8d7bb5ed286532f4a0df154bef09c8be9ec14e518b7510dbe301",
+      "scoreHash": "783ace14e81883ee",
+      "mappingFingerprint": "b141b77affcd6154",
+      "rhythmFingerprint": "ce70accd64880d67",
+      "onsets": 55
+    },
+    {
+      "index": 37,
+      "name": "几何圆形 2",
+      "imageHash": "37ec37fde7fb10230e77fd75402bee2f0f153539416fb67930ac7975f6632a01",
+      "scoreHash": "ca735915d3d1ab89",
+      "mappingFingerprint": "4bd3806d82435e87",
+      "rhythmFingerprint": "390b07a960562da3",
+      "onsets": 56
+    },
+    {
+      "index": 38,
+      "name": "几何圆形 3",
+      "imageHash": "93108df52f1ff60b0c804255eb47e2cfbab0ef41f013b7815c122db5518c8bc1",
+      "scoreHash": "d2b27d24c0e09be8",
+      "mappingFingerprint": "30e097f32a1dd577",
+      "rhythmFingerprint": "d315d3c69b647790",
+      "onsets": 61
+    },
+    {
+      "index": 39,
+      "name": "几何圆形 4",
+      "imageHash": "6f0b743516b20ff34d10f4d5faf9c96fa6aa2d61b186f1c968412975b52d9e81",
+      "scoreHash": "29ae459bd30c2da7",
+      "mappingFingerprint": "a75e2f495ad91d73",
+      "rhythmFingerprint": "51e4729abb4ebd9a",
+      "onsets": 69
+    },
+    {
+      "index": 40,
+      "name": "几何圆形 5",
+      "imageHash": "a18fbd9519bc2453fc91d64508ab773fdd75c811ef54bcf9b7c0ae35881b6541",
+      "scoreHash": "06eedc37a2e863f5",
+      "mappingFingerprint": "ce7f30774b060ad5",
+      "rhythmFingerprint": "508b70fbe18061c9",
+      "onsets": 75
+    },
+    {
+      "index": 41,
+      "name": "几何圆形 6",
+      "imageHash": "1dfa671d712debfbb9ab944515e7d27fef6917496b0c3f01cee3fef5c6097181",
+      "scoreHash": "5aacbd94514f0b24",
+      "mappingFingerprint": "2203237b2f985c0b",
+      "rhythmFingerprint": "9cc3f5cdb07d2be3",
+      "onsets": 71
+    },
+    {
+      "index": 42,
+      "name": "空间块面 1",
+      "imageHash": "0a2007c5fdffc26bf088c9359300632fec9136b1bce99f61b201bfb5a8a942c1",
+      "scoreHash": "81d0d9c90ca272b3",
+      "mappingFingerprint": "cf451ce8522a9410",
+      "rhythmFingerprint": "cd32d495b6a41e7f",
+      "onsets": 104
+    },
+    {
+      "index": 43,
+      "name": "空间块面 2",
+      "imageHash": "e4b5170a6a70cf84773f8836d554ec185517dcbef8849f96814ddb86ab1bbf26",
+      "scoreHash": "cb7c96b7b8adc19f",
+      "mappingFingerprint": "91af697865ce7a02",
+      "rhythmFingerprint": "0261d0849b973742",
+      "onsets": 106
+    },
+    {
+      "index": 44,
+      "name": "空间块面 3",
+      "imageHash": "4c283465f260ae6b79475595b1ece12faf5800114553fce1d5e98e55012770c1",
+      "scoreHash": "bde7a97ec117ba8c",
+      "mappingFingerprint": "5439171f07216bcd",
+      "rhythmFingerprint": "84e615afc4f032c9",
+      "onsets": 105
+    },
+    {
+      "index": 45,
+      "name": "空间块面 4",
+      "imageHash": "3f101bf5a7fca10321725495db8e62df2bc47c89217cf0f94d77e56d9ae31281",
+      "scoreHash": "526f8344e2c94e86",
+      "mappingFingerprint": "ad9e8b7157cc3895",
+      "rhythmFingerprint": "560701e9f71d8937",
+      "onsets": 103
+    },
+    {
+      "index": 46,
+      "name": "空间块面 5",
+      "imageHash": "5df54dc507025e6b91d99375ea17752fb9cb47b15f2e1461d3c27235ba3e42c1",
+      "scoreHash": "6d8c96737ae079c9",
+      "mappingFingerprint": "75feffb156926f75",
+      "rhythmFingerprint": "a98a91c983caa879",
+      "onsets": 102
+    },
+    {
+      "index": 47,
+      "name": "空间块面 6",
+      "imageHash": "0f56324dbbe5d8f35eba070d2967511fda8724e155782889d56edb8570cfc981",
+      "scoreHash": "4132b6a1f9e5c9e5",
+      "mappingFingerprint": "43f5834fe9ab4d89",
+      "rhythmFingerprint": "3cbee75b027f2fd9",
+      "onsets": 100
+    },
+    {
+      "index": 48,
+      "name": "放射环形 1",
+      "imageHash": "b1153911b4bd1f939af86879129b8abff039f955bb93f3f9d2e7b791f5fd32c1",
+      "scoreHash": "732f62011b469adf",
+      "mappingFingerprint": "da457465f6cf781b",
+      "rhythmFingerprint": "4768632585a94edd",
+      "onsets": 105
+    },
+    {
+      "index": 49,
+      "name": "放射环形 2",
+      "imageHash": "668a09fd51dc487b4996b3252561ddcffef4c09191fda3c1324a920db11178a1",
+      "scoreHash": "c1382fe843e37294",
+      "mappingFingerprint": "245491dca2fdb526",
+      "rhythmFingerprint": "945d606dac726d11",
+      "onsets": 97
+    },
+    {
+      "index": 50,
+      "name": "放射环形 3",
+      "imageHash": "b91a94c433156bec183646346a0fea3c8b511a7077cd1eb68aea4d746fb6abda",
+      "scoreHash": "c11057e85e7cba32",
+      "mappingFingerprint": "24783926da8a2af8",
+      "rhythmFingerprint": "d50ed8fd19b200e3",
+      "onsets": 68
+    },
+    {
+      "index": 51,
+      "name": "放射环形 4",
+      "imageHash": "9e5ef29dd0e7ecd3891a80256dbdbfaff0c0e1f93bf08559efe2d785178a4241",
+      "scoreHash": "9d39db8c675212aa",
+      "mappingFingerprint": "51f01d171fe06af5",
+      "rhythmFingerprint": "ff82e4c2e71013e8",
+      "onsets": 69
+    },
+    {
+      "index": 52,
+      "name": "放射环形 5",
+      "imageHash": "c1bd3da374669fc7b9b3ccaf53972f67c6676d0f8f34e8857a8112af7cbc7171",
+      "scoreHash": "aad654d698357200",
+      "mappingFingerprint": "39127380349dfe90",
+      "rhythmFingerprint": "c6f7ecf1f44987f3",
+      "onsets": 71
+    },
+    {
+      "index": 53,
+      "name": "放射环形 6",
+      "imageHash": "b13d07d38d1cd27d0b5c62534a325ba1a089ca97abd34967cbde7563ab5e837f",
+      "scoreHash": "9852f7194a77a26f",
+      "mappingFingerprint": "12562a6310beb0c9",
+      "rhythmFingerprint": "d89965c41a5b5dd2",
+      "onsets": 67
+    },
+    {
+      "index": 54,
+      "name": "噪声强度 1",
+      "imageHash": "c5fb42584d9d8d645878fa74aabce86c6b3b86c41e96e6a6622566c450fc712a",
+      "scoreHash": "5a8bb0c4ba3d705e",
+      "mappingFingerprint": "9f0e5761877fdf15",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "onsets": 1
+    },
+    {
+      "index": 55,
+      "name": "噪声强度 2",
+      "imageHash": "f2c4eedb076b427d4988d913fd2ce7a12bf9ffe7e638ab572626083bf33e65bf",
+      "scoreHash": "4b21222f9eb54177",
+      "mappingFingerprint": "f1afdc080da9b4fe",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "onsets": 1
+    },
+    {
+      "index": 56,
+      "name": "噪声强度 3",
+      "imageHash": "0c08f37522414b57f0436cfd7dfdd6fb722dc989e25a4ccd3c6fbbad7c6f0875",
+      "scoreHash": "2d6784e7363e1cbf",
+      "mappingFingerprint": "28d1c5b4ccf6538c",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "onsets": 1
+    },
+    {
+      "index": 57,
+      "name": "噪声强度 4",
+      "imageHash": "5e801d0ce23b0900d5c23de8198ebdc09c5b0168938247423cf359e021d04196",
+      "scoreHash": "32c17906ba8710d8",
+      "mappingFingerprint": "c59fe1de19781d3e",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "onsets": 1
+    },
+    {
+      "index": 58,
+      "name": "噪声强度 5",
+      "imageHash": "4ada0933a8d77f79c4eca2d7f201f8a5b0c045bf6120d88b6f622347e392b67b",
+      "scoreHash": "acc59525017818c9",
+      "mappingFingerprint": "ff24fcbda2eaa67b",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "onsets": 1
+    },
+    {
+      "index": 59,
+      "name": "噪声强度 6",
+      "imageHash": "75e1488ea6c3277c7ba00ebe346a9fe0f8817c0a6f3081c6ce2b1ca694838ace",
+      "scoreHash": "89508de68c7aa086",
+      "mappingFingerprint": "f2b26c62ec90cd38",
+      "rhythmFingerprint": "7ee386a5e1c041c5",
+      "onsets": 10
+    },
+    {
+      "index": 60,
+      "name": "精确纯白",
+      "imageHash": "fbefe5c53b1c2a6bc47a6635d1186b2fdbdb8fb125271f61a862d4b513fdf2c1",
+      "scoreHash": "36d2e573071f82fb",
+      "mappingFingerprint": "0fdbd083500a6b5f",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "onsets": 1
+    },
+    {
+      "index": 61,
+      "name": "精确纯黑",
+      "imageHash": "ace52dc5c2210a6b2a5f763559e2eb2fb67057b142799f611c0fa4b55549f2c1",
+      "scoreHash": "1818a7e01fefa8d4",
+      "mappingFingerprint": "d44635e7a7377e37",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "onsets": 1
+    },
+    {
+      "index": 62,
+      "name": "纯灰 32",
+      "imageHash": "141d2dc524164a6b45077635c8486b2f896857b1f6785f6114afa4b5bf49f2c1",
+      "scoreHash": "2f7e4af59b95b577",
+      "mappingFingerprint": "eb1fdc5f936d7ad7",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "onsets": 1
+    },
+    {
+      "index": 63,
+      "name": "纯灰 96",
+      "imageHash": "ca9d2dc5b3eb4a6b9d177635109f6b2fd2d857b1db085f6172efa4b54349f2c1",
+      "scoreHash": "7a58b000eaef7890",
+      "mappingFingerprint": "b736b393283f01ef",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "onsets": 1
+    },
+    {
+      "index": 64,
+      "name": "纯灰 128",
+      "imageHash": "eae52dc56d110a6b743f76359357eb2fa2d057b14d739f61568fa4b57fe3f2c1",
+      "scoreHash": "7acf15069bae8646",
+      "mappingFingerprint": "dc7c2b675abe3417",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "onsets": 1
+    },
+    {
+      "index": 65,
+      "name": "纯灰 192",
+      "imageHash": "b4552dc5bd290a6b122f76350764eb2f9c7057b175cb1f61a3cfa4b53aaff2c1",
+      "scoreHash": "01210211f019d6f3",
+      "mappingFingerprint": "e71f7a6f99bd748f",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "onsets": 1
+    },
+    {
+      "index": 66,
+      "name": "接近纯白 254",
+      "imageHash": "526ff5c587584a6b1319ae351043eb2fcbc2cfb100c3df615accbcb54f0bf2c1",
+      "scoreHash": "99f609593ab11bbb",
+      "mappingFingerprint": "0d67960fa302ecf7",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "onsets": 1
+    },
+    {
+      "index": 67,
+      "name": "纯红",
+      "imageHash": "cfd811c5ef9c326b737d2a35dac09b2ffaba6bb1c4d0f761dca748b59e4032c1",
+      "scoreHash": "8bbaf8ef29b33cdb",
+      "mappingFingerprint": "2d5ae823a8a8a65f",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "onsets": 1
+    },
+    {
+      "index": 68,
+      "name": "纯绿",
+      "imageHash": "ffd56dc51908ca6b92a53635ae5deb2fac2017b134c1cf61536fa4b5dfc9f2c1",
+      "scoreHash": "5d10d3740adbe5b4",
+      "mappingFingerprint": "22ec8aefacbff157",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "onsets": 1
+    },
+    {
+      "index": 69,
+      "name": "纯蓝",
+      "imageHash": "f2b5a1c5bbd8726b11a34a3534509b2f0adddbb1cbadb7617214c8b5befc32c1",
+      "scoreHash": "96ef56cab4851340",
+      "mappingFingerprint": "a3987983d647665f",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "onsets": 1
+    },
+    {
+      "index": 70,
+      "name": "纯青",
+      "imageHash": "83060dc543924a6bd5370e35b81deb2f504dbfb1cc63cf6114c1d4b50349f2c1",
+      "scoreHash": "1573819998f268bd",
+      "mappingFingerprint": "fa14eef3c22eff1f",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "onsets": 1
+    },
+    {
+      "index": 71,
+      "name": "纯品红",
+      "imageHash": "57592dc571e20a6b4d540e350df4eb2f91e9ffb1c0ac8f61c844a4b56749f2c1",
+      "scoreHash": "190065e43822e39a",
+      "mappingFingerprint": "368842c32beb0fef",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "onsets": 1
+    },
+    {
+      "index": 72,
+      "name": "纯白轻微噪声",
+      "imageHash": "79f0e832731b14fe8e8c9c02aecf6f46c5bf4bd6f3df30a42c88669ae45126e0",
+      "scoreHash": "795c10a7e2d896e7",
+      "mappingFingerprint": "4b4abed4979eb15e",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "onsets": 1
+    },
+    {
+      "index": 73,
+      "name": "纯灰轻微噪声",
+      "imageHash": "bed01800e75c98489015c644ad957a280755b25cf68b06ea26c4c73c24b0d95e",
+      "scoreHash": "7acf15069bae8646",
+      "mappingFingerprint": "dc7c2b675abe3417",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "onsets": 1
+    },
+    {
+      "index": 74,
+      "name": "全范围横向灰阶渐变",
+      "imageHash": "54f881c512de226bd9d252359376eb2f872177b16e7a4f61301c6cb5e624f2c1",
+      "scoreHash": "f0f685cf974cf7ab",
+      "mappingFingerprint": "71b504b5785be379",
+      "rhythmFingerprint": "841c37f7cbd1b603",
+      "onsets": 14
+    },
+    {
+      "index": 75,
+      "name": "全范围纵向灰阶渐变",
+      "imageHash": "21f4b9c5535a6a6bc8dc76352671bb2f7b389bb150325f6188fbc0b546af72c1",
+      "scoreHash": "40a697e52f07fd3d",
+      "mappingFingerprint": "4c63f3a9d92d40eb",
+      "rhythmFingerprint": "170a82734544176f",
+      "onsets": 97
+    },
+    {
+      "index": 76,
+      "name": "白底局部红色块",
+      "imageHash": "dbf19bc5da1e466b2e4c5b35fe62c92f2b6663b15a1fdd616a0977b593977ac1",
+      "scoreHash": "648d2ca7c2643541",
+      "mappingFingerprint": "a1a2266c6257b9cc",
+      "rhythmFingerprint": "dbf7d4bcdda70c34",
+      "onsets": 3
+    },
+    {
+      "index": 77,
+      "name": "同均值细棋盘",
+      "imageHash": "dbaf7dc51198fa6bef08ae35a115ab2fa3f3e7b1956dcf61c1be5cb58604f2c1",
+      "scoreHash": "1964312afa6e048e",
+      "mappingFingerprint": "84480459a63f459b",
+      "rhythmFingerprint": "2c2c035d9a7734e9",
+      "onsets": 24
+    },
+    {
+      "index": 78,
+      "name": "同均值横纹",
+      "imageHash": "ced3bdc5fc1afa6b8f72b635bd15ab2f0810c7b11aa1cf614240a4b5c604f2c1",
+      "scoreHash": "0c61ef98fbdf2cce",
+      "mappingFingerprint": "1129489928c095d3",
+      "rhythmFingerprint": "6413e60210dfce5c",
+      "onsets": 97
+    },
+    {
+      "index": 79,
+      "name": "同均值纵纹",
+      "imageHash": "583f1dc53ac6fa6b45900e353fe5ab2f6913e7b12ab7cf610c57fcb5cd04f2c1",
+      "scoreHash": "1964312afa6e048e",
+      "mappingFingerprint": "84480459a63f459b",
+      "rhythmFingerprint": "2c2c035d9a7734e9",
+      "onsets": 24
+    },
+    {
+      "index": 80,
+      "name": "七像素有组织纹理",
+      "imageHash": "cd10a9f5889c3e1ba919c815206ccf6fa3b6c391cf5585914da4ab45f6df05c1",
+      "scoreHash": "76aed5a089154a5e",
+      "mappingFingerprint": "4a36447225377a9c",
+      "rhythmFingerprint": "6c9f9174efd1d054",
+      "onsets": 14
+    },
+    {
+      "index": 81,
+      "name": "相同颜色分布打乱",
+      "imageHash": "02a8e239eb1223db7038ec196433179f73db5015c485fbd1f8d1f3699201ae01",
+      "scoreHash": "de3616134bee2c37",
+      "mappingFingerprint": "331b2c5c439d4118",
+      "rhythmFingerprint": "c2c9d98d7fe2f475",
+      "onsets": 7
+    },
+    {
+      "index": 82,
+      "name": "微小累积渐变",
+      "imageHash": "05a8da058bc20c6b76d6e7f581d1332f794c2cf19a38f061549e5bf57ba2dac1",
+      "scoreHash": "c2a89e0733962fd5",
+      "mappingFingerprint": "4c01bb1c3fddca36",
+      "rhythmFingerprint": "e7440e9715b77de9",
+      "onsets": 2
+    },
+    {
+      "index": 83,
+      "name": "白底黑色区域",
+      "imageHash": "0310ecc57bd8ce6b4ed9143546c21b2fcd7aa6b1fb63cf618a374eb590bc72c1",
+      "scoreHash": "9232230663c4c910",
+      "mappingFingerprint": "d9f61e0ac8d3543e",
+      "rhythmFingerprint": "9e6d6eec26561678",
+      "onsets": 3
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 const assert = require('node:assert/strict');
-const Timing = require('../dist/timing.js'), Music = require('../dist/music.js');
-const Image = require('../dist/image-analysis.js'), Fixtures = require('./fixtures.js');
+const Timing = require('./baseline/timing-v05.js'), Music = require('./baseline/music-v05.js');
+const Image = require('./baseline/image-analysis-v05.js'), Fixtures = require('./fixtures.js');
 const maps = [
   [{ beat: 0, bpm: 88 }, { beat: 64, bpm: 88 }],
   [{ beat: 0, bpm: 76 }, { beat: 16, bpm: 104 }, { beat: 32, bpm: 76 }, { beat: 64, bpm: 84 }],

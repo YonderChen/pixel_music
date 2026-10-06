@@ -1,0 +1,1703 @@
+{
+  "version": "0.6.0",
+  "verifiedDate": "2026-10-06",
+  "status": "passed",
+  "published": false,
+  "automated": {
+    "allFifteenSuitesPassed": true,
+    "suites": [
+      {
+        "test": "fidelity",
+        "exitCode": 0
+      },
+      {
+        "test": "fidelity-parameters",
+        "exitCode": 0
+      },
+      {
+        "test": "fidelity-audio",
+        "exitCode": 0
+      },
+      {
+        "test": "fidelity-timing",
+        "exitCode": 0
+      },
+      {
+        "test": "fidelity-browser",
+        "exitCode": 0
+      },
+      {
+        "test": "fidelity-normalization",
+        "exitCode": 0
+      },
+      {
+        "test": "music",
+        "exitCode": 0
+      },
+      {
+        "test": "rhythm",
+        "exitCode": 0
+      },
+      {
+        "test": "audio",
+        "exitCode": 0
+      },
+      {
+        "test": "timing",
+        "exitCode": 0
+      },
+      {
+        "test": "baseline",
+        "exitCode": 0
+      },
+      {
+        "test": "legacy",
+        "exitCode": 0
+      },
+      {
+        "test": "listening",
+        "exitCode": 0
+      },
+      {
+        "test": "local-bundle",
+        "exitCode": 0
+      },
+      {
+        "test": "browser-snapshot",
+        "exitCode": 0
+      }
+    ],
+    "samples": 84,
+    "actualVoiceEvents": 4071,
+    "syntheticCases": 432,
+    "solidGraySweep": 256,
+    "noiseSeeds": 32,
+    "audioScheduling": {
+      "status": "passed",
+      "scheduleCases": 252,
+      "actualMainEvents": 12213,
+      "regionBindings": 30240,
+      "resumeCases": 336,
+      "sustainPlateau": true,
+      "toneSwitchCrossfade": true,
+      "cleanup": true,
+      "wavEncoding": true
+    }
+  },
+  "fidelity": {
+    "white": {
+      "onsets": 1,
+      "regions": 120,
+      "seconds": 52.526315789473685
+    },
+    "gradient": {
+      "events": 14,
+      "pitches": 8
+    },
+    "matchedHistogram": {
+      "organized": 14,
+      "noise": 7
+    },
+    "noiseOnsetsDistribution": {
+      "min": 3,
+      "median": 9,
+      "max": 15
+    },
+    "localEdits": [
+      {
+        "col": 2,
+        "changedRegions": [
+          12
+        ],
+        "globalKeyOrModeChanged": false,
+        "globalBpmChanged": false
+      },
+      {
+        "col": 8,
+        "changedRegions": [
+          42
+        ],
+        "globalKeyOrModeChanged": false,
+        "globalBpmChanged": false
+      },
+      {
+        "col": 14,
+        "changedRegions": [
+          72
+        ],
+        "globalKeyOrModeChanged": false,
+        "globalBpmChanged": false
+      },
+      {
+        "col": 20,
+        "changedRegions": [
+          102
+        ],
+        "globalKeyOrModeChanged": false,
+        "globalBpmChanged": false
+      }
+    ],
+    "constantAndNearConstantCases": 14,
+    "caseResults": [
+      {
+        "name": "纯色",
+        "onsets": 1,
+        "complexity": 0,
+        "pitches": 1,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 76,
+        "scoreHash": "1a78cd61bec844eb"
+      },
+      {
+        "name": "黑白棋盘",
+        "onsets": 60,
+        "complexity": 0.491647,
+        "pitches": 2,
+        "periodicRetriggers": 5,
+        "rests": 0,
+        "bpm": 90,
+        "scoreHash": "baa6a22bbd54e9fb"
+      },
+      {
+        "name": "明暗渐变",
+        "onsets": 11,
+        "complexity": 0.009224,
+        "pitches": 6,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 76,
+        "scoreHash": "bbcd984dcc2e0d4f"
+      },
+      {
+        "name": "彩色渐变",
+        "onsets": 24,
+        "complexity": 0.062736,
+        "pitches": 3,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 78,
+        "scoreHash": "3d86ba53c0120921"
+      },
+      {
+        "name": "低饱和风景",
+        "onsets": 25,
+        "complexity": 0.14576,
+        "pitches": 2,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 80,
+        "scoreHash": "bf9c23dbb3d56c29"
+      },
+      {
+        "name": "夕阳",
+        "onsets": 87,
+        "complexity": 0.330067,
+        "pitches": 5,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 86,
+        "scoreHash": "205c2d2d77f4a459"
+      },
+      {
+        "name": "高对比建筑",
+        "onsets": 54,
+        "complexity": 0.210727,
+        "pitches": 6,
+        "periodicRetriggers": 0,
+        "rests": 4,
+        "bpm": 82,
+        "scoreHash": "982056bcac3837d2"
+      },
+      {
+        "name": "几何人像",
+        "onsets": 68,
+        "complexity": 0.170947,
+        "pitches": 4,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 80,
+        "scoreHash": "d2a813afe6404639"
+      },
+      {
+        "name": "抽象图案",
+        "onsets": 114,
+        "complexity": 0.625129,
+        "pitches": 3,
+        "periodicRetriggers": 72,
+        "rests": 0,
+        "bpm": 94,
+        "scoreHash": "11a5186e1722217e"
+      },
+      {
+        "name": "密集纹理",
+        "onsets": 14,
+        "complexity": 0.103794,
+        "pitches": 1,
+        "periodicRetriggers": 13,
+        "rests": 0,
+        "bpm": 78,
+        "scoreHash": "76aed5a089154a5e"
+      },
+      {
+        "name": "噪声",
+        "onsets": 30,
+        "complexity": 0.064092,
+        "pitches": 2,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 78,
+        "scoreHash": "973c191cbaa033ee"
+      },
+      {
+        "name": "局部变化对照",
+        "onsets": 87,
+        "complexity": 0.328467,
+        "pitches": 5,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 86,
+        "scoreHash": "bafe8065cc6eb4dd"
+      },
+      {
+        "name": "方向渐变 1",
+        "onsets": 8,
+        "complexity": 0.006126,
+        "pitches": 2,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 76,
+        "scoreHash": "ad8cd5f973749407"
+      },
+      {
+        "name": "方向渐变 2",
+        "onsets": 97,
+        "complexity": 0.234016,
+        "pitches": 1,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 82,
+        "scoreHash": "9e50ce74882c319a"
+      },
+      {
+        "name": "方向渐变 3",
+        "onsets": 8,
+        "complexity": 0.008054,
+        "pitches": 1,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 76,
+        "scoreHash": "68844aadb1c5916b"
+      },
+      {
+        "name": "方向渐变 4",
+        "onsets": 97,
+        "complexity": 0.272245,
+        "pitches": 1,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 84,
+        "scoreHash": "b75c4b0b28b43d33"
+      },
+      {
+        "name": "方向渐变 5",
+        "onsets": 9,
+        "complexity": 0.012405,
+        "pitches": 1,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 76,
+        "scoreHash": "d80fb8a61cd801d8"
+      },
+      {
+        "name": "方向渐变 6",
+        "onsets": 97,
+        "complexity": 0.307148,
+        "pitches": 2,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 84,
+        "scoreHash": "53b23334bde256ec"
+      },
+      {
+        "name": "周期条纹 1",
+        "onsets": 24,
+        "complexity": 0.227099,
+        "pitches": 3,
+        "periodicRetriggers": 15,
+        "rests": 0,
+        "bpm": 82,
+        "scoreHash": "73a52bdf48aff5b9"
+      },
+      {
+        "name": "周期条纹 2",
+        "onsets": 49,
+        "complexity": 0.144772,
+        "pitches": 1,
+        "periodicRetriggers": 48,
+        "rests": 0,
+        "bpm": 80,
+        "scoreHash": "c59fb0ea28047706"
+      },
+      {
+        "name": "周期条纹 3",
+        "onsets": 12,
+        "complexity": 0.059583,
+        "pitches": 2,
+        "periodicRetriggers": 0,
+        "rests": 11,
+        "bpm": 78,
+        "scoreHash": "6cf6684d997174a3"
+      },
+      {
+        "name": "周期条纹 4",
+        "onsets": 73,
+        "complexity": 0.288521,
+        "pitches": 3,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 84,
+        "scoreHash": "84f24cce9ca4d2e4"
+      },
+      {
+        "name": "周期条纹 5",
+        "onsets": 14,
+        "complexity": 0.060154,
+        "pitches": 4,
+        "periodicRetriggers": 0,
+        "rests": 1,
+        "bpm": 78,
+        "scoreHash": "25ea4dcff4ac339b"
+      },
+      {
+        "name": "周期条纹 6",
+        "onsets": 97,
+        "complexity": 0.306369,
+        "pitches": 4,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 84,
+        "scoreHash": "414da14a393bcf3e"
+      },
+      {
+        "name": "棋盘尺度 1",
+        "onsets": 13,
+        "complexity": 0.138704,
+        "pitches": 1,
+        "periodicRetriggers": 12,
+        "rests": 0,
+        "bpm": 80,
+        "scoreHash": "30034a2bb3d2770d"
+      },
+      {
+        "name": "棋盘尺度 2",
+        "onsets": 56,
+        "complexity": 0.462582,
+        "pitches": 2,
+        "periodicRetriggers": 7,
+        "rests": 0,
+        "bpm": 88,
+        "scoreHash": "7624baff6ca1573d"
+      },
+      {
+        "name": "棋盘尺度 3",
+        "onsets": 108,
+        "complexity": 0.584875,
+        "pitches": 4,
+        "periodicRetriggers": 6,
+        "rests": 0,
+        "bpm": 92,
+        "scoreHash": "949af89229697a94"
+      },
+      {
+        "name": "棋盘尺度 4",
+        "onsets": 91,
+        "complexity": 0.560417,
+        "pitches": 3,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 92,
+        "scoreHash": "f374a5bb5433d907"
+      },
+      {
+        "name": "棋盘尺度 5",
+        "onsets": 104,
+        "complexity": 0.535467,
+        "pitches": 6,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 90,
+        "scoreHash": "2b78b78636756ab8"
+      },
+      {
+        "name": "棋盘尺度 6",
+        "onsets": 73,
+        "complexity": 0.323075,
+        "pitches": 4,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 86,
+        "scoreHash": "6241639a7cd9047c"
+      },
+      {
+        "name": "彩色波形 1",
+        "onsets": 99,
+        "complexity": 0.45366,
+        "pitches": 5,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 88,
+        "scoreHash": "b92100a4647ce400"
+      },
+      {
+        "name": "彩色波形 2",
+        "onsets": 109,
+        "complexity": 0.547285,
+        "pitches": 5,
+        "periodicRetriggers": 4,
+        "rests": 0,
+        "bpm": 92,
+        "scoreHash": "500ea1df0b87c7c7"
+      },
+      {
+        "name": "彩色波形 3",
+        "onsets": 110,
+        "complexity": 0.55607,
+        "pitches": 5,
+        "periodicRetriggers": 23,
+        "rests": 0,
+        "bpm": 92,
+        "scoreHash": "963303fc17725bca"
+      },
+      {
+        "name": "彩色波形 4",
+        "onsets": 115,
+        "complexity": 0.613002,
+        "pitches": 5,
+        "periodicRetriggers": 43,
+        "rests": 0,
+        "bpm": 94,
+        "scoreHash": "4648bc9bdee4e6e1"
+      },
+      {
+        "name": "彩色波形 5",
+        "onsets": 118,
+        "complexity": 0.637542,
+        "pitches": 5,
+        "periodicRetriggers": 62,
+        "rests": 0,
+        "bpm": 94,
+        "scoreHash": "2f8696a9940d1bd3"
+      },
+      {
+        "name": "彩色波形 6",
+        "onsets": 117,
+        "complexity": 0.663241,
+        "pitches": 5,
+        "periodicRetriggers": 86,
+        "rests": 0,
+        "bpm": 94,
+        "scoreHash": "a5c3fe8c4dc40814"
+      },
+      {
+        "name": "几何圆形 1",
+        "onsets": 55,
+        "complexity": 0.21384,
+        "pitches": 3,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 82,
+        "scoreHash": "783ace14e81883ee"
+      },
+      {
+        "name": "几何圆形 2",
+        "onsets": 56,
+        "complexity": 0.216678,
+        "pitches": 3,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 82,
+        "scoreHash": "ca735915d3d1ab89"
+      },
+      {
+        "name": "几何圆形 3",
+        "onsets": 61,
+        "complexity": 0.24502,
+        "pitches": 3,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 82,
+        "scoreHash": "d2b27d24c0e09be8"
+      },
+      {
+        "name": "几何圆形 4",
+        "onsets": 69,
+        "complexity": 0.274792,
+        "pitches": 3,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 84,
+        "scoreHash": "29ae459bd30c2da7"
+      },
+      {
+        "name": "几何圆形 5",
+        "onsets": 75,
+        "complexity": 0.28732,
+        "pitches": 3,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 84,
+        "scoreHash": "06eedc37a2e863f5"
+      },
+      {
+        "name": "几何圆形 6",
+        "onsets": 71,
+        "complexity": 0.274758,
+        "pitches": 3,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 84,
+        "scoreHash": "5aacbd94514f0b24"
+      },
+      {
+        "name": "空间块面 1",
+        "onsets": 104,
+        "complexity": 0.429347,
+        "pitches": 4,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 88,
+        "scoreHash": "81d0d9c90ca272b3"
+      },
+      {
+        "name": "空间块面 2",
+        "onsets": 106,
+        "complexity": 0.414043,
+        "pitches": 4,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 88,
+        "scoreHash": "cb7c96b7b8adc19f"
+      },
+      {
+        "name": "空间块面 3",
+        "onsets": 105,
+        "complexity": 0.398174,
+        "pitches": 5,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 88,
+        "scoreHash": "bde7a97ec117ba8c"
+      },
+      {
+        "name": "空间块面 4",
+        "onsets": 103,
+        "complexity": 0.341264,
+        "pitches": 5,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 86,
+        "scoreHash": "526f8344e2c94e86"
+      },
+      {
+        "name": "空间块面 5",
+        "onsets": 102,
+        "complexity": 0.332331,
+        "pitches": 5,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 86,
+        "scoreHash": "6d8c96737ae079c9"
+      },
+      {
+        "name": "空间块面 6",
+        "onsets": 100,
+        "complexity": 0.319515,
+        "pitches": 5,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 84,
+        "scoreHash": "4132b6a1f9e5c9e5"
+      },
+      {
+        "name": "放射环形 1",
+        "onsets": 105,
+        "complexity": 0.485274,
+        "pitches": 2,
+        "periodicRetriggers": 21,
+        "rests": 0,
+        "bpm": 90,
+        "scoreHash": "732f62011b469adf"
+      },
+      {
+        "name": "放射环形 2",
+        "onsets": 97,
+        "complexity": 0.488658,
+        "pitches": 2,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 90,
+        "scoreHash": "c1382fe843e37294"
+      },
+      {
+        "name": "放射环形 3",
+        "onsets": 68,
+        "complexity": 0.34178,
+        "pitches": 2,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 86,
+        "scoreHash": "c11057e85e7cba32"
+      },
+      {
+        "name": "放射环形 4",
+        "onsets": 69,
+        "complexity": 0.387735,
+        "pitches": 2,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 86,
+        "scoreHash": "9d39db8c675212aa"
+      },
+      {
+        "name": "放射环形 5",
+        "onsets": 71,
+        "complexity": 0.403653,
+        "pitches": 2,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 88,
+        "scoreHash": "aad654d698357200"
+      },
+      {
+        "name": "放射环形 6",
+        "onsets": 67,
+        "complexity": 0.389568,
+        "pitches": 2,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 86,
+        "scoreHash": "9852f7194a77a26f"
+      },
+      {
+        "name": "噪声强度 1",
+        "onsets": 1,
+        "complexity": 0.001788,
+        "pitches": 1,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 76,
+        "scoreHash": "5a8bb0c4ba3d705e"
+      },
+      {
+        "name": "噪声强度 2",
+        "onsets": 1,
+        "complexity": 0.010172,
+        "pitches": 1,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 76,
+        "scoreHash": "4b21222f9eb54177"
+      },
+      {
+        "name": "噪声强度 3",
+        "onsets": 1,
+        "complexity": 0.022206,
+        "pitches": 1,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 76,
+        "scoreHash": "2d6784e7363e1cbf"
+      },
+      {
+        "name": "噪声强度 4",
+        "onsets": 1,
+        "complexity": 0.039042,
+        "pitches": 1,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 78,
+        "scoreHash": "32c17906ba8710d8"
+      },
+      {
+        "name": "噪声强度 5",
+        "onsets": 1,
+        "complexity": 0.052187,
+        "pitches": 1,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 78,
+        "scoreHash": "acc59525017818c9"
+      },
+      {
+        "name": "噪声强度 6",
+        "onsets": 10,
+        "complexity": 0.0687,
+        "pitches": 2,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 78,
+        "scoreHash": "89508de68c7aa086"
+      },
+      {
+        "name": "精确纯白",
+        "onsets": 1,
+        "complexity": 0,
+        "pitches": 1,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 76,
+        "scoreHash": "36d2e573071f82fb"
+      },
+      {
+        "name": "精确纯黑",
+        "onsets": 1,
+        "complexity": 0,
+        "pitches": 1,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 76,
+        "scoreHash": "1818a7e01fefa8d4"
+      },
+      {
+        "name": "纯灰 32",
+        "onsets": 1,
+        "complexity": 0,
+        "pitches": 1,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 76,
+        "scoreHash": "2f7e4af59b95b577"
+      },
+      {
+        "name": "纯灰 96",
+        "onsets": 1,
+        "complexity": 0,
+        "pitches": 1,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 76,
+        "scoreHash": "7a58b000eaef7890"
+      },
+      {
+        "name": "纯灰 128",
+        "onsets": 1,
+        "complexity": 0,
+        "pitches": 1,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 76,
+        "scoreHash": "7acf15069bae8646"
+      },
+      {
+        "name": "纯灰 192",
+        "onsets": 1,
+        "complexity": 0,
+        "pitches": 1,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 76,
+        "scoreHash": "01210211f019d6f3"
+      },
+      {
+        "name": "接近纯白 254",
+        "onsets": 1,
+        "complexity": 0,
+        "pitches": 1,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 76,
+        "scoreHash": "99f609593ab11bbb"
+      },
+      {
+        "name": "纯红",
+        "onsets": 1,
+        "complexity": 0,
+        "pitches": 1,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 76,
+        "scoreHash": "8bbaf8ef29b33cdb"
+      },
+      {
+        "name": "纯绿",
+        "onsets": 1,
+        "complexity": 0,
+        "pitches": 1,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 76,
+        "scoreHash": "5d10d3740adbe5b4"
+      },
+      {
+        "name": "纯蓝",
+        "onsets": 1,
+        "complexity": 0,
+        "pitches": 1,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 76,
+        "scoreHash": "96ef56cab4851340"
+      },
+      {
+        "name": "纯青",
+        "onsets": 1,
+        "complexity": 0,
+        "pitches": 1,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 76,
+        "scoreHash": "1573819998f268bd"
+      },
+      {
+        "name": "纯品红",
+        "onsets": 1,
+        "complexity": 0,
+        "pitches": 1,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 76,
+        "scoreHash": "190065e43822e39a"
+      },
+      {
+        "name": "纯白轻微噪声",
+        "onsets": 1,
+        "complexity": 0,
+        "pitches": 1,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 76,
+        "scoreHash": "795c10a7e2d896e7"
+      },
+      {
+        "name": "纯灰轻微噪声",
+        "onsets": 1,
+        "complexity": 0,
+        "pitches": 1,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 76,
+        "scoreHash": "7acf15069bae8646"
+      },
+      {
+        "name": "全范围横向灰阶渐变",
+        "onsets": 14,
+        "complexity": 0.014433,
+        "pitches": 8,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 76,
+        "scoreHash": "f0f685cf974cf7ab"
+      },
+      {
+        "name": "全范围纵向灰阶渐变",
+        "onsets": 97,
+        "complexity": 0.514482,
+        "pitches": 5,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 90,
+        "scoreHash": "40a697e52f07fd3d"
+      },
+      {
+        "name": "白底局部红色块",
+        "onsets": 3,
+        "complexity": 0.00834,
+        "pitches": 2,
+        "periodicRetriggers": 0,
+        "rests": 1,
+        "bpm": 76,
+        "scoreHash": "648d2ca7c2643541"
+      },
+      {
+        "name": "同均值细棋盘",
+        "onsets": 24,
+        "complexity": 0.35,
+        "pitches": 1,
+        "periodicRetriggers": 23,
+        "rests": 0,
+        "bpm": 86,
+        "scoreHash": "1964312afa6e048e"
+      },
+      {
+        "name": "同均值横纹",
+        "onsets": 97,
+        "complexity": 0.35,
+        "pitches": 1,
+        "periodicRetriggers": 96,
+        "rests": 0,
+        "bpm": 86,
+        "scoreHash": "0c61ef98fbdf2cce"
+      },
+      {
+        "name": "同均值纵纹",
+        "onsets": 24,
+        "complexity": 0.35,
+        "pitches": 1,
+        "periodicRetriggers": 23,
+        "rests": 0,
+        "bpm": 86,
+        "scoreHash": "1964312afa6e048e"
+      },
+      {
+        "name": "七像素有组织纹理",
+        "onsets": 14,
+        "complexity": 0.103794,
+        "pitches": 1,
+        "periodicRetriggers": 13,
+        "rests": 0,
+        "bpm": 78,
+        "scoreHash": "76aed5a089154a5e"
+      },
+      {
+        "name": "相同颜色分布打乱",
+        "onsets": 7,
+        "complexity": 0.017327,
+        "pitches": 2,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 76,
+        "scoreHash": "de3616134bee2c37"
+      },
+      {
+        "name": "微小累积渐变",
+        "onsets": 2,
+        "complexity": 0,
+        "pitches": 2,
+        "periodicRetriggers": 0,
+        "rests": 0,
+        "bpm": 76,
+        "scoreHash": "c2a89e0733962fd5"
+      },
+      {
+        "name": "白底黑色区域",
+        "onsets": 3,
+        "complexity": 0.008333,
+        "pitches": 2,
+        "periodicRetriggers": 0,
+        "rests": 1,
+        "bpm": 76,
+        "scoreHash": "9232230663c4c910"
+      }
+    ]
+  },
+  "realAudio": {
+    "status": "passed",
+    "startedAt": "2026-10-06T14:04:36.400Z",
+    "environment": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+    "cases": 324,
+    "failed": 0,
+    "groups": {
+      "newComplete": 252,
+      "frozenV05": 36,
+      "keyImageRhythmComparisons": 36
+    },
+    "maxPeak": 0.18703919649124146,
+    "minRms": 0.029592202529013414,
+    "invalidSamples": 0,
+    "clippedSamples": 0,
+    "maxTailPeak": 0.000008612648343842011,
+    "steadyCases": 63,
+    "maxSteadyRmsRatio": 1.0009185252781976,
+    "artifact": "tests/artifacts/pixelmusic-0.6-audio-regression.json"
+  },
+  "codec": {
+    "status": "passed",
+    "imageCases": 6,
+    "renderCases": 18,
+    "normalizer": "production ImageAnalysis.normalizeSource",
+    "results": [
+      {
+        "sampleIndex": 60,
+        "sampleName": "精确纯白",
+        "format": "png",
+        "mimeType": "image/png",
+        "byteLength": 1002,
+        "magicVerified": true,
+        "width": 192,
+        "height": 120,
+        "imageHash": "fbefe5c53b1c2a6bc47a6635d1186b2fdbdb8fb125271f61a862d4b513fdf2c1",
+        "scoreHash": "36d2e573071f82fb",
+        "onsets": 1,
+        "tones": [
+          {
+            "tone": "warm",
+            "peak": 0.13082654774188995,
+            "rms": 0.08695800260316291,
+            "invalid": 0,
+            "clipped": 0,
+            "tailPeak": 0.000006692081115033943,
+            "seconds": 52.626349206349204,
+            "steady": {
+              "windowRms": [
+                0.08906876004498616,
+                0.08906832304746731,
+                0.08906976968067762,
+                0.08907143341187759,
+                0.0890732967149914
+              ],
+              "maxMinRatio": 1.0000558410370142
+            },
+            "passed": true
+          },
+          {
+            "tone": "glass",
+            "peak": 0.11141002923250198,
+            "rms": 0.07579146249985845,
+            "invalid": 0,
+            "clipped": 0,
+            "tailPeak": 0.00000641014503344195,
+            "seconds": 52.626349206349204,
+            "steady": {
+              "windowRms": [
+                0.0776291730968804,
+                0.07763573783923045,
+                0.07763758735949906,
+                0.07763958560347786,
+                0.07764171277728142
+              ],
+              "maxMinRatio": 1.0001615330925318
+            },
+            "passed": true
+          },
+          {
+            "tone": "mist",
+            "peak": 0.12658177316188812,
+            "rms": 0.08471202547097542,
+            "invalid": 0,
+            "clipped": 0,
+            "tailPeak": 0.000006280166871874826,
+            "seconds": 52.626349206349204,
+            "steady": {
+              "windowRms": [
+                0.08678208683817437,
+                0.08677788762653219,
+                0.08677833267261251,
+                0.08677899102770667,
+                0.08677985167942423
+              ],
+              "maxMinRatio": 1.0000483903417914
+            },
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      {
+        "sampleIndex": 60,
+        "sampleName": "精确纯白",
+        "format": "jpg",
+        "mimeType": "image/jpeg",
+        "byteLength": 902,
+        "magicVerified": true,
+        "width": 192,
+        "height": 120,
+        "imageHash": "fbefe5c53b1c2a6bc47a6635d1186b2fdbdb8fb125271f61a862d4b513fdf2c1",
+        "scoreHash": "36d2e573071f82fb",
+        "onsets": 1,
+        "tones": [
+          {
+            "tone": "warm",
+            "peak": 0.13082654774188995,
+            "rms": 0.08695800260319647,
+            "invalid": 0,
+            "clipped": 0,
+            "tailPeak": 0.000006692081115033943,
+            "seconds": 52.626349206349204,
+            "steady": {
+              "windowRms": [
+                0.08906876015381408,
+                0.08906832307897083,
+                0.08906976974872595,
+                0.08907143343128138,
+                0.08907329679026006
+              ],
+              "maxMinRatio": 1.0000558415283605
+            },
+            "passed": true
+          },
+          {
+            "tone": "glass",
+            "peak": 0.11141002923250198,
+            "rms": 0.07579146248486648,
+            "invalid": 0,
+            "clipped": 0,
+            "tailPeak": 0.00000641014503344195,
+            "seconds": 52.626349206349204,
+            "steady": {
+              "windowRms": [
+                0.07762917299701762,
+                0.07763573787968178,
+                0.0776375872342449,
+                0.07763958560572522,
+                0.07764171279162578
+              ],
+              "maxMinRatio": 1.000161534563928
+            },
+            "passed": true
+          },
+          {
+            "tone": "mist",
+            "peak": 0.12658177316188812,
+            "rms": 0.08471202547097542,
+            "invalid": 0,
+            "clipped": 0,
+            "tailPeak": 0.000006280166871874826,
+            "seconds": 52.626349206349204,
+            "steady": {
+              "windowRms": [
+                0.08678208683817437,
+                0.08677788762653219,
+                0.08677833267261251,
+                0.08677899102770667,
+                0.08677985167942423
+              ],
+              "maxMinRatio": 1.0000483903417914
+            },
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      {
+        "sampleIndex": 60,
+        "sampleName": "精确纯白",
+        "format": "webp",
+        "mimeType": "image/webp",
+        "byteLength": 586,
+        "magicVerified": true,
+        "width": 192,
+        "height": 120,
+        "imageHash": "fbefe5c53b1c2a6bc47a6635d1186b2fdbdb8fb125271f61a862d4b513fdf2c1",
+        "scoreHash": "36d2e573071f82fb",
+        "onsets": 1,
+        "tones": [
+          {
+            "tone": "warm",
+            "peak": 0.13082654774188995,
+            "rms": 0.08695800260319647,
+            "invalid": 0,
+            "clipped": 0,
+            "tailPeak": 0.000006692081115033943,
+            "seconds": 52.626349206349204,
+            "steady": {
+              "windowRms": [
+                0.08906876015381408,
+                0.08906832307897083,
+                0.08906976974872595,
+                0.08907143343128138,
+                0.08907329679026006
+              ],
+              "maxMinRatio": 1.0000558415283605
+            },
+            "passed": true
+          },
+          {
+            "tone": "glass",
+            "peak": 0.11141002923250198,
+            "rms": 0.07579146249985845,
+            "invalid": 0,
+            "clipped": 0,
+            "tailPeak": 0.00000641014503344195,
+            "seconds": 52.626349206349204,
+            "steady": {
+              "windowRms": [
+                0.0776291730968804,
+                0.07763573783923045,
+                0.07763758735949906,
+                0.07763958560347786,
+                0.07764171277728142
+              ],
+              "maxMinRatio": 1.0001615330925318
+            },
+            "passed": true
+          },
+          {
+            "tone": "mist",
+            "peak": 0.12658177316188812,
+            "rms": 0.08471202547097542,
+            "invalid": 0,
+            "clipped": 0,
+            "tailPeak": 0.000006280166871874826,
+            "seconds": 52.626349206349204,
+            "steady": {
+              "windowRms": [
+                0.08678208683817437,
+                0.08677788762653219,
+                0.08677833267261251,
+                0.08677899102770667,
+                0.08677985167942423
+              ],
+              "maxMinRatio": 1.0000483903417914
+            },
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      {
+        "sampleIndex": 5,
+        "sampleName": "夕阳",
+        "format": "png",
+        "mimeType": "image/png",
+        "byteLength": 1958,
+        "magicVerified": true,
+        "width": 192,
+        "height": 120,
+        "imageHash": "bc6037a81904b3525daf3718f940cd565999786488e93fe8be0fa608fbbfe558",
+        "scoreHash": "205c2d2d77f4a459",
+        "onsets": 87,
+        "tones": [
+          {
+            "tone": "warm",
+            "peak": 0.14398397505283356,
+            "rms": 0.07104432927833933,
+            "invalid": 0,
+            "clipped": 0,
+            "tailPeak": 0.000005145222985447617,
+            "seconds": 46.743038548752835,
+            "steady": null,
+            "passed": true
+          },
+          {
+            "tone": "glass",
+            "peak": 0.13755972683429718,
+            "rms": 0.06229782192524841,
+            "invalid": 0,
+            "clipped": 0,
+            "tailPeak": 0.000004771386556967627,
+            "seconds": 46.743038548752835,
+            "steady": null,
+            "passed": true
+          },
+          {
+            "tone": "mist",
+            "peak": 0.13405920565128326,
+            "rms": 0.06494827572285829,
+            "invalid": 0,
+            "clipped": 0,
+            "tailPeak": 0.000004942691248288611,
+            "seconds": 46.743038548752835,
+            "steady": null,
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      {
+        "sampleIndex": 5,
+        "sampleName": "夕阳",
+        "format": "jpg",
+        "mimeType": "image/jpeg",
+        "byteLength": 3477,
+        "magicVerified": true,
+        "width": 192,
+        "height": 120,
+        "imageHash": "bb31af8585e6ee95c8350081d730276d116719017e5257b74c53cc31682452ab",
+        "scoreHash": "16bbf17379be1b6d",
+        "onsets": 89,
+        "tones": [
+          {
+            "tone": "warm",
+            "peak": 0.14135503768920898,
+            "rms": 0.0710132140549961,
+            "invalid": 0,
+            "clipped": 0,
+            "tailPeak": 0.000005252827577351127,
+            "seconds": 46.742222222222225,
+            "steady": null,
+            "passed": true
+          },
+          {
+            "tone": "glass",
+            "peak": 0.13150140643119812,
+            "rms": 0.062265559854392104,
+            "invalid": 0,
+            "clipped": 0,
+            "tailPeak": 0.000005063807293481659,
+            "seconds": 46.742222222222225,
+            "steady": null,
+            "passed": true
+          },
+          {
+            "tone": "mist",
+            "peak": 0.13222736120224,
+            "rms": 0.0648677862285661,
+            "invalid": 0,
+            "clipped": 0,
+            "tailPeak": 0.00000490986440127017,
+            "seconds": 46.742222222222225,
+            "steady": null,
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      {
+        "sampleIndex": 5,
+        "sampleName": "夕阳",
+        "format": "webp",
+        "mimeType": "image/webp",
+        "byteLength": 1880,
+        "magicVerified": true,
+        "width": 192,
+        "height": 120,
+        "imageHash": "3ae5a4354578a681d1f414f15654f021ffb351b9040cc0b3f5d36df19f2334f7",
+        "scoreHash": "40fa5114938f7860",
+        "onsets": 88,
+        "tones": [
+          {
+            "tone": "warm",
+            "peak": 0.14038783311843872,
+            "rms": 0.07097882629802703,
+            "invalid": 0,
+            "clipped": 0,
+            "tailPeak": 0.000005038909421273274,
+            "seconds": 46.744081632653064,
+            "steady": null,
+            "passed": true
+          },
+          {
+            "tone": "glass",
+            "peak": 0.13292092084884644,
+            "rms": 0.062238550522165724,
+            "invalid": 0,
+            "clipped": 0,
+            "tailPeak": 0.000004490582796279341,
+            "seconds": 46.744081632653064,
+            "steady": null,
+            "passed": true
+          },
+          {
+            "tone": "mist",
+            "peak": 0.1316632181406021,
+            "rms": 0.06485295266555684,
+            "invalid": 0,
+            "clipped": 0,
+            "tailPeak": 0.000004944268312101485,
+            "seconds": 46.744081632653064,
+            "steady": null,
+            "passed": true
+          }
+        ],
+        "passed": true
+      }
+    ],
+    "artifact": "tests/artifacts/pixelmusic-0.6-decode-regression.json"
+  },
+  "crossEnvironment": {
+    "status": "passed",
+    "imageCount": 84,
+    "imageBundleHash": "8a64685de659c9cf",
+    "allFinalAudioScoresMatchBrowserAndNode": true,
+    "artifact": "tests/fidelity-browser-snapshot.json"
+  },
+  "browserUi": {
+    "protocol": "http://127.0.0.1",
+    "whiteRegions": 120,
+    "whiteOnsets": 1,
+    "lastRegionPreview": true,
+    "naturalEnd": true,
+    "midSustainToneSwitch": {
+      "beforeRegion": 109,
+      "afterRegion": 110,
+      "voice": "1/1"
+    },
+    "actualPngUpload": true,
+    "pngUploadOnsets": 60,
+    "consoleErrors": 0,
+    "consoleWarnings": 0,
+    "comparisonModes": {
+      "complete": true,
+      "fixed88Bpm": true,
+      "samePitch88Bpm": true,
+      "audioCardsPerMode": 4
+    },
+    "finalScreenshot": "tests/artifacts/pixelmusic-0.6-final-workbench-detail.jpg"
+  },
+  "directHtml": {
+    "automatedLiveFileProtocol": false,
+    "userConfirmed": true,
+    "status": "passed-user-confirmed",
+    "version": "0.6.0",
+    "confirmedOn": "2026-10-07",
+    "confirmation": "我手动试了一下，确认这些正常了",
+    "scope": [
+      "generation",
+      "playback",
+      "scan_highlights",
+      "region_preview",
+      "wav_save"
+    ]
+  },
+  "sourceSha256": [
+    {
+      "path": "dist/music.js",
+      "sha256": "2bfb5c499da95e4b7674117b2ea6136fbf005b5bdbcbfa9df199e1cf85fb4566"
+    },
+    {
+      "path": "dist/rhythm.js",
+      "sha256": "44b68f8f694f54853403a04e7688aa6cc842e797e312eea8625bdcc28dd787fe"
+    },
+    {
+      "path": "dist/image-analysis.js",
+      "sha256": "16ce1d71ef065808cb526e3cfb61bacb90c2045198e42379e3386f4ad350b3b8"
+    },
+    {
+      "path": "dist/timing.js",
+      "sha256": "6fabfb1f4ceabb68b1488938d94c672d1cb0275aface9f968da6595f0b058783"
+    },
+    {
+      "path": "dist/audio.js",
+      "sha256": "7719256fb721f33b84641a18dc1dbbd4f09350d485b9a496d853e54ca10c828d"
+    },
+    {
+      "path": "dist/app.js",
+      "sha256": "9307f0fe1d912181ad642378fa6f625978808ecb55dcba7e64c9cc3e05c32346"
+    },
+    {
+      "path": "dist/index.html",
+      "sha256": "a76dbd157e68e754ab4820c37399c4a888d91f56a7bf1477bbebc8d7c2b9222e"
+    },
+    {
+      "path": "dist/styles.css",
+      "sha256": "14735ae8b2bbe2a0fc971a474585d53d1c9c9ce3a96a73a3dbf651c00f04fd6b"
+    },
+    {
+      "path": "tests/fidelity-listen.js",
+      "sha256": "da9d9e410184814d79ab21adc29856f55a0a1b04761c5a8e4ad67eedb1445e69"
+    },
+    {
+      "path": "tests/fidelity-listen.html",
+      "sha256": "fc96849aa74602ab5901d31e9f1fd9d05983ce88e666b161761e7b608aafc957"
+    }
+  ],
+  "limitations": [
+    "Human subjective listening scores were not required and were not fabricated.",
+    "Current Chromium and Node only; normalized pixels must match.",
+    "Sound and rhythm collisions are allowed; fingerprints are not cryptographic.",
+    "Direct HTML runtime was verified by the user, not by browser automation."
+  ],
+  "additionalBoundaryProbes": {
+    "status": "passed",
+    "results": [
+      {
+        "strength": 11,
+        "onsets": 1,
+        "bpm": 76,
+        "boundaries": []
+      },
+      {
+        "strength": 12,
+        "onsets": 1,
+        "bpm": 76,
+        "boundaries": []
+      },
+      {
+        "strength": 13,
+        "onsets": 3,
+        "bpm": 76,
+        "boundaries": [
+          [
+            {
+              "kind": "cumulative-colour-drift",
+              "distance": 0.072917,
+              "anchorRegion": "0:0"
+            }
+          ],
+          [
+            {
+              "kind": "cumulative-colour-drift",
+              "distance": 0.072917,
+              "anchorRegion": "9:2"
+            }
+          ]
+        ]
+      },
+      {
+        "strength": 14,
+        "onsets": 3,
+        "bpm": 76,
+        "boundaries": [
+          [
+            {
+              "kind": "cumulative-colour-drift",
+              "distance": 0.072917,
+              "anchorRegion": "0:0"
+            }
+          ],
+          [
+            {
+              "kind": "cumulative-colour-drift",
+              "distance": 0.072917,
+              "anchorRegion": "9:2"
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  "additionalColourRampProbe": {
+    "pitchCount": 1,
+    "onsets": 6,
+    "internalBoundaryReasons": [
+      "cumulative-colour-drift",
+      "cumulative-colour-drift",
+      "cumulative-colour-drift",
+      "cumulative-colour-drift",
+      "cumulative-colour-drift"
+    ],
+    "repeatedScoreIdentical": true,
+    "recipe": "192x120: c=round(80*x/191), RGBA=[128+c,128-c,128-c,255]"
+  },
+  "completionAudit": [
+    {
+      "planSection": 1,
+      "status": "engineering-proven",
+      "evidence": [
+        "tests/fidelity.test.cjs",
+        "tests/fidelity-parameters.test.cjs"
+      ],
+      "note": "Image-derived variation; subjective preference explicitly not claimed."
+    },
+    {
+      "planSection": 2,
+      "status": "proven",
+      "evidence": [
+        "tests/baseline/music-v05.js",
+        "tests/baseline/image-analysis-v05.js",
+        "tests/browser-snapshot.test.cjs"
+      ],
+      "note": "Frozen 0.5 diagnosis and snapshots preserved."
+    },
+    {
+      "planSection": 3,
+      "status": "proven",
+      "evidence": [
+        "tests/score-contract.cjs",
+        "tests/fidelity-audio.test.cjs",
+        "tests/fidelity-normalization.test.cjs"
+      ],
+      "note": "120 regions, snake order, 64 beats, variable actual voices."
+    },
+    {
+      "planSection": 4,
+      "status": "proven",
+      "evidence": [
+        "dist/image-analysis.js",
+        "dist/rhythm.js",
+        "tests/fidelity-parameters.test.cjs"
+      ],
+      "note": "Continuous local/global structure metrics, 256 uniform grey levels, 32 matching-histogram noise seeds."
+    },
+    {
+      "planSection": 5,
+      "status": "proven",
+      "evidence": [
+        "dist/music.js",
+        "tests/fidelity.test.cjs"
+      ],
+      "note": "Absolute feature targets; no positional/hash contour or forced climax/cadence."
+    },
+    {
+      "planSection": 6,
+      "status": "proven",
+      "evidence": [
+        "dist/rhythm.js",
+        "tests/fidelity.test.cjs",
+        "additionalBoundaryAndColourRampProbes"
+      ],
+      "note": "Pitch/boundary/cumulative/period evidence; 1-pitch colour ramp produces 6 evidence-backed segments."
+    },
+    {
+      "planSection": 7,
+      "status": "proven",
+      "evidence": [
+        "tests/score-contract.cjs",
+        "tests/fidelity-timing.test.cjs"
+      ],
+      "note": "256 ticks allocated to real voices/rests; region animation subdivision is not an attack."
+    },
+    {
+      "planSection": 8,
+      "status": "proven",
+      "evidence": [
+        "tests/score-contract.cjs",
+        "tests/fidelity-browser.test.cjs"
+      ],
+      "note": "Bidirectional provenance, variable melody array, 84 sound/mapping/rhythm snapshot matches."
+    },
+    {
+      "planSection": 9,
+      "status": "proven",
+      "evidence": [
+        "tests/fidelity-audio.test.cjs",
+        "tests/artifacts/pixelmusic-0.6-audio-regression.json"
+      ],
+      "note": "Conditional accompaniment; 63 steady sustain render checks; resume and cleanup."
+    },
+    {
+      "planSection": 10,
+      "status": "http-and-user-file-proven",
+      "evidence": [
+        "dist/app.js",
+        "dist/index.html",
+        "tests/artifacts/pixelmusic-0.6-final-workbench-detail.jpg",
+        "directHtml.userConfirmation"
+      ],
+      "note": "Separate region/sound positions, neutral navigation, preview and timbre continuity verified."
+    },
+    {
+      "planSection": 11,
+      "status": "stages-A-D-proven",
+      "evidence": [
+        "tests/baseline/*-v05.js",
+        "tests/fidelity*.test.cjs",
+        "FIDELITY_IMPLEMENTATION_REPORT.md",
+        "directHtml.userConfirmation"
+      ]
+    },
+    {
+      "planSection": 12,
+      "status": "automated-and-user-file-proven",
+      "evidence": [
+        "fifteen-suite-exit-codes",
+        "324-audio-cases",
+        "18-codec-render-cases",
+        "directHtml.userConfirmation"
+      ],
+      "note": "All automatic gates and the user-confirmed direct HTML functional gate passed."
+    },
+    {
+      "planSection": 13,
+      "status": "http-proven",
+      "evidence": [
+        "tests/fidelity-listen.html",
+        "tests/fidelity-listen.js"
+      ],
+      "note": "Complete, fixed 88 BPM and same-pitch modes each generate four audio cards; no ratings required."
+    },
+    {
+      "planSection": 14,
+      "status": "proven",
+      "evidence": [
+        "git diff",
+        "dist/index.html",
+        "tests/local-bundle.test.cjs"
+      ],
+      "note": "Local-only; no dependency installation, AI, deployment, added timing length or Git commit."
+    },
+    {
+      "planSection": 15,
+      "status": "engineering-and-functional-proven",
+      "evidence": [
+        "white-one-event-contract",
+        "gradient-and-texture-cases",
+        "directHtml.userConfirmation"
+      ],
+      "note": "Stable white sound and evidence-driven richness; subjective preferences not claimed."
+    }
+  ],
+  "lastAuditedOn": "2026-10-07",
+  "completedOn": "2026-10-07"
+}
