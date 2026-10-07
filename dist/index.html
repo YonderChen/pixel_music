@@ -14,7 +14,7 @@
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%2311110f'/%3E%3Cpath d='M17 19h30v26H17z' fill='none' stroke='%23f4f1e8' stroke-width='3'/%3E%3Cpath d='M25 37V25l15-3v12' fill='none' stroke='%23ff6b45' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='21' cy='39' r='5' fill='%23ff6b45'/%3E%3Ccircle cx='36' cy='36' r='5' fill='%23ff6b45'/%3E%3C/svg%3E"
     />
     <title>图鸣 · PixelMusic</title>
-    <link rel="stylesheet" href="./styles.css?v=0.6.0-r2" />
+    <link rel="stylesheet" href="./styles.css?v=0.6.1-r1" />
   </head>
   <body>
     <main class="app-shell">
@@ -74,8 +74,8 @@
             <span>IMAGE SIGNATURE</span>
             <code id="fingerprintValue">–––– –––– –––– ––––</code>
             <span class="score-signature-label">SCORE SIGNATURE · 乐谱版本</span>
-            <code class="score-signature" id="scoreHashValue">0.6.0 · 等待图像</code>
-            <span class="score-signature-label">RHYTHM SIGNATURE · 图片节奏</span>
+            <code class="score-signature" id="scoreHashValue">0.6.1 · 等待图像</code>
+            <span class="score-signature-label">RHYTHM SIGNATURE · 实际演奏</span>
             <code class="score-signature" id="rhythmHashValue">等待图像</code>
             <span class="score-signature-label">REGION MAPPING · 区域出处</span>
             <code class="score-signature" id="mappingHashValue">等待图像</code>
@@ -93,6 +93,12 @@
             <label><input type="radio" name="tone" value="mist" /><span>弦雾</span></label>
           </fieldset>
 
+          <fieldset class="tone-picker performance-picker">
+            <legend>稳定区域的奏法</legend>
+            <label><input type="radio" name="performanceStyle" value="sparse" checked /><span>轻奏留白</span></label>
+            <label><input type="radio" name="performanceStyle" value="continuous" /><span>连续声景</span></label>
+          </fieldset>
+
           <div class="actions">
             <label class="button button-primary" for="fileInput">
               <input id="fileInput" type="file" accept="image/jpeg,image/png,image/webp" />
@@ -106,7 +112,7 @@
           <button class="sample-button" id="sampleButton" type="button">先用示例图体验</button>
           <button class="sample-button" id="whiteSampleButton" type="button">也试试纯白图片</button>
           <button class="sample-button" id="exportButton" type="button" disabled>保存这张图的音乐 · WAV</button>
-          <a class="comparison-link" href="../tests/fidelity-listen.html">图像忠实性 · 本地对照试听</a>
+          <a class="comparison-link" href="../tests/articulation-listen.html">轻奏与长音 · 本地对照试听</a>
         </div>
       </section>
 
@@ -117,9 +123,9 @@
         </div>
         <ol>
           <li><span>01</span><div><strong>横向位置决定时间</strong><p>图片被划分为 24 列，从左向右依次演奏。</p></div></li>
-          <li><span>02</span><div><strong>120 个区域，不必敲击 120 次</strong><p>相同声音可以跨区域持续。每个区域保留出处、都能点击试听；纯色图是一段稳定声音。</p></div></li>
-          <li><span>03</span><div><strong>图片变化，声音才变化</strong><p>明暗渐变带来缓慢变化，重复纹理产生有依据的节奏。不为静态图片补上高潮或和弦循环。</p></div></li>
-          <li><span>04</span><div><strong>同图同版本，可以重现</strong><p>相同规范化像素与设置，在 PixelMusic 0.6 中生成相同乐谱；音乐指纹与区域映射分别记录。</p></div></li>
+          <li><span>02</span><div><strong>120 个区域，不必敲击 120 次</strong><p>每个区域保留出处、都能点击试听。稳定长段默认轻奏同音、间隔留白，也可选择连续声景。</p></div></li>
+          <li><span>03</span><div><strong>图片决定音高与结构</strong><p>渐变与纹理提供音乐变化；轻奏留白只调整稳定长段的发声方式，不为静态图片补上旋律或和弦循环。</p></div></li>
+          <li><span>04</span><div><strong>同图同版本，可以重现</strong><p>相同规范化像素与奏法，在 PixelMusic 0.6.1 中生成相同乐谱。演奏留白明确来自奏法规则，不冒充图片变化。</p></div></li>
         </ol>
       </section>
 
@@ -130,11 +136,11 @@
     </main>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="./timing.js?v=0.6.0-r2"></script>
-    <script src="./rhythm.js?v=0.6.0-r2"></script>
-    <script src="./music.js?v=0.6.0-r2"></script>
-    <script src="./image-analysis.js?v=0.6.0-r2"></script>
-    <script src="./audio.js?v=0.6.0-r2"></script>
-    <script src="./app.js?v=0.6.0-r2"></script>
+    <script src="./timing.js?v=0.6.1-r1"></script>
+    <script src="./rhythm.js?v=0.6.1-r1"></script>
+    <script src="./music.js?v=0.6.1-r1"></script>
+    <script src="./image-analysis.js?v=0.6.1-r1"></script>
+    <script src="./audio.js?v=0.6.1-r1"></script>
+    <script src="./app.js?v=0.6.1-r1"></script>
   </body>
 </html>

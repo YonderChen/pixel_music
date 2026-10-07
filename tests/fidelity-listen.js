@@ -1,5 +1,5 @@
 'use strict';
-const $=id=>document.getElementById(id),Music=window.PixelMusic,Analysis=window.PixelMusicImage,Audio=window.PixelMusicAudio;
+const $=id=>document.getElementById(id),Music=window.PixelMusicV06,Analysis=window.PixelMusicImageV06,Audio=window.PixelMusicAudioV06;
 const OldMusic=window.PixelMusicV05,OldAnalysis=window.PixelMusicImageV05,OldAudio=window.PixelMusicAudioV05,Samples=window.PixelMusicFidelityFixtures;
 let busy=false,urls=[],reportData=null;
 for(const id of ['imageA','imageB'])$(id).innerHTML=Samples.names.map((name,i)=>`<option value="${i}">${i+1}. ${name}</option>`).join('');

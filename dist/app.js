@@ -10,7 +10,7 @@ const els = Object.fromEntries(Object.entries({
   phraseTracker: 'phraseTracker', phraseLabel: 'phraseLabel', uploadLabel: 'uploadLabel',
   play: 'playButton', playLabel: 'playLabel', sample: 'sampleButton', whiteSample: 'whiteSampleButton', toast: 'toast',
 }).map(([key, id]) => [key, document.getElementById(id)]));
-let audioContext, audioSession, composition = null, canonicalImage = null, displaySource = null;
+let audioContext, audioSession, composition = null, canonicalImage = null, displaySource = null, currentAnalysis = null;
 let isPlaying = false, animationId = 0, playbackStart = 0, playbackToken = 0, loadToken = 0;
 let regionCells = [], noteBars = [], lastActive = -1, lastPhrase = -1;
 
@@ -29,7 +29,8 @@ function normalizeSource(source) {
 function analyzeSource(source, name) {
   const canonical = normalizeSource(source);
   const data = canonical.getContext('2d').getImageData(0, 0, canonical.width, canonical.height).data;
-  const score = Music.compose(ImageAnalysis.analyzePixels(data)); score.name = name;
+  currentAnalysis=ImageAnalysis.analyzePixels(data);
+  const score = Music.compose(currentAnalysis,{performanceStyle:currentPerformanceStyle()}); score.name = name;
   canonicalImage = canonical; displaySource = source; composition = score;
   drawDisplay(); renderComposition();
 }
@@ -61,8 +62,8 @@ function renderComposition() {
   els.rhythmHash.textContent = c.rhythmFingerprint.toUpperCase().match(/.{1,4}/g).join(' ');
   els.mappingHash.textContent = c.mappingFingerprint.toUpperCase().match(/.{1,4}/g).join(' ');
   els.export.disabled = false;
-  els.stageLabel.textContent = `120 区域 · ${c.melody.length} 次起音 · ${Math.round(c.duration)} 秒`;
-  els.phraseLabel.textContent = c.melody.length === 1 ? '图像稳定，同一个声音持续经过所有区域' : '图像的变化决定声音的变化';
+  els.stageLabel.textContent = `120 区域 · ${c.performanceEvents.length} 次起音 · ${Math.round(c.duration)} 秒`;
+  els.phraseLabel.textContent = c.melody.length === 1 ? c.performanceStyle==='sparse'?'图像稳定，轻奏同音，间隔留白':'图像稳定，连续声景' : '图像决定音高与结构，稳定长段采用轻奏留白';
   els.uploadLabel.textContent = '更换图片'; els.play.disabled = false;
   els.empty.classList.add('hidden'); els.dropZone.classList.add('has-image');
   els.dropZone.classList.toggle('light-image', c.avgL > .72);
@@ -84,6 +85,7 @@ async function getAudioContext() {
   return audioContext;
 }
 function currentTone() { return document.querySelector('input[name="tone"]:checked').value; }
+function currentPerformanceStyle() { return document.querySelector('input[name="performanceStyle"]:checked').value; }
 async function togglePlayback() {
   if (!composition) return;
   if (isPlaying) return stopPlayback();
@@ -102,10 +104,10 @@ function animatePlayback() {
   if (!isPlaying || !composition) return;
   const elapsed = Math.max(0, audioContext.currentTime - playbackStart), position = Music.playbackPosition(composition, elapsed);
   if (position.finished) return stopPlayback();
-  const { note, index, rest, tail, phase } = position;
-  els.scanLine.classList.add('active'); els.scanLine.classList.toggle('breathing', rest || tail);
+  const { note, index, rest, tail, phase, performanceRest } = position;
+  els.scanLine.classList.add('active'); els.scanLine.classList.toggle('breathing', rest || tail || performanceRest);
   els.scanLine.style.transform = `translateX(${position.scanFraction * els.dropZone.clientWidth}px)`;
-  els.scanLine.firstElementChild.textContent = tail ? '余韵' : rest ? '呼吸' : note.noteName;
+  els.scanLine.firstElementChild.textContent = tail ? '余韵' : rest ? '边界' : performanceRest ? '留白' : note.noteName;
   if (!note) {
     regionCells.forEach(cell => cell.classList.remove('active')); noteBars.forEach(bar => bar.classList.remove('active'));
     els.stepLabel.textContent = '000 / 120'; els.status.textContent = '等待起音';
@@ -113,14 +115,14 @@ function animatePlayback() {
   }
   if (lastActive !== index) {
     regionCells.forEach(cell => cell.classList.toggle('active', Number(cell.dataset.sequence) === index));
-    noteBars.forEach((bar, col) => bar.classList.toggle('active', col === note.col));
+    noteBars.forEach((bar, col) => bar.classList.toggle('active', col === position.region.col));
     els.stepLabel.textContent = `${String(index + 1).padStart(3, '0')} / 120`; lastActive = index;
   }
   if (lastPhrase !== phase) {
     [...els.phraseTracker.children].forEach((item, i) => item.classList.toggle('active', i === phase)); lastPhrase = phase;
   }
-  els.phraseLabel.textContent = `${Music.PHRASES[phase]} · 声音 ${position.soundIndex + 1} / ${composition.melody.length}${rest ? ' · 图像边界留白' : tail ? ' · 余韵' : note.regionIds.length > 1 ? ' · 跨区域持续' : ''}`;
-  els.status.textContent = rest ? '图像边界留白' : tail ? '渐渐收尾' : '正在演奏';
+  els.phraseLabel.textContent = `${Music.PHRASES[phase]} · 起音 ${position.performanceIndex + 1} / ${composition.performanceEvents.length}${rest ? ' · 图像边界留白' : tail ? ' · 余韵' : performanceRest ? ' · 奏法留白，扫描继续' : position.performanceNote?.envelope==='pluck' ? ' · 轻奏同音' : ''}`;
+  els.status.textContent = rest ? '图像边界留白' : tail ? '渐渐收尾' : performanceRest ? '轻奏留白' : '正在演奏';
   animationId = requestAnimationFrame(animatePlayback);
 }
 function stopPlayback() {
@@ -177,7 +179,7 @@ els.regionGrid.addEventListener('click', async event => {
   const note = Music.previewForRegion(composition, Number(cell.dataset.sequence));
   try {
     const context = await getAudioContext(), preview = Audio.createSession(context, { bpm: composition.bpm, volume: .85 });
-    preview.voice(note.midi, context.currentTime + .02, .65, note.velocity, currentTone(), 'melody', note.send, null, { sustain: true, fullDuration: .65 });
+    preview.voice(note.midi, context.currentTime + .02, .65, note.velocity, currentTone(), 'melody', note.send, null, { sustain: note.envelope!=='pluck',pluck:note.envelope==='pluck',fullDuration:.65 });
     cell.classList.add('preview'); setTimeout(() => cell.classList.remove('preview'), 420); setTimeout(() => preview.stop(), 950);
   } catch (error) { showToast(error.message); }
 });
@@ -187,6 +189,12 @@ document.querySelectorAll('input[name="tone"]').forEach(input => input.addEventL
   audioSession.stop(); audioSession = Audio.createSession(audioContext, { bpm: composition.bpm });
   // Keep the original audio/scan clock; only the user's timbre change is crossfaded.
   audioSession.schedule(composition, playbackStart, currentTone(), Music.timeToBeat(composition, continuedAt - playbackStart));
+}));
+document.querySelectorAll('input[name="performanceStyle"]').forEach(input=>input.addEventListener('change',()=>{
+  if(!currentAnalysis||!composition)return;
+  const name=composition.name,wasPlaying=isPlaying;stopPlayback();
+  composition=Music.compose(currentAnalysis,{performanceStyle:currentPerformanceStyle()});composition.name=name;renderComposition();
+  if(wasPlaying)showToast('已切换奏法，请重新开始听画');
 }));
 ['dragenter', 'dragover'].forEach(type => els.dropZone.addEventListener(type, event => { event.preventDefault(); els.dropZone.classList.add('dragging'); }));
 ['dragleave', 'drop'].forEach(type => els.dropZone.addEventListener(type, event => { event.preventDefault(); els.dropZone.classList.remove('dragging'); }));

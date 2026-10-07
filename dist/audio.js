@@ -31,7 +31,19 @@
       const peak = Math.max(.001, velocity) * (expressive ? clamp((440 / frequency) ** .1, .84, 1.15) : 1);
       const attack = expressive ? Math.min(duration * .16, role === 'pad' ? .16 : tone === 'mist' ? .038 : .009) : Math.min(duration * .2, legacyAttack ?? (tone === 'mist' ? .18 : .025));
       filter.type = 'lowpass'; filter.frequency.setValueAtTime(expressive ? (tone === 'glass' ? 3600 : tone === 'warm' ? 2600 : 1400) : (tone === 'glass' ? 5200 : tone === 'warm' ? 1900 : 1100), start);
-      if (performance?.sustain) {
+      if (performance?.pluck) {
+        const full=performance.fullDuration??duration,offset=performance.offsetSeconds||0;
+        const onset=Math.min(.025,full*.12),release=Math.min(.15,full*.18),decay=Math.min(.22,(full-release)*.55);
+        const knots=[[0,.0001],[onset,peak],[Math.max(onset,decay),peak*.36],[Math.max(decay,full-release),peak*.06],[full,.0001]];
+        const levelAt=time=>{
+          for(let i=1;i<knots.length;i++)if(time<=knots[i][0]){const [t0,v0]=knots[i-1],[t1,v1]=knots[i];return v0*(v1/v0)**((time-t0)/Math.max(.000001,t1-t0));}
+          return .0001;
+        };
+        const fade=Math.min(duration*.12,offset?.02:onset);
+        gain.gain.setValueAtTime(.0001,start);
+        gain.gain.exponentialRampToValueAtTime(Math.max(.0001,levelAt(offset+fade)),start+fade);
+        knots.forEach(([time,level])=>{if(time>offset+fade)gain.gain.exponentialRampToValueAtTime(level,start+time-offset);});
+      } else if (performance?.sustain) {
         const full = performance.fullDuration ?? duration, offset = performance.offsetSeconds || 0;
         const originalAttack = Math.min(full * .18, role === 'pad' ? .16 : tone === 'mist' ? .055 : .025), release = Math.min(.35, full * .18);
         const levelAt = time => time < originalAttack ? .0001 * (peak / .0001) ** (time / originalAttack) : time > full - release ? peak * (.0001 / peak) ** ((time - full + release) / release) : peak;
@@ -49,7 +61,7 @@
       }
       gain.connect(filter); filter.connect(dry); filter.connect(sendGain); sendGain.connect(delay);
       sendGain.gain.value = expressive ? send : 1;
-      const partials = performance?.sustain ? (tone === 'glass' ? [['sine',1,.76],['sine',2,.12],['sine',4,.025]] : tone === 'warm' ? [['sine',1,.75],['triangle',1,.15],['sine',2,.055]] : [['triangle',1,.35],['sine',1,.52]])
+      const partials = performance?.sustain || performance?.pluck ? (tone === 'glass' ? [['sine',1,.76],['sine',2,.12],['sine',4,.025]] : tone === 'warm' ? [['sine',1,.75],['triangle',1,.15],['sine',2,.055]] : [['triangle',1,.35],['sine',1,.52]])
         : !expressive ? (tone === 'glass' ? [['sine', 1, .72], ['triangle', 2, .2]] : tone === 'warm' ? [['triangle', 1, .72], ['sine', 1.003, .2]] : [['sawtooth', 1, .32], ['sine', 1.003, .2]])
         : tone === 'glass' ? [['sine', 1, .76], ['sine', 2, .12], ['sine', 3.99, .025]]
           : tone === 'warm' ? [['sine', 1, .75], ['triangle', 1, .15], ['sine', 2, .055]]
@@ -72,9 +84,9 @@
         function eventVoice(event, pitch, selectedTone, role, stagger = 0) {
           const fullStart = time(event.beat) + stagger, fullEnd = time(event.beat + event.durationBeats), onset = Math.max(fullStart, time(fromBeat));
           if (fullEnd <= onset) return;
-          voice(pitch, start + onset, fullEnd - onset, event.velocity, selectedTone, role, event.send, null, { sustain: true, fullDuration: fullEnd - fullStart, offsetSeconds: onset - fullStart });
+          voice(pitch, start + onset, fullEnd - onset, event.velocity, selectedTone, role, event.send, null, { sustain: event.envelope!=='pluck', pluck:event.envelope==='pluck', fullDuration: fullEnd - fullStart, offsetSeconds: onset - fullStart });
         }
-        score.melody.forEach(event => eventVoice(event, event.midi, tone, 'melody'));
+        (score.performanceEvents||score.melody).forEach(event => eventVoice(event, event.midi, tone, 'melody'));
         score.bassEvents.forEach(event => eventVoice(event, event.midi, 'warm', 'bass'));
         score.padEvents.forEach(event => event.midi.forEach((pitch,index) => eventVoice(event,pitch,'mist','pad',index*.012)));
         return { start, end: start + score.duration };

@@ -45,6 +45,7 @@
   function makeAccompaniment(melody,profile,mode,root,rests) {
     const bassEvents=[],padEvents=[];let previous=null,previousBass=36+root;
     for(const event of melody){
+      if(event.performanceEnvelope==='pluck')continue;
       const local=mean(profile.notes.slice(event.startIndex,event.endIndex+1).map(n=>n.complexity)),gain=fixed(Math.min(.028,local*.05));
       if(gain<.003||event.beats<1)continue;
       const degree=mode.notes.indexOf(pc(event.midi-root)),classes=[0,2,4].map(offset=>mode.notes[(Math.max(0,degree)+offset)%mode.notes.length]);
@@ -97,22 +98,55 @@
     };
   }
   function audible(event) { return [event.beat,event.beats,event.durationBeats,event.midi,event.velocity,event.envelope,event.send]; }
-  function rhythmFingerprint(score) { return digestText(JSON.stringify({notes:score.melody.map(n=>[n.beat,n.beats]),rests:score.rests.map(r=>[r.beat,r.beats])})); }
+  const PERFORMANCE_RULES = Object.freeze({ version:'sparse-pluck-v1', minimumSegmentBeats:6, maximumComplexity:.08, maximumFeatureDrift:.035 });
+  function makePerformance(score, style) {
+    if(!['sparse','continuous'].includes(style))throw new Error('未知演奏方式');
+    const events=[],rests=[],decisions=[];
+    for(const source of score.melody){
+      const features=score.diagnostics.regionFeatures.slice(source.startIndex,source.endIndex+1);
+      const complexity=mean(features.map(n=>n.complexity));
+      const drift=Math.max(...features.map(n=>Rhythm.difference(n.vector,features[0].vector)));
+      const sparse=style==='sparse'&&source.beats>=PERFORMANCE_RULES.minimumSegmentBeats&&complexity<=PERFORMANCE_RULES.maximumComplexity&&drift<=PERFORMANCE_RULES.maximumFeatureDrift&&!source.reasons.some(r=>r.kind==='measured-period');
+      const light=mean(features.map(n=>n.vector[0])),chroma=mean(features.map(n=>n.vector[3]));
+      const interval=sparse?Math.round((3+.5*(1-light)+.25*chroma)*4)/4:source.beats;
+      const noteLength=sparse?Math.round((.9+.25*light)*4)/4:source.durationBeats;
+      decisions.push({sourceEventId:source.id,sparse,complexity:fixed(complexity),featureDrift:fixed(drift),intervalBeats:interval,noteBeats:noteLength,reason:sparse?'stable-region-performance-rule':'preserve-image-structure'});
+      let stroke=0;
+      for(let beat=source.beat;beat<source.beat+source.beats;beat+=interval){
+        const remaining=source.beat+source.beats-beat;
+        if(sparse&&stroke&&remaining<.75){rests.push({beat,beats:remaining,scope:'performance-melody',sourceEventId:source.id,reason:'performance-rule-trailing-space'});break;}
+        const coverageBeats=Math.min(interval,remaining),durationBeats=Math.min(noteLength,remaining);
+        const event={...source,id:`${source.id}:stroke-${stroke}`,sourceEventId:source.id,index:events.length,beat,beats:sparse?durationBeats:source.beats,durationBeats,coverageBeats,envelope:sparse?'pluck':'sustain',articulation:sparse?'sparse-repeat':'sustain',send:sparse?.008:source.send,origin:sparse?'performance-rule':'image-structure'};
+        events.push(event);
+        if(sparse&&coverageBeats>durationBeats)rests.push({beat:beat+durationBeats,beats:coverageBeats-durationBeats,scope:'performance-melody',sourceEventId:source.id,reason:'performance-rule-space'});
+        stroke++;
+      }
+      source.performanceEnvelope=sparse?'pluck':'sustain';
+    }
+    score.regionMap.forEach(region=>{region.previewRef.envelope=score.melody.find(source=>source.id===region.voiceEventId).performanceEnvelope;});
+    return {events,rests,decisions,style,rules:PERFORMANCE_RULES};
+  }
+  function rhythmFingerprint(score) { return digestText(JSON.stringify({notes:(score.performanceEvents||score.melody).map(n=>[n.beat,n.beats]),rests:[...score.rests,...(score.performanceRests||[])].sort((a,b)=>a.beat-b.beat).map(r=>[r.beat,r.beats])})); }
   function scoreFingerprint(score) {
     if(!score.regionMap)return digestText(JSON.stringify({version:score.version,synthVersion:score.synthVersion,root:score.root,mode:score.mode.id,bpm:score.bpm,tempoMap:score.tempoMap,melody:score.melody.map(n=>[n.regionId,n.beat,n.beats,n.midi,n.durationBeats,n.velocity,n.articulation,n.send]),bars:score.bars.map(b=>[b.beat,b.voicing||b.chord,b.bass]),bass:score.bassEvents,pads:score.padEvents}));
     // Source/mapping metadata has its own signature and must not inflate sound differences.
-    return digestText(JSON.stringify({version:score.version,synthVersion:score.synthVersion,bpm:score.bpm,tempoMap:score.tempoMap,melody:score.melody.map(audible),bass:score.bassEvents.map(audible),pads:score.padEvents.map(audible)}));
+    return digestText(JSON.stringify({version:score.version,synthVersion:score.synthVersion,bpm:score.bpm,tempoMap:score.tempoMap,melody:(score.performanceEvents||score.melody).map(audible),bass:score.bassEvents.map(audible),pads:score.padEvents.map(audible)}));
   }
   function compose(analysis,options={}) {
     const columns=analysis.columns.map(c=>({notes:c.notes.map(n=>({...n}))})),root=options.root??analysis.root,mode=modeOf(options.modeId||analysis.modeId);
     const arranged=arrangeRegions(columns,root,mode,{...options,rhythmStructure:analysis.rhythmStructure}),bpm=options.bpm??analysis.bpm;
-    const score={...analysis,...arranged,columns,bpm,secondsPerBeat:60/bpm,version:'0.6.0',synthVersion:'0.6.0',normalizationVersion:analysis.normalizationVersion||'canonical-fixture-v1'};
+    const score={...analysis,...arranged,columns,bpm,secondsPerBeat:60/bpm,version:'0.6.1',synthVersion:'0.6.1',normalizationVersion:analysis.normalizationVersion||'canonical-fixture-v1'};
     const activities=score.diagnostics.phaseComplexity,average=mean(activities),flat=options.tempo===false||score.rhythmProfile.complexity<.02||Math.max(...activities)-Math.min(...activities)<.02;
     const factor=i=>1+clamp((activities[i]-average)*.08,-.025,.025);
     score.tempoMap=Timing.makeMap(flat?[{beat:0,bpm},{beat:64,bpm}]:[{beat:0,bpm:bpm*factor(0)},{beat:16,bpm:bpm*factor(1)},{beat:32,bpm:bpm*factor(2)},{beat:48,bpm:bpm*factor(3)},{beat:64,bpm:bpm*factor(3)}]);
     score.melodyDuration=Timing.beatToTime(score,64);score.duration=score.melodyDuration+2;
+    score.imageRhythmFingerprint=rhythmFingerprint(score);
+    const performance=makePerformance(score,options.performanceStyle||'sparse');
+    score.performanceEvents=performance.events;score.performanceRests=performance.rests;score.performanceStyle=performance.style;
+    Object.assign(score,makeAccompaniment(score.melody,{notes:score.diagnostics.regionFeatures},score.mode,score.root,score.rests));
+    score.diagnostics.performanceDecisions=performance.decisions;score.diagnostics.actualOnsetCount=performance.events.length;score.diagnostics.performanceRules=performance.rules;
     score.rhythmFingerprint=rhythmFingerprint(score);score.mappingFingerprint=digestText(JSON.stringify(score.regionMap));
-    score.expressionFingerprint=digestText(JSON.stringify({rhythm:score.rhythmFingerprint,bpm,tempo:score.tempoMap,melody:score.melody.map(n=>[n.durationBeats,n.velocity,n.envelope,n.send]),bass:score.bassEvents.map(audible),pads:score.padEvents.map(audible)}));
+    score.expressionFingerprint=digestText(JSON.stringify({rhythm:score.rhythmFingerprint,bpm,tempo:score.tempoMap,melody:score.performanceEvents.map(n=>[n.durationBeats,n.velocity,n.envelope,n.send]),bass:score.bassEvents.map(audible),pads:score.padEvents.map(audible)}));
     score.scoreHash=scoreFingerprint(score);return score;
   }
   function previewForRegion(score,sequence) { const entry=score.regionMap[sequence];if(!entry)throw new Error('未知图像区域');return {...entry.previewRef,voiceEventId:entry.voiceEventId,regionId:entry.regionId}; }
@@ -122,7 +156,10 @@
     if(index<0)index=tail?119:score.regionMap.findLastIndex(r=>r.endBeat<=beat);
     const region=index>=0?score.regionMap[index]:null,soundIndex=region?score.melody.findIndex(n=>n.id===region.voiceEventId):-1,note=soundIndex>=0?score.melody[soundIndex]:null;
     const progress=!region?0:rest||tail?1:clamp((beat-region.startBeat)/(region.endBeat-region.startBeat),0,1);
-    return {index,region,soundIndex,note,rest:!!rest||!region,tail,finished:elapsed>=score.duration,scanFraction:region?clamp((region.col+(region.sequence%5+progress)/5)/24,0,1):0,phase:Math.min(3,Math.floor(beat/16)),beat};
+    const performanceIndex=score.performanceEvents?score.performanceEvents.findLastIndex(n=>n.beat<=beat):-1;
+    const performanceNote=performanceIndex>=0?score.performanceEvents[performanceIndex]:null;
+    const performanceRest=!!performanceNote&&!rest&&!tail&&beat>=performanceNote.beat+performanceNote.durationBeats;
+    return {index,region,soundIndex,note,performanceIndex,performanceNote,performanceRest,rest:!!rest||!region,tail,finished:elapsed>=score.duration,scanFraction:region?clamp((region.col+(region.sequence%5+progress)/5)/24,0,1):0,phase:Math.min(3,Math.floor(beat/16)),beat};
   }
-  return {MODES,PHRASES,modeOf,orderedRegions,midiToName,digestText,mapTargets,arrangeRegions,compose,rhythmFingerprint,scoreFingerprint,previewForRegion,playbackPosition,beatToTime:Timing.beatToTime,timeToBeat:Timing.timeToBeat};
+  return {MODES,PHRASES,PERFORMANCE_RULES,modeOf,orderedRegions,midiToName,digestText,mapTargets,arrangeRegions,compose,rhythmFingerprint,scoreFingerprint,previewForRegion,playbackPosition,beatToTime:Timing.beatToTime,timeToBeat:Timing.timeToBeat};
 });

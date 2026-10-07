@@ -1,6 +1,6 @@
 const assert=require('node:assert/strict'),Music=require('../dist/music.js');
 function check(score){
-  assert.equal(score.version,'0.6.0');assert.equal(score.regionMap.length,120);assert.ok(score.melody.length>=1&&score.melody.length<=120);
+  assert.equal(score.version,'0.6.1');assert.equal(score.regionMap.length,120);assert.ok(score.melody.length>=1&&score.melody.length<=120);
   assert.equal(new Set(score.regionMap.map(r=>r.regionId)).size,120);assert.equal(score.totalBeats,64);assert.equal(score.bars.length,16);
   const ids=new Map(score.melody.map(e=>[e.id,e]));assert.equal(ids.size,score.melody.length);
   score.regionMap.forEach((r,i)=>{
@@ -27,6 +27,16 @@ function check(score){
   }
   score.bassEvents.forEach(event=>assert.deepEqual(event.featureSupport.regionIds,ids.get(event.featureSupport.sourceEventId).regionIds,'pad merging must not mutate a bass event provenance'));
   score.padEvents.forEach(event=>assert.deepEqual(event.featureSupport.regionIds,event.featureSupport.sourceEventIds.flatMap(id=>ids.get(id).regionIds)));
+  assert.ok(score.performanceEvents.length>0);
+  score.performanceEvents.forEach((event,i)=>{
+    assert.equal(event.midi,ids.get(event.sourceEventId).midi);assert.ok(event.durationBeats>0);
+    if(i)assert.ok(event.beat>score.performanceEvents[i-1].beat);
+    assert.ok(['pluck','sustain'].includes(event.envelope));
+    if(event.envelope==='pluck')assert.equal(event.origin,'performance-rule');
+  });
+  const performed=[...score.performanceEvents.map(e=>[e.beat,e.beat+e.beats]),...score.performanceRests.map(r=>[r.beat,r.beat+r.beats]),...score.rests.map(r=>[r.beat,r.beat+r.beats])].sort((a,b)=>a[0]-b[0]);
+  assert.equal(performed[0][0],0);assert.equal(performed.at(-1)[1],64);
+  performed.forEach((span,i)=>{if(i)assert.ok(Math.abs(span[0]-performed[i-1][1])<1e-9);});
   assert.equal(score.rhythmFingerprint,Music.rhythmFingerprint(score));assert.equal(score.scoreHash,Music.scoreFingerprint(score));
   for(let beat=0;beat<=66;beat+=.125)assert.ok(Math.abs(Music.timeToBeat(score,Music.beatToTime(score,beat))-beat)<1e-9);
   assert.equal(Music.playbackPosition(score,score.duration).finished,true);

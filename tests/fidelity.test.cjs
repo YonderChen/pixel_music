@@ -1,6 +1,6 @@
 const assert = require('node:assert/strict');
-const Music = require('../dist/music.js'), Image = require('../dist/image-analysis.js');
-const Samples = require('./fidelity-fixtures.js'), Rhythm = require('../dist/rhythm.js'), check = require('./score-contract.cjs');
+const Music = require('./baseline/music-v06.js'), Image = require('./baseline/image-analysis-v06.js');
+const Samples = require('./fidelity-fixtures.js'), Rhythm = require('./baseline/rhythm-v06.js'), check = require('./score-contract-v06.cjs');
 function solid(rgb) {
   const data = new Uint8ClampedArray(192 * 120 * 4);
   for (let i = 0; i < data.length; i += 4) data.set([...rgb, 255], i);

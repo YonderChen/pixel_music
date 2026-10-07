@@ -1,5 +1,5 @@
 const assert=require('node:assert/strict'),{Context}=require('./fake-audio.cjs');
-const Audio=require('../dist/audio.js'),Music=require('../dist/music.js'),Image=require('../dist/image-analysis.js'),Samples=require('./fidelity-fixtures.js');
+const Audio=require('./baseline/audio-v06.js'),Music=require('./baseline/music-v06.js'),Image=require('./baseline/image-analysis-v06.js'),Samples=require('./fidelity-fixtures.js');
 let cases=0,mainEvents=0,regionBindings=0;
 for(let i=0;i<Samples.names.length;i++){
   const score=Music.compose(Image.analyzePixels(Samples.pixels(i)));

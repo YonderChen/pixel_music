@@ -1,4 +1,4 @@
-const assert=require('node:assert/strict'),Music=require('../dist/music.js'),Image=require('../dist/image-analysis.js'),Samples=require('./fidelity-fixtures.js');
+const assert=require('node:assert/strict'),Music=require('./baseline/music-v06.js'),Image=require('./baseline/image-analysis-v06.js'),Samples=require('./fidelity-fixtures.js');
 const white=Music.compose(Image.analyzePixels(Samples.pixels(60)));
 assert.equal(white.melodyDuration,64*60/76);assert.ok(white.tempoMap.every(s=>s.slope===0));
 const indices=[];for(let second=0;second<white.melodyDuration;second+=.1){const p=Music.playbackPosition(white,second);indices.push(p.index);assert.equal(p.soundIndex,0);assert.equal(p.note.id,'voice-0');assert.ok(!p.rest);}

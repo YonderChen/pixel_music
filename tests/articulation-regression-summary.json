@@ -1,0 +1,915 @@
+{
+  "version": "0.6.1",
+  "status": "passed",
+  "verifiedDate": "2026-10-07",
+  "published": false,
+  "rules": {
+    "version": "sparse-pluck-v1",
+    "minimumSegmentBeats": 6,
+    "maximumComplexity": 0.08,
+    "maximumFeatureDrift": 0.035,
+    "origin": "performance-rule, not image-structure"
+  },
+  "imageFidelity": {
+    "images": 84,
+    "unchangedImagePitchesAndGroups": true,
+    "unchangedRegionVisits": true,
+    "alteredImages": 26,
+    "white": {
+      "attacks": 22,
+      "pitchCount": 1,
+      "intervalSeconds": 2.3684210526315788,
+      "firstNoteSeconds": 0.986842105263158,
+      "sourceRegions": 120
+    },
+    "cases": [
+      {
+        "index": 0,
+        "name": "纯色",
+        "imageSegments": 1,
+        "attacks": 20,
+        "pulsedSegments": 1,
+        "scoreHash": "0d1568595236dd59"
+      },
+      {
+        "index": 1,
+        "name": "黑白棋盘",
+        "imageSegments": 60,
+        "attacks": 60,
+        "pulsedSegments": 0,
+        "scoreHash": "74141d2961ff588f"
+      },
+      {
+        "index": 2,
+        "name": "明暗渐变",
+        "imageSegments": 11,
+        "attacks": 11,
+        "pulsedSegments": 0,
+        "scoreHash": "e169d027c40b0a23"
+      },
+      {
+        "index": 3,
+        "name": "彩色渐变",
+        "imageSegments": 24,
+        "attacks": 24,
+        "pulsedSegments": 0,
+        "scoreHash": "86bc9d51ac45051d"
+      },
+      {
+        "index": 4,
+        "name": "低饱和风景",
+        "imageSegments": 25,
+        "attacks": 25,
+        "pulsedSegments": 0,
+        "scoreHash": "342cd5dd81aa8075"
+      },
+      {
+        "index": 5,
+        "name": "夕阳",
+        "imageSegments": 87,
+        "attacks": 87,
+        "pulsedSegments": 0,
+        "scoreHash": "e4cceb1bf141c82d"
+      },
+      {
+        "index": 6,
+        "name": "高对比建筑",
+        "imageSegments": 54,
+        "attacks": 54,
+        "pulsedSegments": 0,
+        "scoreHash": "b98de1c6d71e081e"
+      },
+      {
+        "index": 7,
+        "name": "几何人像",
+        "imageSegments": 68,
+        "attacks": 68,
+        "pulsedSegments": 0,
+        "scoreHash": "4eb5d1d19cd2f765"
+      },
+      {
+        "index": 8,
+        "name": "抽象图案",
+        "imageSegments": 114,
+        "attacks": 114,
+        "pulsedSegments": 0,
+        "scoreHash": "4d0591d03ff5e37a"
+      },
+      {
+        "index": 9,
+        "name": "密集纹理",
+        "imageSegments": 14,
+        "attacks": 14,
+        "pulsedSegments": 0,
+        "scoreHash": "1224101a01d1ea82"
+      },
+      {
+        "index": 10,
+        "name": "噪声",
+        "imageSegments": 30,
+        "attacks": 30,
+        "pulsedSegments": 0,
+        "scoreHash": "d99e4106be96fac2"
+      },
+      {
+        "index": 11,
+        "name": "局部变化对照",
+        "imageSegments": 87,
+        "attacks": 87,
+        "pulsedSegments": 0,
+        "scoreHash": "d46369e31d6915f9"
+      },
+      {
+        "index": 12,
+        "name": "方向渐变 1",
+        "imageSegments": 8,
+        "attacks": 8,
+        "pulsedSegments": 0,
+        "scoreHash": "fa2b7b3b75fbe23b"
+      },
+      {
+        "index": 13,
+        "name": "方向渐变 2",
+        "imageSegments": 97,
+        "attacks": 97,
+        "pulsedSegments": 0,
+        "scoreHash": "e2323e7ec277a7c6"
+      },
+      {
+        "index": 14,
+        "name": "方向渐变 3",
+        "imageSegments": 8,
+        "attacks": 8,
+        "pulsedSegments": 0,
+        "scoreHash": "0f9199d38c8bf4e7"
+      },
+      {
+        "index": 15,
+        "name": "方向渐变 4",
+        "imageSegments": 97,
+        "attacks": 97,
+        "pulsedSegments": 0,
+        "scoreHash": "177c301560294897"
+      },
+      {
+        "index": 16,
+        "name": "方向渐变 5",
+        "imageSegments": 9,
+        "attacks": 9,
+        "pulsedSegments": 0,
+        "scoreHash": "eb342bb00990bda4"
+      },
+      {
+        "index": 17,
+        "name": "方向渐变 6",
+        "imageSegments": 97,
+        "attacks": 97,
+        "pulsedSegments": 0,
+        "scoreHash": "c385292e7ea93318"
+      },
+      {
+        "index": 18,
+        "name": "周期条纹 1",
+        "imageSegments": 24,
+        "attacks": 24,
+        "pulsedSegments": 0,
+        "scoreHash": "ca99d19de30aa465"
+      },
+      {
+        "index": 19,
+        "name": "周期条纹 2",
+        "imageSegments": 49,
+        "attacks": 49,
+        "pulsedSegments": 0,
+        "scoreHash": "43a91f3cdf9a53c2"
+      },
+      {
+        "index": 20,
+        "name": "周期条纹 3",
+        "imageSegments": 12,
+        "attacks": 12,
+        "pulsedSegments": 0,
+        "scoreHash": "2ecd6037ee543d7f"
+      },
+      {
+        "index": 21,
+        "name": "周期条纹 4",
+        "imageSegments": 73,
+        "attacks": 73,
+        "pulsedSegments": 0,
+        "scoreHash": "97e1e2f41c6e8c28"
+      },
+      {
+        "index": 22,
+        "name": "周期条纹 5",
+        "imageSegments": 14,
+        "attacks": 19,
+        "pulsedSegments": 3,
+        "scoreHash": "9087395ead43c0dc"
+      },
+      {
+        "index": 23,
+        "name": "周期条纹 6",
+        "imageSegments": 97,
+        "attacks": 97,
+        "pulsedSegments": 0,
+        "scoreHash": "73a7c828783c8f9a"
+      },
+      {
+        "index": 24,
+        "name": "棋盘尺度 1",
+        "imageSegments": 13,
+        "attacks": 13,
+        "pulsedSegments": 0,
+        "scoreHash": "4d4b026dee541901"
+      },
+      {
+        "index": 25,
+        "name": "棋盘尺度 2",
+        "imageSegments": 56,
+        "attacks": 56,
+        "pulsedSegments": 0,
+        "scoreHash": "23190ea58fd733e1"
+      },
+      {
+        "index": 26,
+        "name": "棋盘尺度 3",
+        "imageSegments": 108,
+        "attacks": 108,
+        "pulsedSegments": 0,
+        "scoreHash": "2bb39f7861e63818"
+      },
+      {
+        "index": 27,
+        "name": "棋盘尺度 4",
+        "imageSegments": 91,
+        "attacks": 91,
+        "pulsedSegments": 0,
+        "scoreHash": "addb92919fb66823"
+      },
+      {
+        "index": 28,
+        "name": "棋盘尺度 5",
+        "imageSegments": 104,
+        "attacks": 104,
+        "pulsedSegments": 0,
+        "scoreHash": "a7821bd0759db2a4"
+      },
+      {
+        "index": 29,
+        "name": "棋盘尺度 6",
+        "imageSegments": 73,
+        "attacks": 73,
+        "pulsedSegments": 0,
+        "scoreHash": "7026c694d681f3d0"
+      },
+      {
+        "index": 30,
+        "name": "彩色波形 1",
+        "imageSegments": 99,
+        "attacks": 99,
+        "pulsedSegments": 0,
+        "scoreHash": "edac3d5208a36e54"
+      },
+      {
+        "index": 31,
+        "name": "彩色波形 2",
+        "imageSegments": 109,
+        "attacks": 109,
+        "pulsedSegments": 0,
+        "scoreHash": "87a304112fde1953"
+      },
+      {
+        "index": 32,
+        "name": "彩色波形 3",
+        "imageSegments": 110,
+        "attacks": 110,
+        "pulsedSegments": 0,
+        "scoreHash": "4eb0f0924733b8f6"
+      },
+      {
+        "index": 33,
+        "name": "彩色波形 4",
+        "imageSegments": 115,
+        "attacks": 115,
+        "pulsedSegments": 0,
+        "scoreHash": "3c92d571d42da09d"
+      },
+      {
+        "index": 34,
+        "name": "彩色波形 5",
+        "imageSegments": 118,
+        "attacks": 118,
+        "pulsedSegments": 0,
+        "scoreHash": "a4fe650b49a3342f"
+      },
+      {
+        "index": 35,
+        "name": "彩色波形 6",
+        "imageSegments": 117,
+        "attacks": 117,
+        "pulsedSegments": 0,
+        "scoreHash": "b95c4e964eb5e6a0"
+      },
+      {
+        "index": 36,
+        "name": "几何圆形 1",
+        "imageSegments": 55,
+        "attacks": 59,
+        "pulsedSegments": 1,
+        "scoreHash": "5d36a0c035fbe94e"
+      },
+      {
+        "index": 37,
+        "name": "几何圆形 2",
+        "imageSegments": 56,
+        "attacks": 59,
+        "pulsedSegments": 1,
+        "scoreHash": "2fe2cecfe4fcf3dd"
+      },
+      {
+        "index": 38,
+        "name": "几何圆形 3",
+        "imageSegments": 61,
+        "attacks": 63,
+        "pulsedSegments": 1,
+        "scoreHash": "df8d7d01c9b02dd3"
+      },
+      {
+        "index": 39,
+        "name": "几何圆形 4",
+        "imageSegments": 69,
+        "attacks": 69,
+        "pulsedSegments": 0,
+        "scoreHash": "12ae11559d4c0493"
+      },
+      {
+        "index": 40,
+        "name": "几何圆形 5",
+        "imageSegments": 75,
+        "attacks": 75,
+        "pulsedSegments": 0,
+        "scoreHash": "23a8b951bb31b179"
+      },
+      {
+        "index": 41,
+        "name": "几何圆形 6",
+        "imageSegments": 71,
+        "attacks": 71,
+        "pulsedSegments": 0,
+        "scoreHash": "3d00bdd6c7087cc0"
+      },
+      {
+        "index": 42,
+        "name": "空间块面 1",
+        "imageSegments": 104,
+        "attacks": 104,
+        "pulsedSegments": 0,
+        "scoreHash": "b987902719b735cf"
+      },
+      {
+        "index": 43,
+        "name": "空间块面 2",
+        "imageSegments": 106,
+        "attacks": 106,
+        "pulsedSegments": 0,
+        "scoreHash": "efa8d2d9e7853ccb"
+      },
+      {
+        "index": 44,
+        "name": "空间块面 3",
+        "imageSegments": 105,
+        "attacks": 105,
+        "pulsedSegments": 0,
+        "scoreHash": "b484e1d4ff7de480"
+      },
+      {
+        "index": 45,
+        "name": "空间块面 4",
+        "imageSegments": 103,
+        "attacks": 103,
+        "pulsedSegments": 0,
+        "scoreHash": "c598d9c2be7e7ffa"
+      },
+      {
+        "index": 46,
+        "name": "空间块面 5",
+        "imageSegments": 102,
+        "attacks": 102,
+        "pulsedSegments": 0,
+        "scoreHash": "930baf098efb5085"
+      },
+      {
+        "index": 47,
+        "name": "空间块面 6",
+        "imageSegments": 100,
+        "attacks": 100,
+        "pulsedSegments": 0,
+        "scoreHash": "0147e8039a950ac1"
+      },
+      {
+        "index": 48,
+        "name": "放射环形 1",
+        "imageSegments": 105,
+        "attacks": 105,
+        "pulsedSegments": 0,
+        "scoreHash": "a558381f8e33f5f3"
+      },
+      {
+        "index": 49,
+        "name": "放射环形 2",
+        "imageSegments": 97,
+        "attacks": 97,
+        "pulsedSegments": 0,
+        "scoreHash": "a3e400fa3d448ee0"
+      },
+      {
+        "index": 50,
+        "name": "放射环形 3",
+        "imageSegments": 68,
+        "attacks": 68,
+        "pulsedSegments": 0,
+        "scoreHash": "3fbb6c7e19bdab2e"
+      },
+      {
+        "index": 51,
+        "name": "放射环形 4",
+        "imageSegments": 69,
+        "attacks": 69,
+        "pulsedSegments": 0,
+        "scoreHash": "9ec263e23160fcc6"
+      },
+      {
+        "index": 52,
+        "name": "放射环形 5",
+        "imageSegments": 71,
+        "attacks": 71,
+        "pulsedSegments": 0,
+        "scoreHash": "544f08a8aac9500c"
+      },
+      {
+        "index": 53,
+        "name": "放射环形 6",
+        "imageSegments": 67,
+        "attacks": 67,
+        "pulsedSegments": 0,
+        "scoreHash": "465f10d33594e2b3"
+      },
+      {
+        "index": 54,
+        "name": "噪声强度 1",
+        "imageSegments": 1,
+        "attacks": 20,
+        "pulsedSegments": 1,
+        "scoreHash": "03c565a510ba43c9"
+      },
+      {
+        "index": 55,
+        "name": "噪声强度 2",
+        "imageSegments": 1,
+        "attacks": 20,
+        "pulsedSegments": 1,
+        "scoreHash": "ce7f9e61c13a4179"
+      },
+      {
+        "index": 56,
+        "name": "噪声强度 3",
+        "imageSegments": 1,
+        "attacks": 20,
+        "pulsedSegments": 1,
+        "scoreHash": "e14d8ad143e76639"
+      },
+      {
+        "index": 57,
+        "name": "噪声强度 4",
+        "imageSegments": 1,
+        "attacks": 1,
+        "pulsedSegments": 0,
+        "scoreHash": "6a0b4b6845313fb4"
+      },
+      {
+        "index": 58,
+        "name": "噪声强度 5",
+        "imageSegments": 1,
+        "attacks": 1,
+        "pulsedSegments": 0,
+        "scoreHash": "e352f24f99323a2d"
+      },
+      {
+        "index": 59,
+        "name": "噪声强度 6",
+        "imageSegments": 10,
+        "attacks": 10,
+        "pulsedSegments": 0,
+        "scoreHash": "e0dcb2ccf4c90132"
+      },
+      {
+        "index": 60,
+        "name": "精确纯白",
+        "imageSegments": 1,
+        "attacks": 22,
+        "pulsedSegments": 1,
+        "scoreHash": "492eed5b4cf0d783"
+      },
+      {
+        "index": 61,
+        "name": "精确纯黑",
+        "imageSegments": 1,
+        "attacks": 19,
+        "pulsedSegments": 1,
+        "scoreHash": "7dfed760ef11fb64"
+      },
+      {
+        "index": 62,
+        "name": "纯灰 32",
+        "imageSegments": 1,
+        "attacks": 19,
+        "pulsedSegments": 1,
+        "scoreHash": "f572d90161e598ff"
+      },
+      {
+        "index": 63,
+        "name": "纯灰 96",
+        "imageSegments": 1,
+        "attacks": 20,
+        "pulsedSegments": 1,
+        "scoreHash": "664500a5c1c65a89"
+      },
+      {
+        "index": 64,
+        "name": "纯灰 128",
+        "imageSegments": 1,
+        "attacks": 20,
+        "pulsedSegments": 1,
+        "scoreHash": "c04b158d8448dc59"
+      },
+      {
+        "index": 65,
+        "name": "纯灰 192",
+        "imageSegments": 1,
+        "attacks": 20,
+        "pulsedSegments": 1,
+        "scoreHash": "137e8155c1a11d19"
+      },
+      {
+        "index": 66,
+        "name": "接近纯白 254",
+        "imageSegments": 1,
+        "attacks": 22,
+        "pulsedSegments": 1,
+        "scoreHash": "be603d05fa5b9e7f"
+      },
+      {
+        "index": 67,
+        "name": "纯红",
+        "imageSegments": 1,
+        "attacks": 19,
+        "pulsedSegments": 1,
+        "scoreHash": "1c135ef7ced3514b"
+      },
+      {
+        "index": 68,
+        "name": "纯绿",
+        "imageSegments": 1,
+        "attacks": 19,
+        "pulsedSegments": 1,
+        "scoreHash": "58afb1fc93519264"
+      },
+      {
+        "index": 69,
+        "name": "纯蓝",
+        "imageSegments": 1,
+        "attacks": 19,
+        "pulsedSegments": 1,
+        "scoreHash": "dc7991befef281d0"
+      },
+      {
+        "index": 70,
+        "name": "纯青",
+        "imageSegments": 1,
+        "attacks": 19,
+        "pulsedSegments": 1,
+        "scoreHash": "0c280bd9bf2bb95d"
+      },
+      {
+        "index": 71,
+        "name": "纯品红",
+        "imageSegments": 1,
+        "attacks": 19,
+        "pulsedSegments": 1,
+        "scoreHash": "ef6b57505639549a"
+      },
+      {
+        "index": 72,
+        "name": "纯白轻微噪声",
+        "imageSegments": 1,
+        "attacks": 22,
+        "pulsedSegments": 1,
+        "scoreHash": "38f838d547f1eaa7"
+      },
+      {
+        "index": 73,
+        "name": "纯灰轻微噪声",
+        "imageSegments": 1,
+        "attacks": 20,
+        "pulsedSegments": 1,
+        "scoreHash": "c04b158d8448dc59"
+      },
+      {
+        "index": 74,
+        "name": "全范围横向灰阶渐变",
+        "imageSegments": 14,
+        "attacks": 14,
+        "pulsedSegments": 0,
+        "scoreHash": "0171117962f2832f"
+      },
+      {
+        "index": 75,
+        "name": "全范围纵向灰阶渐变",
+        "imageSegments": 97,
+        "attacks": 97,
+        "pulsedSegments": 0,
+        "scoreHash": "7fcf9feb20014b79"
+      },
+      {
+        "index": 76,
+        "name": "白底局部红色块",
+        "imageSegments": 3,
+        "attacks": 23,
+        "pulsedSegments": 2,
+        "scoreHash": "f966df639ace019b"
+      },
+      {
+        "index": 77,
+        "name": "同均值细棋盘",
+        "imageSegments": 24,
+        "attacks": 24,
+        "pulsedSegments": 0,
+        "scoreHash": "6ae14f4c9a1ba47a"
+      },
+      {
+        "index": 78,
+        "name": "同均值横纹",
+        "imageSegments": 97,
+        "attacks": 97,
+        "pulsedSegments": 0,
+        "scoreHash": "e0b61082009c9af2"
+      },
+      {
+        "index": 79,
+        "name": "同均值纵纹",
+        "imageSegments": 24,
+        "attacks": 24,
+        "pulsedSegments": 0,
+        "scoreHash": "6ae14f4c9a1ba47a"
+      },
+      {
+        "index": 80,
+        "name": "七像素有组织纹理",
+        "imageSegments": 14,
+        "attacks": 14,
+        "pulsedSegments": 0,
+        "scoreHash": "1224101a01d1ea82"
+      },
+      {
+        "index": 81,
+        "name": "相同颜色分布打乱",
+        "imageSegments": 7,
+        "attacks": 23,
+        "pulsedSegments": 4,
+        "scoreHash": "4f7fc0568010ffe2"
+      },
+      {
+        "index": 82,
+        "name": "微小累积渐变",
+        "imageSegments": 2,
+        "attacks": 21,
+        "pulsedSegments": 2,
+        "scoreHash": "ba2b9b282bd39e7e"
+      },
+      {
+        "index": 83,
+        "name": "白底黑色区域",
+        "imageSegments": 3,
+        "attacks": 23,
+        "pulsedSegments": 2,
+        "scoreHash": "fb127d9aaf370a14"
+      }
+    ]
+  },
+  "automated": {
+    "suites": [
+      {
+        "test": "articulation",
+        "exitCode": 0
+      },
+      {
+        "test": "articulation-audio",
+        "exitCode": 0
+      },
+      {
+        "test": "articulation-browser",
+        "exitCode": 0
+      },
+      {
+        "test": "fidelity",
+        "exitCode": 0
+      },
+      {
+        "test": "fidelity-audio",
+        "exitCode": 0
+      },
+      {
+        "test": "fidelity-parameters",
+        "exitCode": 0
+      },
+      {
+        "test": "fidelity-timing",
+        "exitCode": 0
+      },
+      {
+        "test": "fidelity-normalization",
+        "exitCode": 0
+      },
+      {
+        "test": "fidelity-browser",
+        "exitCode": 0
+      },
+      {
+        "test": "music",
+        "exitCode": 0
+      },
+      {
+        "test": "rhythm",
+        "exitCode": 0
+      },
+      {
+        "test": "audio",
+        "exitCode": 0
+      },
+      {
+        "test": "timing",
+        "exitCode": 0
+      },
+      {
+        "test": "baseline",
+        "exitCode": 0
+      },
+      {
+        "test": "legacy",
+        "exitCode": 0
+      },
+      {
+        "test": "listening",
+        "exitCode": 0
+      },
+      {
+        "test": "local-bundle",
+        "exitCode": 0
+      },
+      {
+        "test": "browser-snapshot",
+        "exitCode": 0
+      }
+    ],
+    "audioScheduling": {
+      "status": "passed",
+      "schedulingCases": 504,
+      "actualMelodyAttacks": 25716,
+      "decayEnvelope": true,
+      "gapResume": true,
+      "cleanup": true
+    },
+    "realBrowserSnapshotEntries": 168,
+    "continuousStyleMatchesFrozenV06ImageEvents": true
+  },
+  "realAudio": {
+    "cases": 288,
+    "status": "passed",
+    "createdAt": "2026-10-07T00:51:57.135Z",
+    "environment": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+    "maxPeak": 0.18703918159008026,
+    "minRms": 0.012137793897170224,
+    "maxTailPeak": 0.000008612648343842011,
+    "invalid": 0,
+    "clipped": 0,
+    "decayAndGapCases": 54,
+    "maxDecayRmsRatio": 0.11636287070617794,
+    "maxQuietRmsRatio": 0.0004604942642218052,
+    "artifact": "tests/artifacts/articulation-audio-regression.json"
+  },
+  "runtime": {
+    "protocol": "http://127.0.0.1",
+    "sparseWhiteAttacks": 22,
+    "continuousWhiteAttacks": 1,
+    "regions": 120,
+    "comparisonCards": 4,
+    "performanceGapStatus": "轻奏留白",
+    "gapScanRegion": 33,
+    "toneChangeProgressPreserved": true,
+    "lastRegionPreview": true,
+    "consoleErrors": 0,
+    "consoleWarnings": 0,
+    "sampleFiles": [
+      "tests/artifacts/pixelmusic-0.6.1-white-sparse-warm-16s.wav",
+      "tests/artifacts/pixelmusic-0.6.1-white-continuous-warm-16s.wav"
+    ]
+  },
+  "directHtml": {
+    "automatedLiveFileProtocol": false,
+    "userConfirmed": true,
+    "status": "passed-user-confirmed",
+    "version": "0.6.1",
+    "confirmedOn": "2026-10-07",
+    "confirmation": "都正常",
+    "basis": "User reply to the previously requested local functional checklist; not a subjective preference score.",
+    "scope": [
+      "sparse_playback",
+      "continuous_playback",
+      "region_preview",
+      "wav_save"
+    ]
+  },
+  "sourceSha256": [
+    {
+      "path": "dist/music.js",
+      "sha256": "94588a50155085a9e8e2ee53811fa3149a8d1eb6a88fa64f37431fbece881aa1"
+    },
+    {
+      "path": "dist/audio.js",
+      "sha256": "e3605df751545b649998e1488069d5e420aedc9825154018690e0c9d75795df9"
+    },
+    {
+      "path": "dist/image-analysis.js",
+      "sha256": "16ce1d71ef065808cb526e3cfb61bacb90c2045198e42379e3386f4ad350b3b8"
+    },
+    {
+      "path": "dist/rhythm.js",
+      "sha256": "44b68f8f694f54853403a04e7688aa6cc842e797e312eea8625bdcc28dd787fe"
+    },
+    {
+      "path": "dist/timing.js",
+      "sha256": "6fabfb1f4ceabb68b1488938d94c672d1cb0275aface9f968da6595f0b058783"
+    },
+    {
+      "path": "dist/app.js",
+      "sha256": "dafa19050665845da863e0cae997c96680f33ef59fee4840f373252869f22079"
+    },
+    {
+      "path": "dist/styles.css",
+      "sha256": "45989e9f1196f0745bb80b4e186eaa59692ed95730bd3572456dfec3ed451fcd"
+    },
+    {
+      "path": "dist/index.html",
+      "sha256": "f900ba036541243bcd105ab007d16db1c6de6c092d5417d9d20610107d1f62d4"
+    },
+    {
+      "path": "tests/articulation-listen.html",
+      "sha256": "8e504a86e1a6c448743ea230acaa90569ea56e762dfea0eea4cb9f6be4b90bc7"
+    },
+    {
+      "path": "tests/articulation-listen.js",
+      "sha256": "6d3f6057a2f12facc6cb8e8170e73794cee4e9d153c85667b03b4adbaece6d4e"
+    }
+  ],
+  "audit": [
+    {
+      "item": "Sparse default only on stable long segments",
+      "status": "proven"
+    },
+    {
+      "item": "No new pitch, theme, harmony or random ornaments",
+      "status": "proven"
+    },
+    {
+      "item": "Natural decay, real quiet intervals, no hard waveform cut",
+      "status": "proven"
+    },
+    {
+      "item": "Keep continuous mode available",
+      "status": "proven"
+    },
+    {
+      "item": "Keep all region maps, scanning during performer gaps, region preview",
+      "status": "http-and-unit-proven"
+    },
+    {
+      "item": "Playback, tone-switch resume and WAV use actual events",
+      "status": "http-real-audio-and-unit-proven"
+    },
+    {
+      "item": "Frozen history and current artifact links",
+      "status": "proven"
+    },
+    {
+      "item": "Direct HTML new UI and playback",
+      "status": "user-file-proven"
+    }
+  ],
+  "limitations": [
+    "Performance pulses are explicit artistic articulation rules, not inferred white-pixel structure.",
+    "No subjective preference scores were created.",
+    "Current Chromium and Node only; normalized pixels must match.",
+    "Direct HTML functionality was manually confirmed by the user; live file-protocol automation remains unavailable."
+  ]
+}

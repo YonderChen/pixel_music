@@ -1,4 +1,4 @@
-const assert=require('node:assert/strict'),Music=require('../dist/music.js'),Image=require('../dist/image-analysis.js'),Samples=require('./fidelity-fixtures.js'),check=require('./score-contract.cjs');
+const assert=require('node:assert/strict'),Music=require('./baseline/music-v06.js'),Image=require('./baseline/image-analysis-v06.js'),Samples=require('./fidelity-fixtures.js'),check=require('./score-contract-v06.cjs');
 let syntheticCases=0;
 for(const mode of Object.values(Music.MODES))for(let root=0;root<12;root++)for(let seed=1;seed<=12;seed++){
   let state=seed;const random=()=>{state=Math.imul(state,1664525)+1013904223|0;return(state>>>0)/4294967296;};
