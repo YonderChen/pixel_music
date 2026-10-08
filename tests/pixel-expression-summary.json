@@ -1,0 +1,129 @@
+{
+  "schema": "pixelmusic-pixel-expression-experiment-v1",
+  "version": "0.6.2-exp",
+  "expressionVersion": "pixel-turn-v1",
+  "date": "2026-10-08",
+  "status": "passed-for-experimental-preview",
+  "sources": [
+    {
+      "path": "dist/timing.js",
+      "sha256": "6fabfb1f4ceabb68b1488938d94c672d1cb0275aface9f968da6595f0b058783"
+    },
+    {
+      "path": "dist/rhythm.js",
+      "sha256": "44b68f8f694f54853403a04e7688aa6cc842e797e312eea8625bdcc28dd787fe"
+    },
+    {
+      "path": "dist/music.js",
+      "sha256": "94588a50155085a9e8e2ee53811fa3149a8d1eb6a88fa64f37431fbece881aa1"
+    },
+    {
+      "path": "dist/image-analysis.js",
+      "sha256": "16ce1d71ef065808cb526e3cfb61bacb90c2045198e42379e3386f4ad350b3b8"
+    },
+    {
+      "path": "dist/audio.js",
+      "sha256": "e3605df751545b649998e1488069d5e420aedc9825154018690e0c9d75795df9"
+    },
+    {
+      "path": "dist/pixel-expression.js",
+      "sha256": "d69b93b3f10877140b54e77483a90d618ff807f3905d29c3cd98f2b260805ab4"
+    },
+    {
+      "path": "dist/app.js",
+      "sha256": "050c5242c4f265cacd5e2621ed2732d44883800048ca342bfb383a78f8c51776"
+    },
+    {
+      "path": "dist/index.html",
+      "sha256": "06aad14f41918857a20f8e168aa40c3ca4b2f6332f8f167ab72e03b15e08eeea"
+    },
+    {
+      "path": "dist/styles.css",
+      "sha256": "a809a2b9f732eac3ac7c3e8fdcb5a66adf28d6a106f7a20ebc16693ff2f671c6"
+    },
+    {
+      "path": "tests/pixel-expression.test.cjs",
+      "sha256": "20138b3a39c1248f95586667f94deee6114145e35f48d3128532341aa110134d"
+    }
+  ],
+  "scope": "colour-derived pixel score plus optional rise/fall ornament; no contour extraction",
+  "unit": {
+    "cases": 168,
+    "changedCases": 57,
+    "addedNotes": 892,
+    "originalScoreExactMatch": true,
+    "baseObjectsUnmutated": true,
+    "schedulingCases": 504,
+    "resumeCases": 1512,
+    "classicScriptVmMatch": true,
+    "pureColoursAddNoMelody": true
+  },
+  "commands": [
+    {
+      "command": "node tests/pixel-expression.test.cjs",
+      "status": "passed"
+    },
+    {
+      "command": "node tests/articulation.test.cjs",
+      "status": "passed"
+    },
+    {
+      "command": "node tests/articulation-audio.test.cjs",
+      "status": "passed"
+    },
+    {
+      "command": "node tests/articulation-browser.test.cjs",
+      "status": "passed"
+    },
+    {
+      "command": "node tests/local-bundle.test.cjs",
+      "status": "passed"
+    }
+  ],
+  "browser": {
+    "evidenceType": "browser-http",
+    "url": "http://127.0.0.1:4174/dist/index.html",
+    "gradient": {
+      "originalAttacks": 13,
+      "experimentalAttacks": 31,
+      "addedNotes": 18,
+      "transitions": 9,
+      "switchBothWays": true
+    },
+    "white": {
+      "version": "0.6.1",
+      "attacks": 22,
+      "noAddedMelody": true
+    },
+    "playbackObserved": true,
+    "consoleErrors": 0,
+    "warmWavExportObserved": true,
+    "screenshot": "tests/artifacts/pixel-expression-preview.png",
+    "controlsScreenshot": "tests/artifacts/pixel-expression-controls.png"
+  },
+  "realAudio": {
+    "renders": 1,
+    "tone": "warm",
+    "metrics": {
+      "status": "passed",
+      "path": "/Users/chenyongduo/Downloads/PixelMusic-0.6.2-exp-pixel-turn-v1-be33d9303b92278e-warm.wav",
+      "sha256": "1863cf6c39615c820db7f1587fc0f72fba758d4ccac20c7c1d0af1ad541b6943",
+      "sampleRate": 22050,
+      "frames": 1160411,
+      "seconds": 52.626349206349204,
+      "peak": 0.12841796875,
+      "rms": 0.07227948100275808,
+      "tailPeak": 0,
+      "clipped": 0,
+      "wavHeader": true,
+      "artifact": "tests/artifacts/pixel-expression-gradient-warm.wav"
+    },
+    "evidenceType": "downloaded-PCM-WAV-inspection"
+  },
+  "limits": [
+    "This is a small deterministic ornament experiment, not a complete composition engine.",
+    "Only warm tone was actually rendered; 504 three-tone cases are fake-Context scheduling checks.",
+    "Direct file:// behavior and subjective listening await user feedback.",
+    "Historical M0 source audit is not asserted against the now-changed UI; old evidence is not rewritten."
+  ]
+}

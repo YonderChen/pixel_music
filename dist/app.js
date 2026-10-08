@@ -1,5 +1,5 @@
 'use strict';
-const Music = window.PixelMusic, ImageAnalysis = window.PixelMusicImage, Audio = window.PixelMusicAudio;
+const Music = window.PixelMusic, ImageAnalysis = window.PixelMusicImage, Audio = window.PixelMusicAudio, Expression = window.PixelMusicExpression;
 const STEPS = 24, REGION_ROWS = 5;
 const SCALE_NAMES = ['C', 'D♭', 'D', 'E♭', 'E', 'F', 'F♯', 'G', 'A♭', 'A', 'B♭', 'B'];
 const els = Object.fromEntries(Object.entries({
@@ -8,11 +8,12 @@ const els = Object.fromEntries(Object.entries({
   title: 'workTitle', status: 'statusPill', key: 'keyMetric', tempo: 'tempoMetric', color: 'colorMetric',
   texture: 'textureMetric', fingerprint: 'fingerprintValue', scoreHash: 'scoreHashValue', rhythmHash: 'rhythmHashValue', mappingHash: 'mappingHashValue', export: 'exportButton',
   phraseTracker: 'phraseTracker', phraseLabel: 'phraseLabel', uploadLabel: 'uploadLabel',
-  play: 'playButton', playLabel: 'playLabel', sample: 'sampleButton', whiteSample: 'whiteSampleButton', toast: 'toast',
+  play: 'playButton', playLabel: 'playLabel', sample: 'sampleButton', whiteSample: 'whiteSampleButton', gradientSample: 'gradientSampleButton', expressionHint: 'expressionHint', abOriginal: 'abOriginalButton', abExpression: 'abExpressionButton', toast: 'toast',
 }).map(([key, id]) => [key, document.getElementById(id)]));
 let audioContext, audioSession, composition = null, canonicalImage = null, displaySource = null, currentAnalysis = null;
-let isPlaying = false, animationId = 0, playbackStart = 0, playbackToken = 0, loadToken = 0;
+let isPlaying = false, animationId = 0, playbackStart = 0, playbackToken = 0, loadToken = 0, previewTimer = 0;
 let regionCells = [], noteBars = [], lastActive = -1, lastPhrase = -1;
+const comparisonProbes=new Map();
 
 function drawDisplay() {
   if (!canonicalImage) return;
@@ -30,7 +31,8 @@ function analyzeSource(source, name) {
   const canonical = normalizeSource(source);
   const data = canonical.getContext('2d').getImageData(0, 0, canonical.width, canonical.height).data;
   currentAnalysis=ImageAnalysis.analyzePixels(data);
-  const score = Music.compose(currentAnalysis,{performanceStyle:currentPerformanceStyle()}); score.name = name;
+  comparisonProbes.clear();
+  const score = composeCurrent(); score.name = name;
   canonicalImage = canonical; displaySource = source; composition = score;
   drawDisplay(); renderComposition();
 }
@@ -63,6 +65,9 @@ function renderComposition() {
   els.mappingHash.textContent = c.mappingFingerprint.toUpperCase().match(/.{1,4}/g).join(' ');
   els.export.disabled = false;
   els.stageLabel.textContent = `120 区域 · ${c.performanceEvents.length} 次起音 · ${Math.round(c.duration)} 秒`;
+  const expression=c.diagnostics.pixelExpression;
+  els.expressionHint.textContent = expression ? `v2：${expression.phraseCount} 个颜色短句，增加 ${expression.addedNotes} 音；第 ${expression.firstChangedSeconds.toFixed(1)} 秒开始改变奏法${expression.firstConnectorSeconds===null?'':`，第 ${expression.firstConnectorSeconds.toFixed(1)} 秒出现连接音`}。主音来自像素，区域点击试听原音。` : currentExpressionEnabled() ? 'v2已载入：这张图没有可组织的音高升降，保留原曲；纯色不补旋律。' : '原始像素映射，未加入短句组织。';
+  els.abOriginal.disabled=false;els.abExpression.disabled=false;
   els.phraseLabel.textContent = c.melody.length === 1 ? c.performanceStyle==='sparse'?'图像稳定，轻奏同音，间隔留白':'图像稳定，连续声景' : '图像决定音高与结构，稳定长段采用轻奏留白';
   els.uploadLabel.textContent = '更换图片'; els.play.disabled = false;
   els.empty.classList.add('hidden'); els.dropZone.classList.add('has-image');
@@ -86,17 +91,20 @@ async function getAudioContext() {
 }
 function currentTone() { return document.querySelector('input[name="tone"]:checked').value; }
 function currentPerformanceStyle() { return document.querySelector('input[name="performanceStyle"]:checked').value; }
-async function togglePlayback() {
+function currentExpressionEnabled() { return document.querySelector('input[name="pixelExpression"]:checked').value==='on'; }
+function composeCurrent() { return Expression.apply(Music.compose(currentAnalysis,{performanceStyle:currentPerformanceStyle()}),{enabled:currentExpressionEnabled()}); }
+async function togglePlayback({ seconds = 0, volume = 1 } = {}) {
   if (!composition) return;
   if (isPlaying) return stopPlayback();
   const token = ++playbackToken, score = composition; els.play.disabled = true;
   try {
     const context = await getAudioContext();
     if (token !== playbackToken || score !== composition) return;
-    audioSession = Audio.createSession(context, { bpm: score.bpm });
+    audioSession = Audio.createSession(context, { bpm: score.bpm, volume });
     playbackStart = context.currentTime + .08; audioSession.schedule(score, playbackStart, currentTone());
     isPlaying = true; els.play.classList.add('is-playing'); els.playLabel.textContent = '停止演奏';
     els.status.className = 'status-pill playing'; animatePlayback();
+    if(seconds>0)previewTimer=setTimeout(()=>{stopPlayback();showToast(`${seconds}秒对照结束，可以切换另一版`);},(seconds+.08)*1000);
   } catch (error) { stopPlayback(); showToast(error.message || '声音暂时无法播放，请重试'); }
   finally { els.play.disabled = !composition; }
 }
@@ -107,7 +115,7 @@ function animatePlayback() {
   const { note, index, rest, tail, phase, performanceRest } = position;
   els.scanLine.classList.add('active'); els.scanLine.classList.toggle('breathing', rest || tail || performanceRest);
   els.scanLine.style.transform = `translateX(${position.scanFraction * els.dropZone.clientWidth}px)`;
-  els.scanLine.firstElementChild.textContent = tail ? '余韵' : rest ? '边界' : performanceRest ? '留白' : note.noteName;
+  els.scanLine.firstElementChild.textContent = tail ? '余韵' : rest ? '边界' : performanceRest ? '留白' : position.performanceNote?.noteName || note?.noteName || '等待';
   if (!note) {
     regionCells.forEach(cell => cell.classList.remove('active')); noteBars.forEach(bar => bar.classList.remove('active'));
     els.stepLabel.textContent = '000 / 120'; els.status.textContent = '等待起音';
@@ -121,12 +129,13 @@ function animatePlayback() {
   if (lastPhrase !== phase) {
     [...els.phraseTracker.children].forEach((item, i) => item.classList.toggle('active', i === phase)); lastPhrase = phase;
   }
-  els.phraseLabel.textContent = `${Music.PHRASES[phase]} · 起音 ${position.performanceIndex + 1} / ${composition.performanceEvents.length}${rest ? ' · 图像边界留白' : tail ? ' · 余韵' : performanceRest ? ' · 奏法留白，扫描继续' : position.performanceNote?.envelope==='pluck' ? ' · 轻奏同音' : ''}`;
+  const role=position.performanceNote?.expressionSupport?.kind;
+  els.phraseLabel.textContent = `${Music.PHRASES[phase]} · 起音 ${position.performanceIndex + 1} / ${composition.performanceEvents.length}${rest ? ' · 图像边界留白' : tail ? ' · 余韵' : performanceRest ? ' · 主旋律留白，扫描继续' : role==='anchor-rhythm' ? ' · 颜色短句主音' : role==='connection' ? ' · 音阶连接' : role==='return' ? ' · 短句回应' : position.performanceNote?.envelope==='pluck' ? ' · 轻奏同音' : ''}`;
   els.status.textContent = rest ? '图像边界留白' : tail ? '渐渐收尾' : performanceRest ? '轻奏留白' : '正在演奏';
   animationId = requestAnimationFrame(animatePlayback);
 }
 function stopPlayback() {
-  playbackToken++; cancelAnimationFrame(animationId); audioSession?.stop(); audioSession = null; isPlaying = false;
+  playbackToken++; clearTimeout(previewTimer); previewTimer=0; cancelAnimationFrame(animationId); audioSession?.stop(); audioSession = null; isPlaying = false;
   els.play.classList.remove('is-playing'); els.playLabel.textContent = '开始听画'; els.play.disabled = !composition;
   els.scanLine.classList.remove('active', 'breathing'); els.scanLine.style.transform = 'translateX(0)';
   els.stepLabel.textContent = '000 / 120';
@@ -156,11 +165,46 @@ function showToast(message) {
 }
 els.file.addEventListener('change', event => { loadFile(event.target.files[0]); event.target.value = ''; });
 els.play.addEventListener('click', togglePlayback); els.sample.addEventListener('click', loadSample);
+async function compareExcerpt(enabled){
+  if(!currentAnalysis||!composition)return;
+  const name=composition.name;stopPlayback();const token=playbackToken,analysis=currentAnalysis,tone=currentTone();
+  document.querySelector(`input[name="pixelExpression"][value="${enabled?'on':'off'}"]`).checked=true;
+  const original=Music.compose(analysis,{performanceStyle:currentPerformanceStyle()}),expressed=Expression.apply(original);
+  composition=enabled?expressed:original;composition.name=name;renderComposition();els.play.disabled=true;els.status.textContent='准备同响度对照…';
+  try{
+    await getAudioContext(); // Resume within the user's gesture, before offline preparation.
+    const probe=score=>{
+      const key=`${score.scoreHash}:${tone}`;
+      if(!comparisonProbes.has(key))comparisonProbes.set(key,Audio.renderOffline(score,{tone}).then(buffer=>{
+        const samples=buffer.getChannelData(0),from=Math.floor(.05*buffer.sampleRate),to=Math.min(samples.length,from+12*buffer.sampleRate);let energy=0;
+        for(let i=from;i<to;i++)energy+=samples[i]*samples[i];return Math.sqrt(energy/(to-from));
+      }).catch(error=>{comparisonProbes.delete(key);throw error;}));
+      return comparisonProbes.get(key);
+    };
+    const [a,b]=await Promise.all([probe(original),probe(expressed)]);
+    if(token!==playbackToken||analysis!==currentAnalysis||tone!==currentTone())return;
+    if(!(a>0&&b>0&&Number.isFinite(a)&&Number.isFinite(b)))throw new Error('对照音频暂时无法准备');
+    const target=Math.min(a,b),volume=target/(enabled?b:a);
+    els.abExpression.dataset.lastComparison=JSON.stringify({seconds:12,tone,rmsOriginal:a,rmsExpression:b,gainOriginal:target/a,gainExpression:target/b,targetRms:target});
+    await togglePlayback({seconds:12,volume});
+  }catch(error){if(token===playbackToken)showToast(error.message||'对照试听暂时无法准备');}
+  finally{if(token===playbackToken){els.play.disabled=!composition;if(!isPlaying)els.status.textContent='可以演奏';}}
+}
+els.abOriginal.addEventListener('click',()=>compareExcerpt(false));
+els.abExpression.addEventListener('click',()=>compareExcerpt(true));
 els.whiteSample.addEventListener('click', () => {
   loadToken++; stopPlayback();
   const source = document.createElement('canvas'); source.width = 192; source.height = 120;
   source.getContext('2d').fillStyle = '#fff'; source.getContext('2d').fillRect(0,0,192,120);
   try { analyzeSource(source,'纯白样本'); } catch(error) { showToast(error.message); }
+});
+els.gradientSample.addEventListener('click',()=>{
+  loadToken++;stopPlayback();
+  const source=document.createElement('canvas');source.width=192;source.height=120;
+  const ctx=source.getContext('2d'),gradient=ctx.createLinearGradient(0,0,192,0);
+  gradient.addColorStop(0,'#202028');gradient.addColorStop(.5,'#ece2d0');gradient.addColorStop(1,'#304c79');
+  ctx.fillStyle=gradient;ctx.fillRect(0,0,192,120);
+  try{analyzeSource(source,'渐变升降样本');}catch(error){showToast(error.message);}
 });
 els.export.addEventListener('click', async () => {
   if (!composition) return;
@@ -168,9 +212,14 @@ els.export.addEventListener('click', async () => {
   try {
     const buffer = await Audio.renderOffline(score, { tone }), metrics = Audio.inspectBuffer(buffer);
     if (metrics.invalid || metrics.clipped) throw new Error('音频校验未通过，暂不保存');
-    const url = URL.createObjectURL(new Blob([Audio.wavBytes(buffer)], { type: 'audio/wav' }));
-    const link = document.createElement('a'); link.href = url; link.download = `PixelMusic-${score.version}-${score.scoreHash}-${tone}.wav`; link.click();
-    setTimeout(() => URL.revokeObjectURL(url), 3000); showToast('已生成音乐，保存到浏览器下载目录');
+    const wav=Audio.wavBytes(buffer),view=new DataView(wav),fileName=`PixelMusic-${score.version}-${score.expressionVersion||'original'}-${score.scoreHash}-${tone}.wav`;
+    // A small local diagnostic, no PCM/image data or upload. Rendering is not proof
+    // that a browser granted the later download request.
+    els.export.dataset.lastRender=JSON.stringify({scoreHash:score.scoreHash,expressionVersion:score.expressionVersion||'original',tone,sampleRate:buffer.sampleRate,frames:buffer.length,wavBytes:wav.byteLength,
+      headerValid:view.getUint32(0)===0x52494646&&view.getUint32(8)===0x57415645&&view.getUint32(40,true)+44===wav.byteLength,metrics,fileName});
+    const url = URL.createObjectURL(new Blob([wav], { type: 'audio/wav' }));
+    const link = document.createElement('a'); link.href = url; link.download = fileName; link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 3000); showToast('音乐已生成，已请求浏览器保存');
   } catch (error) { showToast(error.message || '音乐暂时无法保存'); }
   finally { els.export.disabled = !composition; els.export.textContent = '保存这张图的音乐 · WAV'; }
 });
@@ -186,15 +235,15 @@ els.regionGrid.addEventListener('click', async event => {
 document.querySelectorAll('input[name="tone"]').forEach(input => input.addEventListener('change', () => {
   if (!isPlaying) return;
   const continuedAt = audioContext.currentTime + .015;
-  audioSession.stop(); audioSession = Audio.createSession(audioContext, { bpm: composition.bpm });
+  const volume=audioSession.output.gain.value;audioSession.stop(); audioSession = Audio.createSession(audioContext, { bpm: composition.bpm, volume });
   // Keep the original audio/scan clock; only the user's timbre change is crossfaded.
   audioSession.schedule(composition, playbackStart, currentTone(), Music.timeToBeat(composition, continuedAt - playbackStart));
 }));
-document.querySelectorAll('input[name="performanceStyle"]').forEach(input=>input.addEventListener('change',()=>{
+document.querySelectorAll('input[name="performanceStyle"], input[name="pixelExpression"]').forEach(input=>input.addEventListener('change',()=>{
   if(!currentAnalysis||!composition)return;
   const name=composition.name,wasPlaying=isPlaying;stopPlayback();
-  composition=Music.compose(currentAnalysis,{performanceStyle:currentPerformanceStyle()});composition.name=name;renderComposition();
-  if(wasPlaying)showToast('已切换奏法，请重新开始听画');
+  composition=composeCurrent();composition.name=name;renderComposition();
+  if(wasPlaying)showToast('已切换表达／奏法，请重新开始听画');
 }));
 ['dragenter', 'dragover'].forEach(type => els.dropZone.addEventListener(type, event => { event.preventDefault(); els.dropZone.classList.add('dragging'); }));
 ['dragleave', 'drop'].forEach(type => els.dropZone.addEventListener(type, event => { event.preventDefault(); els.dropZone.classList.remove('dragging'); }));

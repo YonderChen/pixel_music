@@ -1,0 +1,282 @@
+{
+  "schema": "pixelmusic-pixel-phrase-v2-experiment-v1",
+  "date": "2026-10-08",
+  "version": "0.6.3-exp",
+  "expressionVersion": "pixel-phrase-v2",
+  "status": "passed-for-local-listening-experiment",
+  "sources": [
+    {
+      "path": "dist/timing.js",
+      "sha256": "6fabfb1f4ceabb68b1488938d94c672d1cb0275aface9f968da6595f0b058783"
+    },
+    {
+      "path": "dist/rhythm.js",
+      "sha256": "44b68f8f694f54853403a04e7688aa6cc842e797e312eea8625bdcc28dd787fe"
+    },
+    {
+      "path": "dist/music.js",
+      "sha256": "94588a50155085a9e8e2ee53811fa3149a8d1eb6a88fa64f37431fbece881aa1"
+    },
+    {
+      "path": "dist/image-analysis.js",
+      "sha256": "16ce1d71ef065808cb526e3cfb61bacb90c2045198e42379e3386f4ad350b3b8"
+    },
+    {
+      "path": "dist/audio.js",
+      "sha256": "e3605df751545b649998e1488069d5e420aedc9825154018690e0c9d75795df9"
+    },
+    {
+      "path": "dist/pixel-expression.js",
+      "sha256": "ce7282337bbe6df42fbd2e23994428c529bec1abdedbc7e4bab93ac7c6e904c8"
+    },
+    {
+      "path": "dist/app.js",
+      "sha256": "0f184dfd31a3f65a588a6dffd8b3ba45cdcea3649b9c5632acd293efc4144e96"
+    },
+    {
+      "path": "dist/index.html",
+      "sha256": "e712e7e805adf95762626fbb15d9b1eb89f1e1e4baf33f2aa16824b71e7d0158"
+    },
+    {
+      "path": "dist/styles.css",
+      "sha256": "c222729d5b64ee4405be2a9cdee2564a9a83d6d0f5d1d60c3f22391b289b3a72"
+    },
+    {
+      "path": "tests/pixel-expression.test.cjs",
+      "sha256": "c413ce0b83a01ad0de83edfce253b6fd527ddf57ba24a1cfcaac9d674aa3aa51"
+    },
+    {
+      "path": "tests/pixel-phrase-audio-check.cjs",
+      "sha256": "f967ef0f777aaef08f6b3c152bf9c48d61f489bbe037add60e46880e50e07dbe"
+    },
+    {
+      "path": "tests/baseline/pixel-expression-v1.js",
+      "sha256": "7d5e6dafaac48e1d4d0736ed9341998c9084e689de8f7ef1bf079e6fd29f3855"
+    }
+  ],
+  "scope": "Pixel colour score remains the basis. No contours, no common tune, bounded local phrase rules.",
+  "unit": {
+    "status": "passed",
+    "version": "pixel-phrase-v2",
+    "cases": 168,
+    "changedCases": 104,
+    "addedNotes": 3212,
+    "schedulingCases": 504,
+    "resumeCases": 1512,
+    "classicScriptVmMatch": true,
+    "patterns": [
+      "neighbor-response",
+      "step-connection"
+    ],
+    "distinctChangedScoreHashes": 60,
+    "examples": [
+      {
+        "index": 5,
+        "name": "夕阳",
+        "style": "sparse",
+        "original": 87,
+        "experimental": 127,
+        "phrases": 22,
+        "firstConnectorSeconds": 0.174458
+      },
+      {
+        "index": 5,
+        "name": "夕阳",
+        "style": "continuous",
+        "original": 87,
+        "experimental": 127,
+        "phrases": 22,
+        "firstConnectorSeconds": 0.174458
+      },
+      {
+        "index": 60,
+        "name": "精确纯白",
+        "style": "sparse",
+        "original": 22,
+        "experimental": 22,
+        "phrases": 0,
+        "firstConnectorSeconds": null
+      },
+      {
+        "index": 60,
+        "name": "精确纯白",
+        "style": "continuous",
+        "original": 1,
+        "experimental": 1,
+        "phrases": 0,
+        "firstConnectorSeconds": null
+      },
+      {
+        "index": 74,
+        "name": "全范围横向灰阶渐变",
+        "style": "sparse",
+        "original": 14,
+        "experimental": 42,
+        "phrases": 7,
+        "firstConnectorSeconds": 0.394737
+      },
+      {
+        "index": 74,
+        "name": "全范围横向灰阶渐变",
+        "style": "continuous",
+        "original": 14,
+        "experimental": 42,
+        "phrases": 7,
+        "firstConnectorSeconds": 0.394737
+      },
+      {
+        "index": 75,
+        "name": "全范围纵向灰阶渐变",
+        "style": "sparse",
+        "original": 97,
+        "experimental": 126,
+        "phrases": 25,
+        "firstConnectorSeconds": 0.166667
+      },
+      {
+        "index": 75,
+        "name": "全范围纵向灰阶渐变",
+        "style": "continuous",
+        "original": 97,
+        "experimental": 126,
+        "phrases": 25,
+        "firstConnectorSeconds": 0.166667
+      }
+    ],
+    "realAudio": false
+  },
+  "commands": [
+    {
+      "command": "node tests/pixel-expression.test.cjs",
+      "status": "passed"
+    },
+    {
+      "command": "node tests/articulation.test.cjs",
+      "status": "passed"
+    },
+    {
+      "command": "node tests/articulation-audio.test.cjs",
+      "status": "passed"
+    },
+    {
+      "command": "node tests/articulation-browser.test.cjs",
+      "status": "passed"
+    },
+    {
+      "command": "node tests/local-bundle.test.cjs",
+      "status": "passed"
+    }
+  ],
+  "browser": {
+    "evidenceType": "browser-http-independent-procedural-example",
+    "example": "main app sunset canvas",
+    "originalAttacks": 102,
+    "expressionAttacks": 146,
+    "phrases": 26,
+    "addedNotes": 44,
+    "firstConnectorSecondsDisplayed": 0.2,
+    "playbackObserved": true,
+    "excerptAutoStopObserved": true,
+    "rapidLatestModeWinsObserved": true,
+    "toneSwitchDuringPlaybackObserved": true,
+    "comparison": {
+      "seconds": 12,
+      "tone": "warm",
+      "rmsOriginal": 0.07281733644531196,
+      "rmsExpression": 0.031144910399959508,
+      "gainOriginal": 0.42771284862019476,
+      "gainExpression": 1,
+      "targetRms": 0.031144910399959508,
+      "noGainBoost": true,
+      "normalFullSongVolumeUnchanged": true
+    },
+    "white": {
+      "version": "0.6.1",
+      "attacks": 22,
+      "noAddedMelody": true
+    },
+    "consoleErrors": 0,
+    "screenshot": "tests/artifacts/pixel-phrase-v2-controls.png"
+  },
+  "realAudio": {
+    "evidenceType": "browser-rendered-AudioBuffer-and-encoded-WAV-header-diagnostics",
+    "measuredRenders": 3,
+    "records": [
+      {
+        "scoreHash": "0501a676e06b72c2",
+        "expressionVersion": "pixel-phrase-v2",
+        "tone": "warm",
+        "sampleRate": 22050,
+        "frames": 1030858,
+        "wavBytes": 2061760,
+        "headerValid": true,
+        "metrics": {
+          "peak": 0.1401401311159134,
+          "rms": 0.030710983867416927,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 6.502896781057643e-7,
+          "seconds": 46.75092970521542
+        }
+      },
+      {
+        "scoreHash": "0501a676e06b72c2",
+        "expressionVersion": "pixel-phrase-v2",
+        "tone": "glass",
+        "sampleRate": 22050,
+        "frames": 1030858,
+        "wavBytes": 2061760,
+        "headerValid": true,
+        "metrics": {
+          "peak": 0.13225871324539185,
+          "rms": 0.026930048056493953,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 6.145072575236554e-7,
+          "seconds": 46.75092970521542
+        }
+      },
+      {
+        "scoreHash": "0501a676e06b72c2",
+        "expressionVersion": "pixel-phrase-v2",
+        "tone": "mist",
+        "sampleRate": 22050,
+        "frames": 1030858,
+        "wavBytes": 2061760,
+        "headerValid": true,
+        "metrics": {
+          "peak": 0.13208863139152527,
+          "rms": 0.02906180364807493,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 6.062613238100312e-7,
+          "seconds": 46.75092970521542
+        }
+      }
+    ],
+    "newDownloadFileConfirmed": false,
+    "downloadBoundary": "Generation and download requests succeeded in the page; no v2 files were found in the expected desktop Downloads directory during automated consecutive exports. Cause not established; do not treat page toast as proof of saving.",
+    "originalDownloadedWavInspected": {
+      "path": "/Users/chenyongduo/Downloads/PixelMusic-0.6.1-original-bab8c35a6567e60a-warm.wav",
+      "sha256": "8b428237366e042825a349ba8d84a472afa2bee8b341e495fba624a8d4dd1424",
+      "headerValid": true,
+      "peak": 0.13720703125,
+      "rms": 0.07159583497019607,
+      "tailPeak": 0,
+      "clipped": 0
+    }
+  },
+  "reference": {
+    "page": "https://playmusictheory.net/play",
+    "checkedOn": "2026-10-08",
+    "verified": "official page scale and rhythm controls",
+    "notVerified": "live instrument audio and automatic note insertion; interactive page timed out"
+  },
+  "limits": [
+    "User file:// page was not inspected or operated; browser policy blocks it. Tests used an independent HTTP page with generated sample, not the user's uploaded image.",
+    "Subjective naturalness and distinctness are not proven by event counts or tests; await user feedback.",
+    "52 of 84 images in each style had usable phrase motion; flat or ineligible inputs stay untouched. No promise of unique music for every different image.",
+    "Only one procedural image was actually rendered in all three tones; the 504 matrix entries are scheduling checks, not 504 real renders.",
+    "Historical v1/M0 evidence is retained, not rewritten as proof for v2."
+  ]
+}

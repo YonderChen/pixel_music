@@ -119,6 +119,10 @@ button, label { -webkit-tap-highlight-color: transparent; }
 .tone-picker input:checked + span { background: var(--ink); color: white; border-color: var(--ink); }
 .tone-picker input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
 .performance-picker { grid-template-columns: repeat(2,1fr); padding-top: 0; }
+.expression-hint { margin: -10px 0 20px; font-size: .72rem; line-height: 1.7; color: var(--muted); }
+.comparison-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: -8px 0 20px; }
+.comparison-actions .sample-button { margin: 0; padding: 10px 4px; border: 1px solid var(--line); font-size: .76rem; }
+.comparison-actions button:disabled { opacity: .4; cursor: default; }
 
 .actions { margin-top: auto; display: grid; grid-template-columns: 1fr 1.35fr; gap: 9px; }
 .button { min-height: 52px; border: 1px solid var(--ink); display: flex; justify-content: center; align-items: center; gap: 10px; cursor: pointer; transition: transform .15s ease, box-shadow .15s ease; font-weight: 700; }
