@@ -1,0 +1,249 @@
+{
+  "schema": "pixelmusic-photo-pixels-v1",
+  "frozenOn": "2026-10-08",
+  "width": 192,
+  "height": 120,
+  "channels": 4,
+  "photos": [
+    {
+      "id": "photo-camera",
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "cropBox": [
+        0,
+        96,
+        512,
+        416
+      ],
+      "normalizationVersion": "fixture-cover-pillow-bilinear-v1",
+      "pillowVersion": "12.3.0",
+      "sourceSha256": "b0793d2adda0fa6ae899c03989482bff9a42d3d5690fc7e3648f2795d730c23a",
+      "pngPath": "tests/m0/photos/photo-camera.png",
+      "pngSha256": "acea0f2aa5b6a98ce586ab267e0b96a250df30f0f5d0be6dbc7896948dddcdb5",
+      "rgbaPath": "tests/m0/photos/photo-camera.rgba",
+      "rgbaSha256": "f00112780a300415250ebedfd2daf191be97919accceaddc5731a8638c8cc49d"
+    },
+    {
+      "id": "photo-brick",
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "cropBox": [
+        0,
+        96,
+        512,
+        416
+      ],
+      "normalizationVersion": "fixture-cover-pillow-bilinear-v1",
+      "pillowVersion": "12.3.0",
+      "sourceSha256": "7966caf324f6ba843118d98f7a07746d22f6a343430add0233eca5f6eaaa8fcf",
+      "pngPath": "tests/m0/photos/photo-brick.png",
+      "pngSha256": "fe07fcdba9314b7cd0d6c730fee1dd1dc625623f3d8c90904fd89df207d8c0c5",
+      "rgbaPath": "tests/m0/photos/photo-brick.rgba",
+      "rgbaSha256": "4d61dff9e5acedc467ef914fb23c36e078fd9fb8037dd0d8c9b3bde929824167"
+    },
+    {
+      "id": "photo-earthrise",
+      "sourceDimensions": [
+        3000,
+        3000
+      ],
+      "cropBox": [
+        0,
+        562.5,
+        3000,
+        2437.5
+      ],
+      "normalizationVersion": "fixture-cover-pillow-bilinear-v1",
+      "pillowVersion": "12.3.0",
+      "sourceSha256": "d1095c83ba668aaec3054b9720ad9ebe98d7c53cf54ad45f398a6fdfed84aed2",
+      "pngPath": "tests/m0/photos/photo-earthrise.png",
+      "pngSha256": "b01aee5114237834665349a66b2ee5002d6c9ec77fd8a0777e9770f3f2dfd85f",
+      "rgbaPath": "tests/m0/photos/photo-earthrise.rgba",
+      "rgbaSha256": "acb2a6b151c58c46e19a87b9278ef848e352c289f8ab16c5ae7b857547f3034d"
+    },
+    {
+      "id": "photo-astronaut",
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "cropBox": [
+        0,
+        96,
+        512,
+        416
+      ],
+      "normalizationVersion": "fixture-cover-pillow-bilinear-v1",
+      "pillowVersion": "12.3.0",
+      "sourceSha256": "88431cd9653ccd539741b555fb0a46b61558b301d4110412b5bc28b5e3ea6cb5",
+      "pngPath": "tests/m0/photos/photo-astronaut.png",
+      "pngSha256": "b6875fd520a46aab913b55c52b030e5ed80ffe2d5af83aefd80747e5d190a846",
+      "rgbaPath": "tests/m0/photos/photo-astronaut.rgba",
+      "rgbaSha256": "eec2031b0f2fb6369ae9320d86d791ffc16c2bb81bc3b2f7f3506c32b34b21c2"
+    },
+    {
+      "id": "photo-coffee",
+      "sourceDimensions": [
+        600,
+        400
+      ],
+      "cropBox": [
+        0,
+        12.5,
+        600,
+        387.5
+      ],
+      "normalizationVersion": "fixture-cover-pillow-bilinear-v1",
+      "pillowVersion": "12.3.0",
+      "sourceSha256": "cc02f8ca188b167c775a7101b5d767d1e71792cf762c33d6fa15a4599b5a8de7",
+      "pngPath": "tests/m0/photos/photo-coffee.png",
+      "pngSha256": "16b4fdbca864bca7c9a2deb8d89bf498867fbbed757e36151e47508a71ecbfae",
+      "rgbaPath": "tests/m0/photos/photo-coffee.rgba",
+      "rgbaSha256": "ec47e4ce8622516fafd85d17bb5bc6541d7bcb3f4358392ff8ce505b439d15aa"
+    },
+    {
+      "id": "photo-chelsea",
+      "sourceDimensions": [
+        451,
+        300
+      ],
+      "cropBox": [
+        0,
+        9.0625,
+        451,
+        290.9375
+      ],
+      "normalizationVersion": "fixture-cover-pillow-bilinear-v1",
+      "pillowVersion": "12.3.0",
+      "sourceSha256": "596aa1e7cb875eb79f437e310381d26b338a81c2da23439704a73c4651e8c4bb",
+      "pngPath": "tests/m0/photos/photo-chelsea.png",
+      "pngSha256": "9d0efedba7b9311616232b472dcd45a2dcbc400011911ab8ff74f61aec422558",
+      "rgbaPath": "tests/m0/photos/photo-chelsea.rgba",
+      "rgbaSha256": "e1829c1f9395f24bede898153cab987a9e76c8fecdd3fb59e218641dfb7b8364"
+    },
+    {
+      "id": "photo-rocket",
+      "sourceDimensions": [
+        640,
+        427
+      ],
+      "cropBox": [
+        0,
+        13.5,
+        640,
+        413.5
+      ],
+      "normalizationVersion": "fixture-cover-pillow-bilinear-v1",
+      "pillowVersion": "12.3.0",
+      "sourceSha256": "c2dd0de7c538df8d111e479619b129464d0269d0ae5fd18ca91d33a7fdfea95c",
+      "pngPath": "tests/m0/photos/photo-rocket.png",
+      "pngSha256": "9de524be405acee58d154cd53a7baae8af51d31bf47e1380a528251283578b5f",
+      "rgbaPath": "tests/m0/photos/photo-rocket.rgba",
+      "rgbaSha256": "6ba45d88dac7f7396930a06a5ffe70c2d46f95ce74f88e6ee8f147ecfc978b96"
+    },
+    {
+      "id": "photo-clock",
+      "sourceDimensions": [
+        400,
+        300
+      ],
+      "cropBox": [
+        0,
+        25,
+        400,
+        275
+      ],
+      "normalizationVersion": "fixture-cover-pillow-bilinear-v1",
+      "pillowVersion": "12.3.0",
+      "sourceSha256": "f029226b28b642e80113d86622e9b215ee067a0966feaf5e60604a1e05733955",
+      "pngPath": "tests/m0/photos/photo-clock.png",
+      "pngSha256": "681d11824afce283a07bd9d9c5306d38d4222a04274101711d9ed8e5ce151b17",
+      "rgbaPath": "tests/m0/photos/photo-clock.rgba",
+      "rgbaSha256": "c67ba461885a0b6426875d122ae72253cdea75abb535e89c5ff4b89ca746897c"
+    },
+    {
+      "id": "photo-mars-sunset",
+      "sourceDimensions": [
+        2486,
+        1913
+      ],
+      "cropBox": [
+        0,
+        179.625,
+        2486,
+        1733.375
+      ],
+      "normalizationVersion": "fixture-cover-pillow-bilinear-v1",
+      "pillowVersion": "12.3.0",
+      "sourceSha256": "4dfe2f8b71c7d4703ea236ef248d0a3a3b6c5b2295aa6d621c6593fd5994bdb9",
+      "pngPath": "tests/m0/photos/photo-mars-sunset.png",
+      "pngSha256": "519ba2637434401ad617660fcef45d31e9682d2121aec3e2f020ce46cabc6e4c",
+      "rgbaPath": "tests/m0/photos/photo-mars-sunset.rgba",
+      "rgbaSha256": "f4d008c0af7d87b074a274787e3512ca271fc639261fd88891615be1b624b96e"
+    },
+    {
+      "id": "photo-grass",
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "cropBox": [
+        0,
+        96,
+        512,
+        416
+      ],
+      "normalizationVersion": "fixture-cover-pillow-bilinear-v1",
+      "pillowVersion": "12.3.0",
+      "sourceSha256": "b6b6022426b38936c43a4ac09635cd78af074e90f42ffa8227ac8b7452d39f89",
+      "pngPath": "tests/m0/photos/photo-grass.png",
+      "pngSha256": "7337be705d7f0ea86c9bed0ab0ead1da665bfbc01d4a53687245f18cc2793e13",
+      "rgbaPath": "tests/m0/photos/photo-grass.rgba",
+      "rgbaSha256": "b029c53c9d47b2cb5318e8a72b900bca29303dcf1e55d77938a061e09c5f2b83"
+    },
+    {
+      "id": "photo-gravel",
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "cropBox": [
+        0,
+        96,
+        512,
+        416
+      ],
+      "normalizationVersion": "fixture-cover-pillow-bilinear-v1",
+      "pillowVersion": "12.3.0",
+      "sourceSha256": "c48615b451bf1e606fbd72c0aa9f8cc0f068ab7111ef7d93bb9b0f2586440c12",
+      "pngPath": "tests/m0/photos/photo-gravel.png",
+      "pngSha256": "e0ea3f0744504c965444f0e9fe7120dada4c65439e7bf9c2b2af65abbe03bf6c",
+      "rgbaPath": "tests/m0/photos/photo-gravel.rgba",
+      "rgbaSha256": "fa082cb90f66fc5d4218156cf627a6a559d6dd0159468951a71c2421614eb11a"
+    },
+    {
+      "id": "photo-eagle",
+      "sourceDimensions": [
+        1826,
+        2019
+      ],
+      "cropBox": [
+        0,
+        438.875,
+        1826,
+        1580.125
+      ],
+      "normalizationVersion": "fixture-cover-pillow-bilinear-v1",
+      "pillowVersion": "12.3.0",
+      "sourceSha256": "928f1bbe7403b533265f56db3a6b07c835dfa8e2513f5c5075ca2f1960f6179e",
+      "pngPath": "tests/m0/photos/photo-eagle.png",
+      "pngSha256": "9ed8ced249ff5c40b610a18b44f5a88d55cfb7ab77d68412a49e941cc4001b4a",
+      "rgbaPath": "tests/m0/photos/photo-eagle.rgba",
+      "rgbaSha256": "605fe219cf4dcc90b6d35c835ee4d580d04d9de0c9223219794ca4ff71df868f"
+    }
+  ]
+}

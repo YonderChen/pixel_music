@@ -1,0 +1,13 @@
+const assert=require('node:assert/strict'),vm=require('node:vm');
+const Spec=require('./m0/identity.cjs');
+const {read,jsonSha}=require('./m0/utils.cjs');
+assert.equal(Spec.fnv64(''),'cbf29ce484222325');assert.equal(Spec.fnv64('a'),'af63dc4c8601ec8c');assert.equal(Spec.fnv64('hello'),'a430d84680aabd0b');
+assert.equal(Spec.canonical({z:-0,a:[.12345678949,.12345678951,2]}),'{"a":[0.123456789,0.12345679,2],"z":0}');
+const a={z:3,nested:{b:'图鸣',a:1},points:[{x:0,y:1},{x:1,y:2}]},b={points:[{y:1,x:0},{y:2,x:1}],nested:{a:1,b:'图鸣'},z:3};
+const before=jsonSha(a);assert.equal(Spec.fingerprint('structure',a),Spec.fingerprint('structure',b));assert.equal(jsonSha(a),before);
+assert.notEqual(Spec.fingerprint('structure',a),Spec.fingerprint('mapping',a));assert.notEqual(Spec.fingerprint('structure',a),Spec.fingerprint('structure',{...a,points:a.points.slice().reverse()}));
+for(const value of [NaN,Infinity,undefined,()=>0,new Date(),{a:undefined},1e7,{'非ASCII':1}])assert.throws(()=>Spec.canonical(value));
+const context=vm.createContext({TextEncoder});new vm.Script(read('tests/m0/identity.cjs').toString()).runInContext(context);
+const result=vm.runInContext('PixelMusicIdentitySpecM0.fingerprint("structure",{z:3,nested:{b:"图鸣",a:1},points:[{x:0,y:1},{x:1,y:2}]})',context);
+assert.equal(result,Spec.fingerprint('structure',a));
+console.log(JSON.stringify({status:'passed',knownHashVectors:3,canonicalNumberDigits:9,classicScriptVmMatches:true,productFingerprintImplementation:false}));

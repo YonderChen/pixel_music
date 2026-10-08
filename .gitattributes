@@ -1,0 +1,2 @@
+# Canonical pixel fixtures are binary; never normalize their line endings.
+tests/m0/photos/*.rgba binary

@@ -1,0 +1,1199 @@
+{
+  "schema": "pixelmusic-m0-dataset-v1",
+  "version": "m0-fixtures-v1",
+  "frozenOn": "2026-10-08",
+  "width": 192,
+  "height": 120,
+  "channels": 4,
+  "counts": {
+    "legacy": 84,
+    "geometry": 24,
+    "photos": 12,
+    "total": 120,
+    "calibration": 24,
+    "holdout": 12,
+    "regression": 84
+  },
+  "sourceManifest": "tests/m0/photo-sources.json",
+  "photoMetadata": "tests/m0/photo-pixels.json",
+  "photoAnnotations": "tests/m0/photo-annotations.json",
+  "geometryAnnotations": "tests/m0/geometry-annotations.json",
+  "inputs": [
+    {
+      "id": "legacy-00",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "纯色",
+      "index": 0,
+      "rgbaSha256": "49e087037f21f032535ddadfd57de1b5079568604540d891481c1bde4ac3e5a3"
+    },
+    {
+      "id": "legacy-01",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "黑白棋盘",
+      "index": 1,
+      "rgbaSha256": "60bce265a716ece411bab2dcb8a9ddfb82d6e8f8fa520916dfbc1d8464192b6e"
+    },
+    {
+      "id": "legacy-02",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "明暗渐变",
+      "index": 2,
+      "rgbaSha256": "3f5aff1ff4c61db6e97ae15f449f144d5316eb42f87845b2d58472b619ead3de"
+    },
+    {
+      "id": "legacy-03",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "彩色渐变",
+      "index": 3,
+      "rgbaSha256": "6737f319e54bcfa5b29b4e2d5991ae739aa938e7d56e9587efe41141da1f5b04"
+    },
+    {
+      "id": "legacy-04",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "低饱和风景",
+      "index": 4,
+      "rgbaSha256": "4f11561ebb9ca10a44ce9607d31fe1dd4ffd206fb3227df80d3172307953e2cf"
+    },
+    {
+      "id": "legacy-05",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "夕阳",
+      "index": 5,
+      "rgbaSha256": "746786958e6e00a32a14c1155f6598a91dd5b6581466f487e1a8cd42f22af7d7"
+    },
+    {
+      "id": "legacy-06",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "高对比建筑",
+      "index": 6,
+      "rgbaSha256": "37f8b34967b06c0287c6feeab678e942abbd2e32f2d78872a58d0305e5189c38"
+    },
+    {
+      "id": "legacy-07",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "几何人像",
+      "index": 7,
+      "rgbaSha256": "8972b27821590ea60def4d88c12e6064cc818fbf683ca1e8ab16e2fa9c69db74"
+    },
+    {
+      "id": "legacy-08",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "抽象图案",
+      "index": 8,
+      "rgbaSha256": "23808cf842b623c7c868c0aba8418b56401cc8912090d9d74cfed5b9c0e87677"
+    },
+    {
+      "id": "legacy-09",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "密集纹理",
+      "index": 9,
+      "rgbaSha256": "9b10bb9c47b7d9543dcb73224271be17acdde81180cc92b83d15e228b212cb4f"
+    },
+    {
+      "id": "legacy-10",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "噪声",
+      "index": 10,
+      "rgbaSha256": "9c591e6831a822fcf71b3803381fe6fc929bb7cbc965a116fc5efc5cfd9e5b8b"
+    },
+    {
+      "id": "legacy-11",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "局部变化对照",
+      "index": 11,
+      "rgbaSha256": "d3a9c1229f8c077ac3ad9c15d9ee6c291126c94dce3466187d1ee6118d8824b6"
+    },
+    {
+      "id": "legacy-12",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "方向渐变 1",
+      "index": 12,
+      "rgbaSha256": "6c8c63305ad9647e52d33d4557448be724f5bb8d5081f7b24d47efc6f064faeb"
+    },
+    {
+      "id": "legacy-13",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "方向渐变 2",
+      "index": 13,
+      "rgbaSha256": "db18aeab6e4cb1991fe4b3c7af39d8f09bb183a30a1ffcabbd7f086d0197027c"
+    },
+    {
+      "id": "legacy-14",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "方向渐变 3",
+      "index": 14,
+      "rgbaSha256": "7627eefe08f8044323840c6fd87bf54227ffa98f8c90159f6a18c3571d85026b"
+    },
+    {
+      "id": "legacy-15",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "方向渐变 4",
+      "index": 15,
+      "rgbaSha256": "b0c17ea63686c4dfd2b975ba5870120a5692508a697212b0898a4094aee8ec1d"
+    },
+    {
+      "id": "legacy-16",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "方向渐变 5",
+      "index": 16,
+      "rgbaSha256": "51f6a855592e735119c4b70390c9e6cd7b1f61fb5ad6114f6338793ee90ae681"
+    },
+    {
+      "id": "legacy-17",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "方向渐变 6",
+      "index": 17,
+      "rgbaSha256": "00ddc0f6a4155bfafa3cd2e76b20372d8775b7f6494f66674609e0ee8696a242"
+    },
+    {
+      "id": "legacy-18",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "周期条纹 1",
+      "index": 18,
+      "rgbaSha256": "e2e1ff2aeaf021526c4d9cd41cf6c3963fb2cac2864218bc98a9d8252546f591"
+    },
+    {
+      "id": "legacy-19",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "周期条纹 2",
+      "index": 19,
+      "rgbaSha256": "4347b929c3380a922a65f30b130a44341631bedafaa0a86980f6959ff0fc637c"
+    },
+    {
+      "id": "legacy-20",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "周期条纹 3",
+      "index": 20,
+      "rgbaSha256": "8d7a83cba569996a2ca5ec2e03683718134f1054787c7ca24c60525f0dd6c2b8"
+    },
+    {
+      "id": "legacy-21",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "周期条纹 4",
+      "index": 21,
+      "rgbaSha256": "85536302c050dadff8d1db50e9cf38a40d694b2e0fda8cb13ecbde4e076f1198"
+    },
+    {
+      "id": "legacy-22",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "周期条纹 5",
+      "index": 22,
+      "rgbaSha256": "17c1f3a9b9471ca3726a06c874bcd64ced9580166d633ca4472f9b96e26c7bb1"
+    },
+    {
+      "id": "legacy-23",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "周期条纹 6",
+      "index": 23,
+      "rgbaSha256": "6b74a7744485bac8382badeff9963da85f6a676e392470461918f61c5a420046"
+    },
+    {
+      "id": "legacy-24",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "棋盘尺度 1",
+      "index": 24,
+      "rgbaSha256": "03b3f2da65229f474e802578b6e82572f8bc74b52b10b960db2ca89ac29f381f"
+    },
+    {
+      "id": "legacy-25",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "棋盘尺度 2",
+      "index": 25,
+      "rgbaSha256": "24ea55f31fd65d546575180bd62994deb4129f7674d6078ab6cf0e25fb89a703"
+    },
+    {
+      "id": "legacy-26",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "棋盘尺度 3",
+      "index": 26,
+      "rgbaSha256": "37245b6b07fa5107e5d1d6b01852e9aaca5459c34b721c349ae0c84c0a843ac4"
+    },
+    {
+      "id": "legacy-27",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "棋盘尺度 4",
+      "index": 27,
+      "rgbaSha256": "4ee4ce4e973d3a26054cc578eb492223ba41eb73ddf0fcc39aaf53b52d7ca60b"
+    },
+    {
+      "id": "legacy-28",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "棋盘尺度 5",
+      "index": 28,
+      "rgbaSha256": "74775bcc739f0ecefd006b63efebef458dc7d46ca371f6fef3244d9d78608e27"
+    },
+    {
+      "id": "legacy-29",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "棋盘尺度 6",
+      "index": 29,
+      "rgbaSha256": "dbb899e93e08edf66947391fd90fbc27753243f216ec7f9d417ce432131fbdb0"
+    },
+    {
+      "id": "legacy-30",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "彩色波形 1",
+      "index": 30,
+      "rgbaSha256": "75a35a920603f7d89f8782479cb4128bc769f4be3207e907a7dfcccfd472e56a"
+    },
+    {
+      "id": "legacy-31",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "彩色波形 2",
+      "index": 31,
+      "rgbaSha256": "7bff061b92e7d9e83ea7aa566381c88b1a225429e272c56d2cc2ee5b94caf614"
+    },
+    {
+      "id": "legacy-32",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "彩色波形 3",
+      "index": 32,
+      "rgbaSha256": "48413d8ecfcf2dc8b283180755d732664ac8e8c0be5f877e4b0e057c652cb610"
+    },
+    {
+      "id": "legacy-33",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "彩色波形 4",
+      "index": 33,
+      "rgbaSha256": "135547ffe44380e1c8a6589479dd6a7abb9b1cec683c21cb1fd600ca563e057e"
+    },
+    {
+      "id": "legacy-34",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "彩色波形 5",
+      "index": 34,
+      "rgbaSha256": "d7566773beb7a1e98c2348db9af225bff519aa1c3fab82bbec4678c2c9498773"
+    },
+    {
+      "id": "legacy-35",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "彩色波形 6",
+      "index": 35,
+      "rgbaSha256": "d155d961190df815ab64f34ffb6043bcfc9c038794f27c68d45fe22a9abb507d"
+    },
+    {
+      "id": "legacy-36",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "几何圆形 1",
+      "index": 36,
+      "rgbaSha256": "66ff517b265b7d84e66ad7c6dd79bc07cd2d68303333f6987b7b5738de8606db"
+    },
+    {
+      "id": "legacy-37",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "几何圆形 2",
+      "index": 37,
+      "rgbaSha256": "fefb0e8c3856d7ec574e8f9970746b628ba1fed904aec670fc5f90c2b74e653e"
+    },
+    {
+      "id": "legacy-38",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "几何圆形 3",
+      "index": 38,
+      "rgbaSha256": "b22e340b305f93582d2e85dd73e5beb723725683614b4f1f5d995d0d3fbbc9c9"
+    },
+    {
+      "id": "legacy-39",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "几何圆形 4",
+      "index": 39,
+      "rgbaSha256": "00e50e73ea9ef1b19c9785fe842f6ad0156788a21d0df39eb7d3f8b0c063d602"
+    },
+    {
+      "id": "legacy-40",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "几何圆形 5",
+      "index": 40,
+      "rgbaSha256": "b0c59e728113226c6d37021d1515597f4427a7c1aa10ed9363137dad316e4e13"
+    },
+    {
+      "id": "legacy-41",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "几何圆形 6",
+      "index": 41,
+      "rgbaSha256": "ffdfc274f15abf375992fe3a4b272fb90cbf80acb4860993cef736a50caf339c"
+    },
+    {
+      "id": "legacy-42",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "空间块面 1",
+      "index": 42,
+      "rgbaSha256": "bb7e12f72cdaeac4215fee1b4cd6f68851451fe448d8b5e8be58f7235568153c"
+    },
+    {
+      "id": "legacy-43",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "空间块面 2",
+      "index": 43,
+      "rgbaSha256": "915768710354f7f5c99f319ee946fd2c94f4d53ef94f496242b48fb15885ec90"
+    },
+    {
+      "id": "legacy-44",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "空间块面 3",
+      "index": 44,
+      "rgbaSha256": "d32a1e090664e84dd25a912975e00531714c3c1e7aceab3e5abcb2f88a1deaf6"
+    },
+    {
+      "id": "legacy-45",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "空间块面 4",
+      "index": 45,
+      "rgbaSha256": "7827c21e3398fedc9e7d76a22b9a8d2f136a9dc6a880742f8f505c27b4c565b5"
+    },
+    {
+      "id": "legacy-46",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "空间块面 5",
+      "index": 46,
+      "rgbaSha256": "29f576a0832b70547c3456850c38a68011e480aeff9ecdfdf66d12614aeba9d7"
+    },
+    {
+      "id": "legacy-47",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "空间块面 6",
+      "index": 47,
+      "rgbaSha256": "0ca853f264552799841204380e91df50da364e1b15166a1c702f9d307626783a"
+    },
+    {
+      "id": "legacy-48",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "放射环形 1",
+      "index": 48,
+      "rgbaSha256": "b393bfa745a5893ce13902c2483a19614deedddbad7f9603647edfa56a678b1b"
+    },
+    {
+      "id": "legacy-49",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "放射环形 2",
+      "index": 49,
+      "rgbaSha256": "7073eb88e2008ef3b6c9ba2d79f446a7013030d1a66b2999d52e2413555c8633"
+    },
+    {
+      "id": "legacy-50",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "放射环形 3",
+      "index": 50,
+      "rgbaSha256": "aeb5a4d11df73bad6e6d44145583cace1e87c3827e97f088339fa6925de938ca"
+    },
+    {
+      "id": "legacy-51",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "放射环形 4",
+      "index": 51,
+      "rgbaSha256": "7aad5da90c0cf183f7a32dc7325f558f9f7dd96dc1c5eaf00c85e7a9c6ed4d1d"
+    },
+    {
+      "id": "legacy-52",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "放射环形 5",
+      "index": 52,
+      "rgbaSha256": "d56748e754638c07fa429935e21aa2a06c7d6161113e4c0b88fa38d3735dbee9"
+    },
+    {
+      "id": "legacy-53",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "放射环形 6",
+      "index": 53,
+      "rgbaSha256": "1ea0e6f174f732bcd38e3f24dca6fe750c5b7a30ae1fb50e95fec3b178592363"
+    },
+    {
+      "id": "legacy-54",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "噪声强度 1",
+      "index": 54,
+      "rgbaSha256": "8aa579b8a493c69917da3dd56294764ec57e8743dc511a5490268aab3b80794d"
+    },
+    {
+      "id": "legacy-55",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "噪声强度 2",
+      "index": 55,
+      "rgbaSha256": "d239dae3ccb2e5925b4968d437541519e90c41c1030c440ed0f406bef00c12b0"
+    },
+    {
+      "id": "legacy-56",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "噪声强度 3",
+      "index": 56,
+      "rgbaSha256": "314a70330f73dcf5e21eb707f7101aae27fd8e1a5a2fe0ff990c72ba76c42179"
+    },
+    {
+      "id": "legacy-57",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "噪声强度 4",
+      "index": 57,
+      "rgbaSha256": "21e72a4e61d3f57bd2a1f58eeb1cf6d6b9009f16371099d4b582ecf8244abaed"
+    },
+    {
+      "id": "legacy-58",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "噪声强度 5",
+      "index": 58,
+      "rgbaSha256": "ed17068c62a5d7cff7540d0410a50ffebd676d8111a2cee148cefd51d2960c65"
+    },
+    {
+      "id": "legacy-59",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "噪声强度 6",
+      "index": 59,
+      "rgbaSha256": "9042f76983f4c03e70b3e562424d8f3e9923b2afbe4bdc3ee9a91028deddd4f8"
+    },
+    {
+      "id": "legacy-60",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "精确纯白",
+      "index": 60,
+      "rgbaSha256": "fc7bc70fa8de6eb76d3a6c47669324e70f084c326e0ea1166224c516b5c4e642"
+    },
+    {
+      "id": "legacy-61",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "精确纯黑",
+      "index": 61,
+      "rgbaSha256": "fc25121efb4a45f650f86e5ba6acb8f0916478fe3c99ae04f5dbf1102a650462"
+    },
+    {
+      "id": "legacy-62",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "纯灰 32",
+      "index": 62,
+      "rgbaSha256": "574b988b4ed284723de41ad38aabba6db783a5dcb87e920102793092acdb6f7e"
+    },
+    {
+      "id": "legacy-63",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "纯灰 96",
+      "index": 63,
+      "rgbaSha256": "e58bd50b9c0edfbc4f3cded3efe7f396a5bb9d5cd251ebaef30e4aead7b1a645"
+    },
+    {
+      "id": "legacy-64",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "纯灰 128",
+      "index": 64,
+      "rgbaSha256": "f2ea22a1f1d7c1166037f9d495d1b910a5bc86a0ba582acc281a4aec51cf1cc0"
+    },
+    {
+      "id": "legacy-65",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "纯灰 192",
+      "index": 65,
+      "rgbaSha256": "8cda0dd2b9568ffb8fc121e53731bb8083450444ec268125956da234632eae4e"
+    },
+    {
+      "id": "legacy-66",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "接近纯白 254",
+      "index": 66,
+      "rgbaSha256": "b264108b04d5b53963c1e52f1f9f1fd102a9c639a36a18a72394ea1ac92317d4"
+    },
+    {
+      "id": "legacy-67",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "纯红",
+      "index": 67,
+      "rgbaSha256": "5c384f510f6a498986cb4d545582f5abbcb036f8c9335ac67f16c87e31a8f00d"
+    },
+    {
+      "id": "legacy-68",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "纯绿",
+      "index": 68,
+      "rgbaSha256": "d5e83c7f898e16c1f040834ec12907b3061b5a6825aa26f49db11e6a9b99d35c"
+    },
+    {
+      "id": "legacy-69",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "纯蓝",
+      "index": 69,
+      "rgbaSha256": "598b260e87b55fbc5d652bc4c31e1f67ccb3165212b8c430f0d9658fd92bc2c8"
+    },
+    {
+      "id": "legacy-70",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "纯青",
+      "index": 70,
+      "rgbaSha256": "59535865ce3e4179101661a1ba1e3416efe759545f62f4adf85316ce9b94e78b"
+    },
+    {
+      "id": "legacy-71",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "纯品红",
+      "index": 71,
+      "rgbaSha256": "4d6373643beefee7cb3a1dbc9555e887cb606cb870082876483bdb49ba660f7f"
+    },
+    {
+      "id": "legacy-72",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "纯白轻微噪声",
+      "index": 72,
+      "rgbaSha256": "448bf7d1d4a5c39ee9f1f6abdbf941a49d6aae5c32f2665b39409b40c1766c34"
+    },
+    {
+      "id": "legacy-73",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "纯灰轻微噪声",
+      "index": 73,
+      "rgbaSha256": "4ee63a55462da4c3e28a5f17a69a0be71896f6d3c1d2f67054cc36410854b73b"
+    },
+    {
+      "id": "legacy-74",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "全范围横向灰阶渐变",
+      "index": 74,
+      "rgbaSha256": "18ac1dfdfd812e786d3d012959e33cf2dc0dfc517af0af23ffb0aa7ac2358a98"
+    },
+    {
+      "id": "legacy-75",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "全范围纵向灰阶渐变",
+      "index": 75,
+      "rgbaSha256": "7af58d5a8b3f00c99e84876b7b2ea708ad5ac983615ae13339e7d1bb74613cb3"
+    },
+    {
+      "id": "legacy-76",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "白底局部红色块",
+      "index": 76,
+      "rgbaSha256": "dc3f74fe02d5a4c4db83a4c18d35408c8ab5b27ccd5d3f4a1ae714e45910a211"
+    },
+    {
+      "id": "legacy-77",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "同均值细棋盘",
+      "index": 77,
+      "rgbaSha256": "e91e090e9479c58e3a47534d76af296502e1ddc3f04379a62453a09c607190d9"
+    },
+    {
+      "id": "legacy-78",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "同均值横纹",
+      "index": 78,
+      "rgbaSha256": "618d0140fc774e17e91b77a8e5e9dc9a76de1c2b717ed7359c521d8feb05dce9"
+    },
+    {
+      "id": "legacy-79",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "同均值纵纹",
+      "index": 79,
+      "rgbaSha256": "e6c3326b06ed256091f5c1447b52a89c3cc7995bf5c1ad3dfd0a5e30cbb92ac0"
+    },
+    {
+      "id": "legacy-80",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "七像素有组织纹理",
+      "index": 80,
+      "rgbaSha256": "9b10bb9c47b7d9543dcb73224271be17acdde81180cc92b83d15e228b212cb4f"
+    },
+    {
+      "id": "legacy-81",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "相同颜色分布打乱",
+      "index": 81,
+      "rgbaSha256": "e7efcc650c0e30b7a03a899a8635cbe3f4e8dc941a03d5f93441cbbb97e1d148"
+    },
+    {
+      "id": "legacy-82",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "微小累积渐变",
+      "index": 82,
+      "rgbaSha256": "fd47ca92af9d0579745a30ced492d55b39ba10c6e307a3021b9d1dbdfd93ffc3"
+    },
+    {
+      "id": "legacy-83",
+      "kind": "legacy",
+      "split": "regression",
+      "name": "白底黑色区域",
+      "index": 83,
+      "rgbaSha256": "9527304625b8626924bf646707dbf97db3b62e1cbd0192d732775e8c4e8b9dec"
+    },
+    {
+      "id": "geometry-horizontal-1",
+      "kind": "geometry",
+      "split": "calibration",
+      "family": "horizontal",
+      "palette": "dark-on-light",
+      "rgbaSha256": "58fec1e8e958cccd22b8e9fbf3dc148520f2e0d01992c419d872dfe4c4ae70ef",
+      "annotationSha256": "9be0d616413f32f0469c70e9cd28bfe2dec21fcbf10d92daf7f73d1f3f4d53e2"
+    },
+    {
+      "id": "geometry-horizontal-2",
+      "kind": "geometry",
+      "split": "calibration",
+      "family": "horizontal",
+      "palette": "colour-on-dark",
+      "rgbaSha256": "9ca99ac960b87f202e484061beb509e73df9fcfd7d38193f39272a43f82e1153",
+      "annotationSha256": "774fcf0d9ee0031ccff0537d0a85f44da917486c8b4ea235804a152ccc952515"
+    },
+    {
+      "id": "geometry-horizontal-3",
+      "kind": "geometry",
+      "split": "holdout",
+      "family": "horizontal",
+      "palette": "low-contrast",
+      "rgbaSha256": "b615648b8743e790e7d879c82b8babdbeeebe2ba17e8b0d4dbd25896e803a0fb",
+      "annotationSha256": "8162db7c870e8efe845a517e1b3465adc6a77be42707536079d22345a95d324c"
+    },
+    {
+      "id": "geometry-rising-1",
+      "kind": "geometry",
+      "split": "calibration",
+      "family": "rising",
+      "palette": "dark-on-light",
+      "rgbaSha256": "f4fa04718f00fc067d0a91a252b5cbacba2b99782caf5e685a13d6cfc579ddea",
+      "annotationSha256": "144f6d229c6692e0e264a33d5f8498c38ed84239fb6f80a03e70aef1f24d75b6"
+    },
+    {
+      "id": "geometry-rising-2",
+      "kind": "geometry",
+      "split": "calibration",
+      "family": "rising",
+      "palette": "colour-on-dark",
+      "rgbaSha256": "aab14af821a7c81110fdf04345c81a36b18e22069b3251f665527cd34f10501a",
+      "annotationSha256": "6254623a6aa15cfa2ee233eeeaef9f3425c69e6bdd8a40ccfc92bff1666368e9"
+    },
+    {
+      "id": "geometry-rising-3",
+      "kind": "geometry",
+      "split": "holdout",
+      "family": "rising",
+      "palette": "low-contrast",
+      "rgbaSha256": "af9b590e7d4af263b3b3b4b1fd38690869ce88dabf668d01add023ebce85c56b",
+      "annotationSha256": "6bab25a33317c59a73e7de20e81ffb6fb22d45c3984a9f751d44fd2903a1cb22"
+    },
+    {
+      "id": "geometry-falling-1",
+      "kind": "geometry",
+      "split": "calibration",
+      "family": "falling",
+      "palette": "dark-on-light",
+      "rgbaSha256": "144ae63a33dd5e9e816bd963230d35d9726f304c1f7a4e4e127ef019191717f1",
+      "annotationSha256": "536684e8d55f9cab44e1e574ec13d43aaf0006b5575e7e949c1147b948516c56"
+    },
+    {
+      "id": "geometry-falling-2",
+      "kind": "geometry",
+      "split": "calibration",
+      "family": "falling",
+      "palette": "colour-on-dark",
+      "rgbaSha256": "81018b0f2fc56aeb7747c13e8039d7c2c881dd8fe084d2fa31bff170a771f6a0",
+      "annotationSha256": "200e61984fdd5d2461ac099828ee66e8b686cc7ac2b7f503453fac3a90c33615"
+    },
+    {
+      "id": "geometry-falling-3",
+      "kind": "geometry",
+      "split": "holdout",
+      "family": "falling",
+      "palette": "low-contrast",
+      "rgbaSha256": "5af926ab1ac16b741d6b5f466d65da1d35394be9bc5f77d386bc7827c15f8ed1",
+      "annotationSha256": "f771d263f6226313d6441b9045acd3e28a22d81f347bee539f2e6d93c35d8522"
+    },
+    {
+      "id": "geometry-wave-1",
+      "kind": "geometry",
+      "split": "calibration",
+      "family": "wave",
+      "palette": "dark-on-light",
+      "rgbaSha256": "b1d5305ffd678c3377e0c6cafe0779b55c38466694bd8ac4d54277aa1f03f864",
+      "annotationSha256": "155ee63f93d03ae2c1665b2cc411b170420b02400cec001fb0e09dfa0cdd3305"
+    },
+    {
+      "id": "geometry-wave-2",
+      "kind": "geometry",
+      "split": "calibration",
+      "family": "wave",
+      "palette": "colour-on-dark",
+      "rgbaSha256": "5db38dd15ab59e7ba4d9615fa2ccf691c8d4f16dd563bf5e46822bf7fd10c0bd",
+      "annotationSha256": "a211051526c43d3af191439d01bf133b20b9fcb72bd760ba95ab87a1ef3f6b09"
+    },
+    {
+      "id": "geometry-wave-3",
+      "kind": "geometry",
+      "split": "holdout",
+      "family": "wave",
+      "palette": "low-contrast",
+      "rgbaSha256": "156deb4b90665bb38fd60d0bb4543b22fc4e5d7881004b3ec4fcd879af6dbd7e",
+      "annotationSha256": "32a9bd974cb141d6bd42f9fec3cca8dddea2446bc7e225ed77fefce153ec4274"
+    },
+    {
+      "id": "geometry-broken-1",
+      "kind": "geometry",
+      "split": "calibration",
+      "family": "broken",
+      "palette": "dark-on-light",
+      "rgbaSha256": "c294a50b3e84a456801f52a1facaa1a0afa9190d7f23321e320b8e9bf3923de5",
+      "annotationSha256": "6c4d732743ce0d9af148a8322c0ae53d59b8ca8d44a8a0007c996e90644556d7"
+    },
+    {
+      "id": "geometry-broken-2",
+      "kind": "geometry",
+      "split": "calibration",
+      "family": "broken",
+      "palette": "colour-on-dark",
+      "rgbaSha256": "457fedf237a2ded0bda0e3df0a4285d369396d0eeb8115f410b22dd17f299888",
+      "annotationSha256": "b74709988f48356b997563d3b029ca3fedc88a4a586364c70d07f2b7961286f0"
+    },
+    {
+      "id": "geometry-broken-3",
+      "kind": "geometry",
+      "split": "holdout",
+      "family": "broken",
+      "palette": "low-contrast",
+      "rgbaSha256": "183de874fe9ef9e11d4cd27a7ac98a58060a8a319ec034bb3e13411382b049ec",
+      "annotationSha256": "43c2d825ccce0a806f60c18a2e94fdc68d1bd8f735d37eef2c9176a5f8bac6e9"
+    },
+    {
+      "id": "geometry-block-1",
+      "kind": "geometry",
+      "split": "calibration",
+      "family": "block",
+      "palette": "dark-on-light",
+      "rgbaSha256": "d49f2e8fcf32fef0e59c2f1edb561756bf1d271750994a22113acfa6a45a7a5a",
+      "annotationSha256": "374ca5578f27d10e63611e3d9b84c3fa93b1600cfffae83b016ab637039a8e71"
+    },
+    {
+      "id": "geometry-block-2",
+      "kind": "geometry",
+      "split": "calibration",
+      "family": "block",
+      "palette": "colour-on-dark",
+      "rgbaSha256": "1b28a2bc243443a71197dca645904479d613aee4b249fb5f39defa66b04d39bc",
+      "annotationSha256": "499fc9995311d75ebca45184866227f45dfbec4dba57119ad2a604692dd12d9c"
+    },
+    {
+      "id": "geometry-block-3",
+      "kind": "geometry",
+      "split": "holdout",
+      "family": "block",
+      "palette": "low-contrast",
+      "rgbaSha256": "aa9091fd9bb41b757f8ddd6d02f35f1fce41b70a14cbae0f3b5be449d7bc3ff5",
+      "annotationSha256": "081e2de606132f5b13b32e531538c5453bd6d17be793c67de5546f529aedf459"
+    },
+    {
+      "id": "geometry-double-1",
+      "kind": "geometry",
+      "split": "calibration",
+      "family": "double",
+      "palette": "dark-on-light",
+      "rgbaSha256": "cfac6602b4d54b4467d3516e3a97b6736604a6c195d53a9f995ee677dab7790b",
+      "annotationSha256": "bbcb8413b4638948e920f0094292d37695dc4528b242c11c8e451e16a0ce368a"
+    },
+    {
+      "id": "geometry-double-2",
+      "kind": "geometry",
+      "split": "calibration",
+      "family": "double",
+      "palette": "colour-on-dark",
+      "rgbaSha256": "6e867fc360d13354ee1627a972e578bfe50a1c86ce4113d162a666043c0d46d6",
+      "annotationSha256": "9132ccd0a3658212a2946d6c3d5fc0ec6ddce7be637a1065288990e0f0c18db6"
+    },
+    {
+      "id": "geometry-double-3",
+      "kind": "geometry",
+      "split": "holdout",
+      "family": "double",
+      "palette": "low-contrast",
+      "rgbaSha256": "c7648599e7ea10c87d2db6247a7c67b2ae7d6d487af2f73ace2ebf9d35c71691",
+      "annotationSha256": "d79b9cd49c34870a218574c444f79b4b5bce0596bd07357e98a42ccaa8a5d83e"
+    },
+    {
+      "id": "geometry-noise-1",
+      "kind": "geometry",
+      "split": "calibration",
+      "family": "noise",
+      "palette": "dark-on-light",
+      "rgbaSha256": "30924a8333b9504b17380ba8c3dca24a6bd87539d21499b303672c3faa10db70",
+      "annotationSha256": "98614736aef816d151c348aace8aab0747b0087e01b8d5b1bb9d62d8f72ed281"
+    },
+    {
+      "id": "geometry-noise-2",
+      "kind": "geometry",
+      "split": "calibration",
+      "family": "noise",
+      "palette": "colour-on-dark",
+      "rgbaSha256": "ee6bc690e54a7df1097d7380f527823d03ae456df14fa7267eb54cce064a8260",
+      "annotationSha256": "3001adc8e55eed9d9bb2730f968eb8915999ad3fa20537fdee3454a9430f6a34"
+    },
+    {
+      "id": "geometry-noise-3",
+      "kind": "geometry",
+      "split": "holdout",
+      "family": "noise",
+      "palette": "low-contrast",
+      "rgbaSha256": "2c2dd0551b7a9a3911b8792820c9d9f33e660c16a4a780daa391c3550085ea36",
+      "annotationSha256": "d35b269c17e7b74a4d9e499eb112793026b44a9cac1c85f29679b2c47faef996"
+    },
+    {
+      "id": "photo-camera",
+      "kind": "photo",
+      "split": "calibration",
+      "category": "long-boundary",
+      "rgbaSha256": "f00112780a300415250ebedfd2daf191be97919accceaddc5731a8638c8cc49d",
+      "annotationSha256": "119998f7d8c0c758cecb0e38d612ac79c4c5aba4e19954aa2d89d905f3c36b12",
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "cropBox": [
+        0,
+        96,
+        512,
+        416
+      ],
+      "normalizationVersion": "fixture-cover-pillow-bilinear-v1",
+      "pillowVersion": "12.3.0",
+      "sourceSha256": "b0793d2adda0fa6ae899c03989482bff9a42d3d5690fc7e3648f2795d730c23a",
+      "pngPath": "tests/m0/photos/photo-camera.png",
+      "pngSha256": "acea0f2aa5b6a98ce586ab267e0b96a250df30f0f5d0be6dbc7896948dddcdb5",
+      "rgbaPath": "tests/m0/photos/photo-camera.rgba"
+    },
+    {
+      "id": "photo-brick",
+      "kind": "photo",
+      "split": "calibration",
+      "category": "long-boundary",
+      "rgbaSha256": "4d61dff9e5acedc467ef914fb23c36e078fd9fb8037dd0d8c9b3bde929824167",
+      "annotationSha256": "a85f38955720f6fedefb7b6372b05b44360e837643ee1c6c6a9e4f86e7e86dc7",
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "cropBox": [
+        0,
+        96,
+        512,
+        416
+      ],
+      "normalizationVersion": "fixture-cover-pillow-bilinear-v1",
+      "pillowVersion": "12.3.0",
+      "sourceSha256": "7966caf324f6ba843118d98f7a07746d22f6a343430add0233eca5f6eaaa8fcf",
+      "pngPath": "tests/m0/photos/photo-brick.png",
+      "pngSha256": "fe07fcdba9314b7cd0d6c730fee1dd1dc625623f3d8c90904fd89df207d8c0c5",
+      "rgbaPath": "tests/m0/photos/photo-brick.rgba"
+    },
+    {
+      "id": "photo-earthrise",
+      "kind": "photo",
+      "split": "holdout",
+      "category": "long-boundary",
+      "rgbaSha256": "acb2a6b151c58c46e19a87b9278ef848e352c289f8ab16c5ae7b857547f3034d",
+      "annotationSha256": "0485ded9cf517cf14c018a4b96d4de7edc5e26ef45439b3595a74da05a66c4ac",
+      "sourceDimensions": [
+        3000,
+        3000
+      ],
+      "cropBox": [
+        0,
+        562.5,
+        3000,
+        2437.5
+      ],
+      "normalizationVersion": "fixture-cover-pillow-bilinear-v1",
+      "pillowVersion": "12.3.0",
+      "sourceSha256": "d1095c83ba668aaec3054b9720ad9ebe98d7c53cf54ad45f398a6fdfed84aed2",
+      "pngPath": "tests/m0/photos/photo-earthrise.png",
+      "pngSha256": "b01aee5114237834665349a66b2ee5002d6c9ec77fd8a0777e9770f3f2dfd85f",
+      "rgbaPath": "tests/m0/photos/photo-earthrise.rgba"
+    },
+    {
+      "id": "photo-astronaut",
+      "kind": "photo",
+      "split": "calibration",
+      "category": "competing-boundaries",
+      "rgbaSha256": "eec2031b0f2fb6369ae9320d86d791ffc16c2bb81bc3b2f7f3506c32b34b21c2",
+      "annotationSha256": "a1fc0a80e2d4117b108c702bef0f273445e4e7b91121faa303a7339c893ce2bd",
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "cropBox": [
+        0,
+        96,
+        512,
+        416
+      ],
+      "normalizationVersion": "fixture-cover-pillow-bilinear-v1",
+      "pillowVersion": "12.3.0",
+      "sourceSha256": "88431cd9653ccd539741b555fb0a46b61558b301d4110412b5bc28b5e3ea6cb5",
+      "pngPath": "tests/m0/photos/photo-astronaut.png",
+      "pngSha256": "b6875fd520a46aab913b55c52b030e5ed80ffe2d5af83aefd80747e5d190a846",
+      "rgbaPath": "tests/m0/photos/photo-astronaut.rgba"
+    },
+    {
+      "id": "photo-coffee",
+      "kind": "photo",
+      "split": "calibration",
+      "category": "competing-boundaries",
+      "rgbaSha256": "ec47e4ce8622516fafd85d17bb5bc6541d7bcb3f4358392ff8ce505b439d15aa",
+      "annotationSha256": "9ab93fcd8831d70f6fa72970696e8426044d0b7473ea976115958e028ba9ca44",
+      "sourceDimensions": [
+        600,
+        400
+      ],
+      "cropBox": [
+        0,
+        12.5,
+        600,
+        387.5
+      ],
+      "normalizationVersion": "fixture-cover-pillow-bilinear-v1",
+      "pillowVersion": "12.3.0",
+      "sourceSha256": "cc02f8ca188b167c775a7101b5d767d1e71792cf762c33d6fa15a4599b5a8de7",
+      "pngPath": "tests/m0/photos/photo-coffee.png",
+      "pngSha256": "16b4fdbca864bca7c9a2deb8d89bf498867fbbed757e36151e47508a71ecbfae",
+      "rgbaPath": "tests/m0/photos/photo-coffee.rgba"
+    },
+    {
+      "id": "photo-chelsea",
+      "kind": "photo",
+      "split": "holdout",
+      "category": "competing-boundaries",
+      "rgbaSha256": "e1829c1f9395f24bede898153cab987a9e76c8fecdd3fb59e218641dfb7b8364",
+      "annotationSha256": "7bbdf0f598f84ffd0aa47a40862685688b33b3eae1ce7adfe6aa38d1b3a5e9d2",
+      "sourceDimensions": [
+        451,
+        300
+      ],
+      "cropBox": [
+        0,
+        9.0625,
+        451,
+        290.9375
+      ],
+      "normalizationVersion": "fixture-cover-pillow-bilinear-v1",
+      "pillowVersion": "12.3.0",
+      "sourceSha256": "596aa1e7cb875eb79f437e310381d26b338a81c2da23439704a73c4651e8c4bb",
+      "pngPath": "tests/m0/photos/photo-chelsea.png",
+      "pngSha256": "9d0efedba7b9311616232b472dcd45a2dcbc400011911ab8ff74f61aec422558",
+      "rgbaPath": "tests/m0/photos/photo-chelsea.rgba"
+    },
+    {
+      "id": "photo-rocket",
+      "kind": "photo",
+      "split": "calibration",
+      "category": "large-low-information-area",
+      "rgbaSha256": "6ba45d88dac7f7396930a06a5ffe70c2d46f95ce74f88e6ee8f147ecfc978b96",
+      "annotationSha256": "eb425d501871b0b6201107580363a0a5b3ed2c02d471a872ccec3b22085b9d7d",
+      "sourceDimensions": [
+        640,
+        427
+      ],
+      "cropBox": [
+        0,
+        13.5,
+        640,
+        413.5
+      ],
+      "normalizationVersion": "fixture-cover-pillow-bilinear-v1",
+      "pillowVersion": "12.3.0",
+      "sourceSha256": "c2dd0de7c538df8d111e479619b129464d0269d0ae5fd18ca91d33a7fdfea95c",
+      "pngPath": "tests/m0/photos/photo-rocket.png",
+      "pngSha256": "9de524be405acee58d154cd53a7baae8af51d31bf47e1380a528251283578b5f",
+      "rgbaPath": "tests/m0/photos/photo-rocket.rgba"
+    },
+    {
+      "id": "photo-clock",
+      "kind": "photo",
+      "split": "calibration",
+      "category": "large-low-information-area",
+      "rgbaSha256": "c67ba461885a0b6426875d122ae72253cdea75abb535e89c5ff4b89ca746897c",
+      "annotationSha256": "a25c0b9f58dbea38fbfd06608d73e5400f12fdcef0bb547e11c1dbccc0fbfa62",
+      "sourceDimensions": [
+        400,
+        300
+      ],
+      "cropBox": [
+        0,
+        25,
+        400,
+        275
+      ],
+      "normalizationVersion": "fixture-cover-pillow-bilinear-v1",
+      "pillowVersion": "12.3.0",
+      "sourceSha256": "f029226b28b642e80113d86622e9b215ee067a0966feaf5e60604a1e05733955",
+      "pngPath": "tests/m0/photos/photo-clock.png",
+      "pngSha256": "681d11824afce283a07bd9d9c5306d38d4222a04274101711d9ed8e5ce151b17",
+      "rgbaPath": "tests/m0/photos/photo-clock.rgba"
+    },
+    {
+      "id": "photo-mars-sunset",
+      "kind": "photo",
+      "split": "holdout",
+      "category": "large-low-information-area",
+      "rgbaSha256": "f4d008c0af7d87b074a274787e3512ca271fc639261fd88891615be1b624b96e",
+      "annotationSha256": "f4b731a122c6c569baa745759eb89fe0a028fac0131f9c068298cb22e99e60b9",
+      "sourceDimensions": [
+        2486,
+        1913
+      ],
+      "cropBox": [
+        0,
+        179.625,
+        2486,
+        1733.375
+      ],
+      "normalizationVersion": "fixture-cover-pillow-bilinear-v1",
+      "pillowVersion": "12.3.0",
+      "sourceSha256": "4dfe2f8b71c7d4703ea236ef248d0a3a3b6c5b2295aa6d621c6593fd5994bdb9",
+      "pngPath": "tests/m0/photos/photo-mars-sunset.png",
+      "pngSha256": "519ba2637434401ad617660fcef45d31e9682d2121aec3e2f020ce46cabc6e4c",
+      "rgbaPath": "tests/m0/photos/photo-mars-sunset.rgba"
+    },
+    {
+      "id": "photo-grass",
+      "kind": "photo",
+      "split": "calibration",
+      "category": "high-texture-or-low-contrast",
+      "rgbaSha256": "b029c53c9d47b2cb5318e8a72b900bca29303dcf1e55d77938a061e09c5f2b83",
+      "annotationSha256": "816a3c9a4f76b861c0ec8e92cb54805a9a747f765cb928470185ada0e8e5ac77",
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "cropBox": [
+        0,
+        96,
+        512,
+        416
+      ],
+      "normalizationVersion": "fixture-cover-pillow-bilinear-v1",
+      "pillowVersion": "12.3.0",
+      "sourceSha256": "b6b6022426b38936c43a4ac09635cd78af074e90f42ffa8227ac8b7452d39f89",
+      "pngPath": "tests/m0/photos/photo-grass.png",
+      "pngSha256": "7337be705d7f0ea86c9bed0ab0ead1da665bfbc01d4a53687245f18cc2793e13",
+      "rgbaPath": "tests/m0/photos/photo-grass.rgba"
+    },
+    {
+      "id": "photo-gravel",
+      "kind": "photo",
+      "split": "calibration",
+      "category": "high-texture-or-low-contrast",
+      "rgbaSha256": "fa082cb90f66fc5d4218156cf627a6a559d6dd0159468951a71c2421614eb11a",
+      "annotationSha256": "d5ae9fc303249b4a604bb399da3debce71a4c7b792a9ed8c63125ae426f7412b",
+      "sourceDimensions": [
+        512,
+        512
+      ],
+      "cropBox": [
+        0,
+        96,
+        512,
+        416
+      ],
+      "normalizationVersion": "fixture-cover-pillow-bilinear-v1",
+      "pillowVersion": "12.3.0",
+      "sourceSha256": "c48615b451bf1e606fbd72c0aa9f8cc0f068ab7111ef7d93bb9b0f2586440c12",
+      "pngPath": "tests/m0/photos/photo-gravel.png",
+      "pngSha256": "e0ea3f0744504c965444f0e9fe7120dada4c65439e7bf9c2b2af65abbe03bf6c",
+      "rgbaPath": "tests/m0/photos/photo-gravel.rgba"
+    },
+    {
+      "id": "photo-eagle",
+      "kind": "photo",
+      "split": "holdout",
+      "category": "high-texture-or-low-contrast",
+      "rgbaSha256": "605fe219cf4dcc90b6d35c835ee4d580d04d9de0c9223219794ca4ff71df868f",
+      "annotationSha256": "c82b776993a614f59d3a3ef08b0f4ec4490a46f553fe927b7621f46dbdb10a7e",
+      "sourceDimensions": [
+        1826,
+        2019
+      ],
+      "cropBox": [
+        0,
+        438.875,
+        1826,
+        1580.125
+      ],
+      "normalizationVersion": "fixture-cover-pillow-bilinear-v1",
+      "pillowVersion": "12.3.0",
+      "sourceSha256": "928f1bbe7403b533265f56db3a6b07c835dfa8e2513f5c5075ca2f1960f6179e",
+      "pngPath": "tests/m0/photos/photo-eagle.png",
+      "pngSha256": "9ed8ced249ff5c40b610a18b44f5a88d55cfb7ab77d68412a49e941cc4001b4a",
+      "rgbaPath": "tests/m0/photos/photo-eagle.rgba"
+    }
+  ]
+}

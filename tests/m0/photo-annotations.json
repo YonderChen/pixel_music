@@ -1,0 +1,22 @@
+{
+  "schema": "pixelmusic-photo-review-v1",
+  "reviewedOn": "2026-10-08",
+  "reviewer": "Codex / visual inspection of canonical contact sheet",
+  "coordinateSystem": "192x120 normalized pixels; half-open rectangles",
+  "evidenceType": "manual-coarse-structural-labels-not-detector-output",
+  "policy": "Photos have no unique ground-truth melody. Every accepted point must have real local support; ambiguous photos may explicitly fall back. ROIs guide review, not compulsory tracks or semantic recognition.",
+  "photos": [
+    {"id":"photo-camera","observations":"前景人物、相机与背后水平地面边界竞争；不应把左侧黑衣与右侧地面拼成一条假线。","regions":[{"rect":[120,45,192,66],"role":"boundary-review","note":"右侧地面长边界候选"},{"rect":[0,0,115,120],"role":"competing-structure","note":"人物及相机边界"}],"expectedPolicy":"supported-track-or-explained-fallback"},
+    {"id":"photo-brick","observations":"重复砖缝以纵向、倾斜边界为主；有长边界不等于存在贯穿横轴的唯一主轨迹。","regions":[{"rect":[0,0,192,120],"role":"competing-structure","note":"重复砖缝网络"}],"expectedPolicy":"supported-track-or-explained-fallback"},
+    {"id":"photo-earthrise","observations":"大片黑色空间、底部月面边界与局部地球圆弧；黑色空间不能生成观测线。","regions":[{"rect":[0,104,192,120],"role":"boundary-review","note":"底部月面边界"},{"rect":[84,44,132,82],"role":"competing-structure","note":"局部地球边缘"},{"rect":[0,0,80,95],"role":"low-information","note":"黑色空间；无依据不得补线"}],"expectedPolicy":"supported-track-or-explained-fallback"},
+    {"id":"photo-astronaut","observations":"人脸、衣服、头盔和背景具有多个强边界；允许择主，但不能在不相关边界之间跳接。","regions":[{"rect":[0,0,192,120],"role":"competing-structure","note":"多个独立物体边缘"}],"expectedPolicy":"supported-track-or-explained-fallback"},
+    {"id":"photo-coffee","observations":"杯口与碟子弧线竞争，木纹也会产生候选；曲线闭合不要求输出复音。","regions":[{"rect":[49,0,145,76],"role":"boundary-review","note":"杯口弧线"},{"rect":[19,38,163,120],"role":"competing-structure","note":"碟子边缘及木纹"}],"expectedPolicy":"supported-track-or-explained-fallback"},
+    {"id":"photo-chelsea","observations":"眼睛与脸部毛发是多尺度结构；不能用语义上的猫脸轮廓代替真实候选支持。","regions":[{"rect":[48,18,163,86],"role":"competing-structure","note":"双眼及面部边界"},{"rect":[0,0,192,120],"role":"texture-review","note":"密集毛发局部边缘"}],"expectedPolicy":"supported-track-or-explained-fallback"},
+    {"id":"photo-rocket","observations":"天空有渐变但大片缺乏清楚边界；火箭与两侧支架结构更明显，不能沿天空等值线造轨迹。","regions":[{"rect":[88,26,108,115],"role":"boundary-review","note":"中央火箭边缘"},{"rect":[28,0,80,40],"role":"low-information","note":"天空平滑区"},{"rect":[0,0,26,120],"role":"competing-structure","note":"左侧支架"}],"expectedPolicy":"supported-track-or-explained-fallback"},
+    {"id":"photo-clock","observations":"局部模糊圆形与平滑背景；不应为模糊边缘补出尖锐折线。","regions":[{"rect":[62,25,114,94],"role":"boundary-review","note":"模糊时钟轮廓"},{"rect":[0,0,50,120],"role":"low-information","note":"平滑背景"}],"expectedPolicy":"supported-track-or-explained-fallback"},
+    {"id":"photo-mars-sunset","observations":"假彩色摄影拼接：大面积天空渐变及底部地面；光晕等值线不是必选轮廓。","regions":[{"rect":[0,95,192,120],"role":"boundary-review","note":"底部地面与天空交界"},{"rect":[0,0,192,80],"role":"low-information","note":"天空光晕与平滑渐变"}],"expectedPolicy":"supported-track-or-explained-fallback"},
+    {"id":"photo-grass","observations":"全图细密杂乱草纹；高候选密度本身不能证明跨列可靠轨迹。","regions":[{"rect":[0,0,192,120],"role":"texture-review","note":"杂乱细纹，检查误连与尺度稳定性"}],"expectedPolicy":"supported-track-or-explained-fallback"},
+    {"id":"photo-gravel","observations":"细小石块形成密集短边缘；不能把不同石块逐列拼接成持续旋律。","regions":[{"rect":[0,0,192,120],"role":"texture-review","note":"短边界密集；检查误连"}],"expectedPolicy":"supported-track-or-explained-fallback"},
+    {"id":"photo-eagle","observations":"鸟身、弧形支架、右侧斜构件与草地竞争，左上墙面较平滑。","regions":[{"rect":[35,80,164,120],"role":"boundary-review","note":"弧形支架"},{"rect":[95,0,192,70],"role":"competing-structure","note":"鸟身及斜构件"},{"rect":[0,0,58,40],"role":"low-information","note":"墙面背景"}],"expectedPolicy":"supported-track-or-explained-fallback"}
+  ]
+}

@@ -1,0 +1,3370 @@
+{
+  "version": "0.6.1",
+  "schema": "pixelmusic-baseline-snapshot-v1",
+  "evidenceType": "node-events-and-fake-audio-scheduling",
+  "images": 84,
+  "entries": 168,
+  "audioSchedulingCases": 504,
+  "scores": [
+    {
+      "index": 0,
+      "name": "纯色",
+      "performanceStyle": "sparse",
+      "inputSha256": "49e087037f21f032535ddadfd57de1b5079568604540d891481c1bde4ac3e5a3",
+      "imageHash": "9a5fb5c591d8ca6b3c162e35723c2b2fd82e8fb152ff1f617f9a7cb53526b2c1",
+      "fullScoreSha256": "2ac3172eea90bab2e6af3d6d33201f81c35cae537e729e46ff6e3aff7cf77b88",
+      "scoreHash": "0d1568595236dd59",
+      "mappingFingerprint": "7dbf0e4339742f7f",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "1cf6d20e0fbe63c2",
+      "performanceEventsSha256": "7db118a1ef7838421f6e8cbf06e049c7adeceb153a14a1817ea6512b5c6a5d59",
+      "regionMapSha256": "7e7136718bb632e0d12892e6cdfa553f6f0b05b493054caabada98c57a2558c3",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "e0c9dd54f82b8a7d5ed1af65b13e146dee7c6f5634e09505711ba47dfa4a245a",
+        "glass": "44e1efc446347a63b7f72f83dbd1318e81e7206d3fe23d69ebc47a4e52b59e03",
+        "mist": "4bc61438c8a1ac509f961dca7c2fa8e522096d3810484eda251f660d6ec7eb0c"
+      }
+    },
+    {
+      "index": 0,
+      "name": "纯色",
+      "performanceStyle": "continuous",
+      "inputSha256": "49e087037f21f032535ddadfd57de1b5079568604540d891481c1bde4ac3e5a3",
+      "imageHash": "9a5fb5c591d8ca6b3c162e35723c2b2fd82e8fb152ff1f617f9a7cb53526b2c1",
+      "fullScoreSha256": "f498a5a6ec57ea2df6976a1a8bf85dd4975431f3aa76c6e31a3a4485a5e7fff1",
+      "scoreHash": "e029a3137db62cd7",
+      "mappingFingerprint": "c96e2f6b983bcc5f",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "performanceEventsSha256": "ddb4344be25bbfd0e65f9366a4c2c07ceb59e2142371b45813093640e0a67da5",
+      "regionMapSha256": "e8d56c657801b9efe44e79665367e6bc340af2a7ba1856cf0e80434a9c53ff56",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "7cc42595ca2fe1ebe9f688927b79d306b41431292572ba224231c846d4d5bfdd",
+        "glass": "4361581c009475c5e296d8bce20b8cfe76402c5b8f91f196935dc0518ffb5445",
+        "mist": "30fcd9dfa62f2690cb20b4fb24fb64e237a75c164c312de19f4f52417b00b129"
+      }
+    },
+    {
+      "index": 1,
+      "name": "黑白棋盘",
+      "performanceStyle": "sparse",
+      "inputSha256": "60bce265a716ece411bab2dcb8a9ddfb82d6e8f8fa520916dfbc1d8464192b6e",
+      "imageHash": "137641c59228fa6bee99ce35abd52b2f06793bb19b89ef61c6af94b5c60af2c1",
+      "fullScoreSha256": "af8a31e7011c0747f2a3354b1d7547eefa05fa61564f0b5070c7ce6c8eb76a70",
+      "scoreHash": "74141d2961ff588f",
+      "mappingFingerprint": "50ec9fbd85cc76c3",
+      "imageRhythmFingerprint": "d982753d95e02dbf",
+      "rhythmFingerprint": "d982753d95e02dbf",
+      "performanceEventsSha256": "fdc986163848704a9f1f4a4398ccfd117e556d1db8492437072039ef6c22da8e",
+      "regionMapSha256": "b44136c46e87086cf2b488567895d045d4285b9590aee4b6f095ec6041b8ad48",
+      "tempoMapSha256": "bc830f04e8cdff1d7828ebda871ebef83605af21bd18b476ac21c154632bfda1",
+      "audioTraces": {
+        "warm": "72009c4234dc3c677f8144b0b3c3589f2533e22cc84138e699c57696fdebcf5c",
+        "glass": "e5f9b1a2a294e0387cacee9b11b135bced8e47b751f61c804585cc386265f153",
+        "mist": "d9a5c4ac6e4376334ebf1b5681b5ec960bbcea37ce7aa200f09eee8e88a34e5d"
+      }
+    },
+    {
+      "index": 1,
+      "name": "黑白棋盘",
+      "performanceStyle": "continuous",
+      "inputSha256": "60bce265a716ece411bab2dcb8a9ddfb82d6e8f8fa520916dfbc1d8464192b6e",
+      "imageHash": "137641c59228fa6bee99ce35abd52b2f06793bb19b89ef61c6af94b5c60af2c1",
+      "fullScoreSha256": "517b0384f5c7439c6c1bdd1615fcd4271c4379a58396ac465346ce2dad9f25aa",
+      "scoreHash": "74141d2961ff588f",
+      "mappingFingerprint": "50ec9fbd85cc76c3",
+      "imageRhythmFingerprint": "d982753d95e02dbf",
+      "rhythmFingerprint": "d982753d95e02dbf",
+      "performanceEventsSha256": "fdc986163848704a9f1f4a4398ccfd117e556d1db8492437072039ef6c22da8e",
+      "regionMapSha256": "b44136c46e87086cf2b488567895d045d4285b9590aee4b6f095ec6041b8ad48",
+      "tempoMapSha256": "bc830f04e8cdff1d7828ebda871ebef83605af21bd18b476ac21c154632bfda1",
+      "audioTraces": {
+        "warm": "72009c4234dc3c677f8144b0b3c3589f2533e22cc84138e699c57696fdebcf5c",
+        "glass": "e5f9b1a2a294e0387cacee9b11b135bced8e47b751f61c804585cc386265f153",
+        "mist": "d9a5c4ac6e4376334ebf1b5681b5ec960bbcea37ce7aa200f09eee8e88a34e5d"
+      }
+    },
+    {
+      "index": 2,
+      "name": "明暗渐变",
+      "performanceStyle": "sparse",
+      "inputSha256": "3f5aff1ff4c61db6e97ae15f449f144d5316eb42f87845b2d58472b619ead3de",
+      "imageHash": "61bbd9c5ec09486b36b1dc3561d2852f3d3941b144e6db614be594b5ec2436c1",
+      "fullScoreSha256": "b5c9bc305735a306163cbc82b9629d470a29c3e6a775c386e3a772adf507ffab",
+      "scoreHash": "e169d027c40b0a23",
+      "mappingFingerprint": "c1d32b02493d02c8",
+      "imageRhythmFingerprint": "404fd80628cc8514",
+      "rhythmFingerprint": "404fd80628cc8514",
+      "performanceEventsSha256": "b49878b3b1a284ff8533562b8323b2e20af048041ba65e994b41388ce0aa92d2",
+      "regionMapSha256": "883f8f084820be23743eb938b807a11ae52c3a375e01ba1ce2923811cb6197af",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "77eaccc7568ed9ac27cee50b02c867a6e98d5f11da841fec90d261d241f0519e",
+        "glass": "42449f8117cc9013d3ddfd22d4e550a41bd7e0327a35f15280b918afb60fd64c",
+        "mist": "5e02418833c83c4e54ac2987608d824622462410d7401d4acc138cc7e25e09ee"
+      }
+    },
+    {
+      "index": 2,
+      "name": "明暗渐变",
+      "performanceStyle": "continuous",
+      "inputSha256": "3f5aff1ff4c61db6e97ae15f449f144d5316eb42f87845b2d58472b619ead3de",
+      "imageHash": "61bbd9c5ec09486b36b1dc3561d2852f3d3941b144e6db614be594b5ec2436c1",
+      "fullScoreSha256": "9cc21f239b4a14d818f442f578f7886295acd7b164a088e727dcdec61979bee8",
+      "scoreHash": "e169d027c40b0a23",
+      "mappingFingerprint": "c1d32b02493d02c8",
+      "imageRhythmFingerprint": "404fd80628cc8514",
+      "rhythmFingerprint": "404fd80628cc8514",
+      "performanceEventsSha256": "b49878b3b1a284ff8533562b8323b2e20af048041ba65e994b41388ce0aa92d2",
+      "regionMapSha256": "883f8f084820be23743eb938b807a11ae52c3a375e01ba1ce2923811cb6197af",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "77eaccc7568ed9ac27cee50b02c867a6e98d5f11da841fec90d261d241f0519e",
+        "glass": "42449f8117cc9013d3ddfd22d4e550a41bd7e0327a35f15280b918afb60fd64c",
+        "mist": "5e02418833c83c4e54ac2987608d824622462410d7401d4acc138cc7e25e09ee"
+      }
+    },
+    {
+      "index": 3,
+      "name": "彩色渐变",
+      "performanceStyle": "sparse",
+      "inputSha256": "6737f319e54bcfa5b29b4e2d5991ae739aa938e7d56e9587efe41141da1f5b04",
+      "imageHash": "8f68ff15dcfe1e8be2c1a485325292ef9898080132f17641f1fd6885e18549c1",
+      "fullScoreSha256": "e796c8ed1d60c0299ad51dd2b1896302c775f2de5b2b0a550b9319001837839a",
+      "scoreHash": "86bc9d51ac45051d",
+      "mappingFingerprint": "88756db1faa4d9b5",
+      "imageRhythmFingerprint": "09b662553eb91cdb",
+      "rhythmFingerprint": "09b662553eb91cdb",
+      "performanceEventsSha256": "4d88b7ba77bab46506d40c7d4c105367f4fa03d690dbf0c0e277fc4c985e0540",
+      "regionMapSha256": "88b1181e3884ded61b899a3de5ac54410d6ca9d42f6569d390344447ab5ec44c",
+      "tempoMapSha256": "eb536347179aba59f047b51d6f5279e45e7ac06783ed0762aaaf88e565d35ecc",
+      "audioTraces": {
+        "warm": "837f1d07adf6de41f9248cdf520eef14875505542e0ea01ace5ccc27195305a5",
+        "glass": "093d0be2b648e4470a2839c93be15c19f6ff6d127ec0ab517ccc6924b63d066a",
+        "mist": "ba15de0dbbba692093dbe1f4393a904c82fc5522b8577cd7a4a6a77297cde4ca"
+      }
+    },
+    {
+      "index": 3,
+      "name": "彩色渐变",
+      "performanceStyle": "continuous",
+      "inputSha256": "6737f319e54bcfa5b29b4e2d5991ae739aa938e7d56e9587efe41141da1f5b04",
+      "imageHash": "8f68ff15dcfe1e8be2c1a485325292ef9898080132f17641f1fd6885e18549c1",
+      "fullScoreSha256": "1a6e1fb658dbb1f059c774743ce420f1405c3749da31168d978d6321f81220a7",
+      "scoreHash": "86bc9d51ac45051d",
+      "mappingFingerprint": "88756db1faa4d9b5",
+      "imageRhythmFingerprint": "09b662553eb91cdb",
+      "rhythmFingerprint": "09b662553eb91cdb",
+      "performanceEventsSha256": "4d88b7ba77bab46506d40c7d4c105367f4fa03d690dbf0c0e277fc4c985e0540",
+      "regionMapSha256": "88b1181e3884ded61b899a3de5ac54410d6ca9d42f6569d390344447ab5ec44c",
+      "tempoMapSha256": "eb536347179aba59f047b51d6f5279e45e7ac06783ed0762aaaf88e565d35ecc",
+      "audioTraces": {
+        "warm": "837f1d07adf6de41f9248cdf520eef14875505542e0ea01ace5ccc27195305a5",
+        "glass": "093d0be2b648e4470a2839c93be15c19f6ff6d127ec0ab517ccc6924b63d066a",
+        "mist": "ba15de0dbbba692093dbe1f4393a904c82fc5522b8577cd7a4a6a77297cde4ca"
+      }
+    },
+    {
+      "index": 4,
+      "name": "低饱和风景",
+      "performanceStyle": "sparse",
+      "inputSha256": "4f11561ebb9ca10a44ce9607d31fe1dd4ffd206fb3227df80d3172307953e2cf",
+      "imageHash": "7176d6c5bbee526b30022b35803f332f2a63a4b1762ea361d48eabb56c7782c1",
+      "fullScoreSha256": "71205661c317d7a7d4a198463ae3f84c631d5868b66dd5613531efec99c5c983",
+      "scoreHash": "342cd5dd81aa8075",
+      "mappingFingerprint": "bcdb3fab6974214d",
+      "imageRhythmFingerprint": "61f368a581d8e19b",
+      "rhythmFingerprint": "61f368a581d8e19b",
+      "performanceEventsSha256": "ce299d8bffb8af921a5f79fd709baa5d9f133d62167d8dd3bb1069a6b44f0eee",
+      "regionMapSha256": "0535d0dcc10086b5cc7e404fa4cb8cba895a0ff424761eb12e081b66aeda7e77",
+      "tempoMapSha256": "b028f5c856c79fd24b9fecf091304f521c93245991389b0121656952532bbde4",
+      "audioTraces": {
+        "warm": "2dc2bce302477b18dc6d5f6a7f87e1ba2eeaaf07175c490e0b4af9c64bba4680",
+        "glass": "e2d8ab5c55baf30a4d87d5a6729c9b2b21a712ca34961c0a8e95f443c27b1615",
+        "mist": "b0621cd162acca1e8bd6a0582bff22d2bbe568aa049cb2fb5eb4e2208a73f041"
+      }
+    },
+    {
+      "index": 4,
+      "name": "低饱和风景",
+      "performanceStyle": "continuous",
+      "inputSha256": "4f11561ebb9ca10a44ce9607d31fe1dd4ffd206fb3227df80d3172307953e2cf",
+      "imageHash": "7176d6c5bbee526b30022b35803f332f2a63a4b1762ea361d48eabb56c7782c1",
+      "fullScoreSha256": "a125227abdf718c1dda9319136f56500f95adc5046e2d76e07da450a46a355a8",
+      "scoreHash": "342cd5dd81aa8075",
+      "mappingFingerprint": "bcdb3fab6974214d",
+      "imageRhythmFingerprint": "61f368a581d8e19b",
+      "rhythmFingerprint": "61f368a581d8e19b",
+      "performanceEventsSha256": "ce299d8bffb8af921a5f79fd709baa5d9f133d62167d8dd3bb1069a6b44f0eee",
+      "regionMapSha256": "0535d0dcc10086b5cc7e404fa4cb8cba895a0ff424761eb12e081b66aeda7e77",
+      "tempoMapSha256": "b028f5c856c79fd24b9fecf091304f521c93245991389b0121656952532bbde4",
+      "audioTraces": {
+        "warm": "2dc2bce302477b18dc6d5f6a7f87e1ba2eeaaf07175c490e0b4af9c64bba4680",
+        "glass": "e2d8ab5c55baf30a4d87d5a6729c9b2b21a712ca34961c0a8e95f443c27b1615",
+        "mist": "b0621cd162acca1e8bd6a0582bff22d2bbe568aa049cb2fb5eb4e2208a73f041"
+      }
+    },
+    {
+      "index": 5,
+      "name": "夕阳",
+      "performanceStyle": "sparse",
+      "inputSha256": "746786958e6e00a32a14c1155f6598a91dd5b6581466f487e1a8cd42f22af7d7",
+      "imageHash": "bc6037a81904b3525daf3718f940cd565999786488e93fe8be0fa608fbbfe558",
+      "fullScoreSha256": "deca70db48f6862bd4a1858d7506493a330b53e8208245c0a195dc68818869f0",
+      "scoreHash": "e4cceb1bf141c82d",
+      "mappingFingerprint": "90cfab9f25b4a00f",
+      "imageRhythmFingerprint": "016638227eab7f9e",
+      "rhythmFingerprint": "016638227eab7f9e",
+      "performanceEventsSha256": "eb478dbacc0479b6b001e7f6b27ff2fc9ca1e407f12805d104606224d94d7187",
+      "regionMapSha256": "9124c62a2dcb5661434c31a233f2c4a0146722dd3c15d6e76db010a1b2c36fa7",
+      "tempoMapSha256": "24492d6ee71cd930d49a48dd6f90ebea04f99a77390df7d62d416d8f8cb009b6",
+      "audioTraces": {
+        "warm": "ec1ad8e83db7fbc72cbea03cc33a503221dc1d49032ab6dfd023a589a65ecc10",
+        "glass": "5cbf3b25294a7947035abaf62a4a02e3a526d6a2f8d2c3547c887c2cec0ed4fd",
+        "mist": "85a5f386912b6f160a92fcb951a2bcec1de8c5518250778aed1d817912c6a3f1"
+      }
+    },
+    {
+      "index": 5,
+      "name": "夕阳",
+      "performanceStyle": "continuous",
+      "inputSha256": "746786958e6e00a32a14c1155f6598a91dd5b6581466f487e1a8cd42f22af7d7",
+      "imageHash": "bc6037a81904b3525daf3718f940cd565999786488e93fe8be0fa608fbbfe558",
+      "fullScoreSha256": "0b6e6ab7e6d6e291c90bc5d262fc9c95549cc4689d212deb415bbeee1982cb98",
+      "scoreHash": "e4cceb1bf141c82d",
+      "mappingFingerprint": "90cfab9f25b4a00f",
+      "imageRhythmFingerprint": "016638227eab7f9e",
+      "rhythmFingerprint": "016638227eab7f9e",
+      "performanceEventsSha256": "eb478dbacc0479b6b001e7f6b27ff2fc9ca1e407f12805d104606224d94d7187",
+      "regionMapSha256": "9124c62a2dcb5661434c31a233f2c4a0146722dd3c15d6e76db010a1b2c36fa7",
+      "tempoMapSha256": "24492d6ee71cd930d49a48dd6f90ebea04f99a77390df7d62d416d8f8cb009b6",
+      "audioTraces": {
+        "warm": "ec1ad8e83db7fbc72cbea03cc33a503221dc1d49032ab6dfd023a589a65ecc10",
+        "glass": "5cbf3b25294a7947035abaf62a4a02e3a526d6a2f8d2c3547c887c2cec0ed4fd",
+        "mist": "85a5f386912b6f160a92fcb951a2bcec1de8c5518250778aed1d817912c6a3f1"
+      }
+    },
+    {
+      "index": 6,
+      "name": "高对比建筑",
+      "performanceStyle": "sparse",
+      "inputSha256": "37f8b34967b06c0287c6feeab678e942abbd2e32f2d78872a58d0305e5189c38",
+      "imageHash": "362aa9756e488f8b4579c22507d21cef401875e116f6de410ff222e5615802c1",
+      "fullScoreSha256": "48fe899efc0a0a07aa476265d427c41bee77cc3867eaab676cc0c5cfc15a381c",
+      "scoreHash": "b98de1c6d71e081e",
+      "mappingFingerprint": "9ed255a57f57353d",
+      "imageRhythmFingerprint": "34286a6036660356",
+      "rhythmFingerprint": "34286a6036660356",
+      "performanceEventsSha256": "01f7af9ddba78d34ee1650b1977052ce800978d6fa0cc8125facb63e7e0338af",
+      "regionMapSha256": "7ff10ed9f0b5960eb6b59a98b893c7f590e7eef5c3650ba2a6bfe7e7a19dc47e",
+      "tempoMapSha256": "28e2895a4f553ac23d2a9b9898b0f7437e13f0dc14a945a9258f3bdddbcf2274",
+      "audioTraces": {
+        "warm": "e8d047657a05741cec1a7f184503f3603a49e158e997e07834c0f3fad373e384",
+        "glass": "d9ee123539d66449314693aba5fe79c1fc8a4c3fa61ca3ec188bb9da42564866",
+        "mist": "8d2e9d5f1e444b297fc171620965fa14496c9d05987825c76bfd15d301fdf76b"
+      }
+    },
+    {
+      "index": 6,
+      "name": "高对比建筑",
+      "performanceStyle": "continuous",
+      "inputSha256": "37f8b34967b06c0287c6feeab678e942abbd2e32f2d78872a58d0305e5189c38",
+      "imageHash": "362aa9756e488f8b4579c22507d21cef401875e116f6de410ff222e5615802c1",
+      "fullScoreSha256": "ad7a0d59f541db49dd24c094074e2e59c39eab79d88ee2cbb0b694297e93c208",
+      "scoreHash": "b98de1c6d71e081e",
+      "mappingFingerprint": "9ed255a57f57353d",
+      "imageRhythmFingerprint": "34286a6036660356",
+      "rhythmFingerprint": "34286a6036660356",
+      "performanceEventsSha256": "01f7af9ddba78d34ee1650b1977052ce800978d6fa0cc8125facb63e7e0338af",
+      "regionMapSha256": "7ff10ed9f0b5960eb6b59a98b893c7f590e7eef5c3650ba2a6bfe7e7a19dc47e",
+      "tempoMapSha256": "28e2895a4f553ac23d2a9b9898b0f7437e13f0dc14a945a9258f3bdddbcf2274",
+      "audioTraces": {
+        "warm": "e8d047657a05741cec1a7f184503f3603a49e158e997e07834c0f3fad373e384",
+        "glass": "d9ee123539d66449314693aba5fe79c1fc8a4c3fa61ca3ec188bb9da42564866",
+        "mist": "8d2e9d5f1e444b297fc171620965fa14496c9d05987825c76bfd15d301fdf76b"
+      }
+    },
+    {
+      "index": 7,
+      "name": "几何人像",
+      "performanceStyle": "sparse",
+      "inputSha256": "8972b27821590ea60def4d88c12e6064cc818fbf683ca1e8ab16e2fa9c69db74",
+      "imageHash": "bc55e2227549f4f4d8ee210ac9fcf7b8d6ecb1de1729e1deb9f6a83206910726",
+      "fullScoreSha256": "b182f9f47179dd142c9a6491667f6bc04809c7e56569df1dfff5054214511170",
+      "scoreHash": "4eb5d1d19cd2f765",
+      "mappingFingerprint": "f09be6e2a3e02020",
+      "imageRhythmFingerprint": "882d3518687acefe",
+      "rhythmFingerprint": "882d3518687acefe",
+      "performanceEventsSha256": "be89501b18b5e9528cbae6df259e2aa6e9ea8097412c926b2d12c1ad6a3ab523",
+      "regionMapSha256": "6e3f816925489a25275fd5a72ab678aeba1e93da253f94414dd4034afe081989",
+      "tempoMapSha256": "7a07dffdc5fb3ded541560c19c622629dc376fcdc9c579e39c7584a8e6e4a1e9",
+      "audioTraces": {
+        "warm": "805e9963e5d212d1906058fd60ae64e9ee157fa69413d6df290abeec43ee5e8a",
+        "glass": "f6f7b79879484b266815dc5d88f8497f56a13db64261a6dbb34f0ce5ea2b03ab",
+        "mist": "1d22166a82e3eea1de0aa3627a5d1dd930c6dff87738aece13dacf59642472c7"
+      }
+    },
+    {
+      "index": 7,
+      "name": "几何人像",
+      "performanceStyle": "continuous",
+      "inputSha256": "8972b27821590ea60def4d88c12e6064cc818fbf683ca1e8ab16e2fa9c69db74",
+      "imageHash": "bc55e2227549f4f4d8ee210ac9fcf7b8d6ecb1de1729e1deb9f6a83206910726",
+      "fullScoreSha256": "1feb1b44a6b431434450329a4b0fee82312ae2b132c691ad81334d1538225a9c",
+      "scoreHash": "4eb5d1d19cd2f765",
+      "mappingFingerprint": "f09be6e2a3e02020",
+      "imageRhythmFingerprint": "882d3518687acefe",
+      "rhythmFingerprint": "882d3518687acefe",
+      "performanceEventsSha256": "be89501b18b5e9528cbae6df259e2aa6e9ea8097412c926b2d12c1ad6a3ab523",
+      "regionMapSha256": "6e3f816925489a25275fd5a72ab678aeba1e93da253f94414dd4034afe081989",
+      "tempoMapSha256": "7a07dffdc5fb3ded541560c19c622629dc376fcdc9c579e39c7584a8e6e4a1e9",
+      "audioTraces": {
+        "warm": "805e9963e5d212d1906058fd60ae64e9ee157fa69413d6df290abeec43ee5e8a",
+        "glass": "f6f7b79879484b266815dc5d88f8497f56a13db64261a6dbb34f0ce5ea2b03ab",
+        "mist": "1d22166a82e3eea1de0aa3627a5d1dd930c6dff87738aece13dacf59642472c7"
+      }
+    },
+    {
+      "index": 8,
+      "name": "抽象图案",
+      "performanceStyle": "sparse",
+      "inputSha256": "23808cf842b623c7c868c0aba8418b56401cc8912090d9d74cfed5b9c0e87677",
+      "imageHash": "24dfcd2fe4b0e949ae9dfc37006a802dc1391c7b03bd9b332f2d44775f6faf13",
+      "fullScoreSha256": "cac963e8c34adefba0402a925007789ea2dab77b98da337e8f9fbd1324b3d8e1",
+      "scoreHash": "4d0591d03ff5e37a",
+      "mappingFingerprint": "d4660415b420c123",
+      "imageRhythmFingerprint": "4daf7883a7b86de7",
+      "rhythmFingerprint": "4daf7883a7b86de7",
+      "performanceEventsSha256": "54d1bca47c6b004f780f39076b8b830c7af32ffaa8b067f92ed93a50e33a08a1",
+      "regionMapSha256": "54f81257bf7873b3ac49e51006ed78649385fbac0c71c61ee13321ffb11e7c60",
+      "tempoMapSha256": "6cce20ff32e6a43518689bbfa5c34699e52df1d0b60358682b415d66c26d4526",
+      "audioTraces": {
+        "warm": "b3eaffe38f53327d11ef2e3debf65e4b6c7e51781410a8a64b7e10fa79b4dcbd",
+        "glass": "64f432b78f061a45477f7f39ceeb272a09860eeb14cf4fd85d01cac3064310c5",
+        "mist": "fa587132c1e39afc1f5cfcb587e0c4c94c58844f93a4f4aa54c0fb2f80796b59"
+      }
+    },
+    {
+      "index": 8,
+      "name": "抽象图案",
+      "performanceStyle": "continuous",
+      "inputSha256": "23808cf842b623c7c868c0aba8418b56401cc8912090d9d74cfed5b9c0e87677",
+      "imageHash": "24dfcd2fe4b0e949ae9dfc37006a802dc1391c7b03bd9b332f2d44775f6faf13",
+      "fullScoreSha256": "5b80f2d99246995a75e93efe0558288e95f111f72d06cc2c713b4bbf1193065c",
+      "scoreHash": "4d0591d03ff5e37a",
+      "mappingFingerprint": "d4660415b420c123",
+      "imageRhythmFingerprint": "4daf7883a7b86de7",
+      "rhythmFingerprint": "4daf7883a7b86de7",
+      "performanceEventsSha256": "54d1bca47c6b004f780f39076b8b830c7af32ffaa8b067f92ed93a50e33a08a1",
+      "regionMapSha256": "54f81257bf7873b3ac49e51006ed78649385fbac0c71c61ee13321ffb11e7c60",
+      "tempoMapSha256": "6cce20ff32e6a43518689bbfa5c34699e52df1d0b60358682b415d66c26d4526",
+      "audioTraces": {
+        "warm": "b3eaffe38f53327d11ef2e3debf65e4b6c7e51781410a8a64b7e10fa79b4dcbd",
+        "glass": "64f432b78f061a45477f7f39ceeb272a09860eeb14cf4fd85d01cac3064310c5",
+        "mist": "fa587132c1e39afc1f5cfcb587e0c4c94c58844f93a4f4aa54c0fb2f80796b59"
+      }
+    },
+    {
+      "index": 9,
+      "name": "密集纹理",
+      "performanceStyle": "sparse",
+      "inputSha256": "9b10bb9c47b7d9543dcb73224271be17acdde81180cc92b83d15e228b212cb4f",
+      "imageHash": "cd10a9f5889c3e1ba919c815206ccf6fa3b6c391cf5585914da4ab45f6df05c1",
+      "fullScoreSha256": "5d53c68446a6ee4d68af232882834b2593246e424c34d65b1168ccdef0ded8f4",
+      "scoreHash": "1224101a01d1ea82",
+      "mappingFingerprint": "b6c686b8a5b02268",
+      "imageRhythmFingerprint": "6c9f9174efd1d054",
+      "rhythmFingerprint": "6c9f9174efd1d054",
+      "performanceEventsSha256": "127966ce41e33aa638653346f3805eebf01202d1d9d5248b17555de70276aaa3",
+      "regionMapSha256": "0a14acfd5d91874443310b6b2a2a8ffb52953e1377770e8817446ea6fe129b86",
+      "tempoMapSha256": "eb536347179aba59f047b51d6f5279e45e7ac06783ed0762aaaf88e565d35ecc",
+      "audioTraces": {
+        "warm": "041189b678c9c1831daa11677e274623026c26dc59a1c13f4a951959ba71956c",
+        "glass": "59fd1cd169319d96013215ef13034fe4057fa932ca48e478fe8052ca59465637",
+        "mist": "0a3224f591e1e15b8dc58827567e0cb21bcfb8ea52d0850e96ef862ad14c31e2"
+      }
+    },
+    {
+      "index": 9,
+      "name": "密集纹理",
+      "performanceStyle": "continuous",
+      "inputSha256": "9b10bb9c47b7d9543dcb73224271be17acdde81180cc92b83d15e228b212cb4f",
+      "imageHash": "cd10a9f5889c3e1ba919c815206ccf6fa3b6c391cf5585914da4ab45f6df05c1",
+      "fullScoreSha256": "188530aa007eade3097184899a68310719bc5e6955e3241c13393d8df22d7688",
+      "scoreHash": "1224101a01d1ea82",
+      "mappingFingerprint": "b6c686b8a5b02268",
+      "imageRhythmFingerprint": "6c9f9174efd1d054",
+      "rhythmFingerprint": "6c9f9174efd1d054",
+      "performanceEventsSha256": "127966ce41e33aa638653346f3805eebf01202d1d9d5248b17555de70276aaa3",
+      "regionMapSha256": "0a14acfd5d91874443310b6b2a2a8ffb52953e1377770e8817446ea6fe129b86",
+      "tempoMapSha256": "eb536347179aba59f047b51d6f5279e45e7ac06783ed0762aaaf88e565d35ecc",
+      "audioTraces": {
+        "warm": "041189b678c9c1831daa11677e274623026c26dc59a1c13f4a951959ba71956c",
+        "glass": "59fd1cd169319d96013215ef13034fe4057fa932ca48e478fe8052ca59465637",
+        "mist": "0a3224f591e1e15b8dc58827567e0cb21bcfb8ea52d0850e96ef862ad14c31e2"
+      }
+    },
+    {
+      "index": 10,
+      "name": "噪声",
+      "performanceStyle": "sparse",
+      "inputSha256": "9c591e6831a822fcf71b3803381fe6fc929bb7cbc965a116fc5efc5cfd9e5b8b",
+      "imageHash": "a6909493f7f99a7928ee8c9782c54d25f6209c4ff376cbfbd8c95027d512839b",
+      "fullScoreSha256": "06bdd907817fbdb85743c14d8498552defdd28997b5894e4b181726600b74f5b",
+      "scoreHash": "d99e4106be96fac2",
+      "mappingFingerprint": "cf1f350a4d83e9d2",
+      "imageRhythmFingerprint": "d7699247a37fec79",
+      "rhythmFingerprint": "d7699247a37fec79",
+      "performanceEventsSha256": "f1bfe931724651327ff39a013f8896245b26c4cd57a7e8a44491acd4ee167e1b",
+      "regionMapSha256": "1719a1c0b3c3797e812112525d783dc1c3854bb7c8f27271f40edbf327befb35",
+      "tempoMapSha256": "bf7427d9ac5027186631d848b8d92ecb0cda64a9f543651d3ae828f60ff738f6",
+      "audioTraces": {
+        "warm": "2d568dce3b0b9a1612cb6c8e35389fbedc77758af3f1ea6a44a7f3866c873f05",
+        "glass": "01d669fa3d44548479ea2ac57a113948601d9f6b286cf87a029c02d0659ee21b",
+        "mist": "f1cd536180ad5f837913a4603c28846c8aa70be5d54d6446611115a6698345af"
+      }
+    },
+    {
+      "index": 10,
+      "name": "噪声",
+      "performanceStyle": "continuous",
+      "inputSha256": "9c591e6831a822fcf71b3803381fe6fc929bb7cbc965a116fc5efc5cfd9e5b8b",
+      "imageHash": "a6909493f7f99a7928ee8c9782c54d25f6209c4ff376cbfbd8c95027d512839b",
+      "fullScoreSha256": "668ee580fd85f47b262f0f5f28bce28f712af46f89ff60e5025cec3fa36bfc18",
+      "scoreHash": "d99e4106be96fac2",
+      "mappingFingerprint": "cf1f350a4d83e9d2",
+      "imageRhythmFingerprint": "d7699247a37fec79",
+      "rhythmFingerprint": "d7699247a37fec79",
+      "performanceEventsSha256": "f1bfe931724651327ff39a013f8896245b26c4cd57a7e8a44491acd4ee167e1b",
+      "regionMapSha256": "1719a1c0b3c3797e812112525d783dc1c3854bb7c8f27271f40edbf327befb35",
+      "tempoMapSha256": "bf7427d9ac5027186631d848b8d92ecb0cda64a9f543651d3ae828f60ff738f6",
+      "audioTraces": {
+        "warm": "2d568dce3b0b9a1612cb6c8e35389fbedc77758af3f1ea6a44a7f3866c873f05",
+        "glass": "01d669fa3d44548479ea2ac57a113948601d9f6b286cf87a029c02d0659ee21b",
+        "mist": "f1cd536180ad5f837913a4603c28846c8aa70be5d54d6446611115a6698345af"
+      }
+    },
+    {
+      "index": 11,
+      "name": "局部变化对照",
+      "performanceStyle": "sparse",
+      "inputSha256": "d3a9c1229f8c077ac3ad9c15d9ee6c291126c94dce3466187d1ee6118d8824b6",
+      "imageHash": "6720d0163b2830500d4f9122d481b34ca1e614ca546feb72f02a101ad7703392",
+      "fullScoreSha256": "59a18ad209542dabfda0ff1a24725aabe32d4337b94b4837e5ea4aebc0dd0459",
+      "scoreHash": "d46369e31d6915f9",
+      "mappingFingerprint": "fc2afb04387546d6",
+      "imageRhythmFingerprint": "016638227eab7f9e",
+      "rhythmFingerprint": "016638227eab7f9e",
+      "performanceEventsSha256": "4d51a15b994256059be2deffbb57ed065c3f8fdc327f5abe73970c06bfef71eb",
+      "regionMapSha256": "9068f3bee3b2a8e1a5f912a873516164ffcaec172c883a9da768d600d5c3efcd",
+      "tempoMapSha256": "eec72dacf214df61fedaddde62eff86daa970ca6e9ad4dd0cbbd77b1bade58db",
+      "audioTraces": {
+        "warm": "d88c9625054c58678369ca94f6149d318b55679320726e2e10c0fcffa0d7e9f2",
+        "glass": "20b0d6d7859b307b52e3f40cb75d5869d72445b42d0b6b7bc41412431f95aaa1",
+        "mist": "84409f54dddab9260837c2b63a2898056f626c66b17bb9424979d8a7fa385407"
+      }
+    },
+    {
+      "index": 11,
+      "name": "局部变化对照",
+      "performanceStyle": "continuous",
+      "inputSha256": "d3a9c1229f8c077ac3ad9c15d9ee6c291126c94dce3466187d1ee6118d8824b6",
+      "imageHash": "6720d0163b2830500d4f9122d481b34ca1e614ca546feb72f02a101ad7703392",
+      "fullScoreSha256": "feac37f658987bfc9cf237025b669f94c682cc962e9f56ae2d6df646c5cfa888",
+      "scoreHash": "d46369e31d6915f9",
+      "mappingFingerprint": "fc2afb04387546d6",
+      "imageRhythmFingerprint": "016638227eab7f9e",
+      "rhythmFingerprint": "016638227eab7f9e",
+      "performanceEventsSha256": "4d51a15b994256059be2deffbb57ed065c3f8fdc327f5abe73970c06bfef71eb",
+      "regionMapSha256": "9068f3bee3b2a8e1a5f912a873516164ffcaec172c883a9da768d600d5c3efcd",
+      "tempoMapSha256": "eec72dacf214df61fedaddde62eff86daa970ca6e9ad4dd0cbbd77b1bade58db",
+      "audioTraces": {
+        "warm": "d88c9625054c58678369ca94f6149d318b55679320726e2e10c0fcffa0d7e9f2",
+        "glass": "20b0d6d7859b307b52e3f40cb75d5869d72445b42d0b6b7bc41412431f95aaa1",
+        "mist": "84409f54dddab9260837c2b63a2898056f626c66b17bb9424979d8a7fa385407"
+      }
+    },
+    {
+      "index": 12,
+      "name": "方向渐变 1",
+      "performanceStyle": "sparse",
+      "inputSha256": "6c8c63305ad9647e52d33d4557448be724f5bb8d5081f7b24d47efc6f064faeb",
+      "imageHash": "2884e8c59e3b126b1a2600f586f1042f092dfb313826e661d8319c75c10e1ec1",
+      "fullScoreSha256": "1d73786c6db8b5a508ee3640a22118273ca966b3823a8a7977336a829b31e480",
+      "scoreHash": "fa2b7b3b75fbe23b",
+      "mappingFingerprint": "2ba986fd80a2e613",
+      "imageRhythmFingerprint": "78e326558a9a3685",
+      "rhythmFingerprint": "78e326558a9a3685",
+      "performanceEventsSha256": "4f02a17eaee763a0126dcdf1b93aac1bbbac6e1591cb51d745e755555777218e",
+      "regionMapSha256": "063c34259f80bce9a8dcfdc7c313b559959fc3d51f5c1fe55fd0d18e1034e202",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "c4b8cf728a61aeb3444145dcac5320e04f64ca8fc87b4be71baf94520f4ba5df",
+        "glass": "58ee7fcb2263a0f273d3364ccb92d5804e208f1f6a3b9806aa6811f05ba589de",
+        "mist": "d92be406b15f9953b7f92bdcc1410fec36c086e9e10006ecf5b028369c71c020"
+      }
+    },
+    {
+      "index": 12,
+      "name": "方向渐变 1",
+      "performanceStyle": "continuous",
+      "inputSha256": "6c8c63305ad9647e52d33d4557448be724f5bb8d5081f7b24d47efc6f064faeb",
+      "imageHash": "2884e8c59e3b126b1a2600f586f1042f092dfb313826e661d8319c75c10e1ec1",
+      "fullScoreSha256": "cdba756e64947a34ad625ed5048f5a520e20cc130d506793b2cfcf3ee1de0a9d",
+      "scoreHash": "fa2b7b3b75fbe23b",
+      "mappingFingerprint": "2ba986fd80a2e613",
+      "imageRhythmFingerprint": "78e326558a9a3685",
+      "rhythmFingerprint": "78e326558a9a3685",
+      "performanceEventsSha256": "4f02a17eaee763a0126dcdf1b93aac1bbbac6e1591cb51d745e755555777218e",
+      "regionMapSha256": "063c34259f80bce9a8dcfdc7c313b559959fc3d51f5c1fe55fd0d18e1034e202",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "c4b8cf728a61aeb3444145dcac5320e04f64ca8fc87b4be71baf94520f4ba5df",
+        "glass": "58ee7fcb2263a0f273d3364ccb92d5804e208f1f6a3b9806aa6811f05ba589de",
+        "mist": "d92be406b15f9953b7f92bdcc1410fec36c086e9e10006ecf5b028369c71c020"
+      }
+    },
+    {
+      "index": 13,
+      "name": "方向渐变 2",
+      "performanceStyle": "sparse",
+      "inputSha256": "db18aeab6e4cb1991fe4b3c7af39d8f09bb183a30a1ffcabbd7f086d0197027c",
+      "imageHash": "9c21f6c56b06036bb64159352281632f190a68b1c85fda615e2a03b5ab720ac1",
+      "fullScoreSha256": "c0c0c2cac5e99654f0bed57a3c4ef0901c19f6528921d66be4efe2e6b8c9ab63",
+      "scoreHash": "e2323e7ec277a7c6",
+      "mappingFingerprint": "b271c569f4010053",
+      "imageRhythmFingerprint": "4e1d4e8ab08440ec",
+      "rhythmFingerprint": "4e1d4e8ab08440ec",
+      "performanceEventsSha256": "340457fe39e9bebe421fdd47071ee1b2613d5bd4fb9e7fd45751f0b2e31b8998",
+      "regionMapSha256": "f567b02b36809e6e7cd2c850598416a927ca7380a852a2541003721142ac0231",
+      "tempoMapSha256": "f695840355f56826d2cc59332ab912fe17acfdd8a6baec0c45b5e1e3724651e5",
+      "audioTraces": {
+        "warm": "4a6d56814186a16e3ffec9d97a69f97e7669f4a0c6143498546af3fc992ee999",
+        "glass": "94aa1bde8209919cb5fe8c5322ea9fd608920cb700f47df70aa4b915cf331e45",
+        "mist": "dbc27a34a297bc67736ed5be683b5e47aaee6e0db39008204132b0952cc8e177"
+      }
+    },
+    {
+      "index": 13,
+      "name": "方向渐变 2",
+      "performanceStyle": "continuous",
+      "inputSha256": "db18aeab6e4cb1991fe4b3c7af39d8f09bb183a30a1ffcabbd7f086d0197027c",
+      "imageHash": "9c21f6c56b06036bb64159352281632f190a68b1c85fda615e2a03b5ab720ac1",
+      "fullScoreSha256": "f44824a85f5c75f9cf95ae9d2754cee30cc519a18d0ec0473bfdd4997261d349",
+      "scoreHash": "e2323e7ec277a7c6",
+      "mappingFingerprint": "b271c569f4010053",
+      "imageRhythmFingerprint": "4e1d4e8ab08440ec",
+      "rhythmFingerprint": "4e1d4e8ab08440ec",
+      "performanceEventsSha256": "340457fe39e9bebe421fdd47071ee1b2613d5bd4fb9e7fd45751f0b2e31b8998",
+      "regionMapSha256": "f567b02b36809e6e7cd2c850598416a927ca7380a852a2541003721142ac0231",
+      "tempoMapSha256": "f695840355f56826d2cc59332ab912fe17acfdd8a6baec0c45b5e1e3724651e5",
+      "audioTraces": {
+        "warm": "4a6d56814186a16e3ffec9d97a69f97e7669f4a0c6143498546af3fc992ee999",
+        "glass": "94aa1bde8209919cb5fe8c5322ea9fd608920cb700f47df70aa4b915cf331e45",
+        "mist": "dbc27a34a297bc67736ed5be683b5e47aaee6e0db39008204132b0952cc8e177"
+      }
+    },
+    {
+      "index": 14,
+      "name": "方向渐变 3",
+      "performanceStyle": "sparse",
+      "inputSha256": "7627eefe08f8044323840c6fd87bf54227ffa98f8c90159f6a18c3571d85026b",
+      "imageHash": "f73636c5ae41556b3e7d9475d3af1f2fc2a1ffb15aa0cf613ffbf5750f11d6c1",
+      "fullScoreSha256": "d5c717bbb117b1cef1ef6538f8b78aff63276dc98aabf94f68fe4690b2ac081c",
+      "scoreHash": "0f9199d38c8bf4e7",
+      "mappingFingerprint": "99ed8884594ef664",
+      "imageRhythmFingerprint": "68c18df6c423b22a",
+      "rhythmFingerprint": "68c18df6c423b22a",
+      "performanceEventsSha256": "9b028e29d74bf267615578ac9d34184ab76a03cfd8bd432839d1db1735b40150",
+      "regionMapSha256": "920b0045dbb52217960aace6eaf3a43fba3eca2fd09befc37b7ad52131d98d50",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "d3998e2d9680e653c23a6a386c4a3285455661ba84d790fadc1b2a82ceb00ee8",
+        "glass": "30ae4358231677d819971e3d65c677d02c141b50c772ae0d6157c67670889c9e",
+        "mist": "30a24ff150a9dd9bf25244761bff54a21e2ff6d2f484ebb755504a815552b936"
+      }
+    },
+    {
+      "index": 14,
+      "name": "方向渐变 3",
+      "performanceStyle": "continuous",
+      "inputSha256": "7627eefe08f8044323840c6fd87bf54227ffa98f8c90159f6a18c3571d85026b",
+      "imageHash": "f73636c5ae41556b3e7d9475d3af1f2fc2a1ffb15aa0cf613ffbf5750f11d6c1",
+      "fullScoreSha256": "9f0eb1f149e5a954b89b44fac43a653b09a4a1d6794b80fe07ad70ee1cb643e9",
+      "scoreHash": "0f9199d38c8bf4e7",
+      "mappingFingerprint": "99ed8884594ef664",
+      "imageRhythmFingerprint": "68c18df6c423b22a",
+      "rhythmFingerprint": "68c18df6c423b22a",
+      "performanceEventsSha256": "9b028e29d74bf267615578ac9d34184ab76a03cfd8bd432839d1db1735b40150",
+      "regionMapSha256": "920b0045dbb52217960aace6eaf3a43fba3eca2fd09befc37b7ad52131d98d50",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "d3998e2d9680e653c23a6a386c4a3285455661ba84d790fadc1b2a82ceb00ee8",
+        "glass": "30ae4358231677d819971e3d65c677d02c141b50c772ae0d6157c67670889c9e",
+        "mist": "30a24ff150a9dd9bf25244761bff54a21e2ff6d2f484ebb755504a815552b936"
+      }
+    },
+    {
+      "index": 15,
+      "name": "方向渐变 4",
+      "performanceStyle": "sparse",
+      "inputSha256": "b0c17ea63686c4dfd2b975ba5870120a5692508a697212b0898a4094aee8ec1d",
+      "imageHash": "434b26c53337f56bca5e793595f9512fa297c9b1848a8c61385932b55388a2c1",
+      "fullScoreSha256": "a51c51461defa83e2bc7766c62f9779cab876be085033118b0e5713880de386f",
+      "scoreHash": "177c301560294897",
+      "mappingFingerprint": "b6155a5771143407",
+      "imageRhythmFingerprint": "f30ba8c05dfa56d4",
+      "rhythmFingerprint": "f30ba8c05dfa56d4",
+      "performanceEventsSha256": "a55f7adee218e717aca0b9d157c641316cca30f7a539159a3b461c6ba2ae732e",
+      "regionMapSha256": "143a45db5265183c95f6f0989e17a061823977def2be793975fdc6e3fd5ef236",
+      "tempoMapSha256": "ab2429d3ecb6bf28ad958abb8f4c8218ea5eabae726b4c43d5771f021bce3dbd",
+      "audioTraces": {
+        "warm": "f611db068f875c31748164b8a9f91b49e6d326d5a6c51a6ea502946372586699",
+        "glass": "5ae4a853dce3a1c9ba78783f60db02561ccb9fd490b34ff1f569d5c61af76596",
+        "mist": "7a489ccc9013e0ca7dc8e5501a2abb70fce4362aa32136cb64b1c1b5a9cb00df"
+      }
+    },
+    {
+      "index": 15,
+      "name": "方向渐变 4",
+      "performanceStyle": "continuous",
+      "inputSha256": "b0c17ea63686c4dfd2b975ba5870120a5692508a697212b0898a4094aee8ec1d",
+      "imageHash": "434b26c53337f56bca5e793595f9512fa297c9b1848a8c61385932b55388a2c1",
+      "fullScoreSha256": "3ee367e77e9ae4c36efb87da5fc625f7ed51db33fdcf980b01b281eb009b945c",
+      "scoreHash": "177c301560294897",
+      "mappingFingerprint": "b6155a5771143407",
+      "imageRhythmFingerprint": "f30ba8c05dfa56d4",
+      "rhythmFingerprint": "f30ba8c05dfa56d4",
+      "performanceEventsSha256": "a55f7adee218e717aca0b9d157c641316cca30f7a539159a3b461c6ba2ae732e",
+      "regionMapSha256": "143a45db5265183c95f6f0989e17a061823977def2be793975fdc6e3fd5ef236",
+      "tempoMapSha256": "ab2429d3ecb6bf28ad958abb8f4c8218ea5eabae726b4c43d5771f021bce3dbd",
+      "audioTraces": {
+        "warm": "f611db068f875c31748164b8a9f91b49e6d326d5a6c51a6ea502946372586699",
+        "glass": "5ae4a853dce3a1c9ba78783f60db02561ccb9fd490b34ff1f569d5c61af76596",
+        "mist": "7a489ccc9013e0ca7dc8e5501a2abb70fce4362aa32136cb64b1c1b5a9cb00df"
+      }
+    },
+    {
+      "index": 16,
+      "name": "方向渐变 5",
+      "performanceStyle": "sparse",
+      "inputSha256": "51f6a855592e735119c4b70390c9e6cd7b1f61fb5ad6114f6338793ee90ae681",
+      "imageHash": "9c90b1a56a2c6a6b752855d52ba6462fd5848b51ca2193612f3e96554a6b70c1",
+      "fullScoreSha256": "fed59aa4c60a567692ec0fc5a1bb460784cbef8d3fd68d7b421eb25c2159a792",
+      "scoreHash": "eb342bb00990bda4",
+      "mappingFingerprint": "938b730834e81b38",
+      "imageRhythmFingerprint": "f681b40be9c1fdab",
+      "rhythmFingerprint": "f681b40be9c1fdab",
+      "performanceEventsSha256": "53d0a707c3d3595432505d0da3c9dd8a58b746607146694ffc0d78a44938a02e",
+      "regionMapSha256": "4b8c569edc764a2c73303b0baee73c35d6d0d1345ec3a20da9e6ccdf2d00196e",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "6827f9f286919ca78a07e05413e700b27fd7227374b81f8cbe05ee88ef434bde",
+        "glass": "66f3e52272e445eab53707d7cc4a24b5e4202dcfb318c999e47b655f15cd4ae4",
+        "mist": "1f4e84e13401d463580d2adaf0a3d5e9282548453e188433a6e6030bff6f476b"
+      }
+    },
+    {
+      "index": 16,
+      "name": "方向渐变 5",
+      "performanceStyle": "continuous",
+      "inputSha256": "51f6a855592e735119c4b70390c9e6cd7b1f61fb5ad6114f6338793ee90ae681",
+      "imageHash": "9c90b1a56a2c6a6b752855d52ba6462fd5848b51ca2193612f3e96554a6b70c1",
+      "fullScoreSha256": "651605d6ac6059134c077a44d9dcbce3184897204ac283166cf0518344bcf4af",
+      "scoreHash": "eb342bb00990bda4",
+      "mappingFingerprint": "938b730834e81b38",
+      "imageRhythmFingerprint": "f681b40be9c1fdab",
+      "rhythmFingerprint": "f681b40be9c1fdab",
+      "performanceEventsSha256": "53d0a707c3d3595432505d0da3c9dd8a58b746607146694ffc0d78a44938a02e",
+      "regionMapSha256": "4b8c569edc764a2c73303b0baee73c35d6d0d1345ec3a20da9e6ccdf2d00196e",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "6827f9f286919ca78a07e05413e700b27fd7227374b81f8cbe05ee88ef434bde",
+        "glass": "66f3e52272e445eab53707d7cc4a24b5e4202dcfb318c999e47b655f15cd4ae4",
+        "mist": "1f4e84e13401d463580d2adaf0a3d5e9282548453e188433a6e6030bff6f476b"
+      }
+    },
+    {
+      "index": 17,
+      "name": "方向渐变 6",
+      "performanceStyle": "sparse",
+      "inputSha256": "00ddc0f6a4155bfafa3cd2e76b20372d8775b7f6494f66674609e0ee8696a242",
+      "imageHash": "af2841c5bfe47d6b3b88a73548c3132fa6a83ab16eeb7a61b39feeb5bf541ac1",
+      "fullScoreSha256": "3a09fbdfbe1e89d9f75065c7bd0255a718c1cf8cff4fd3598dd16e77e7da08f8",
+      "scoreHash": "c385292e7ea93318",
+      "mappingFingerprint": "ebb3d305ea5b3423",
+      "imageRhythmFingerprint": "d328ee03d4203a67",
+      "rhythmFingerprint": "d328ee03d4203a67",
+      "performanceEventsSha256": "5bc20f91952ab1f36601b83bb82985ff2bb7da8f9e359f0126139eb011e2063f",
+      "regionMapSha256": "8a1deb36a1e27d1bbf202ea7c4a1b61f9d1fcac0cc50a18ae9c2d849a1e42368",
+      "tempoMapSha256": "ab2429d3ecb6bf28ad958abb8f4c8218ea5eabae726b4c43d5771f021bce3dbd",
+      "audioTraces": {
+        "warm": "f3fd76e2155e0cb8b3b3148c6907a6a86decdce540da4d6e29129a6429fe801b",
+        "glass": "0c1b048bc93519ba87c7bd48d131b6e0c1ff0d932fb1d5ace7a3973615803a13",
+        "mist": "98d8b5abe9e18fc7eadae7d9d46e5fba79de609a952c15e3dc54e34bfa2d0b5a"
+      }
+    },
+    {
+      "index": 17,
+      "name": "方向渐变 6",
+      "performanceStyle": "continuous",
+      "inputSha256": "00ddc0f6a4155bfafa3cd2e76b20372d8775b7f6494f66674609e0ee8696a242",
+      "imageHash": "af2841c5bfe47d6b3b88a73548c3132fa6a83ab16eeb7a61b39feeb5bf541ac1",
+      "fullScoreSha256": "be7077a6972d8cd51ebf547172919ce8cd5b8b2763c94ff59cc636aa0e0ea2c7",
+      "scoreHash": "c385292e7ea93318",
+      "mappingFingerprint": "ebb3d305ea5b3423",
+      "imageRhythmFingerprint": "d328ee03d4203a67",
+      "rhythmFingerprint": "d328ee03d4203a67",
+      "performanceEventsSha256": "5bc20f91952ab1f36601b83bb82985ff2bb7da8f9e359f0126139eb011e2063f",
+      "regionMapSha256": "8a1deb36a1e27d1bbf202ea7c4a1b61f9d1fcac0cc50a18ae9c2d849a1e42368",
+      "tempoMapSha256": "ab2429d3ecb6bf28ad958abb8f4c8218ea5eabae726b4c43d5771f021bce3dbd",
+      "audioTraces": {
+        "warm": "f3fd76e2155e0cb8b3b3148c6907a6a86decdce540da4d6e29129a6429fe801b",
+        "glass": "0c1b048bc93519ba87c7bd48d131b6e0c1ff0d932fb1d5ace7a3973615803a13",
+        "mist": "98d8b5abe9e18fc7eadae7d9d46e5fba79de609a952c15e3dc54e34bfa2d0b5a"
+      }
+    },
+    {
+      "index": 18,
+      "name": "周期条纹 1",
+      "performanceStyle": "sparse",
+      "inputSha256": "e2e1ff2aeaf021526c4d9cd41cf6c3963fb2cac2864218bc98a9d8252546f591",
+      "imageHash": "f161e3c52d78726b7726fc3532e4232f0d87edb1a4a33f61015ccab5caaa72c1",
+      "fullScoreSha256": "1e9dc6a629c65805570daada39014749280af01a543a2833b1b1852fbbfded1c",
+      "scoreHash": "ca99d19de30aa465",
+      "mappingFingerprint": "c7b70d1776684627",
+      "imageRhythmFingerprint": "0aa7924053c1944a",
+      "rhythmFingerprint": "0aa7924053c1944a",
+      "performanceEventsSha256": "49cd108d26f52efbe399305c708a11a5e3c8dced53d65bdd073b2b91b37ad155",
+      "regionMapSha256": "5849a65acc286b5389a405b410b413a641e0863336ff49d22cde2307434814b0",
+      "tempoMapSha256": "f695840355f56826d2cc59332ab912fe17acfdd8a6baec0c45b5e1e3724651e5",
+      "audioTraces": {
+        "warm": "110c7acdc096ff7f6f9194564c50116fdf1b048abcd5c783e2ba435b4e6dbaed",
+        "glass": "018fd232c12c504c479ee7e21c3fb89395b316f1d6a94fe1a6d2a9cb50188366",
+        "mist": "397c6f2fe187b4b51bbd608496212f04907dfaf24fded33b50e9c927ed73afc1"
+      }
+    },
+    {
+      "index": 18,
+      "name": "周期条纹 1",
+      "performanceStyle": "continuous",
+      "inputSha256": "e2e1ff2aeaf021526c4d9cd41cf6c3963fb2cac2864218bc98a9d8252546f591",
+      "imageHash": "f161e3c52d78726b7726fc3532e4232f0d87edb1a4a33f61015ccab5caaa72c1",
+      "fullScoreSha256": "3a1c368005c9ac8fab7229a5ef212f2b1e831750ee18bfd2e7e33c3166c07c95",
+      "scoreHash": "ca99d19de30aa465",
+      "mappingFingerprint": "c7b70d1776684627",
+      "imageRhythmFingerprint": "0aa7924053c1944a",
+      "rhythmFingerprint": "0aa7924053c1944a",
+      "performanceEventsSha256": "49cd108d26f52efbe399305c708a11a5e3c8dced53d65bdd073b2b91b37ad155",
+      "regionMapSha256": "5849a65acc286b5389a405b410b413a641e0863336ff49d22cde2307434814b0",
+      "tempoMapSha256": "f695840355f56826d2cc59332ab912fe17acfdd8a6baec0c45b5e1e3724651e5",
+      "audioTraces": {
+        "warm": "110c7acdc096ff7f6f9194564c50116fdf1b048abcd5c783e2ba435b4e6dbaed",
+        "glass": "018fd232c12c504c479ee7e21c3fb89395b316f1d6a94fe1a6d2a9cb50188366",
+        "mist": "397c6f2fe187b4b51bbd608496212f04907dfaf24fded33b50e9c927ed73afc1"
+      }
+    },
+    {
+      "index": 19,
+      "name": "周期条纹 2",
+      "performanceStyle": "sparse",
+      "inputSha256": "4347b929c3380a922a65f30b130a44341631bedafaa0a86980f6959ff0fc637c",
+      "imageHash": "b69dd9456783026b0eee3cb5cc7cd12f21f25b31775b3761706471359a2eb2c1",
+      "fullScoreSha256": "1bfd459ebab2c3b2181e066fa40389b32b231e23c91d8b5d1919a2c25d196691",
+      "scoreHash": "43a91f3cdf9a53c2",
+      "mappingFingerprint": "c7836d298fa82d83",
+      "imageRhythmFingerprint": "fa98c8eaf5f81486",
+      "rhythmFingerprint": "fa98c8eaf5f81486",
+      "performanceEventsSha256": "53d2564cfc883d535b6bd07dfafd9f96164933119e3e40b3c910690aa8473727",
+      "regionMapSha256": "50c8052cefcc62fb5fa32699835e79c5fa0445b98e43e3b7753abd40d806c73e",
+      "tempoMapSha256": "b028f5c856c79fd24b9fecf091304f521c93245991389b0121656952532bbde4",
+      "audioTraces": {
+        "warm": "43a3aa793ca5b12f2a0a9056db9506b72e64d16e477ee2d8a9cc723e54d1a73a",
+        "glass": "40a0078630729899a828d6007fd8ff8da5bb9ee28b1ea6683eb3e0eea10732e6",
+        "mist": "1748532ec003ea485aa4c3bddda13d62a952e8782c8f7f22fca56e9f48026451"
+      }
+    },
+    {
+      "index": 19,
+      "name": "周期条纹 2",
+      "performanceStyle": "continuous",
+      "inputSha256": "4347b929c3380a922a65f30b130a44341631bedafaa0a86980f6959ff0fc637c",
+      "imageHash": "b69dd9456783026b0eee3cb5cc7cd12f21f25b31775b3761706471359a2eb2c1",
+      "fullScoreSha256": "94499e89e38220926999cfdce23eb98518976bcb0a9ab82546289a2745e583c0",
+      "scoreHash": "43a91f3cdf9a53c2",
+      "mappingFingerprint": "c7836d298fa82d83",
+      "imageRhythmFingerprint": "fa98c8eaf5f81486",
+      "rhythmFingerprint": "fa98c8eaf5f81486",
+      "performanceEventsSha256": "53d2564cfc883d535b6bd07dfafd9f96164933119e3e40b3c910690aa8473727",
+      "regionMapSha256": "50c8052cefcc62fb5fa32699835e79c5fa0445b98e43e3b7753abd40d806c73e",
+      "tempoMapSha256": "b028f5c856c79fd24b9fecf091304f521c93245991389b0121656952532bbde4",
+      "audioTraces": {
+        "warm": "43a3aa793ca5b12f2a0a9056db9506b72e64d16e477ee2d8a9cc723e54d1a73a",
+        "glass": "40a0078630729899a828d6007fd8ff8da5bb9ee28b1ea6683eb3e0eea10732e6",
+        "mist": "1748532ec003ea485aa4c3bddda13d62a952e8782c8f7f22fca56e9f48026451"
+      }
+    },
+    {
+      "index": 20,
+      "name": "周期条纹 3",
+      "performanceStyle": "sparse",
+      "inputSha256": "8d7a83cba569996a2ca5ec2e03683718134f1054787c7ca24c60525f0dd6c2b8",
+      "imageHash": "38c7ebc5d1a5826bac001c35eea3232fee3ad5b1b089af61ea43cab57d9fb2c1",
+      "fullScoreSha256": "f483ad9b0eb022437ee7a5b2088ddfa59750a07530b7992ed8c5acf98c19ffd0",
+      "scoreHash": "2ecd6037ee543d7f",
+      "mappingFingerprint": "7063caf76d58e207",
+      "imageRhythmFingerprint": "bf4c22074615f585",
+      "rhythmFingerprint": "bf4c22074615f585",
+      "performanceEventsSha256": "14ba89652d4e4d3128cea66da36c7d14e74d7e7e5dcef44ef539560925c11f01",
+      "regionMapSha256": "6e0257ae58b878a267f4516ef9991ce7ab4541c24c68bf0178ee4f5badf0dd61",
+      "tempoMapSha256": "3150d0ff6455e9381c90e824e4ded39f6e51bd109c28a023018137be9ea161fb",
+      "audioTraces": {
+        "warm": "646d7cf9ca7d892d826189d664af4d774431f43106264cf4220192de4ed2e361",
+        "glass": "9f1bb0896eca0351843e8360477482085a5746d48e66007350b27ce9e200373e",
+        "mist": "0a46462b6bf96eb244b8086a80750090c77d59d011300e11e5917f4bb9a8161b"
+      }
+    },
+    {
+      "index": 20,
+      "name": "周期条纹 3",
+      "performanceStyle": "continuous",
+      "inputSha256": "8d7a83cba569996a2ca5ec2e03683718134f1054787c7ca24c60525f0dd6c2b8",
+      "imageHash": "38c7ebc5d1a5826bac001c35eea3232fee3ad5b1b089af61ea43cab57d9fb2c1",
+      "fullScoreSha256": "7087a96057ceb666a0358d985ce93e8018d624fc1d1b2f838e5d815b565d23b0",
+      "scoreHash": "2ecd6037ee543d7f",
+      "mappingFingerprint": "7063caf76d58e207",
+      "imageRhythmFingerprint": "bf4c22074615f585",
+      "rhythmFingerprint": "bf4c22074615f585",
+      "performanceEventsSha256": "14ba89652d4e4d3128cea66da36c7d14e74d7e7e5dcef44ef539560925c11f01",
+      "regionMapSha256": "6e0257ae58b878a267f4516ef9991ce7ab4541c24c68bf0178ee4f5badf0dd61",
+      "tempoMapSha256": "3150d0ff6455e9381c90e824e4ded39f6e51bd109c28a023018137be9ea161fb",
+      "audioTraces": {
+        "warm": "646d7cf9ca7d892d826189d664af4d774431f43106264cf4220192de4ed2e361",
+        "glass": "9f1bb0896eca0351843e8360477482085a5746d48e66007350b27ce9e200373e",
+        "mist": "0a46462b6bf96eb244b8086a80750090c77d59d011300e11e5917f4bb9a8161b"
+      }
+    },
+    {
+      "index": 21,
+      "name": "周期条纹 4",
+      "performanceStyle": "sparse",
+      "inputSha256": "85536302c050dadff8d1db50e9cf38a40d694b2e0fda8cb13ecbde4e076f1198",
+      "imageHash": "43d3d245416ec26b5186d9b5cd9c252f28c8143126f3d7619eb0ae355528b2c1",
+      "fullScoreSha256": "3feb6b95929b9d74de7ce5284599a792bfa4cb5a2414f15c5ae949f6fe6947ab",
+      "scoreHash": "97e1e2f41c6e8c28",
+      "mappingFingerprint": "2db421c752fc8561",
+      "imageRhythmFingerprint": "36c4bf5e38ea33ba",
+      "rhythmFingerprint": "36c4bf5e38ea33ba",
+      "performanceEventsSha256": "ecd7fd0b3f044d5142a5faf4af18e4dc55d62dba2902432c8b6b8b3816c66201",
+      "regionMapSha256": "d182e68cd634525c1be40cd7dec529e8ff9c17bb128ec11cb4565c88c9bccb3d",
+      "tempoMapSha256": "ab2429d3ecb6bf28ad958abb8f4c8218ea5eabae726b4c43d5771f021bce3dbd",
+      "audioTraces": {
+        "warm": "95b0cc97fb0ff8014a93aca07b6f3563da610e94c2f78e15f2dcf5f08fc262bb",
+        "glass": "c2123dd0c08d8d6e13e549c18b1880febbccf4bcb235eb01a99e1e871e85ecda",
+        "mist": "3ab63c107431baeb2855f9ce2e632f125d960660489202aae6090c62761a2d32"
+      }
+    },
+    {
+      "index": 21,
+      "name": "周期条纹 4",
+      "performanceStyle": "continuous",
+      "inputSha256": "85536302c050dadff8d1db50e9cf38a40d694b2e0fda8cb13ecbde4e076f1198",
+      "imageHash": "43d3d245416ec26b5186d9b5cd9c252f28c8143126f3d7619eb0ae355528b2c1",
+      "fullScoreSha256": "f53816900aeb428d83ce4a7180267e54d5cfffade4531e8c97096a16f243db89",
+      "scoreHash": "97e1e2f41c6e8c28",
+      "mappingFingerprint": "2db421c752fc8561",
+      "imageRhythmFingerprint": "36c4bf5e38ea33ba",
+      "rhythmFingerprint": "36c4bf5e38ea33ba",
+      "performanceEventsSha256": "ecd7fd0b3f044d5142a5faf4af18e4dc55d62dba2902432c8b6b8b3816c66201",
+      "regionMapSha256": "d182e68cd634525c1be40cd7dec529e8ff9c17bb128ec11cb4565c88c9bccb3d",
+      "tempoMapSha256": "ab2429d3ecb6bf28ad958abb8f4c8218ea5eabae726b4c43d5771f021bce3dbd",
+      "audioTraces": {
+        "warm": "95b0cc97fb0ff8014a93aca07b6f3563da610e94c2f78e15f2dcf5f08fc262bb",
+        "glass": "c2123dd0c08d8d6e13e549c18b1880febbccf4bcb235eb01a99e1e871e85ecda",
+        "mist": "3ab63c107431baeb2855f9ce2e632f125d960660489202aae6090c62761a2d32"
+      }
+    },
+    {
+      "index": 22,
+      "name": "周期条纹 5",
+      "performanceStyle": "sparse",
+      "inputSha256": "17c1f3a9b9471ca3726a06c874bcd64ced9580166d633ca4472f9b96e26c7bb1",
+      "imageHash": "785b5945ea35926b59e79eb5430d112fb31b9b319b2a5d610d2b6735f86fc2c1",
+      "fullScoreSha256": "8d9c02e44fbb4667dcd8a70bddc9190b59a37a005cf70d5a57549b83129b1cea",
+      "scoreHash": "9087395ead43c0dc",
+      "mappingFingerprint": "cf61fae09233bfa2",
+      "imageRhythmFingerprint": "ee4a97688f5b5652",
+      "rhythmFingerprint": "9274c6c5ada60c8d",
+      "performanceEventsSha256": "c5fd57a0e5534c24bd209ecc04b327d90b9bf0b4b90fdf4a58f4fc57f60eb274",
+      "regionMapSha256": "df76d999558e7842060b29dabaffdabb186afe743b5ad34a69fa040170924edc",
+      "tempoMapSha256": "2246b799ee3d4947e4101ee9ced677c0bfb342e30f147efd4f6bed1779cff63a",
+      "audioTraces": {
+        "warm": "f406fb8e74becc1d47a88d6f7e85992b957f6e9c2e771d9876663e79ef747add",
+        "glass": "8a9e91131512dfa21faa74d7a9b128fff41db1eaa1658508868598bd03ea24ec",
+        "mist": "770523bc93c1ed6c0aaf910f82054929a9f2c773f1738c4a780e86895138ced1"
+      }
+    },
+    {
+      "index": 22,
+      "name": "周期条纹 5",
+      "performanceStyle": "continuous",
+      "inputSha256": "17c1f3a9b9471ca3726a06c874bcd64ced9580166d633ca4472f9b96e26c7bb1",
+      "imageHash": "785b5945ea35926b59e79eb5430d112fb31b9b319b2a5d610d2b6735f86fc2c1",
+      "fullScoreSha256": "e09aa6e1faac89aba09063bca71c5f7de9727ad17e8cfe66245e0826bcebc988",
+      "scoreHash": "1be7b0f570ee131f",
+      "mappingFingerprint": "62f20ab4a3f13008",
+      "imageRhythmFingerprint": "ee4a97688f5b5652",
+      "rhythmFingerprint": "ee4a97688f5b5652",
+      "performanceEventsSha256": "3fa0bf01d0936f37ee0afb541e48db73ddc55c852ce50199eb088007d924d603",
+      "regionMapSha256": "f3e778da3615c717c4db797b6b0f34c1421dee4fcdc5dba5b2042d5f4684b77e",
+      "tempoMapSha256": "2246b799ee3d4947e4101ee9ced677c0bfb342e30f147efd4f6bed1779cff63a",
+      "audioTraces": {
+        "warm": "1e0ecdbbc9432621fed538d79a6eca3bc9a8a6b26c9adff1d14d4f2cf1cd40f9",
+        "glass": "57b2dabeff802cda9990ec255d8b83e5a59d5dff617de7cc7bfafb41330b9cee",
+        "mist": "15bad755d3d924a5428aa4acdd437326e50c593ce3619fca835a7bb34591a57d"
+      }
+    },
+    {
+      "index": 23,
+      "name": "周期条纹 6",
+      "performanceStyle": "sparse",
+      "inputSha256": "6b74a7744485bac8382badeff9963da85f6a676e392470461918f61c5a420046",
+      "imageHash": "d5d4f2c5ad64a26b519d7f35fb4bcf2f94cc1cb19840276144af8db572a5b2c1",
+      "fullScoreSha256": "010d04be50e122a5096b8556a6b780cba386cc41625456e0bc93c12c3ca1994a",
+      "scoreHash": "73a7c828783c8f9a",
+      "mappingFingerprint": "a9e0d36dbac21c13",
+      "imageRhythmFingerprint": "d958d1887861ecae",
+      "rhythmFingerprint": "d958d1887861ecae",
+      "performanceEventsSha256": "c55fce6f149852800f380337fdb9e4f73416bdf68c72a37867cb7ba240832998",
+      "regionMapSha256": "dc45fe3c24f4894ebe9a536b1f07056d47fa1b06baa01bcaa78459cece19ac3c",
+      "tempoMapSha256": "ab2429d3ecb6bf28ad958abb8f4c8218ea5eabae726b4c43d5771f021bce3dbd",
+      "audioTraces": {
+        "warm": "249a75c07c0f7140c31f9080c7bf8bde4e67b98884d8551808f19132f61584d8",
+        "glass": "5d2f3ae1d642bf912d5c0318403174785259395f04d6df8bf36bdfd7890f581b",
+        "mist": "9e0017df291044524598d12aaa6a10922ffb7de77f05b6d388cc5d49304be8a2"
+      }
+    },
+    {
+      "index": 23,
+      "name": "周期条纹 6",
+      "performanceStyle": "continuous",
+      "inputSha256": "6b74a7744485bac8382badeff9963da85f6a676e392470461918f61c5a420046",
+      "imageHash": "d5d4f2c5ad64a26b519d7f35fb4bcf2f94cc1cb19840276144af8db572a5b2c1",
+      "fullScoreSha256": "5e57b0a0aa9e9cb7e5ed6a6a1f58a354129f1f02c2662e430f940f061e3df4c6",
+      "scoreHash": "73a7c828783c8f9a",
+      "mappingFingerprint": "a9e0d36dbac21c13",
+      "imageRhythmFingerprint": "d958d1887861ecae",
+      "rhythmFingerprint": "d958d1887861ecae",
+      "performanceEventsSha256": "c55fce6f149852800f380337fdb9e4f73416bdf68c72a37867cb7ba240832998",
+      "regionMapSha256": "dc45fe3c24f4894ebe9a536b1f07056d47fa1b06baa01bcaa78459cece19ac3c",
+      "tempoMapSha256": "ab2429d3ecb6bf28ad958abb8f4c8218ea5eabae726b4c43d5771f021bce3dbd",
+      "audioTraces": {
+        "warm": "249a75c07c0f7140c31f9080c7bf8bde4e67b98884d8551808f19132f61584d8",
+        "glass": "5d2f3ae1d642bf912d5c0318403174785259395f04d6df8bf36bdfd7890f581b",
+        "mist": "9e0017df291044524598d12aaa6a10922ffb7de77f05b6d388cc5d49304be8a2"
+      }
+    },
+    {
+      "index": 24,
+      "name": "棋盘尺度 1",
+      "performanceStyle": "sparse",
+      "inputSha256": "03b3f2da65229f474e802578b6e82572f8bc74b52b10b960db2ca89ac29f381f",
+      "imageHash": "42d809c535e26a6b96e8a235f8f10b2fb987c7b11d9fb761958c94b58e85f2c1",
+      "fullScoreSha256": "8f908fd31d3490c4a6bbe07b1cfdc25e408aea3af8ea5dda94a4a03d3be71d25",
+      "scoreHash": "4d4b026dee541901",
+      "mappingFingerprint": "32a92760fcb9fa6c",
+      "imageRhythmFingerprint": "bf8bc51617d27a3a",
+      "rhythmFingerprint": "bf8bc51617d27a3a",
+      "performanceEventsSha256": "cae887d3dcd47ab52afa1395cf51f29978e925ec912e204cc2b327bdd55e4430",
+      "regionMapSha256": "93df0ef9eda9d054aa11451bd549244b35bf6b49b2cb281b3b16d9f4c26ba3f2",
+      "tempoMapSha256": "b028f5c856c79fd24b9fecf091304f521c93245991389b0121656952532bbde4",
+      "audioTraces": {
+        "warm": "ca2e3a7ca2d82491ff2af95dcc2ee2588a85fb98e70298fe076ffbe3a8c22ec2",
+        "glass": "7a0a9a7af1dc9a875cffa49bc6a851c6cd74f836a05b432b0a1395615817bc12",
+        "mist": "d0d78919e5a6a63033eeb6b6a396e171a005140e2209dd9daed9c6720cae4695"
+      }
+    },
+    {
+      "index": 24,
+      "name": "棋盘尺度 1",
+      "performanceStyle": "continuous",
+      "inputSha256": "03b3f2da65229f474e802578b6e82572f8bc74b52b10b960db2ca89ac29f381f",
+      "imageHash": "42d809c535e26a6b96e8a235f8f10b2fb987c7b11d9fb761958c94b58e85f2c1",
+      "fullScoreSha256": "5ae9f520017b9684b1650c8dedc3f60286a22d57d1b41f7d512bc658e05d6a38",
+      "scoreHash": "4d4b026dee541901",
+      "mappingFingerprint": "32a92760fcb9fa6c",
+      "imageRhythmFingerprint": "bf8bc51617d27a3a",
+      "rhythmFingerprint": "bf8bc51617d27a3a",
+      "performanceEventsSha256": "cae887d3dcd47ab52afa1395cf51f29978e925ec912e204cc2b327bdd55e4430",
+      "regionMapSha256": "93df0ef9eda9d054aa11451bd549244b35bf6b49b2cb281b3b16d9f4c26ba3f2",
+      "tempoMapSha256": "b028f5c856c79fd24b9fecf091304f521c93245991389b0121656952532bbde4",
+      "audioTraces": {
+        "warm": "ca2e3a7ca2d82491ff2af95dcc2ee2588a85fb98e70298fe076ffbe3a8c22ec2",
+        "glass": "7a0a9a7af1dc9a875cffa49bc6a851c6cd74f836a05b432b0a1395615817bc12",
+        "mist": "d0d78919e5a6a63033eeb6b6a396e171a005140e2209dd9daed9c6720cae4695"
+      }
+    },
+    {
+      "index": 25,
+      "name": "棋盘尺度 2",
+      "performanceStyle": "sparse",
+      "inputSha256": "24ea55f31fd65d546575180bd62994deb4129f7674d6078ab6cf0e25fb89a703",
+      "imageHash": "d1cb09c5dba91a6b1b28423543190b2f9afc47b16528f76150bc5cb57285f2c1",
+      "fullScoreSha256": "705218b203d5841657ef9944e8b2cf72be7f3266bca7c95d981c2b4246f5e570",
+      "scoreHash": "23190ea58fd733e1",
+      "mappingFingerprint": "ac036a8d9631a383",
+      "imageRhythmFingerprint": "2514ca330350e3e1",
+      "rhythmFingerprint": "2514ca330350e3e1",
+      "performanceEventsSha256": "3b44681dacf50cb672b3adaf762bbae8e5362a6e1b217b664061eb24f9666fd9",
+      "regionMapSha256": "9bccf1e4ec248c4f1cbed96ecaf140279f6e97cce8ef0696dd5f9b39b95c5b8b",
+      "tempoMapSha256": "aaaba630d49a802221e98c50585197874ce3efa68cdac56724f0f8d2f2f6a72f",
+      "audioTraces": {
+        "warm": "ed68cb593fe99aa99af55262ac3faac8cd5c7219e95845d8344aeef2c2a3b137",
+        "glass": "9140f4ac989cae52db36ee4fa2cf0afd9fb3c26f6f56ee7386077dfce544a95d",
+        "mist": "38a99fd358e4f60bac45b3c2c48c23faccaeec7a57a679ca5a4b1e4010c6e02a"
+      }
+    },
+    {
+      "index": 25,
+      "name": "棋盘尺度 2",
+      "performanceStyle": "continuous",
+      "inputSha256": "24ea55f31fd65d546575180bd62994deb4129f7674d6078ab6cf0e25fb89a703",
+      "imageHash": "d1cb09c5dba91a6b1b28423543190b2f9afc47b16528f76150bc5cb57285f2c1",
+      "fullScoreSha256": "466b44f1ec6d40d8d24b98397c23b89801ea2c70f8d688080b98a76a3302ed1a",
+      "scoreHash": "23190ea58fd733e1",
+      "mappingFingerprint": "ac036a8d9631a383",
+      "imageRhythmFingerprint": "2514ca330350e3e1",
+      "rhythmFingerprint": "2514ca330350e3e1",
+      "performanceEventsSha256": "3b44681dacf50cb672b3adaf762bbae8e5362a6e1b217b664061eb24f9666fd9",
+      "regionMapSha256": "9bccf1e4ec248c4f1cbed96ecaf140279f6e97cce8ef0696dd5f9b39b95c5b8b",
+      "tempoMapSha256": "aaaba630d49a802221e98c50585197874ce3efa68cdac56724f0f8d2f2f6a72f",
+      "audioTraces": {
+        "warm": "ed68cb593fe99aa99af55262ac3faac8cd5c7219e95845d8344aeef2c2a3b137",
+        "glass": "9140f4ac989cae52db36ee4fa2cf0afd9fb3c26f6f56ee7386077dfce544a95d",
+        "mist": "38a99fd358e4f60bac45b3c2c48c23faccaeec7a57a679ca5a4b1e4010c6e02a"
+      }
+    },
+    {
+      "index": 26,
+      "name": "棋盘尺度 3",
+      "performanceStyle": "sparse",
+      "inputSha256": "37245b6b07fa5107e5d1d6b01852e9aaca5459c34b721c349ae0c84c0a843ac4",
+      "imageHash": "8080c9c5ca99da6bb4c2a235f8f10b2f7987c7b1a919b7617371e4b58e85f2c1",
+      "fullScoreSha256": "d3f171aa9e4db34afbe80f422b62831a75262da3ea519df69a5f2b38c5256c45",
+      "scoreHash": "2bb39f7861e63818",
+      "mappingFingerprint": "bbef8a756a7d0a1d",
+      "imageRhythmFingerprint": "d247ea0bfc99f50b",
+      "rhythmFingerprint": "d247ea0bfc99f50b",
+      "performanceEventsSha256": "cf174f28a380ad485d953edbeae7598a2d11c57172e6e9c98ffdb491d81b3a33",
+      "regionMapSha256": "c692812d6fd0149dc6d747f5ea41e0105f1eb72a57d3ffee1ccdbffe069f2c48",
+      "tempoMapSha256": "a3943db0ce6b1db7e14cab0abaa50cd05388952b76108a278240e7b1c8ba687e",
+      "audioTraces": {
+        "warm": "a1b1f59ee9aa6d4f67c50ee1b362e124d6d8d7d8cf350cf3a6648a3f95057478",
+        "glass": "39e5a1c412e5b21d8881ef2950969a761f350ad72a2c24192db89bc0fb83056b",
+        "mist": "3c1ac1c6ea6c6bc31310900aba22b4fd306f5a3f4bc0a2bfac611b674b15eaa1"
+      }
+    },
+    {
+      "index": 26,
+      "name": "棋盘尺度 3",
+      "performanceStyle": "continuous",
+      "inputSha256": "37245b6b07fa5107e5d1d6b01852e9aaca5459c34b721c349ae0c84c0a843ac4",
+      "imageHash": "8080c9c5ca99da6bb4c2a235f8f10b2f7987c7b1a919b7617371e4b58e85f2c1",
+      "fullScoreSha256": "c06fe67524bb42ea865d3d102360bd5caf1feff0c7faddd75b5ea0b54b39ab97",
+      "scoreHash": "2bb39f7861e63818",
+      "mappingFingerprint": "bbef8a756a7d0a1d",
+      "imageRhythmFingerprint": "d247ea0bfc99f50b",
+      "rhythmFingerprint": "d247ea0bfc99f50b",
+      "performanceEventsSha256": "cf174f28a380ad485d953edbeae7598a2d11c57172e6e9c98ffdb491d81b3a33",
+      "regionMapSha256": "c692812d6fd0149dc6d747f5ea41e0105f1eb72a57d3ffee1ccdbffe069f2c48",
+      "tempoMapSha256": "a3943db0ce6b1db7e14cab0abaa50cd05388952b76108a278240e7b1c8ba687e",
+      "audioTraces": {
+        "warm": "a1b1f59ee9aa6d4f67c50ee1b362e124d6d8d7d8cf350cf3a6648a3f95057478",
+        "glass": "39e5a1c412e5b21d8881ef2950969a761f350ad72a2c24192db89bc0fb83056b",
+        "mist": "3c1ac1c6ea6c6bc31310900aba22b4fd306f5a3f4bc0a2bfac611b674b15eaa1"
+      }
+    },
+    {
+      "index": 27,
+      "name": "棋盘尺度 4",
+      "performanceStyle": "sparse",
+      "inputSha256": "4ee4ce4e973d3a26054cc578eb492223ba41eb73ddf0fcc39aaf53b52d7ca60b",
+      "imageHash": "736be845ec0e7a6bec82c5b58a2abf2fba404bb1c24ec26190f3adb5416d72c1",
+      "fullScoreSha256": "b2a2dd8a25a803d6211a49689792fd17385907d3f0828dcb9d53f555f9a48cd8",
+      "scoreHash": "addb92919fb66823",
+      "mappingFingerprint": "2b4edf435cb70fa9",
+      "imageRhythmFingerprint": "05b3e9d6da2f71ee",
+      "rhythmFingerprint": "05b3e9d6da2f71ee",
+      "performanceEventsSha256": "e55ef9d73df25831ba5e57c146284cd25b24d9e197a6261535dd71526c86f46d",
+      "regionMapSha256": "c67b74ef833fc7814f470b3f693029c205db0fd7a8186f8b3deabf8db27905d5",
+      "tempoMapSha256": "712196e4a5ba0f87e90b3dc35a29d5f61a6665de874e1b8da05b18a9bd5ecbe9",
+      "audioTraces": {
+        "warm": "78fff4136cf734070fe86cb8c15588c0e2ad588fc7e33362f2a10a6857606ae2",
+        "glass": "4e0378e4497ec5a58dc5783cda8682959278f5f00eb867b6a53991ac14d39aeb",
+        "mist": "830799aa15b0431604697af932ee9ad0804c594364366b391f32b3a9ca7f217d"
+      }
+    },
+    {
+      "index": 27,
+      "name": "棋盘尺度 4",
+      "performanceStyle": "continuous",
+      "inputSha256": "4ee4ce4e973d3a26054cc578eb492223ba41eb73ddf0fcc39aaf53b52d7ca60b",
+      "imageHash": "736be845ec0e7a6bec82c5b58a2abf2fba404bb1c24ec26190f3adb5416d72c1",
+      "fullScoreSha256": "7b46f97823d72332b0c5a5a3f67d4c14375e551addf273fbddc54f905c5cdab5",
+      "scoreHash": "addb92919fb66823",
+      "mappingFingerprint": "2b4edf435cb70fa9",
+      "imageRhythmFingerprint": "05b3e9d6da2f71ee",
+      "rhythmFingerprint": "05b3e9d6da2f71ee",
+      "performanceEventsSha256": "e55ef9d73df25831ba5e57c146284cd25b24d9e197a6261535dd71526c86f46d",
+      "regionMapSha256": "c67b74ef833fc7814f470b3f693029c205db0fd7a8186f8b3deabf8db27905d5",
+      "tempoMapSha256": "712196e4a5ba0f87e90b3dc35a29d5f61a6665de874e1b8da05b18a9bd5ecbe9",
+      "audioTraces": {
+        "warm": "78fff4136cf734070fe86cb8c15588c0e2ad588fc7e33362f2a10a6857606ae2",
+        "glass": "4e0378e4497ec5a58dc5783cda8682959278f5f00eb867b6a53991ac14d39aeb",
+        "mist": "830799aa15b0431604697af932ee9ad0804c594364366b391f32b3a9ca7f217d"
+      }
+    },
+    {
+      "index": 28,
+      "name": "棋盘尺度 5",
+      "performanceStyle": "sparse",
+      "inputSha256": "74775bcc739f0ecefd006b63efebef458dc7d46ca371f6fef3244d9d78608e27",
+      "imageHash": "592109c5e4ea6a6b70eaa235d3810b2faa0fc7b12f19b761ce057cb55685f2c1",
+      "fullScoreSha256": "c98ba03c0d3b4f16f3a9d16b715048f565bbe3c052fca48cab413bf9b817b152",
+      "scoreHash": "a7821bd0759db2a4",
+      "mappingFingerprint": "7ff8bdb201e5073c",
+      "imageRhythmFingerprint": "cf7f93e203fe71da",
+      "rhythmFingerprint": "cf7f93e203fe71da",
+      "performanceEventsSha256": "2f622d8ea0c14f5f87f7b43fc72b98efd016ec3201e5aa084b28ca4ba0904f4a",
+      "regionMapSha256": "548c0397c95574c0313a98974394df8cb7e7ab5b497c22091cd2471fa2ced4d3",
+      "tempoMapSha256": "bc830f04e8cdff1d7828ebda871ebef83605af21bd18b476ac21c154632bfda1",
+      "audioTraces": {
+        "warm": "206845d3c148f26dad18cc2a2505dae25cf8f911aa00ac96431be3dc4bee97f4",
+        "glass": "a20c594b0420b5da7e6e1ee21d39f6e1152bbb9b22bb14c3e6bf68462c2806e9",
+        "mist": "354b5fcf44e37670dd14bbc146b5c5c3bc45dd1e336faceb6b1bccdde7d807ca"
+      }
+    },
+    {
+      "index": 28,
+      "name": "棋盘尺度 5",
+      "performanceStyle": "continuous",
+      "inputSha256": "74775bcc739f0ecefd006b63efebef458dc7d46ca371f6fef3244d9d78608e27",
+      "imageHash": "592109c5e4ea6a6b70eaa235d3810b2faa0fc7b12f19b761ce057cb55685f2c1",
+      "fullScoreSha256": "0e1a2e630964b8afe1d6d9c3a33a899a14f9f07826618432c6321b90fec18079",
+      "scoreHash": "a7821bd0759db2a4",
+      "mappingFingerprint": "7ff8bdb201e5073c",
+      "imageRhythmFingerprint": "cf7f93e203fe71da",
+      "rhythmFingerprint": "cf7f93e203fe71da",
+      "performanceEventsSha256": "2f622d8ea0c14f5f87f7b43fc72b98efd016ec3201e5aa084b28ca4ba0904f4a",
+      "regionMapSha256": "548c0397c95574c0313a98974394df8cb7e7ab5b497c22091cd2471fa2ced4d3",
+      "tempoMapSha256": "bc830f04e8cdff1d7828ebda871ebef83605af21bd18b476ac21c154632bfda1",
+      "audioTraces": {
+        "warm": "206845d3c148f26dad18cc2a2505dae25cf8f911aa00ac96431be3dc4bee97f4",
+        "glass": "a20c594b0420b5da7e6e1ee21d39f6e1152bbb9b22bb14c3e6bf68462c2806e9",
+        "mist": "354b5fcf44e37670dd14bbc146b5c5c3bc45dd1e336faceb6b1bccdde7d807ca"
+      }
+    },
+    {
+      "index": 29,
+      "name": "棋盘尺度 6",
+      "performanceStyle": "sparse",
+      "inputSha256": "dbb899e93e08edf66947391fd90fbc27753243f216ec7f9d417ce432131fbdb0",
+      "imageHash": "5a95d84578ec226b3d708db51ddebf2f1ef24bb16a8b42614c3939b5bb6d72c1",
+      "fullScoreSha256": "7da8be5a142929e555db5cfa700d5b50a0319c831f36b57aad0ffeec29a5c380",
+      "scoreHash": "7026c694d681f3d0",
+      "mappingFingerprint": "825d2e866af08896",
+      "imageRhythmFingerprint": "40dad68d2c2605db",
+      "rhythmFingerprint": "40dad68d2c2605db",
+      "performanceEventsSha256": "ecadc2efd604d857f93bd6f334b507c7ec4634cec9767c39b403919896ee4ec9",
+      "regionMapSha256": "6d8a085b0197cb49995195ba3ebbe9cbd7bc2aaa76d0bce24d3b32285d27f97f",
+      "tempoMapSha256": "f9d09c875786417b4d10f14bb8cffa31bbb5bd24811fe9b6a803f9d0f5f4d4dd",
+      "audioTraces": {
+        "warm": "39e417b3002509285e8e6afd726a1711cb6ab3a4a4db6697d467f107abd45002",
+        "glass": "a78d7014669780f3bcff3e73adb7a4e66b6aa286f401a06bb2712e37c1a677f3",
+        "mist": "7b65900166ef749bb9f2d0dd38e8c0e7462434beaa37025562294b80fe06eb1d"
+      }
+    },
+    {
+      "index": 29,
+      "name": "棋盘尺度 6",
+      "performanceStyle": "continuous",
+      "inputSha256": "dbb899e93e08edf66947391fd90fbc27753243f216ec7f9d417ce432131fbdb0",
+      "imageHash": "5a95d84578ec226b3d708db51ddebf2f1ef24bb16a8b42614c3939b5bb6d72c1",
+      "fullScoreSha256": "cc5e28ae8463e51f3ce3cd18df70c657daede13a743234b5a56ee41fbd6687bc",
+      "scoreHash": "7026c694d681f3d0",
+      "mappingFingerprint": "825d2e866af08896",
+      "imageRhythmFingerprint": "40dad68d2c2605db",
+      "rhythmFingerprint": "40dad68d2c2605db",
+      "performanceEventsSha256": "ecadc2efd604d857f93bd6f334b507c7ec4634cec9767c39b403919896ee4ec9",
+      "regionMapSha256": "6d8a085b0197cb49995195ba3ebbe9cbd7bc2aaa76d0bce24d3b32285d27f97f",
+      "tempoMapSha256": "f9d09c875786417b4d10f14bb8cffa31bbb5bd24811fe9b6a803f9d0f5f4d4dd",
+      "audioTraces": {
+        "warm": "39e417b3002509285e8e6afd726a1711cb6ab3a4a4db6697d467f107abd45002",
+        "glass": "a78d7014669780f3bcff3e73adb7a4e66b6aa286f401a06bb2712e37c1a677f3",
+        "mist": "7b65900166ef749bb9f2d0dd38e8c0e7462434beaa37025562294b80fe06eb1d"
+      }
+    },
+    {
+      "index": 30,
+      "name": "彩色波形 1",
+      "performanceStyle": "sparse",
+      "inputSha256": "75a35a920603f7d89f8782479cb4128bc769f4be3207e907a7dfcccfd472e56a",
+      "imageHash": "19ff385d6daafe8b59047579e174e57f6b7ef511102fcbb951321791e7a19181",
+      "fullScoreSha256": "a395ee61235e7664bacfbac656a05d68ebfed3de8e4165a2e71b8163474c9641",
+      "scoreHash": "edac3d5208a36e54",
+      "mappingFingerprint": "e8c8b522c6a24d52",
+      "imageRhythmFingerprint": "40eeebca67fa25f4",
+      "rhythmFingerprint": "40eeebca67fa25f4",
+      "performanceEventsSha256": "656d609fb7a019822abe3e44e25a27aa02b1bd94c81ac4e1c33ed118b842860d",
+      "regionMapSha256": "496f2a43143a4998b9096fd26c50ab05785746449fb764f7614e36e5489caa71",
+      "tempoMapSha256": "226e7847a535ecb34f295709111111f62a91d329386a6154813e1dac2bd41795",
+      "audioTraces": {
+        "warm": "2b5c2d56de0049e34904f978accb66c77d3dbf9dfacd199d124a481ef2555b98",
+        "glass": "516a1422dafd5496d0e789da7ac9e3cad0735644ccc3a0a11e1bc5af2c85d92a",
+        "mist": "2259509961a321e174e55d374f4bb09ee67b74a07c43059eefc9a19062cbc8a7"
+      }
+    },
+    {
+      "index": 30,
+      "name": "彩色波形 1",
+      "performanceStyle": "continuous",
+      "inputSha256": "75a35a920603f7d89f8782479cb4128bc769f4be3207e907a7dfcccfd472e56a",
+      "imageHash": "19ff385d6daafe8b59047579e174e57f6b7ef511102fcbb951321791e7a19181",
+      "fullScoreSha256": "bc3690d56726afb27a1dd9110886554523facfa8d1674e9bb2ce3cf616a8d36b",
+      "scoreHash": "edac3d5208a36e54",
+      "mappingFingerprint": "e8c8b522c6a24d52",
+      "imageRhythmFingerprint": "40eeebca67fa25f4",
+      "rhythmFingerprint": "40eeebca67fa25f4",
+      "performanceEventsSha256": "656d609fb7a019822abe3e44e25a27aa02b1bd94c81ac4e1c33ed118b842860d",
+      "regionMapSha256": "496f2a43143a4998b9096fd26c50ab05785746449fb764f7614e36e5489caa71",
+      "tempoMapSha256": "226e7847a535ecb34f295709111111f62a91d329386a6154813e1dac2bd41795",
+      "audioTraces": {
+        "warm": "2b5c2d56de0049e34904f978accb66c77d3dbf9dfacd199d124a481ef2555b98",
+        "glass": "516a1422dafd5496d0e789da7ac9e3cad0735644ccc3a0a11e1bc5af2c85d92a",
+        "mist": "2259509961a321e174e55d374f4bb09ee67b74a07c43059eefc9a19062cbc8a7"
+      }
+    },
+    {
+      "index": 31,
+      "name": "彩色波形 2",
+      "performanceStyle": "sparse",
+      "inputSha256": "7bff061b92e7d9e83ea7aa566381c88b1a225429e272c56d2cc2ee5b94caf614",
+      "imageHash": "47013750381bf9062f06d690a512d12ad7f7cfa49e66bddc8c10a31038f02254",
+      "fullScoreSha256": "98fce29f0e8b99f9aedca1ff6ec409710170fdf70e5fbcc2b9683b07fd943406",
+      "scoreHash": "87a304112fde1953",
+      "mappingFingerprint": "f1efa31081ec9582",
+      "imageRhythmFingerprint": "a9ca4f07d4e4c69b",
+      "rhythmFingerprint": "a9ca4f07d4e4c69b",
+      "performanceEventsSha256": "ac9f7039e2380496c3638495993f340bfe14f6e3d5783ce052a800b3e6f3efc7",
+      "regionMapSha256": "6e2196d20ed17c21e459cdf77b8d3b3aa3095eca4fbba2205c384cd041454fa3",
+      "tempoMapSha256": "49d7c199b363bed768a098156283435e8290b75391f43084f451e9bd1f303ea8",
+      "audioTraces": {
+        "warm": "7930a3002056db1f723698d6854e1be5aab614bd4d58d5bb3b7a5059d324fae2",
+        "glass": "f41640a0a830b12daeae92128838ff7f519320c76883f2b9046f94a0ec1676b2",
+        "mist": "37ad402c5d36f16b0446438b5b3d1c9020d0233a26fe6545276a7736a7bf32b6"
+      }
+    },
+    {
+      "index": 31,
+      "name": "彩色波形 2",
+      "performanceStyle": "continuous",
+      "inputSha256": "7bff061b92e7d9e83ea7aa566381c88b1a225429e272c56d2cc2ee5b94caf614",
+      "imageHash": "47013750381bf9062f06d690a512d12ad7f7cfa49e66bddc8c10a31038f02254",
+      "fullScoreSha256": "3dfd7257e38168815d8897e20f32ad5607062f7cd4964060f4841f72d8b12175",
+      "scoreHash": "87a304112fde1953",
+      "mappingFingerprint": "f1efa31081ec9582",
+      "imageRhythmFingerprint": "a9ca4f07d4e4c69b",
+      "rhythmFingerprint": "a9ca4f07d4e4c69b",
+      "performanceEventsSha256": "ac9f7039e2380496c3638495993f340bfe14f6e3d5783ce052a800b3e6f3efc7",
+      "regionMapSha256": "6e2196d20ed17c21e459cdf77b8d3b3aa3095eca4fbba2205c384cd041454fa3",
+      "tempoMapSha256": "49d7c199b363bed768a098156283435e8290b75391f43084f451e9bd1f303ea8",
+      "audioTraces": {
+        "warm": "7930a3002056db1f723698d6854e1be5aab614bd4d58d5bb3b7a5059d324fae2",
+        "glass": "f41640a0a830b12daeae92128838ff7f519320c76883f2b9046f94a0ec1676b2",
+        "mist": "37ad402c5d36f16b0446438b5b3d1c9020d0233a26fe6545276a7736a7bf32b6"
+      }
+    },
+    {
+      "index": 32,
+      "name": "彩色波形 3",
+      "performanceStyle": "sparse",
+      "inputSha256": "48413d8ecfcf2dc8b283180755d732664ac8e8c0be5f877e4b0e057c652cb610",
+      "imageHash": "f067a4fbb576a0bd69801ebf1ed490d1b65e52b7cdfdd87fbd0a99676ab79c1f",
+      "fullScoreSha256": "143507552ec401c48633cad193a3b223c8b720fef327a1238a0dda91cc58dff0",
+      "scoreHash": "4eb0f0924733b8f6",
+      "mappingFingerprint": "00af90348027d5e6",
+      "imageRhythmFingerprint": "1e16a6dc4cf4fe78",
+      "rhythmFingerprint": "1e16a6dc4cf4fe78",
+      "performanceEventsSha256": "eec7cb36d332bcbdd7304b7759b65da29e368b1e3d3a8c096563117a9622ebad",
+      "regionMapSha256": "d1e3e28617ee4e35d73c33007f60d73c6388376b2ea85acfd3598de18bd843d5",
+      "tempoMapSha256": "8ffad6d3773d2c1e19135a37554a42cf3c7a9bcc5479b0626c4cd7a306d23c34",
+      "audioTraces": {
+        "warm": "62eeae5ec692a4ed50dcd8ea9808cd92309ad95baa1d5e1ea6b05c950c4442d6",
+        "glass": "09cacd0848364220ac776257b01f6616d3eef1de83af99e536fb75574b51dcd4",
+        "mist": "f8639a5dbf8f63f88d4e8fb09a9c1481ada8301879e77752dcdd062c46640d84"
+      }
+    },
+    {
+      "index": 32,
+      "name": "彩色波形 3",
+      "performanceStyle": "continuous",
+      "inputSha256": "48413d8ecfcf2dc8b283180755d732664ac8e8c0be5f877e4b0e057c652cb610",
+      "imageHash": "f067a4fbb576a0bd69801ebf1ed490d1b65e52b7cdfdd87fbd0a99676ab79c1f",
+      "fullScoreSha256": "3787815f4beabfa0e627e536323fdb214f708ae00aea8836fafabcaad839fede",
+      "scoreHash": "4eb0f0924733b8f6",
+      "mappingFingerprint": "00af90348027d5e6",
+      "imageRhythmFingerprint": "1e16a6dc4cf4fe78",
+      "rhythmFingerprint": "1e16a6dc4cf4fe78",
+      "performanceEventsSha256": "eec7cb36d332bcbdd7304b7759b65da29e368b1e3d3a8c096563117a9622ebad",
+      "regionMapSha256": "d1e3e28617ee4e35d73c33007f60d73c6388376b2ea85acfd3598de18bd843d5",
+      "tempoMapSha256": "8ffad6d3773d2c1e19135a37554a42cf3c7a9bcc5479b0626c4cd7a306d23c34",
+      "audioTraces": {
+        "warm": "62eeae5ec692a4ed50dcd8ea9808cd92309ad95baa1d5e1ea6b05c950c4442d6",
+        "glass": "09cacd0848364220ac776257b01f6616d3eef1de83af99e536fb75574b51dcd4",
+        "mist": "f8639a5dbf8f63f88d4e8fb09a9c1481ada8301879e77752dcdd062c46640d84"
+      }
+    },
+    {
+      "index": 33,
+      "name": "彩色波形 4",
+      "performanceStyle": "sparse",
+      "inputSha256": "135547ffe44380e1c8a6589479dd6a7abb9b1cec683c21cb1fd600ca563e057e",
+      "imageHash": "5d68081df730dacb8e17341536b7f7270eed979141a0940198094d3d03106bd9",
+      "fullScoreSha256": "597cc84dbf2088f3e8049ac8a475a08a5c33bf563c42472ff097f659af91e39f",
+      "scoreHash": "3c92d571d42da09d",
+      "mappingFingerprint": "d38eb32dbe0adfdd",
+      "imageRhythmFingerprint": "1f482f405d358488",
+      "rhythmFingerprint": "1f482f405d358488",
+      "performanceEventsSha256": "7e7488d860506604de3e530037d5c47c7aa0c846d24403620707835ff19a0296",
+      "regionMapSha256": "e3e59382ee5cfcbe295d48912961211ff0ea16103ba96454147a98ab6c6298e1",
+      "tempoMapSha256": "64fabfaf679f965705ca85f78a437e643dfc537e8553da89f23923828139ec12",
+      "audioTraces": {
+        "warm": "94555ae5bc9277096886d13dd138d55361a1298958e75fbc64682f595dccb24f",
+        "glass": "dbd8e926754f26e3922293c3f695143b48fbd5ddcf9eba0ede8179e92d4cb156",
+        "mist": "657cc982f023f5278c6e8593f1a4f727b813c9f66599721769a4122927410d49"
+      }
+    },
+    {
+      "index": 33,
+      "name": "彩色波形 4",
+      "performanceStyle": "continuous",
+      "inputSha256": "135547ffe44380e1c8a6589479dd6a7abb9b1cec683c21cb1fd600ca563e057e",
+      "imageHash": "5d68081df730dacb8e17341536b7f7270eed979141a0940198094d3d03106bd9",
+      "fullScoreSha256": "f7e02926f59533978235acdb24fee35be7a267cdee86546eb4c5b2d88e21fd29",
+      "scoreHash": "3c92d571d42da09d",
+      "mappingFingerprint": "d38eb32dbe0adfdd",
+      "imageRhythmFingerprint": "1f482f405d358488",
+      "rhythmFingerprint": "1f482f405d358488",
+      "performanceEventsSha256": "7e7488d860506604de3e530037d5c47c7aa0c846d24403620707835ff19a0296",
+      "regionMapSha256": "e3e59382ee5cfcbe295d48912961211ff0ea16103ba96454147a98ab6c6298e1",
+      "tempoMapSha256": "64fabfaf679f965705ca85f78a437e643dfc537e8553da89f23923828139ec12",
+      "audioTraces": {
+        "warm": "94555ae5bc9277096886d13dd138d55361a1298958e75fbc64682f595dccb24f",
+        "glass": "dbd8e926754f26e3922293c3f695143b48fbd5ddcf9eba0ede8179e92d4cb156",
+        "mist": "657cc982f023f5278c6e8593f1a4f727b813c9f66599721769a4122927410d49"
+      }
+    },
+    {
+      "index": 34,
+      "name": "彩色波形 5",
+      "performanceStyle": "sparse",
+      "inputSha256": "d7566773beb7a1e98c2348db9af225bff519aa1c3fab82bbec4678c2c9498773",
+      "imageHash": "f5d3679349f02ad125758eef89df71b554320737c5fe1e33ff0621373d76abfb",
+      "fullScoreSha256": "833b8413b49f6835384f755ec7ee7504fc9220fec5da35ffdbdc10a7aeb0615b",
+      "scoreHash": "a4fe650b49a3342f",
+      "mappingFingerprint": "74563511b6989db3",
+      "imageRhythmFingerprint": "aa89f3c54659c305",
+      "rhythmFingerprint": "aa89f3c54659c305",
+      "performanceEventsSha256": "7bace8396f53a1dc4228aaed9031158c3865927b5736602d6b74b4833fe1882d",
+      "regionMapSha256": "f03f49fab635bbdd72ed62648ab9b2e952af60b65df7d6089a530aca7c07eaa6",
+      "tempoMapSha256": "55f4d66b464fe1b58c4c13586298eeb052eaef2828699394d793b855e406345b",
+      "audioTraces": {
+        "warm": "2d32685a28c54294ed57bf4619b331955cb9707840839d16cef00b8e066e3dcc",
+        "glass": "9bfd2f634db89d51cac910151e4f61bf3995e4e7d6a2a67e962a0e2f57c9603a",
+        "mist": "8a3f78a27905ff8fda06d9e04eedf667442702ffbe60dd8ee0d4135dda0ae4bc"
+      }
+    },
+    {
+      "index": 34,
+      "name": "彩色波形 5",
+      "performanceStyle": "continuous",
+      "inputSha256": "d7566773beb7a1e98c2348db9af225bff519aa1c3fab82bbec4678c2c9498773",
+      "imageHash": "f5d3679349f02ad125758eef89df71b554320737c5fe1e33ff0621373d76abfb",
+      "fullScoreSha256": "e4c8922067b3de4bbb8bdf6d9e008175bc6e0235fe6b5bf09107b35ead43e277",
+      "scoreHash": "a4fe650b49a3342f",
+      "mappingFingerprint": "74563511b6989db3",
+      "imageRhythmFingerprint": "aa89f3c54659c305",
+      "rhythmFingerprint": "aa89f3c54659c305",
+      "performanceEventsSha256": "7bace8396f53a1dc4228aaed9031158c3865927b5736602d6b74b4833fe1882d",
+      "regionMapSha256": "f03f49fab635bbdd72ed62648ab9b2e952af60b65df7d6089a530aca7c07eaa6",
+      "tempoMapSha256": "55f4d66b464fe1b58c4c13586298eeb052eaef2828699394d793b855e406345b",
+      "audioTraces": {
+        "warm": "2d32685a28c54294ed57bf4619b331955cb9707840839d16cef00b8e066e3dcc",
+        "glass": "9bfd2f634db89d51cac910151e4f61bf3995e4e7d6a2a67e962a0e2f57c9603a",
+        "mist": "8a3f78a27905ff8fda06d9e04eedf667442702ffbe60dd8ee0d4135dda0ae4bc"
+      }
+    },
+    {
+      "index": 35,
+      "name": "彩色波形 6",
+      "performanceStyle": "sparse",
+      "inputSha256": "d155d961190df815ab64f34ffb6043bcfc9c038794f27c68d45fe22a9abb507d",
+      "imageHash": "3adfde493cba54df28ec1ea99ecf229b96e277ed4f1df595bf72419918e42f45",
+      "fullScoreSha256": "9676a67b82d1a061b1c3ed48d16bb9a328a1284186d47d69e1d2486a937c1c9d",
+      "scoreHash": "b95c4e964eb5e6a0",
+      "mappingFingerprint": "270ac44c260942f8",
+      "imageRhythmFingerprint": "623de4089be99814",
+      "rhythmFingerprint": "623de4089be99814",
+      "performanceEventsSha256": "785c7e0c03c7d8b3ae9b9932463f3d8d77fcf27dc8597d17ff0469aa1fdaeaa5",
+      "regionMapSha256": "5cf5bc9997753c819e4627f82838bdb81776d969932d6659fcccfb32c966cc55",
+      "tempoMapSha256": "febddcfcc214731b4594265eae43517c3945b2db307bfa3ae3e87a12ea9367e8",
+      "audioTraces": {
+        "warm": "8f663430ee03e0ca1ae7d95c898ec49cf2631c366fb3e724b0433cc56b257857",
+        "glass": "78b4d27d06e8519b630b228d2b9644b9eff1582c44273373be731b56129586fa",
+        "mist": "5123ce4aeb029cf02f5410f0f29f0bc289e40bfb548052e6ed405bed1083739e"
+      }
+    },
+    {
+      "index": 35,
+      "name": "彩色波形 6",
+      "performanceStyle": "continuous",
+      "inputSha256": "d155d961190df815ab64f34ffb6043bcfc9c038794f27c68d45fe22a9abb507d",
+      "imageHash": "3adfde493cba54df28ec1ea99ecf229b96e277ed4f1df595bf72419918e42f45",
+      "fullScoreSha256": "c370d2b0761027328c19e0ae4da076c6dd541b2f7aeea9fc315e74bb410da6dd",
+      "scoreHash": "b95c4e964eb5e6a0",
+      "mappingFingerprint": "270ac44c260942f8",
+      "imageRhythmFingerprint": "623de4089be99814",
+      "rhythmFingerprint": "623de4089be99814",
+      "performanceEventsSha256": "785c7e0c03c7d8b3ae9b9932463f3d8d77fcf27dc8597d17ff0469aa1fdaeaa5",
+      "regionMapSha256": "5cf5bc9997753c819e4627f82838bdb81776d969932d6659fcccfb32c966cc55",
+      "tempoMapSha256": "febddcfcc214731b4594265eae43517c3945b2db307bfa3ae3e87a12ea9367e8",
+      "audioTraces": {
+        "warm": "8f663430ee03e0ca1ae7d95c898ec49cf2631c366fb3e724b0433cc56b257857",
+        "glass": "78b4d27d06e8519b630b228d2b9644b9eff1582c44273373be731b56129586fa",
+        "mist": "5123ce4aeb029cf02f5410f0f29f0bc289e40bfb548052e6ed405bed1083739e"
+      }
+    },
+    {
+      "index": 36,
+      "name": "几何圆形 1",
+      "performanceStyle": "sparse",
+      "inputSha256": "66ff517b265b7d84e66ad7c6dd79bc07cd2d68303333f6987b7b5738de8606db",
+      "imageHash": "691140fd1ecc8d7bb5ed286532f4a0df154bef09c8be9ec14e518b7510dbe301",
+      "fullScoreSha256": "c45e8b875dec6de3e73968921447352623c764bc0dcf521739d6718531e0a1f7",
+      "scoreHash": "5d36a0c035fbe94e",
+      "mappingFingerprint": "8e97c5947de75938",
+      "imageRhythmFingerprint": "ce70accd64880d67",
+      "rhythmFingerprint": "33a1e34e0ef9f8de",
+      "performanceEventsSha256": "f8e3906c221092512109ac01fa3b8732a791c0a8df5c7bd36d678a02420f4cb0",
+      "regionMapSha256": "51f57b4260314acda647b6626986973952a15bcd6e5a2bd5614363b81a75cd99",
+      "tempoMapSha256": "e7359758c0e92b62e6529efae02e0d58ffe8e2c00f25910ef5df20250115741d",
+      "audioTraces": {
+        "warm": "4fd51deb8641778419d279c4ae2a3016510d01f6f1d48cd9fa4faf8ea304ce5b",
+        "glass": "b86df3fc7305526d603828bcbfdb5dc176633071b4994cd2cf2cfb0d3b4b16e2",
+        "mist": "5741da0f884c7cef6fa61111269f1c62ba331996ba97629832fba212254a88f6"
+      }
+    },
+    {
+      "index": 36,
+      "name": "几何圆形 1",
+      "performanceStyle": "continuous",
+      "inputSha256": "66ff517b265b7d84e66ad7c6dd79bc07cd2d68303333f6987b7b5738de8606db",
+      "imageHash": "691140fd1ecc8d7bb5ed286532f4a0df154bef09c8be9ec14e518b7510dbe301",
+      "fullScoreSha256": "a6da92595b2b6d655328599861a8e8a555c90d3a6552f91602205acd9f4dc4d2",
+      "scoreHash": "866df20a9c521a02",
+      "mappingFingerprint": "af2e1db8cd70e7d8",
+      "imageRhythmFingerprint": "ce70accd64880d67",
+      "rhythmFingerprint": "ce70accd64880d67",
+      "performanceEventsSha256": "b62f0b09c1035ac8dd6547b8312fb26ec138db185746194b2d0cfabf2de95085",
+      "regionMapSha256": "bb1d11497a958999fd8544c5cbdb7d0b9e307adcea2a7dae7566bae0a916d0f2",
+      "tempoMapSha256": "e7359758c0e92b62e6529efae02e0d58ffe8e2c00f25910ef5df20250115741d",
+      "audioTraces": {
+        "warm": "6480010b50a2291fc090f83c79d88f6b7ea35b6532fb25529b2eef652cd6397e",
+        "glass": "f6b37e26291e26f2a9e539dd87131faf5ea63a672420d024755b1ac4487666b1",
+        "mist": "3fd9b6b9d85a4e55095a86bc5190c79ddc81d343966e891f97ea3c438e6f4693"
+      }
+    },
+    {
+      "index": 37,
+      "name": "几何圆形 2",
+      "performanceStyle": "sparse",
+      "inputSha256": "fefb0e8c3856d7ec574e8f9970746b628ba1fed904aec670fc5f90c2b74e653e",
+      "imageHash": "37ec37fde7fb10230e77fd75402bee2f0f153539416fb67930ac7975f6632a01",
+      "fullScoreSha256": "922290a44d3de3f2bace6ca9e257695e4054ca1f4318945f74df758233c9712c",
+      "scoreHash": "2fe2cecfe4fcf3dd",
+      "mappingFingerprint": "994c4fada3c8ed17",
+      "imageRhythmFingerprint": "390b07a960562da3",
+      "rhythmFingerprint": "c2dbdc62e550ab08",
+      "performanceEventsSha256": "9051182ad17271fc41b7ab102ca0c92b934242cc9fdec40d28fad816efa0e1a5",
+      "regionMapSha256": "d8b5dcbf0ac5693544f04c8ea4b042360b664a45f51321793027667c17562bb8",
+      "tempoMapSha256": "11cec8f3e175977cce9c361a2fd60dc43aac6ee37a9b5078418b289c7bd94558",
+      "audioTraces": {
+        "warm": "af52fca8cd96f5269222f9b4e5c732a12cd891df6b4a26461effe3ee319679d3",
+        "glass": "0f581d1a89acac838827a26b95bdefe0078adb5d6f47cd5e637cf97191a91855",
+        "mist": "aabe4fadd7318e6e97419f8442b0cbfa7cee800af3593ee907f18d1bb361f4c0"
+      }
+    },
+    {
+      "index": 37,
+      "name": "几何圆形 2",
+      "performanceStyle": "continuous",
+      "inputSha256": "fefb0e8c3856d7ec574e8f9970746b628ba1fed904aec670fc5f90c2b74e653e",
+      "imageHash": "37ec37fde7fb10230e77fd75402bee2f0f153539416fb67930ac7975f6632a01",
+      "fullScoreSha256": "898de97a5c379ab0f80b24654d0368347d9f0799fb0bb4f4591e9f68d5806d6b",
+      "scoreHash": "fb51604b578f569d",
+      "mappingFingerprint": "0d3995c9a7402cff",
+      "imageRhythmFingerprint": "390b07a960562da3",
+      "rhythmFingerprint": "390b07a960562da3",
+      "performanceEventsSha256": "95459400439c222b17e4f7636ead8c15f1ac38c6cdea568abf756fbce9f0f374",
+      "regionMapSha256": "1ba5118df6e414c8c287e610439abd1fca11bb1f07ebffd6b6062196181f392f",
+      "tempoMapSha256": "11cec8f3e175977cce9c361a2fd60dc43aac6ee37a9b5078418b289c7bd94558",
+      "audioTraces": {
+        "warm": "d1faf4ed06a123034c69a73f35f9ed6a543d528ecc2c4163f37d33c883ca1d9a",
+        "glass": "33563e405b768fd76bb048f54d43b7e3dd0acff48d72c596de80a959d0c01e79",
+        "mist": "bf00dfb3776bbe29fc94ab93da1115cea81a3e2028de028160dd08a2a290eda7"
+      }
+    },
+    {
+      "index": 38,
+      "name": "几何圆形 3",
+      "performanceStyle": "sparse",
+      "inputSha256": "b22e340b305f93582d2e85dd73e5beb723725683614b4f1f5d995d0d3fbbc9c9",
+      "imageHash": "93108df52f1ff60b0c804255eb47e2cfbab0ef41f013b7815c122db5518c8bc1",
+      "fullScoreSha256": "7707028eb94a83f84eb5480d0f0124403bc5cf8040378d8b76042e0e982b2120",
+      "scoreHash": "df8d7d01c9b02dd3",
+      "mappingFingerprint": "0580a5c135b8e8d1",
+      "imageRhythmFingerprint": "d315d3c69b647790",
+      "rhythmFingerprint": "3772c001700923c7",
+      "performanceEventsSha256": "6320688b500f59767e61262d56055217c34b7731d3b77508640cf77d0214c3df",
+      "regionMapSha256": "004f60c45257e5e66b09d6fe0395763fcb5f40186e2f602cf5e07a5a2ff18535",
+      "tempoMapSha256": "b514287476e9177bfaeabd98f57823df2f673c783a321dd728f6ea5f91cbdfbd",
+      "audioTraces": {
+        "warm": "b494b9a61da912ba7a37f0e7ea60e191343c600bf32ef352481e5fd8720e3347",
+        "glass": "7869059dd744d94d556add5de2aa1688eab9617ca20c4652af80acb370be8ba2",
+        "mist": "9aa1057990ceeb7d93a4c05b801366a749af2d20f4c7bc3cdd635a83af9c2bcc"
+      }
+    },
+    {
+      "index": 38,
+      "name": "几何圆形 3",
+      "performanceStyle": "continuous",
+      "inputSha256": "b22e340b305f93582d2e85dd73e5beb723725683614b4f1f5d995d0d3fbbc9c9",
+      "imageHash": "93108df52f1ff60b0c804255eb47e2cfbab0ef41f013b7815c122db5518c8bc1",
+      "fullScoreSha256": "ced9449d020fac6c7a28d8f4f34d1451bf0a8f2deec5c154372cd07c0fd70b2e",
+      "scoreHash": "ca43555ae402a3ec",
+      "mappingFingerprint": "6f58dfd593b0a843",
+      "imageRhythmFingerprint": "d315d3c69b647790",
+      "rhythmFingerprint": "d315d3c69b647790",
+      "performanceEventsSha256": "cef0b667e985e04b0347b6a5821ed4ce1d87cc519d749974ab278451c6bd9b07",
+      "regionMapSha256": "0efd37977d12c48122a4565c5d6e2c2a26554b2ce0690caf92364612c5a739db",
+      "tempoMapSha256": "b514287476e9177bfaeabd98f57823df2f673c783a321dd728f6ea5f91cbdfbd",
+      "audioTraces": {
+        "warm": "1ccfaf28bf1aed196a75a7e5bee1a1686d641415b5be7561797d5ea257e61b61",
+        "glass": "8ef04b98de550519831383f75f3e73f966e6ca0ea3f7cac41d10d2e82b8e17e5",
+        "mist": "9b2ceaf476e2c14230c6da4ba03abe635ab4dce60f15613dec3b6687c4b4a025"
+      }
+    },
+    {
+      "index": 39,
+      "name": "几何圆形 4",
+      "performanceStyle": "sparse",
+      "inputSha256": "00e50e73ea9ef1b19c9785fe842f6ad0156788a21d0df39eb7d3f8b0c063d602",
+      "imageHash": "6f0b743516b20ff34d10f4d5faf9c96fa6aa2d61b186f1c968412975b52d9e81",
+      "fullScoreSha256": "e06c02b56cf1d5bd5b316185f98c9e25ccf5a1f65aad09f634582c221703f0c0",
+      "scoreHash": "12ae11559d4c0493",
+      "mappingFingerprint": "351c1703d3d399e7",
+      "imageRhythmFingerprint": "51e4729abb4ebd9a",
+      "rhythmFingerprint": "51e4729abb4ebd9a",
+      "performanceEventsSha256": "85511b96451e1d831a66badc1d895bc4b1f4653f091539bbbbd866d950aa90db",
+      "regionMapSha256": "c76a32ffe345808fd35cded849ada6a26cbfcd642fec21949068da8013076245",
+      "tempoMapSha256": "f91095370204b4f00e642e281c77c432056f5e2babb54b1d2aa1ffee9f40fff2",
+      "audioTraces": {
+        "warm": "cfc6861751423abce12a85f949e2ff6750acbfc0c25674412e58b250dc7766ea",
+        "glass": "bdf6f831e1ccfa9cc983173e0c00b52f23ff9085d58c14bd2c38c6961561fc57",
+        "mist": "26a1f0fd06f8b1c1bf432cf28571b1846e1135dd1657e1509b8e8d7f989e1517"
+      }
+    },
+    {
+      "index": 39,
+      "name": "几何圆形 4",
+      "performanceStyle": "continuous",
+      "inputSha256": "00e50e73ea9ef1b19c9785fe842f6ad0156788a21d0df39eb7d3f8b0c063d602",
+      "imageHash": "6f0b743516b20ff34d10f4d5faf9c96fa6aa2d61b186f1c968412975b52d9e81",
+      "fullScoreSha256": "156ed2a67f0e08d0ac16b43c3f664eba089470fa2091236b7e3ab3b2035af4cb",
+      "scoreHash": "12ae11559d4c0493",
+      "mappingFingerprint": "351c1703d3d399e7",
+      "imageRhythmFingerprint": "51e4729abb4ebd9a",
+      "rhythmFingerprint": "51e4729abb4ebd9a",
+      "performanceEventsSha256": "85511b96451e1d831a66badc1d895bc4b1f4653f091539bbbbd866d950aa90db",
+      "regionMapSha256": "c76a32ffe345808fd35cded849ada6a26cbfcd642fec21949068da8013076245",
+      "tempoMapSha256": "f91095370204b4f00e642e281c77c432056f5e2babb54b1d2aa1ffee9f40fff2",
+      "audioTraces": {
+        "warm": "cfc6861751423abce12a85f949e2ff6750acbfc0c25674412e58b250dc7766ea",
+        "glass": "bdf6f831e1ccfa9cc983173e0c00b52f23ff9085d58c14bd2c38c6961561fc57",
+        "mist": "26a1f0fd06f8b1c1bf432cf28571b1846e1135dd1657e1509b8e8d7f989e1517"
+      }
+    },
+    {
+      "index": 40,
+      "name": "几何圆形 5",
+      "performanceStyle": "sparse",
+      "inputSha256": "b0c59e728113226c6d37021d1515597f4427a7c1aa10ed9363137dad316e4e13",
+      "imageHash": "a18fbd9519bc2453fc91d64508ab773fdd75c811ef54bcf9b7c0ae35881b6541",
+      "fullScoreSha256": "66ba05e5d6338684d59a1e255cdc369a18923c6d4caf1c797e9cf1610fd69a12",
+      "scoreHash": "23a8b951bb31b179",
+      "mappingFingerprint": "fc6b6ee7af7208cd",
+      "imageRhythmFingerprint": "508b70fbe18061c9",
+      "rhythmFingerprint": "508b70fbe18061c9",
+      "performanceEventsSha256": "8cf565b41ddb1b87b4cf27e87aef408f3db13142e6e460cd204b13cdbee06378",
+      "regionMapSha256": "dbc000ff836f45a3ec0e71da7380982b37213e3f65aab97a06b1bc1db265914b",
+      "tempoMapSha256": "c1fdc3d41b0d756c872408c3a99c6837d6d4774b02167015cd7a8875570b32a8",
+      "audioTraces": {
+        "warm": "23d3839460575450d7d6b070455d1085c3440873c5f0f63654b12bc155645b5d",
+        "glass": "1a90f37d29fdccf8ccf78b78e38f4b7102b585d1781a4f3e107f69e0f2327363",
+        "mist": "9d5434b0764f947b2a5bbb3504a1bd3e5cdb862c6813e0aba8b6ae5ec3c8ff23"
+      }
+    },
+    {
+      "index": 40,
+      "name": "几何圆形 5",
+      "performanceStyle": "continuous",
+      "inputSha256": "b0c59e728113226c6d37021d1515597f4427a7c1aa10ed9363137dad316e4e13",
+      "imageHash": "a18fbd9519bc2453fc91d64508ab773fdd75c811ef54bcf9b7c0ae35881b6541",
+      "fullScoreSha256": "6a86462bf54b1048411009419d8749e3461f0f229cabddfc7eb4ce73889afe83",
+      "scoreHash": "23a8b951bb31b179",
+      "mappingFingerprint": "fc6b6ee7af7208cd",
+      "imageRhythmFingerprint": "508b70fbe18061c9",
+      "rhythmFingerprint": "508b70fbe18061c9",
+      "performanceEventsSha256": "8cf565b41ddb1b87b4cf27e87aef408f3db13142e6e460cd204b13cdbee06378",
+      "regionMapSha256": "dbc000ff836f45a3ec0e71da7380982b37213e3f65aab97a06b1bc1db265914b",
+      "tempoMapSha256": "c1fdc3d41b0d756c872408c3a99c6837d6d4774b02167015cd7a8875570b32a8",
+      "audioTraces": {
+        "warm": "23d3839460575450d7d6b070455d1085c3440873c5f0f63654b12bc155645b5d",
+        "glass": "1a90f37d29fdccf8ccf78b78e38f4b7102b585d1781a4f3e107f69e0f2327363",
+        "mist": "9d5434b0764f947b2a5bbb3504a1bd3e5cdb862c6813e0aba8b6ae5ec3c8ff23"
+      }
+    },
+    {
+      "index": 41,
+      "name": "几何圆形 6",
+      "performanceStyle": "sparse",
+      "inputSha256": "ffdfc274f15abf375992fe3a4b272fb90cbf80acb4860993cef736a50caf339c",
+      "imageHash": "1dfa671d712debfbb9ab944515e7d27fef6917496b0c3f01cee3fef5c6097181",
+      "fullScoreSha256": "052af7da3ebb75986e1bbfd5f5202aa9d7a1ce94f18917538ad5773b49dd0b22",
+      "scoreHash": "3d00bdd6c7087cc0",
+      "mappingFingerprint": "183608d167fe333f",
+      "imageRhythmFingerprint": "9cc3f5cdb07d2be3",
+      "rhythmFingerprint": "9cc3f5cdb07d2be3",
+      "performanceEventsSha256": "ad34897e00445a55455309eb967d9589791e77386a5a5fabe7442b784cb8072e",
+      "regionMapSha256": "ce11a6f55fbb936b80fbbd3da1971f44062fd1cb7bf8e193fe52f9bf491bdfe9",
+      "tempoMapSha256": "462e3f4c86dcf5ae7c02db865efd1ee43b97dbcc204674dfe5d153a7c743ad92",
+      "audioTraces": {
+        "warm": "ea355f8611e22b372d8f23a2f61068dc42d5683a6109821c00f0df7270636c1f",
+        "glass": "c160d523a2bd07e366c4a3b9f4a34051e5440bf48ebdf7bbbe3d33885da214ec",
+        "mist": "fdbff3392ec6befd893182ce79dac74a41647432ddbf2b61b181fe35034d7b27"
+      }
+    },
+    {
+      "index": 41,
+      "name": "几何圆形 6",
+      "performanceStyle": "continuous",
+      "inputSha256": "ffdfc274f15abf375992fe3a4b272fb90cbf80acb4860993cef736a50caf339c",
+      "imageHash": "1dfa671d712debfbb9ab944515e7d27fef6917496b0c3f01cee3fef5c6097181",
+      "fullScoreSha256": "13a8e45f4441aa2d4fb69474cba197fd636501b182636b9178b4013dfca96a77",
+      "scoreHash": "3d00bdd6c7087cc0",
+      "mappingFingerprint": "183608d167fe333f",
+      "imageRhythmFingerprint": "9cc3f5cdb07d2be3",
+      "rhythmFingerprint": "9cc3f5cdb07d2be3",
+      "performanceEventsSha256": "ad34897e00445a55455309eb967d9589791e77386a5a5fabe7442b784cb8072e",
+      "regionMapSha256": "ce11a6f55fbb936b80fbbd3da1971f44062fd1cb7bf8e193fe52f9bf491bdfe9",
+      "tempoMapSha256": "462e3f4c86dcf5ae7c02db865efd1ee43b97dbcc204674dfe5d153a7c743ad92",
+      "audioTraces": {
+        "warm": "ea355f8611e22b372d8f23a2f61068dc42d5683a6109821c00f0df7270636c1f",
+        "glass": "c160d523a2bd07e366c4a3b9f4a34051e5440bf48ebdf7bbbe3d33885da214ec",
+        "mist": "fdbff3392ec6befd893182ce79dac74a41647432ddbf2b61b181fe35034d7b27"
+      }
+    },
+    {
+      "index": 42,
+      "name": "空间块面 1",
+      "performanceStyle": "sparse",
+      "inputSha256": "bb7e12f72cdaeac4215fee1b4cd6f68851451fe448d8b5e8be58f7235568153c",
+      "imageHash": "0a2007c5fdffc26bf088c9359300632fec9136b1bce99f61b201bfb5a8a942c1",
+      "fullScoreSha256": "a09473d25eaf64b22153af7a1f60c40f41e62a11baafe361d9f1ef1b8858fa58",
+      "scoreHash": "b987902719b735cf",
+      "mappingFingerprint": "e7183ad8f7a92b20",
+      "imageRhythmFingerprint": "cd32d495b6a41e7f",
+      "rhythmFingerprint": "cd32d495b6a41e7f",
+      "performanceEventsSha256": "696a46fba70d950a0d673d6dd083781fd822894790ece08e2a3d2149cc7f3ba4",
+      "regionMapSha256": "f3ae795f66553ca6d59b739eee83eac89c523abc2819f0d73755ae7da27a88ad",
+      "tempoMapSha256": "38f4182b135b3a3d1bce3566462ba1e8698335e0d828a80aab13e2cc4f23b4d5",
+      "audioTraces": {
+        "warm": "f036a1f0d16c52215e5170122d42d7598d8555ef6d61c9ceecb88aa5910bfe8b",
+        "glass": "074c43f3ed6f6db57dd94cd43e852673f325557628c36fa8f8ef192fdb6e1eb3",
+        "mist": "6b6934c12ce98a786063b16552e8e33c92ded72b506bf37834c8564df8394d18"
+      }
+    },
+    {
+      "index": 42,
+      "name": "空间块面 1",
+      "performanceStyle": "continuous",
+      "inputSha256": "bb7e12f72cdaeac4215fee1b4cd6f68851451fe448d8b5e8be58f7235568153c",
+      "imageHash": "0a2007c5fdffc26bf088c9359300632fec9136b1bce99f61b201bfb5a8a942c1",
+      "fullScoreSha256": "099ebda1a004bbc1146645ec4df8f58b49c4b6a4afaeb72ea4d3237b3b2656c8",
+      "scoreHash": "b987902719b735cf",
+      "mappingFingerprint": "e7183ad8f7a92b20",
+      "imageRhythmFingerprint": "cd32d495b6a41e7f",
+      "rhythmFingerprint": "cd32d495b6a41e7f",
+      "performanceEventsSha256": "696a46fba70d950a0d673d6dd083781fd822894790ece08e2a3d2149cc7f3ba4",
+      "regionMapSha256": "f3ae795f66553ca6d59b739eee83eac89c523abc2819f0d73755ae7da27a88ad",
+      "tempoMapSha256": "38f4182b135b3a3d1bce3566462ba1e8698335e0d828a80aab13e2cc4f23b4d5",
+      "audioTraces": {
+        "warm": "f036a1f0d16c52215e5170122d42d7598d8555ef6d61c9ceecb88aa5910bfe8b",
+        "glass": "074c43f3ed6f6db57dd94cd43e852673f325557628c36fa8f8ef192fdb6e1eb3",
+        "mist": "6b6934c12ce98a786063b16552e8e33c92ded72b506bf37834c8564df8394d18"
+      }
+    },
+    {
+      "index": 43,
+      "name": "空间块面 2",
+      "performanceStyle": "sparse",
+      "inputSha256": "915768710354f7f5c99f319ee946fd2c94f4d53ef94f496242b48fb15885ec90",
+      "imageHash": "e4b5170a6a70cf84773f8836d554ec185517dcbef8849f96814ddb86ab1bbf26",
+      "fullScoreSha256": "418111ad5631b9546376ac4360cc8e57a3ef1adabf43a0e8af98e92f7c229391",
+      "scoreHash": "efa8d2d9e7853ccb",
+      "mappingFingerprint": "ed6061a6b67c4b9e",
+      "imageRhythmFingerprint": "0261d0849b973742",
+      "rhythmFingerprint": "0261d0849b973742",
+      "performanceEventsSha256": "26eb7917a0e28a0998f78b1b92d37c26d535e9ea765a5477baf35cdddd274409",
+      "regionMapSha256": "ad2d8c43a225afb193a724b1e735b0628cdfa4e9248ba7c2fa8b00e812251c9f",
+      "tempoMapSha256": "38f4182b135b3a3d1bce3566462ba1e8698335e0d828a80aab13e2cc4f23b4d5",
+      "audioTraces": {
+        "warm": "451a896aadfbd23273977a2d58cac90786a848ca3400ac93cffc39b234d7d3c0",
+        "glass": "cdc1687f1c5494daebe1cbe7235996b027013e8a47162a024b25d157d7b48671",
+        "mist": "9c1d7271d3dd76b25670748d27c20358e0fc95143800169897ad59693b4dc6dc"
+      }
+    },
+    {
+      "index": 43,
+      "name": "空间块面 2",
+      "performanceStyle": "continuous",
+      "inputSha256": "915768710354f7f5c99f319ee946fd2c94f4d53ef94f496242b48fb15885ec90",
+      "imageHash": "e4b5170a6a70cf84773f8836d554ec185517dcbef8849f96814ddb86ab1bbf26",
+      "fullScoreSha256": "ecca1d9b36371dfc03166dbdf91d2cb089bc5f1a0cc8da59e6f7f2449a2f415d",
+      "scoreHash": "efa8d2d9e7853ccb",
+      "mappingFingerprint": "ed6061a6b67c4b9e",
+      "imageRhythmFingerprint": "0261d0849b973742",
+      "rhythmFingerprint": "0261d0849b973742",
+      "performanceEventsSha256": "26eb7917a0e28a0998f78b1b92d37c26d535e9ea765a5477baf35cdddd274409",
+      "regionMapSha256": "ad2d8c43a225afb193a724b1e735b0628cdfa4e9248ba7c2fa8b00e812251c9f",
+      "tempoMapSha256": "38f4182b135b3a3d1bce3566462ba1e8698335e0d828a80aab13e2cc4f23b4d5",
+      "audioTraces": {
+        "warm": "451a896aadfbd23273977a2d58cac90786a848ca3400ac93cffc39b234d7d3c0",
+        "glass": "cdc1687f1c5494daebe1cbe7235996b027013e8a47162a024b25d157d7b48671",
+        "mist": "9c1d7271d3dd76b25670748d27c20358e0fc95143800169897ad59693b4dc6dc"
+      }
+    },
+    {
+      "index": 44,
+      "name": "空间块面 3",
+      "performanceStyle": "sparse",
+      "inputSha256": "d32a1e090664e84dd25a912975e00531714c3c1e7aceab3e5abcb2f88a1deaf6",
+      "imageHash": "4c283465f260ae6b79475595b1ece12faf5800114553fce1d5e98e55012770c1",
+      "fullScoreSha256": "fbca297be94f376ef59723873ea36a6776fb0a737ec12ffe68802a5cdc6d86fe",
+      "scoreHash": "b484e1d4ff7de480",
+      "mappingFingerprint": "7416400f6291d65d",
+      "imageRhythmFingerprint": "84e615afc4f032c9",
+      "rhythmFingerprint": "84e615afc4f032c9",
+      "performanceEventsSha256": "b64766269afe18deb307dbff2e0a81663bf0b2dc9bd0555944287ebc9fb07203",
+      "regionMapSha256": "4531fc2fd2ad3a30ba372ac15a0068cef9d8a41af5e0a13cb9f792766124a20b",
+      "tempoMapSha256": "38f4182b135b3a3d1bce3566462ba1e8698335e0d828a80aab13e2cc4f23b4d5",
+      "audioTraces": {
+        "warm": "09fef00a8f6f0b93ba258ba45b7e3c5649f1bf072fb86c70480114d4860862db",
+        "glass": "9e745fecb04471447e21e8b9a33a75741423d04a44f29cb21abffe3bfd96f98b",
+        "mist": "1d02bf8048244993b2101abd8943ec7e27ef21f43f37e5640cc48e4328e98889"
+      }
+    },
+    {
+      "index": 44,
+      "name": "空间块面 3",
+      "performanceStyle": "continuous",
+      "inputSha256": "d32a1e090664e84dd25a912975e00531714c3c1e7aceab3e5abcb2f88a1deaf6",
+      "imageHash": "4c283465f260ae6b79475595b1ece12faf5800114553fce1d5e98e55012770c1",
+      "fullScoreSha256": "c1b24ca59bc1a91f05c78b98a310feb01814f8f76d343dbe92b3a4ecedb7b581",
+      "scoreHash": "b484e1d4ff7de480",
+      "mappingFingerprint": "7416400f6291d65d",
+      "imageRhythmFingerprint": "84e615afc4f032c9",
+      "rhythmFingerprint": "84e615afc4f032c9",
+      "performanceEventsSha256": "b64766269afe18deb307dbff2e0a81663bf0b2dc9bd0555944287ebc9fb07203",
+      "regionMapSha256": "4531fc2fd2ad3a30ba372ac15a0068cef9d8a41af5e0a13cb9f792766124a20b",
+      "tempoMapSha256": "38f4182b135b3a3d1bce3566462ba1e8698335e0d828a80aab13e2cc4f23b4d5",
+      "audioTraces": {
+        "warm": "09fef00a8f6f0b93ba258ba45b7e3c5649f1bf072fb86c70480114d4860862db",
+        "glass": "9e745fecb04471447e21e8b9a33a75741423d04a44f29cb21abffe3bfd96f98b",
+        "mist": "1d02bf8048244993b2101abd8943ec7e27ef21f43f37e5640cc48e4328e98889"
+      }
+    },
+    {
+      "index": 45,
+      "name": "空间块面 4",
+      "performanceStyle": "sparse",
+      "inputSha256": "7827c21e3398fedc9e7d76a22b9a8d2f136a9dc6a880742f8f505c27b4c565b5",
+      "imageHash": "3f101bf5a7fca10321725495db8e62df2bc47c89217cf0f94d77e56d9ae31281",
+      "fullScoreSha256": "8aa16b6cebdee5db44a9853ced678acea3c146d21de3b54579080a2901fbad17",
+      "scoreHash": "c598d9c2be7e7ffa",
+      "mappingFingerprint": "c3c2a3affe1e9d71",
+      "imageRhythmFingerprint": "560701e9f71d8937",
+      "rhythmFingerprint": "560701e9f71d8937",
+      "performanceEventsSha256": "9e3ba6343a71d83b219ea73f24ea9a829d7ccf593f15d565e049e828910a9c98",
+      "regionMapSha256": "ab80d4a0320ebad7d46146afa9136be7b7b8357abeb504fafda3684c9b2d830b",
+      "tempoMapSha256": "eec72dacf214df61fedaddde62eff86daa970ca6e9ad4dd0cbbd77b1bade58db",
+      "audioTraces": {
+        "warm": "b9c62deb804fe98a0879981188d05d9fce60167633a214fd6392d6b309bac512",
+        "glass": "6a22be47ddffc98b1a20051d470b57c60891330e0d21b146ae34b7b2f7dea099",
+        "mist": "f9665e3b38e67ab97a5342c34d8dd70f5edc44bf9fd5c58503cf6f8776fa9c7e"
+      }
+    },
+    {
+      "index": 45,
+      "name": "空间块面 4",
+      "performanceStyle": "continuous",
+      "inputSha256": "7827c21e3398fedc9e7d76a22b9a8d2f136a9dc6a880742f8f505c27b4c565b5",
+      "imageHash": "3f101bf5a7fca10321725495db8e62df2bc47c89217cf0f94d77e56d9ae31281",
+      "fullScoreSha256": "ececa21e3c277344868651f0d1887ec6cfefb4810bfd881baed9d957badf243b",
+      "scoreHash": "c598d9c2be7e7ffa",
+      "mappingFingerprint": "c3c2a3affe1e9d71",
+      "imageRhythmFingerprint": "560701e9f71d8937",
+      "rhythmFingerprint": "560701e9f71d8937",
+      "performanceEventsSha256": "9e3ba6343a71d83b219ea73f24ea9a829d7ccf593f15d565e049e828910a9c98",
+      "regionMapSha256": "ab80d4a0320ebad7d46146afa9136be7b7b8357abeb504fafda3684c9b2d830b",
+      "tempoMapSha256": "eec72dacf214df61fedaddde62eff86daa970ca6e9ad4dd0cbbd77b1bade58db",
+      "audioTraces": {
+        "warm": "b9c62deb804fe98a0879981188d05d9fce60167633a214fd6392d6b309bac512",
+        "glass": "6a22be47ddffc98b1a20051d470b57c60891330e0d21b146ae34b7b2f7dea099",
+        "mist": "f9665e3b38e67ab97a5342c34d8dd70f5edc44bf9fd5c58503cf6f8776fa9c7e"
+      }
+    },
+    {
+      "index": 46,
+      "name": "空间块面 5",
+      "performanceStyle": "sparse",
+      "inputSha256": "29f576a0832b70547c3456850c38a68011e480aeff9ecdfdf66d12614aeba9d7",
+      "imageHash": "5df54dc507025e6b91d99375ea17752fb9cb47b15f2e1461d3c27235ba3e42c1",
+      "fullScoreSha256": "b96cc72b40fc76c9266a3451fd16207ff043c5c87f76747c9aa525a421555856",
+      "scoreHash": "930baf098efb5085",
+      "mappingFingerprint": "1e11701fa0b5dee9",
+      "imageRhythmFingerprint": "a98a91c983caa879",
+      "rhythmFingerprint": "a98a91c983caa879",
+      "performanceEventsSha256": "5c7a67a375af3f003e58831e5974e3bd694fa13c9d6541288ce0abb9a86a2997",
+      "regionMapSha256": "6cc05cdf1da9d5298ab69a73ba6ed06908b12873b95b15e825da6267d6c0004f",
+      "tempoMapSha256": "da110f017a60bc453f02a87576c79021b3ddd87f802e70a7c9884b08cf759ade",
+      "audioTraces": {
+        "warm": "8c88ca0e3b427595b00979da67f32d5ee953fdcded915716b74a461d49f83977",
+        "glass": "ad254ebd9a9f40c69ff04a367ed21ab5f5d63be1572e112771a97ed09bff2909",
+        "mist": "dd8e8d97742633418e6ba7c4ffcee6306c1c07d52c0c109f2a98ef6866d4148e"
+      }
+    },
+    {
+      "index": 46,
+      "name": "空间块面 5",
+      "performanceStyle": "continuous",
+      "inputSha256": "29f576a0832b70547c3456850c38a68011e480aeff9ecdfdf66d12614aeba9d7",
+      "imageHash": "5df54dc507025e6b91d99375ea17752fb9cb47b15f2e1461d3c27235ba3e42c1",
+      "fullScoreSha256": "dbe09d7d5fc68800568f46c4e782bcdf3fab9d043cc4d5cfd8d50ec0f031bab8",
+      "scoreHash": "930baf098efb5085",
+      "mappingFingerprint": "1e11701fa0b5dee9",
+      "imageRhythmFingerprint": "a98a91c983caa879",
+      "rhythmFingerprint": "a98a91c983caa879",
+      "performanceEventsSha256": "5c7a67a375af3f003e58831e5974e3bd694fa13c9d6541288ce0abb9a86a2997",
+      "regionMapSha256": "6cc05cdf1da9d5298ab69a73ba6ed06908b12873b95b15e825da6267d6c0004f",
+      "tempoMapSha256": "da110f017a60bc453f02a87576c79021b3ddd87f802e70a7c9884b08cf759ade",
+      "audioTraces": {
+        "warm": "8c88ca0e3b427595b00979da67f32d5ee953fdcded915716b74a461d49f83977",
+        "glass": "ad254ebd9a9f40c69ff04a367ed21ab5f5d63be1572e112771a97ed09bff2909",
+        "mist": "dd8e8d97742633418e6ba7c4ffcee6306c1c07d52c0c109f2a98ef6866d4148e"
+      }
+    },
+    {
+      "index": 47,
+      "name": "空间块面 6",
+      "performanceStyle": "sparse",
+      "inputSha256": "0ca853f264552799841204380e91df50da364e1b15166a1c702f9d307626783a",
+      "imageHash": "0f56324dbbe5d8f35eba070d2967511fda8724e155782889d56edb8570cfc981",
+      "fullScoreSha256": "1191faade3d736d34672277d1e628708fd1cc3c3b22085a339c5f118aada1c6c",
+      "scoreHash": "0147e8039a950ac1",
+      "mappingFingerprint": "90394a3116775675",
+      "imageRhythmFingerprint": "3cbee75b027f2fd9",
+      "rhythmFingerprint": "3cbee75b027f2fd9",
+      "performanceEventsSha256": "699403696337737a0ce2aae42e4fbc3e5b7088122c5bb26e0d7fa9041b8477e4",
+      "regionMapSha256": "1e90aea892d495d415a80f21fbce347461e87fa45dc20f594b4123dbeef818a5",
+      "tempoMapSha256": "f9683907bf62aee1fad9586c0abb1b566dd93d32ea17053c16251201f5becc8c",
+      "audioTraces": {
+        "warm": "17eadb920ae375bd3c7d57cf87030ec675998681502860218792d46d5317c751",
+        "glass": "2034475bdf4ad5777ed6dabcd753c05dcead74a36d64a2661022fdb856573c28",
+        "mist": "145c9d05cade8c434c48336b02dfd200820fe514702a543704c223d3e2996061"
+      }
+    },
+    {
+      "index": 47,
+      "name": "空间块面 6",
+      "performanceStyle": "continuous",
+      "inputSha256": "0ca853f264552799841204380e91df50da364e1b15166a1c702f9d307626783a",
+      "imageHash": "0f56324dbbe5d8f35eba070d2967511fda8724e155782889d56edb8570cfc981",
+      "fullScoreSha256": "ec4cecb2c76ee9f4d979bce7961c8db87e18bfc69790f0ac79b1c895885369c5",
+      "scoreHash": "0147e8039a950ac1",
+      "mappingFingerprint": "90394a3116775675",
+      "imageRhythmFingerprint": "3cbee75b027f2fd9",
+      "rhythmFingerprint": "3cbee75b027f2fd9",
+      "performanceEventsSha256": "699403696337737a0ce2aae42e4fbc3e5b7088122c5bb26e0d7fa9041b8477e4",
+      "regionMapSha256": "1e90aea892d495d415a80f21fbce347461e87fa45dc20f594b4123dbeef818a5",
+      "tempoMapSha256": "f9683907bf62aee1fad9586c0abb1b566dd93d32ea17053c16251201f5becc8c",
+      "audioTraces": {
+        "warm": "17eadb920ae375bd3c7d57cf87030ec675998681502860218792d46d5317c751",
+        "glass": "2034475bdf4ad5777ed6dabcd753c05dcead74a36d64a2661022fdb856573c28",
+        "mist": "145c9d05cade8c434c48336b02dfd200820fe514702a543704c223d3e2996061"
+      }
+    },
+    {
+      "index": 48,
+      "name": "放射环形 1",
+      "performanceStyle": "sparse",
+      "inputSha256": "b393bfa745a5893ce13902c2483a19614deedddbad7f9603647edfa56a678b1b",
+      "imageHash": "b1153911b4bd1f939af86879129b8abff039f955bb93f3f9d2e7b791f5fd32c1",
+      "fullScoreSha256": "9911f2d07ea6483b7ddc4275a8f5a4c6668a8c28b1a36990b16109b309a4d578",
+      "scoreHash": "a558381f8e33f5f3",
+      "mappingFingerprint": "c786105da936e6ab",
+      "imageRhythmFingerprint": "4768632585a94edd",
+      "rhythmFingerprint": "4768632585a94edd",
+      "performanceEventsSha256": "c79beb877a6f4442927ff8b9d53771f531017add6f75e8ca1b3892f382a6363c",
+      "regionMapSha256": "643f5a4e3d9b01713c8c407861db46a26b4899447d5bc415cd50a34964f4a68c",
+      "tempoMapSha256": "f85825587ae1e2ab8bfb9a5aab5ceaef27d58d76a24b87dcdb7c96b8dea27381",
+      "audioTraces": {
+        "warm": "f0ca77dc13da589c63d3482be951b549e95e3692beba8aecf430dfbca42a5771",
+        "glass": "97e9f9077b6a2c911320e97a9bdb728ac527cc98aab309e9496201c2ddf4b3ab",
+        "mist": "43f0caff7bb9574a6cc9994bb2499c1020e5270e4bf6efa4452e2ae3c03e1156"
+      }
+    },
+    {
+      "index": 48,
+      "name": "放射环形 1",
+      "performanceStyle": "continuous",
+      "inputSha256": "b393bfa745a5893ce13902c2483a19614deedddbad7f9603647edfa56a678b1b",
+      "imageHash": "b1153911b4bd1f939af86879129b8abff039f955bb93f3f9d2e7b791f5fd32c1",
+      "fullScoreSha256": "e06149e1b53f6c247058962a133cd09a9ec1652cc8834bcd72be9cdc5bfbdfd4",
+      "scoreHash": "a558381f8e33f5f3",
+      "mappingFingerprint": "c786105da936e6ab",
+      "imageRhythmFingerprint": "4768632585a94edd",
+      "rhythmFingerprint": "4768632585a94edd",
+      "performanceEventsSha256": "c79beb877a6f4442927ff8b9d53771f531017add6f75e8ca1b3892f382a6363c",
+      "regionMapSha256": "643f5a4e3d9b01713c8c407861db46a26b4899447d5bc415cd50a34964f4a68c",
+      "tempoMapSha256": "f85825587ae1e2ab8bfb9a5aab5ceaef27d58d76a24b87dcdb7c96b8dea27381",
+      "audioTraces": {
+        "warm": "f0ca77dc13da589c63d3482be951b549e95e3692beba8aecf430dfbca42a5771",
+        "glass": "97e9f9077b6a2c911320e97a9bdb728ac527cc98aab309e9496201c2ddf4b3ab",
+        "mist": "43f0caff7bb9574a6cc9994bb2499c1020e5270e4bf6efa4452e2ae3c03e1156"
+      }
+    },
+    {
+      "index": 49,
+      "name": "放射环形 2",
+      "performanceStyle": "sparse",
+      "inputSha256": "7073eb88e2008ef3b6c9ba2d79f446a7013030d1a66b2999d52e2413555c8633",
+      "imageHash": "668a09fd51dc487b4996b3252561ddcffef4c09191fda3c1324a920db11178a1",
+      "fullScoreSha256": "0ec5bc56c600426cce869bde1133def19509c78fdb96a1dd6ef27178ab16e584",
+      "scoreHash": "a3e400fa3d448ee0",
+      "mappingFingerprint": "e43cfb688e83fc8e",
+      "imageRhythmFingerprint": "945d606dac726d11",
+      "rhythmFingerprint": "945d606dac726d11",
+      "performanceEventsSha256": "ef674cc924b6d08df933369cc8d9ff0dab0ff551b3a2b8dc23ba189620afdb5e",
+      "regionMapSha256": "67c3c7ef2d99e59b7572333edcc5cd9176c98df71789126cdf474d7d3fb1c531",
+      "tempoMapSha256": "69d39b6b2ab94a2ffce45c58834509e23051bdc221bc5e3915279661822fb1c5",
+      "audioTraces": {
+        "warm": "ac411d30fc8574263e8c902131d522e9541f51193d6b98a938def7b095c57577",
+        "glass": "47100ed6d1597cd9e52dd667f40060b58e60491dfaa8c9bbe0064cfdd1373113",
+        "mist": "8a1c553fc63589322b8458c04c72e660556f79bbcb44624e72d304f80d00984f"
+      }
+    },
+    {
+      "index": 49,
+      "name": "放射环形 2",
+      "performanceStyle": "continuous",
+      "inputSha256": "7073eb88e2008ef3b6c9ba2d79f446a7013030d1a66b2999d52e2413555c8633",
+      "imageHash": "668a09fd51dc487b4996b3252561ddcffef4c09191fda3c1324a920db11178a1",
+      "fullScoreSha256": "5a84b4d2362a61684b22d4430f4bf0e7b616ec2519a680f90ce941fd97298719",
+      "scoreHash": "a3e400fa3d448ee0",
+      "mappingFingerprint": "e43cfb688e83fc8e",
+      "imageRhythmFingerprint": "945d606dac726d11",
+      "rhythmFingerprint": "945d606dac726d11",
+      "performanceEventsSha256": "ef674cc924b6d08df933369cc8d9ff0dab0ff551b3a2b8dc23ba189620afdb5e",
+      "regionMapSha256": "67c3c7ef2d99e59b7572333edcc5cd9176c98df71789126cdf474d7d3fb1c531",
+      "tempoMapSha256": "69d39b6b2ab94a2ffce45c58834509e23051bdc221bc5e3915279661822fb1c5",
+      "audioTraces": {
+        "warm": "ac411d30fc8574263e8c902131d522e9541f51193d6b98a938def7b095c57577",
+        "glass": "47100ed6d1597cd9e52dd667f40060b58e60491dfaa8c9bbe0064cfdd1373113",
+        "mist": "8a1c553fc63589322b8458c04c72e660556f79bbcb44624e72d304f80d00984f"
+      }
+    },
+    {
+      "index": 50,
+      "name": "放射环形 3",
+      "performanceStyle": "sparse",
+      "inputSha256": "aeb5a4d11df73bad6e6d44145583cace1e87c3827e97f088339fa6925de938ca",
+      "imageHash": "b91a94c433156bec183646346a0fea3c8b511a7077cd1eb68aea4d746fb6abda",
+      "fullScoreSha256": "6b5a4f84fbeccd0474ad0e7c2e3495efd80dc775bf25cc31a2b50b4cf775c5a3",
+      "scoreHash": "3fbb6c7e19bdab2e",
+      "mappingFingerprint": "8c3bd920137e746c",
+      "imageRhythmFingerprint": "d50ed8fd19b200e3",
+      "rhythmFingerprint": "d50ed8fd19b200e3",
+      "performanceEventsSha256": "e06677d3cacd490f004a1d13154af3ae76fa2a815ebb711f497ff8ac7b5ad0a4",
+      "regionMapSha256": "28027a97728ada64c0e4a1f1f6247e5341c63a81edb7e0d370af8606b746a331",
+      "tempoMapSha256": "5ea9b6dbf15bf46d0f7b38c77d44064e94f8ca46c0b1641c7f8702f4e85a9bda",
+      "audioTraces": {
+        "warm": "bfd46da2d1eacb7c89ebb82137e4a66e1b3a8bdaa41b76e5a2ab355cfd6e0bb8",
+        "glass": "23df47ec2345e59afa75318348423881a78b776808e5e1348f6df95de28822d2",
+        "mist": "c0f8a3eb7371827a15304489f9e3a09d62230a139e3fd4e98d5873cbdca45092"
+      }
+    },
+    {
+      "index": 50,
+      "name": "放射环形 3",
+      "performanceStyle": "continuous",
+      "inputSha256": "aeb5a4d11df73bad6e6d44145583cace1e87c3827e97f088339fa6925de938ca",
+      "imageHash": "b91a94c433156bec183646346a0fea3c8b511a7077cd1eb68aea4d746fb6abda",
+      "fullScoreSha256": "7257990fde73a573a0945c07d90bb1d1285edcb29bd09e933125c2dfb0c2a468",
+      "scoreHash": "3fbb6c7e19bdab2e",
+      "mappingFingerprint": "8c3bd920137e746c",
+      "imageRhythmFingerprint": "d50ed8fd19b200e3",
+      "rhythmFingerprint": "d50ed8fd19b200e3",
+      "performanceEventsSha256": "e06677d3cacd490f004a1d13154af3ae76fa2a815ebb711f497ff8ac7b5ad0a4",
+      "regionMapSha256": "28027a97728ada64c0e4a1f1f6247e5341c63a81edb7e0d370af8606b746a331",
+      "tempoMapSha256": "5ea9b6dbf15bf46d0f7b38c77d44064e94f8ca46c0b1641c7f8702f4e85a9bda",
+      "audioTraces": {
+        "warm": "bfd46da2d1eacb7c89ebb82137e4a66e1b3a8bdaa41b76e5a2ab355cfd6e0bb8",
+        "glass": "23df47ec2345e59afa75318348423881a78b776808e5e1348f6df95de28822d2",
+        "mist": "c0f8a3eb7371827a15304489f9e3a09d62230a139e3fd4e98d5873cbdca45092"
+      }
+    },
+    {
+      "index": 51,
+      "name": "放射环形 4",
+      "performanceStyle": "sparse",
+      "inputSha256": "7aad5da90c0cf183f7a32dc7325f558f9f7dd96dc1c5eaf00c85e7a9c6ed4d1d",
+      "imageHash": "9e5ef29dd0e7ecd3891a80256dbdbfaff0c0e1f93bf08559efe2d785178a4241",
+      "fullScoreSha256": "c3a8bb46af4504fd54bbe88d0db808d999006af551ba746cdecb125ab8ac502f",
+      "scoreHash": "9ec263e23160fcc6",
+      "mappingFingerprint": "12285b294857c679",
+      "imageRhythmFingerprint": "ff82e4c2e71013e8",
+      "rhythmFingerprint": "ff82e4c2e71013e8",
+      "performanceEventsSha256": "4cca639d1fc670914c2190281a474ba5c97972accd2849c3908f4568c8c39e54",
+      "regionMapSha256": "c202c205c23a860fac5c452eb23407c9ccea78e54dde7d84870f2df97924dd2f",
+      "tempoMapSha256": "cbc7a1f8cde2ee0ddc2ad92a09816b8487960eead2cc8445d2dbf9e0b49a7c54",
+      "audioTraces": {
+        "warm": "568311989e73cb88639e4121de0f75c2cc9c5c576cd966609248da526cbd789a",
+        "glass": "cfaf1d5b70d49569e38980adebd6673802f546f0cca3fb80386cb8b0ea67b0ad",
+        "mist": "f40368b5ff4c76a693c43949e5343ff391e85c5c9da0d5c81457ca04f9bfd8bf"
+      }
+    },
+    {
+      "index": 51,
+      "name": "放射环形 4",
+      "performanceStyle": "continuous",
+      "inputSha256": "7aad5da90c0cf183f7a32dc7325f558f9f7dd96dc1c5eaf00c85e7a9c6ed4d1d",
+      "imageHash": "9e5ef29dd0e7ecd3891a80256dbdbfaff0c0e1f93bf08559efe2d785178a4241",
+      "fullScoreSha256": "9dc0d3a0e62cf80ea4c8776a536e39b8f5f53b254c988e0c68de776852b2a8b7",
+      "scoreHash": "9ec263e23160fcc6",
+      "mappingFingerprint": "12285b294857c679",
+      "imageRhythmFingerprint": "ff82e4c2e71013e8",
+      "rhythmFingerprint": "ff82e4c2e71013e8",
+      "performanceEventsSha256": "4cca639d1fc670914c2190281a474ba5c97972accd2849c3908f4568c8c39e54",
+      "regionMapSha256": "c202c205c23a860fac5c452eb23407c9ccea78e54dde7d84870f2df97924dd2f",
+      "tempoMapSha256": "cbc7a1f8cde2ee0ddc2ad92a09816b8487960eead2cc8445d2dbf9e0b49a7c54",
+      "audioTraces": {
+        "warm": "568311989e73cb88639e4121de0f75c2cc9c5c576cd966609248da526cbd789a",
+        "glass": "cfaf1d5b70d49569e38980adebd6673802f546f0cca3fb80386cb8b0ea67b0ad",
+        "mist": "f40368b5ff4c76a693c43949e5343ff391e85c5c9da0d5c81457ca04f9bfd8bf"
+      }
+    },
+    {
+      "index": 52,
+      "name": "放射环形 5",
+      "performanceStyle": "sparse",
+      "inputSha256": "d56748e754638c07fa429935e21aa2a06c7d6161113e4c0b88fa38d3735dbee9",
+      "imageHash": "c1bd3da374669fc7b9b3ccaf53972f67c6676d0f8f34e8857a8112af7cbc7171",
+      "fullScoreSha256": "9c42947f89bee52bdb7ba00475b574e7a5c82de7096f437d94cb1119da2fcbc6",
+      "scoreHash": "544f08a8aac9500c",
+      "mappingFingerprint": "0a451eb24177894c",
+      "imageRhythmFingerprint": "c6f7ecf1f44987f3",
+      "rhythmFingerprint": "c6f7ecf1f44987f3",
+      "performanceEventsSha256": "f56f1cb6668a1088390dd9ad52d73c21c176ee0ee9336eae4aabfa89f4efdcaf",
+      "regionMapSha256": "a8f2bcf4fde19de0fa64525e3675b8cac1cbf970c8a89327cb6b333dbd966ffe",
+      "tempoMapSha256": "85cc7fa6db5d38072622934ec18fd9bf6a7eeb1bf7ec2fcd952f18ddc6c4d12e",
+      "audioTraces": {
+        "warm": "d5fb338afc912c1b51de5bc89e351ed20f9515d011d864e5f7a5a98f931cd8b4",
+        "glass": "80fc1209dabbe66ace6e074c78c74d22bb40945f80d03f188fa14497ad42fbf3",
+        "mist": "7d267eddee6644e918130e3b6ead692a8b7ad2b0fc4e6dfe391d6eb876415ac9"
+      }
+    },
+    {
+      "index": 52,
+      "name": "放射环形 5",
+      "performanceStyle": "continuous",
+      "inputSha256": "d56748e754638c07fa429935e21aa2a06c7d6161113e4c0b88fa38d3735dbee9",
+      "imageHash": "c1bd3da374669fc7b9b3ccaf53972f67c6676d0f8f34e8857a8112af7cbc7171",
+      "fullScoreSha256": "824d7e16b4f32670a3e52ffab276e8a061e838898cc0e4a0737b739666b31ab6",
+      "scoreHash": "544f08a8aac9500c",
+      "mappingFingerprint": "0a451eb24177894c",
+      "imageRhythmFingerprint": "c6f7ecf1f44987f3",
+      "rhythmFingerprint": "c6f7ecf1f44987f3",
+      "performanceEventsSha256": "f56f1cb6668a1088390dd9ad52d73c21c176ee0ee9336eae4aabfa89f4efdcaf",
+      "regionMapSha256": "a8f2bcf4fde19de0fa64525e3675b8cac1cbf970c8a89327cb6b333dbd966ffe",
+      "tempoMapSha256": "85cc7fa6db5d38072622934ec18fd9bf6a7eeb1bf7ec2fcd952f18ddc6c4d12e",
+      "audioTraces": {
+        "warm": "d5fb338afc912c1b51de5bc89e351ed20f9515d011d864e5f7a5a98f931cd8b4",
+        "glass": "80fc1209dabbe66ace6e074c78c74d22bb40945f80d03f188fa14497ad42fbf3",
+        "mist": "7d267eddee6644e918130e3b6ead692a8b7ad2b0fc4e6dfe391d6eb876415ac9"
+      }
+    },
+    {
+      "index": 53,
+      "name": "放射环形 6",
+      "performanceStyle": "sparse",
+      "inputSha256": "1ea0e6f174f732bcd38e3f24dca6fe750c5b7a30ae1fb50e95fec3b178592363",
+      "imageHash": "b13d07d38d1cd27d0b5c62534a325ba1a089ca97abd34967cbde7563ab5e837f",
+      "fullScoreSha256": "31a92c8ff5e80708035468bf126263c26090e5d86bfcabbfcb740bd0cb8a208b",
+      "scoreHash": "465f10d33594e2b3",
+      "mappingFingerprint": "db4ca6c53bcf39c5",
+      "imageRhythmFingerprint": "d89965c41a5b5dd2",
+      "rhythmFingerprint": "d89965c41a5b5dd2",
+      "performanceEventsSha256": "0221336ec081824f95fee8fb8ac690e0dbbe4fcb5984ebdaa5acea5a3286220d",
+      "regionMapSha256": "c651cb916a45c9486c4ddc3eb997ddc3a9f4a870645b3f9661701a3890239b74",
+      "tempoMapSha256": "d545ad1d7e7e412a28ffc0d0a0a25c883f0e4fd7049cf35c98f97cbf015fef72",
+      "audioTraces": {
+        "warm": "33bed99ae3af999d8d34e97452fbb0b37d01c045bf9aaac88535354b60160e1a",
+        "glass": "9f9c28dbd50e9b35838c4ce3b9e792f85669d82fdb0d67593684630390a1fb89",
+        "mist": "34b079bcb2d0cdb9e97eb9ce93f7b831c653022cf575ecd7bb815c6571a6282f"
+      }
+    },
+    {
+      "index": 53,
+      "name": "放射环形 6",
+      "performanceStyle": "continuous",
+      "inputSha256": "1ea0e6f174f732bcd38e3f24dca6fe750c5b7a30ae1fb50e95fec3b178592363",
+      "imageHash": "b13d07d38d1cd27d0b5c62534a325ba1a089ca97abd34967cbde7563ab5e837f",
+      "fullScoreSha256": "dea0573e5cec49dcf61ad2d4cf2e6cbf47a0c0dd00f84a7c682e1143d68706aa",
+      "scoreHash": "465f10d33594e2b3",
+      "mappingFingerprint": "db4ca6c53bcf39c5",
+      "imageRhythmFingerprint": "d89965c41a5b5dd2",
+      "rhythmFingerprint": "d89965c41a5b5dd2",
+      "performanceEventsSha256": "0221336ec081824f95fee8fb8ac690e0dbbe4fcb5984ebdaa5acea5a3286220d",
+      "regionMapSha256": "c651cb916a45c9486c4ddc3eb997ddc3a9f4a870645b3f9661701a3890239b74",
+      "tempoMapSha256": "d545ad1d7e7e412a28ffc0d0a0a25c883f0e4fd7049cf35c98f97cbf015fef72",
+      "audioTraces": {
+        "warm": "33bed99ae3af999d8d34e97452fbb0b37d01c045bf9aaac88535354b60160e1a",
+        "glass": "9f9c28dbd50e9b35838c4ce3b9e792f85669d82fdb0d67593684630390a1fb89",
+        "mist": "34b079bcb2d0cdb9e97eb9ce93f7b831c653022cf575ecd7bb815c6571a6282f"
+      }
+    },
+    {
+      "index": 54,
+      "name": "噪声强度 1",
+      "performanceStyle": "sparse",
+      "inputSha256": "8aa579b8a493c69917da3dd56294764ec57e8743dc511a5490268aab3b80794d",
+      "imageHash": "c5fb42584d9d8d645878fa74aabce86c6b3b86c41e96e6a6622566c450fc712a",
+      "fullScoreSha256": "d216c4200a8f4413194d0caa6f973c33b4e756c1886eaf46d5184c116fe13bb4",
+      "scoreHash": "03c565a510ba43c9",
+      "mappingFingerprint": "aaedb55d698a1a1d",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "1cf6d20e0fbe63c2",
+      "performanceEventsSha256": "67d2ab9b3714a677cb1d24e37266ff92df857b03ca8f890348e3a790a7ab8a6a",
+      "regionMapSha256": "5b8593fc1c9cba68b3cd47dcb3fa223b3ef444ea69112e2ffc1df2c9f3caf48b",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "0344111d083da89773c1773da46d6d9c9701e444d719180f599e52b583f3e3e3",
+        "glass": "2bfb0d2f4fdee18934048664683a74717db73311fff3a8f193e038ff865d9e9e",
+        "mist": "a429b8088eee9940cff5fe81e60c73f36ca2f700d998c2116cf69a06f2ccbe29"
+      }
+    },
+    {
+      "index": 54,
+      "name": "噪声强度 1",
+      "performanceStyle": "continuous",
+      "inputSha256": "8aa579b8a493c69917da3dd56294764ec57e8743dc511a5490268aab3b80794d",
+      "imageHash": "c5fb42584d9d8d645878fa74aabce86c6b3b86c41e96e6a6622566c450fc712a",
+      "fullScoreSha256": "6ef2f470e829d7f77b18c56c0418355027fc41af7e4e7714be2df00a2d8fcfb9",
+      "scoreHash": "b8ddc8ae50a2e962",
+      "mappingFingerprint": "019b7d5984894e75",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "performanceEventsSha256": "e6109120792f556a0fa5e41871aa191a06b6caeca08a8058e5a10b04e1f828f4",
+      "regionMapSha256": "6e82b6644cc7d2a17606b27ee3d2091e2f6e30566d04a613284321778845d3d5",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "4141eba73338b9068f5012f3d044a0e090768dbc7eb28aefb21d11710bb2e17f",
+        "glass": "9820cfe33ded5fc5af50d65387d7455f9967781cd7bed0a84bc1e2efca320457",
+        "mist": "3eb988b4db257ea6aadaa6561faf998183e414db52ad9e2acc06c8c82a3208b8"
+      }
+    },
+    {
+      "index": 55,
+      "name": "噪声强度 2",
+      "performanceStyle": "sparse",
+      "inputSha256": "d239dae3ccb2e5925b4968d437541519e90c41c1030c440ed0f406bef00c12b0",
+      "imageHash": "f2c4eedb076b427d4988d913fd2ce7a12bf9ffe7e638ab572626083bf33e65bf",
+      "fullScoreSha256": "6dcbc57711c3c1a93570d78d3776ddfd4d15bc1d80e0e305e8216835cb8196e8",
+      "scoreHash": "ce7f9e61c13a4179",
+      "mappingFingerprint": "36707198a6f6376e",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "1cf6d20e0fbe63c2",
+      "performanceEventsSha256": "20e805cc9e714a87656d9086cd00b2976f0a60d7269aaae64936b574be9780fb",
+      "regionMapSha256": "e11a136745b904e573c7471dbb978dd0bbda48b1b2865b9863e4b2c0026e2972",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "ea06cd30cce3d4b3ad7080637834f89ffc785a4cdb593af2ecfe1f38d347d082",
+        "glass": "02d48e37418c5042f0b35ffffc2ed98fad33779c754cb53272a6f1a7deaa395e",
+        "mist": "0d9b48502258dbf6ecf473cd3078024d944e9a6ed2a7207aca83f335ed6c04b8"
+      }
+    },
+    {
+      "index": 55,
+      "name": "噪声强度 2",
+      "performanceStyle": "continuous",
+      "inputSha256": "d239dae3ccb2e5925b4968d437541519e90c41c1030c440ed0f406bef00c12b0",
+      "imageHash": "f2c4eedb076b427d4988d913fd2ce7a12bf9ffe7e638ab572626083bf33e65bf",
+      "fullScoreSha256": "3b3385f68bc24c648ba45df28132bb01525cd08762a564d3aefd28cc65552391",
+      "scoreHash": "49d02d31570db613",
+      "mappingFingerprint": "a4144d78c3188bfe",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "performanceEventsSha256": "9a82e7eaa84f4590f423d3bf849fa51b27cb50108ecd3c76ea2926f3ad0faede",
+      "regionMapSha256": "9fad1d544a692e9f50d1783c6a1eabef18a7f43957cf4e6940a76f153b3f1aa8",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "2aa5cdfeefae8f256de8a335434d8a876bd881fb6cb584e18d41620a15bd00a3",
+        "glass": "00406a8e38cd1b5ecd4c01c06bb52f02b33347c1e02b4a3a77699dd8ea1260de",
+        "mist": "989d67079708ae54076a6213af3923d4d7f3e6bb9c50fcc2b756d13973fedcd1"
+      }
+    },
+    {
+      "index": 56,
+      "name": "噪声强度 3",
+      "performanceStyle": "sparse",
+      "inputSha256": "314a70330f73dcf5e21eb707f7101aae27fd8e1a5a2fe0ff990c72ba76c42179",
+      "imageHash": "0c08f37522414b57f0436cfd7dfdd6fb722dc989e25a4ccd3c6fbbad7c6f0875",
+      "fullScoreSha256": "c7daa8f6e66df480c91e48052687b5639bfcc6d3c1d294664152b114a1662657",
+      "scoreHash": "e14d8ad143e76639",
+      "mappingFingerprint": "2472a1d6f9bfb488",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "1cf6d20e0fbe63c2",
+      "performanceEventsSha256": "a5796a6dde6b98cc3fea9b32b3b4afc67562ae7055b34a0994c11ecfce4cc6ff",
+      "regionMapSha256": "a4f46a52e990743b9812392d6bf2170a27bbcdb819b225abc69be697ce8680dd",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "0b1695bf61b3387198a77e5a70e6ec396bd0999303a3b9d17cc25731fbc52c6b",
+        "glass": "e88f836241aa4702f9936002aa9552660d096758532269d05fdb50a39fdb3def",
+        "mist": "21aa97f33cfbfe02a20032486ffa87f47b80ac9a62759c80b1278f0c7e9e01d1"
+      }
+    },
+    {
+      "index": 56,
+      "name": "噪声强度 3",
+      "performanceStyle": "continuous",
+      "inputSha256": "314a70330f73dcf5e21eb707f7101aae27fd8e1a5a2fe0ff990c72ba76c42179",
+      "imageHash": "0c08f37522414b57f0436cfd7dfdd6fb722dc989e25a4ccd3c6fbbad7c6f0875",
+      "fullScoreSha256": "e64ac6b7de75443a4577e0d87ca36bc5ce210672b013686d79ab237912652dfd",
+      "scoreHash": "3bdf9c1901c9edeb",
+      "mappingFingerprint": "d0bbd4f259870d78",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "performanceEventsSha256": "c98e5c22618e8e3d0456d9df0dde68054ef527328d0bff55bc4ee90869dae9a3",
+      "regionMapSha256": "ab57eac891e1956fe2a3b024117f3ec9c0e370b8ba2dfccb38daa054e8ac2142",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "99ad4af34e9b615ad1d390209dc39a06cfc1524762b276383dba4f2cd7e3e869",
+        "glass": "d662e8e3160e1fa18e9b44a5e8ba22fa007946b15efd7cd3b0ab2ac45764a689",
+        "mist": "1e716788645a439d8984df57017a5cf141170f1add935847c42282f79058c482"
+      }
+    },
+    {
+      "index": 57,
+      "name": "噪声强度 4",
+      "performanceStyle": "sparse",
+      "inputSha256": "21e72a4e61d3f57bd2a1f58eeb1cf6d6b9009f16371099d4b582ecf8244abaed",
+      "imageHash": "5e801d0ce23b0900d5c23de8198ebdc09c5b0168938247423cf359e021d04196",
+      "fullScoreSha256": "bc37c91185bc936b4853013071668661071ab60ad6c5bf6edc92b64eadeed425",
+      "scoreHash": "6a0b4b6845313fb4",
+      "mappingFingerprint": "b49cc7daf5271f3e",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "performanceEventsSha256": "760d529e6e64ef12938acdae6459ac5b37dd182ea0379b9872164861e2aaaa73",
+      "regionMapSha256": "e95bd8d8975d48aaa64d9e4120a45197535f73e20b0af347cc68c8afc3120dd1",
+      "tempoMapSha256": "eb536347179aba59f047b51d6f5279e45e7ac06783ed0762aaaf88e565d35ecc",
+      "audioTraces": {
+        "warm": "bd63337a4e28ca8a9bd7493b58cc0246dceaba7354d57e7bbad81599205a39c7",
+        "glass": "ae4d56b6bf6e2ea6330470440ff90e6a313ea1cc75a3ba5d4e3291ae81a6b4b6",
+        "mist": "55895defa86ec7890683d0046b8c06bd4def03739e696f2c7849ab8441e2fcb7"
+      }
+    },
+    {
+      "index": 57,
+      "name": "噪声强度 4",
+      "performanceStyle": "continuous",
+      "inputSha256": "21e72a4e61d3f57bd2a1f58eeb1cf6d6b9009f16371099d4b582ecf8244abaed",
+      "imageHash": "5e801d0ce23b0900d5c23de8198ebdc09c5b0168938247423cf359e021d04196",
+      "fullScoreSha256": "0e846c593e78f3d3456d7f33ee87acbd29a4d9dd6e2ab9146f3b282911fbdb80",
+      "scoreHash": "6a0b4b6845313fb4",
+      "mappingFingerprint": "b49cc7daf5271f3e",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "performanceEventsSha256": "760d529e6e64ef12938acdae6459ac5b37dd182ea0379b9872164861e2aaaa73",
+      "regionMapSha256": "e95bd8d8975d48aaa64d9e4120a45197535f73e20b0af347cc68c8afc3120dd1",
+      "tempoMapSha256": "eb536347179aba59f047b51d6f5279e45e7ac06783ed0762aaaf88e565d35ecc",
+      "audioTraces": {
+        "warm": "bd63337a4e28ca8a9bd7493b58cc0246dceaba7354d57e7bbad81599205a39c7",
+        "glass": "ae4d56b6bf6e2ea6330470440ff90e6a313ea1cc75a3ba5d4e3291ae81a6b4b6",
+        "mist": "55895defa86ec7890683d0046b8c06bd4def03739e696f2c7849ab8441e2fcb7"
+      }
+    },
+    {
+      "index": 58,
+      "name": "噪声强度 5",
+      "performanceStyle": "sparse",
+      "inputSha256": "ed17068c62a5d7cff7540d0410a50ffebd676d8111a2cee148cefd51d2960c65",
+      "imageHash": "4ada0933a8d77f79c4eca2d7f201f8a5b0c045bf6120d88b6f622347e392b67b",
+      "fullScoreSha256": "777afd6411b6c6dcf26b84cecac9e80433347e4e138d98c0082fd432b47b5d4b",
+      "scoreHash": "e352f24f99323a2d",
+      "mappingFingerprint": "6fa367771af8fa37",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "performanceEventsSha256": "4410552215ed6939e1fa77d55b0c2b0c619e0f960ac1c7b5bd3cffd523bcfab7",
+      "regionMapSha256": "b0671d8915c062f2940105ded8aab84e93395a52214f142787ba1aba814d8724",
+      "tempoMapSha256": "eb536347179aba59f047b51d6f5279e45e7ac06783ed0762aaaf88e565d35ecc",
+      "audioTraces": {
+        "warm": "9878931c17690f3536f752b696b3fb33258e4e8d1898938242e95601a6ccb2c1",
+        "glass": "b406abbd0c378736905c91abd0201b42a1dcec900722df2ee609553646f0bb8a",
+        "mist": "cc33b32030104f5c7a20593a076e0f044ed3ba2d76592fbce50411386f4bc38e"
+      }
+    },
+    {
+      "index": 58,
+      "name": "噪声强度 5",
+      "performanceStyle": "continuous",
+      "inputSha256": "ed17068c62a5d7cff7540d0410a50ffebd676d8111a2cee148cefd51d2960c65",
+      "imageHash": "4ada0933a8d77f79c4eca2d7f201f8a5b0c045bf6120d88b6f622347e392b67b",
+      "fullScoreSha256": "6f08bd4b5e8e7414ed5d23681b50a308f0996e99479145c3f187b43932fbc64f",
+      "scoreHash": "e352f24f99323a2d",
+      "mappingFingerprint": "6fa367771af8fa37",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "performanceEventsSha256": "4410552215ed6939e1fa77d55b0c2b0c619e0f960ac1c7b5bd3cffd523bcfab7",
+      "regionMapSha256": "b0671d8915c062f2940105ded8aab84e93395a52214f142787ba1aba814d8724",
+      "tempoMapSha256": "eb536347179aba59f047b51d6f5279e45e7ac06783ed0762aaaf88e565d35ecc",
+      "audioTraces": {
+        "warm": "9878931c17690f3536f752b696b3fb33258e4e8d1898938242e95601a6ccb2c1",
+        "glass": "b406abbd0c378736905c91abd0201b42a1dcec900722df2ee609553646f0bb8a",
+        "mist": "cc33b32030104f5c7a20593a076e0f044ed3ba2d76592fbce50411386f4bc38e"
+      }
+    },
+    {
+      "index": 59,
+      "name": "噪声强度 6",
+      "performanceStyle": "sparse",
+      "inputSha256": "9042f76983f4c03e70b3e562424d8f3e9923b2afbe4bdc3ee9a91028deddd4f8",
+      "imageHash": "75e1488ea6c3277c7ba00ebe346a9fe0f8817c0a6f3081c6ce2b1ca694838ace",
+      "fullScoreSha256": "68f9adae4cb030c6e18f8d1a62a85e62878aa427eae59fc3888fe54d97e79266",
+      "scoreHash": "e0dcb2ccf4c90132",
+      "mappingFingerprint": "b977cb06a2947ba8",
+      "imageRhythmFingerprint": "7ee386a5e1c041c5",
+      "rhythmFingerprint": "7ee386a5e1c041c5",
+      "performanceEventsSha256": "95ce3a1b5dfe00fee7b9c91501ccc3931ed2d00180681ed90ed06e4f6038b3bd",
+      "regionMapSha256": "d5e6ce2e7c4bf9be504f25216b6d16560fffbdbd4a707a200793b3ee176b30f3",
+      "tempoMapSha256": "eb536347179aba59f047b51d6f5279e45e7ac06783ed0762aaaf88e565d35ecc",
+      "audioTraces": {
+        "warm": "8041da84e3bd19c4cd9e56afdf559f11a62ff3f59a222b91a5a22f26193abda4",
+        "glass": "8ae8d05a136a33eabe19371d4244e212b134e5c17de2dfbc0f36901431bb2091",
+        "mist": "fa43e343f8cf3ee11328cdeb6107288d977146f32dae3320861c9b229b2996aa"
+      }
+    },
+    {
+      "index": 59,
+      "name": "噪声强度 6",
+      "performanceStyle": "continuous",
+      "inputSha256": "9042f76983f4c03e70b3e562424d8f3e9923b2afbe4bdc3ee9a91028deddd4f8",
+      "imageHash": "75e1488ea6c3277c7ba00ebe346a9fe0f8817c0a6f3081c6ce2b1ca694838ace",
+      "fullScoreSha256": "7804903f32d6e0ee4c9e1773f0471b9308b78b1199f8536a9e1ef1c36493db3b",
+      "scoreHash": "e0dcb2ccf4c90132",
+      "mappingFingerprint": "b977cb06a2947ba8",
+      "imageRhythmFingerprint": "7ee386a5e1c041c5",
+      "rhythmFingerprint": "7ee386a5e1c041c5",
+      "performanceEventsSha256": "95ce3a1b5dfe00fee7b9c91501ccc3931ed2d00180681ed90ed06e4f6038b3bd",
+      "regionMapSha256": "d5e6ce2e7c4bf9be504f25216b6d16560fffbdbd4a707a200793b3ee176b30f3",
+      "tempoMapSha256": "eb536347179aba59f047b51d6f5279e45e7ac06783ed0762aaaf88e565d35ecc",
+      "audioTraces": {
+        "warm": "8041da84e3bd19c4cd9e56afdf559f11a62ff3f59a222b91a5a22f26193abda4",
+        "glass": "8ae8d05a136a33eabe19371d4244e212b134e5c17de2dfbc0f36901431bb2091",
+        "mist": "fa43e343f8cf3ee11328cdeb6107288d977146f32dae3320861c9b229b2996aa"
+      }
+    },
+    {
+      "index": 60,
+      "name": "精确纯白",
+      "performanceStyle": "sparse",
+      "inputSha256": "fc7bc70fa8de6eb76d3a6c47669324e70f084c326e0ea1166224c516b5c4e642",
+      "imageHash": "fbefe5c53b1c2a6bc47a6635d1186b2fdbdb8fb125271f61a862d4b513fdf2c1",
+      "fullScoreSha256": "66d625978d6a9bdb5b93d1c3c66b1d8062994b2934634c25eb4f8c4ebad2622b",
+      "scoreHash": "492eed5b4cf0d783",
+      "mappingFingerprint": "de4a4cdb5015be0f",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "8c669b96014a3ab8",
+      "performanceEventsSha256": "4ad42a3a65a50cfa04f22d4fb821d53b17cc97b6955e010730db3ceeaf8f9436",
+      "regionMapSha256": "bd12eebada6cf86b56241b08083a1f682ef16e181adc0f82fc0f9905329e6379",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "56fa9daa0d4addd034058932209ac5288b0a1e96213f9c6b9f71abe4f1d81f17",
+        "glass": "620662c14e68258dc6d0257cdbb30cdc98cacd7d5ad9fcf60e98763419beddbd",
+        "mist": "a7ae31e3b650d8bec7c0e2fd8587e4a2cfa921f2de8c7dc16f1316c4d5315130"
+      }
+    },
+    {
+      "index": 60,
+      "name": "精确纯白",
+      "performanceStyle": "continuous",
+      "inputSha256": "fc7bc70fa8de6eb76d3a6c47669324e70f084c326e0ea1166224c516b5c4e642",
+      "imageHash": "fbefe5c53b1c2a6bc47a6635d1186b2fdbdb8fb125271f61a862d4b513fdf2c1",
+      "fullScoreSha256": "36f1092f8de91a14540fe4f9f70372bd602cf51653dbe29fe7873bf213d49b3a",
+      "scoreHash": "fb2cb3717b4d505f",
+      "mappingFingerprint": "40bf070f9b21e297",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "performanceEventsSha256": "600ad62b87ee301e0c798943470a0197c319c30f48ecac9e58378116ae20016f",
+      "regionMapSha256": "59c68c0e79aa2a466ddad569eca9031e0fa98506d5765c4cab7ed29e3a353c30",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "958f0bb9340a44ae3b4a8f43c0f6e4a4544b595a41f935e14da1af3bf423dd20",
+        "glass": "3ec1fd5542f4c62a9363accea676faf03cbe653af70080d6580e7195e117b2e0",
+        "mist": "a19761f729a8887457c427b76ea6b9d4dce131862cd371f083d26e45beb9673b"
+      }
+    },
+    {
+      "index": 61,
+      "name": "精确纯黑",
+      "performanceStyle": "sparse",
+      "inputSha256": "fc25121efb4a45f650f86e5ba6acb8f0916478fe3c99ae04f5dbf1102a650462",
+      "imageHash": "ace52dc5c2210a6b2a5f763559e2eb2fb67057b142799f611c0fa4b55549f2c1",
+      "fullScoreSha256": "d1251c1703a9fecb68d0daa7d5a0348d70487ff62dcf015b0cf10aead8c707ed",
+      "scoreHash": "7dfed760ef11fb64",
+      "mappingFingerprint": "f928869f5072ee97",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "d697a1979dc9a763",
+      "performanceEventsSha256": "3631b473cae0a3eb5577345ec38bd1b6732047d0f747daadc98b599e4d521c50",
+      "regionMapSha256": "388a9e7e20c00f16f6f939d4ff1579cd1d1c4197cd37f5dfaccd476c0640c26e",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "432ec34b0b35ba88b26a7a598b4f3164e9a86621557f860212b106b6fd4f7575",
+        "glass": "7975ec74deb209a1b791b0b75817b55133b5f16c6868130f8c832cb53c1c5cb4",
+        "mist": "33716c90250a65aca76b456717ca36366a218aed1deb0ef9a82555867176cca4"
+      }
+    },
+    {
+      "index": 61,
+      "name": "精确纯黑",
+      "performanceStyle": "continuous",
+      "inputSha256": "fc25121efb4a45f650f86e5ba6acb8f0916478fe3c99ae04f5dbf1102a650462",
+      "imageHash": "ace52dc5c2210a6b2a5f763559e2eb2fb67057b142799f611c0fa4b55549f2c1",
+      "fullScoreSha256": "47ead0a5079b9ecd61b677ecef7e849dcb3e0a917db6ed7842c7cb262da41b59",
+      "scoreHash": "e0ee5c1eeffeab70",
+      "mappingFingerprint": "11cf562fdfdd6c27",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "performanceEventsSha256": "0416b3ec106a0c3b8c444f310ad3a5e6337e3ad1951c8e2c16fbfd31fd183e2e",
+      "regionMapSha256": "2a53e7240ba174f8e7aa32d1d16326c0cb9df5d2906b92ee1a39ac342dff0281",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "8fffd404a092ffcaf871ec83d7f94da728ccf909e979d71b083e7c0a310a21eb",
+        "glass": "f5016b230ed957b51dba1fa07fec1bcbe6f8cac610b919680a50a9e583f6b22f",
+        "mist": "aa8c90b918a1ec13c764f27d450fb023f73d0431ba541c1da4832d55b1c1cd77"
+      }
+    },
+    {
+      "index": 62,
+      "name": "纯灰 32",
+      "performanceStyle": "sparse",
+      "inputSha256": "574b988b4ed284723de41ad38aabba6db783a5dcb87e920102793092acdb6f7e",
+      "imageHash": "141d2dc524164a6b45077635c8486b2f896857b1f6785f6114afa4b5bf49f2c1",
+      "fullScoreSha256": "8ba77dfd46d0cc134f413658a5498bb832c6cc44481de1f598814682ecb738f8",
+      "scoreHash": "f572d90161e598ff",
+      "mappingFingerprint": "139cafbb53bd8a2f",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "d697a1979dc9a763",
+      "performanceEventsSha256": "495e0fb0f6408e6483d020238ded8e43774c07839e59437dc4f8e501b738d7e9",
+      "regionMapSha256": "1a4556e9f6495b2f9dafb437849f0d861181555c0e1c65f85176f1086b8ccfe0",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "59cfa47167f61021649fab1fdf022d38740293943880e2c34da694cdf9795296",
+        "glass": "3af9a9dcf70e96b2b57980f21ffc0d8301b1f07a6ef3ad0bc83c93bce5ba1791",
+        "mist": "785d17d1a43ebf935de981a5632030accab8f2930ae56ee873d7be95bcf97238"
+      }
+    },
+    {
+      "index": 62,
+      "name": "纯灰 32",
+      "performanceStyle": "continuous",
+      "inputSha256": "574b988b4ed284723de41ad38aabba6db783a5dcb87e920102793092acdb6f7e",
+      "imageHash": "141d2dc524164a6b45077635c8486b2f896857b1f6785f6114afa4b5bf49f2c1",
+      "fullScoreSha256": "eb185320ebd3397e298fac195a62e7f44f3c068a7373ab43c797c77fab7cee22",
+      "scoreHash": "267791df6a1828bb",
+      "mappingFingerprint": "29c897d3647d7a2f",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "performanceEventsSha256": "76082cb54477be16c33ae565dda91439364d1bbae29ff9cab3bc69668ad7a393",
+      "regionMapSha256": "e04760dd4ef3c298df3250e8a0ce503a78ec48f360efbe7ff7dd54f8e839a545",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "54eab01afc093c89dd75ea3cef04719b0f9c793021cb731dcf1ba418483a924c",
+        "glass": "b1a785509d3f82e337c54468d6b8b06e831f06eedff1b06c78d3f4ad65479934",
+        "mist": "b6cc757988afed21f00b1f4a89631ff0a864228dadb8c724dde015e2bae0fcbd"
+      }
+    },
+    {
+      "index": 63,
+      "name": "纯灰 96",
+      "performanceStyle": "sparse",
+      "inputSha256": "e58bd50b9c0edfbc4f3cded3efe7f396a5bb9d5cd251ebaef30e4aead7b1a645",
+      "imageHash": "ca9d2dc5b3eb4a6b9d177635109f6b2fd2d857b1db085f6172efa4b54349f2c1",
+      "fullScoreSha256": "4600de9ca33d3a5796c6fd6f75b7e771589202606207d9ed4be81a2bff5dc813",
+      "scoreHash": "664500a5c1c65a89",
+      "mappingFingerprint": "74072aabab783eff",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "1cf6d20e0fbe63c2",
+      "performanceEventsSha256": "5ecd7f84d003e70f3fbd0745dd8bb63f07ec9d4cb699d0158c19414849e958d7",
+      "regionMapSha256": "66f914398cbfb727f132036ff60a4e0b5e101dca878cc4a7a81715a308e5f83e",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "8b55d0e62e64c171d7aceb59c40592923c08a0aaad13d345e11d119f73ee8845",
+        "glass": "40852704ee0dbe7074314a545123ddb26ced9b521bbb35edd33b37b398415179",
+        "mist": "383e03692bfc5262f779c3b01befdb2dc267ccd551b0635ad8c6512fb6cc1f1a"
+      }
+    },
+    {
+      "index": 63,
+      "name": "纯灰 96",
+      "performanceStyle": "continuous",
+      "inputSha256": "e58bd50b9c0edfbc4f3cded3efe7f396a5bb9d5cd251ebaef30e4aead7b1a645",
+      "imageHash": "ca9d2dc5b3eb4a6b9d177635109f6b2fd2d857b1db085f6172efa4b54349f2c1",
+      "fullScoreSha256": "b0d79ba68471f8a63cc9da9564168a98e60d9307e69f6eca2843bf0a8158faee",
+      "scoreHash": "2b65211e9eefe2e4",
+      "mappingFingerprint": "2b9ce44b9e5d07af",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "performanceEventsSha256": "b2f9fe84e223ae0f8f21f2b99fe2f9a4fb3386b13b14a694ffe026db05f28cbc",
+      "regionMapSha256": "5423b79dd3d00018c3499dc7324bfbed03c5c7e653030ad54a90aa1b05022362",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "d52fc5d1d836a369b21b07b0fbe339eabc9ae868738df13d1f0a95f05615c7e2",
+        "glass": "04d7a9da7e49b7b64036b4a60790815760d3a2064e2ed84b40df4d6d26a78457",
+        "mist": "d43f0d972866828f2af0c3cea0a919813fc48958f54f216b8e8e1d029d6da9dd"
+      }
+    },
+    {
+      "index": 64,
+      "name": "纯灰 128",
+      "performanceStyle": "sparse",
+      "inputSha256": "f2ea22a1f1d7c1166037f9d495d1b910a5bc86a0ba582acc281a4aec51cf1cc0",
+      "imageHash": "eae52dc56d110a6b743f76359357eb2fa2d057b14d739f61568fa4b57fe3f2c1",
+      "fullScoreSha256": "54f7e90cbbf7ae0ad5e5091101e271fe4be59ccfd48dfb7d24c498f322327adf",
+      "scoreHash": "c04b158d8448dc59",
+      "mappingFingerprint": "3473e2eb52f7e11f",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "1cf6d20e0fbe63c2",
+      "performanceEventsSha256": "4dbbfc3dae34fce9f0de31b39e7555900e20cd7953e03969f38a9afe66b1a496",
+      "regionMapSha256": "e1d74315449e61f1b06c6715702d376a66268dae8fb7a0a54f429deb94b45be1",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "e8abaf8924bfa48a5334f04de6b31154eda6bea617d30ad53bc348ead3fb6a18",
+        "glass": "841b15a049871135c267f789eec88b87ad8fdeb3880afaf09f57ccfbbb4dfe0b",
+        "mist": "4a8e96a7bc4c69e4dc3a09c67235a99cbc81bac7d5475692eb9c5b25da6bfceb"
+      }
+    },
+    {
+      "index": 64,
+      "name": "纯灰 128",
+      "performanceStyle": "continuous",
+      "inputSha256": "f2ea22a1f1d7c1166037f9d495d1b910a5bc86a0ba582acc281a4aec51cf1cc0",
+      "imageHash": "eae52dc56d110a6b743f76359357eb2fa2d057b14d739f61568fa4b57fe3f2c1",
+      "fullScoreSha256": "50e9cd94b74df0d0ac0d53530570b874df65dd61dce41fe83a69b0d66dbbf3ee",
+      "scoreHash": "953e44e063ccd932",
+      "mappingFingerprint": "b75a0ac32233a52f",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "performanceEventsSha256": "3ab84e7f0ae97fa3397f3bee6933813457aefed5bd99b7bd0bcbbb8823dd8c1c",
+      "regionMapSha256": "c87a87cf42355e5214591c1bbbbe2e2f8c93e5927894a28fedb4860621320a43",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "4740cb301f760e182383a70a19dfb783d94507b09ef65dd6970839f0864a80e3",
+        "glass": "5579e330393a34a7330dca39956029094539ec889f77fa987b923df73be31386",
+        "mist": "6789d1cc998a83b5359e7aa48dfd72eed623040380cb1f1bee061e0aff97d537"
+      }
+    },
+    {
+      "index": 65,
+      "name": "纯灰 192",
+      "performanceStyle": "sparse",
+      "inputSha256": "8cda0dd2b9568ffb8fc121e53731bb8083450444ec268125956da234632eae4e",
+      "imageHash": "b4552dc5bd290a6b122f76350764eb2f9c7057b175cb1f61a3cfa4b53aaff2c1",
+      "fullScoreSha256": "2e662c5b63dad7f46ac7b09670824ad601bc3203776ea40b499b603eaf15b3d7",
+      "scoreHash": "137e8155c1a11d19",
+      "mappingFingerprint": "931113776fd89f67",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "1cf6d20e0fbe63c2",
+      "performanceEventsSha256": "ab112db64c2129e26609c627512d39710439a60e2f7fe77eb9c984962d219ea6",
+      "regionMapSha256": "44d91e87260a5ded62585ab46971f002bc455bdae9ff93ebd37d94dec24ab9c1",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "01fa25d211b7af28135d69d8b0f593e0767ec7132969dcf989fffd98685c53fd",
+        "glass": "37ff3c100eba4fe38c222c9eeade4369e14b8c9d98f6429110c7d27d227d6433",
+        "mist": "0e474428e4c128477a8cf583366ba34e5ec5db7b4e25c32dca5abada7428a5af"
+      }
+    },
+    {
+      "index": 65,
+      "name": "纯灰 192",
+      "performanceStyle": "continuous",
+      "inputSha256": "8cda0dd2b9568ffb8fc121e53731bb8083450444ec268125956da234632eae4e",
+      "imageHash": "b4552dc5bd290a6b122f76350764eb2f9c7057b175cb1f61a3cfa4b53aaff2c1",
+      "fullScoreSha256": "13f436bbb93debd42f88aa38099066ba222519460e490d78e0d4908dc2aa3bb1",
+      "scoreHash": "c4710707187cf2df",
+      "mappingFingerprint": "9e517b13c2bccd6f",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "performanceEventsSha256": "752c13b8bc83153f47dc09f0c5f08aaff18ebdaac3942ed49ace10697b20611d",
+      "regionMapSha256": "fd2c5a49f63c8beb561019f05ef439a5822678f5df25fea4b394931dc722bde2",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "fdf7dc3c10190575c84e05592a944f8145fd82b76c3951c9ae1a332ce007c517",
+        "glass": "64b68aa88547135e84f49541aebcf722c98f77084525856db4cd41800de062d7",
+        "mist": "3e3d3ac9e46dcf1e3c226673e93a13cece1c23f5514f3b23ca54990d0f845a7d"
+      }
+    },
+    {
+      "index": 66,
+      "name": "接近纯白 254",
+      "performanceStyle": "sparse",
+      "inputSha256": "b264108b04d5b53963c1e52f1f9f1fd102a9c639a36a18a72394ea1ac92317d4",
+      "imageHash": "526ff5c587584a6b1319ae351043eb2fcbc2cfb100c3df615accbcb54f0bf2c1",
+      "fullScoreSha256": "b742a6f91890e03342fe81e420adf88c7580ccfe3e5ce9fd6ef9f73eb96cc8dd",
+      "scoreHash": "be603d05fa5b9e7f",
+      "mappingFingerprint": "40fefe2ff70206d7",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "8c669b96014a3ab8",
+      "performanceEventsSha256": "30285b08edcf50007065810e3afb914808b4d22ae64fe29d26be6f73e21d5841",
+      "regionMapSha256": "9117e99a1cd47242c12b5efdfd55eae58943436688276bc97b07ef46df9176b8",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "af737298b2398d0da5e53524f90e9a5fc54206945b88d469de3dede508004f64",
+        "glass": "18b52fe2fbd5a3972e51926cd60fcec0ee8ce02f7eb1a67b7a095466519316d1",
+        "mist": "4f1336179eecbdbc74a766a1ae7b795e42c0f4c41ddd5654a7d61f5833148f51"
+      }
+    },
+    {
+      "index": 66,
+      "name": "接近纯白 254",
+      "performanceStyle": "continuous",
+      "inputSha256": "b264108b04d5b53963c1e52f1f9f1fd102a9c639a36a18a72394ea1ac92317d4",
+      "imageHash": "526ff5c587584a6b1319ae351043eb2fcbc2cfb100c3df615accbcb54f0bf2c1",
+      "fullScoreSha256": "ebcf09aa71f54b34542eda1fdbb249b10f87059fca970a70226654341156287d",
+      "scoreHash": "fbfcc2abc1045ad7",
+      "mappingFingerprint": "2a1024ff238670e7",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "performanceEventsSha256": "37c0ecd26faefd62f6b51bc1f2a08e13585c883f3940b01b36b275b5b81039dd",
+      "regionMapSha256": "3e2f6853c8b5c59c62c3835f4ae26bccf2bad1be57cfe264d29902269233c522",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "42c1fb2bb6ba18eb9aac4c75c6c299472b22c3827316d70688dd18c02b2c9543",
+        "glass": "2f4f6733d020ef4878c29dcf56b8f0e206e20ceb5ac1e9e02243290c08e099cb",
+        "mist": "83f28f836556ed555bc8ef6c39e6d7fa40d9daf41e073f3a3e9b37012ae118c7"
+      }
+    },
+    {
+      "index": 67,
+      "name": "纯红",
+      "performanceStyle": "sparse",
+      "inputSha256": "5c384f510f6a498986cb4d545582f5abbcb036f8c9335ac67f16c87e31a8f00d",
+      "imageHash": "cfd811c5ef9c326b737d2a35dac09b2ffaba6bb1c4d0f761dca748b59e4032c1",
+      "fullScoreSha256": "acf1d698b7abb12230e1bdbb7ae55289c5a77a3f9877ff4b3245e1da243a62c4",
+      "scoreHash": "1c135ef7ced3514b",
+      "mappingFingerprint": "f885a1a33476299f",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "d697a1979dc9a763",
+      "performanceEventsSha256": "f754670f3690bbc49509f89fd34f22d407a9ebc0462fef523011e8b9bf070bab",
+      "regionMapSha256": "290450fdd093835bcaa7c5df348c509423384e290281fa530af4099a6b043b3b",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "2abec25de90ce0c69b980a371b42f3ad8ff78b3c6999e2d8ba202cd28120d1d0",
+        "glass": "e7598fb0d1ade5ebafb50e44888b0874c5961cd1e3bd10f6b9883a542e18f512",
+        "mist": "8a09333c056247ae0531c9a7ad0947ffea495607ad14224a2f81fc22059b2fab"
+      }
+    },
+    {
+      "index": 67,
+      "name": "纯红",
+      "performanceStyle": "continuous",
+      "inputSha256": "5c384f510f6a498986cb4d545582f5abbcb036f8c9335ac67f16c87e31a8f00d",
+      "imageHash": "cfd811c5ef9c326b737d2a35dac09b2ffaba6bb1c4d0f761dca748b59e4032c1",
+      "fullScoreSha256": "bfd5e3780c0b5207f95ffece3ada1204e1df1812ccfde08d55d9b97052073c4a",
+      "scoreHash": "91cd2841c1624a5f",
+      "mappingFingerprint": "8e818f73f4e837ff",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "performanceEventsSha256": "b3a3561c808cf09b9be3249e9ee1885db968a150273e59a63907f5130d067ab2",
+      "regionMapSha256": "bbeb110898305161611c109e4bca3f8d5e993ec9781f8a0c432780680ec59565",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "a344a6333c86ce7611d4e88e012e777fc468e974d9ebb6041a4ace617b695912",
+        "glass": "355d95d30ed3faa9cd25a83ce97af6a0b43ff4bd7143bc9cc6fed1fbe02ec4d7",
+        "mist": "34be5ebcc329744eee38e8778f6668b177b3411860f74b8eb7b9e52930eb2e8b"
+      }
+    },
+    {
+      "index": 68,
+      "name": "纯绿",
+      "performanceStyle": "sparse",
+      "inputSha256": "d5e83c7f898e16c1f040834ec12907b3061b5a6825aa26f49db11e6a9b99d35c",
+      "imageHash": "ffd56dc51908ca6b92a53635ae5deb2fac2017b134c1cf61536fa4b5dfc9f2c1",
+      "fullScoreSha256": "1f238233321982e559cde6dd9ca50fa5e882242d4fd651c6fca9db2537a514a8",
+      "scoreHash": "58afb1fc93519264",
+      "mappingFingerprint": "915a805b6cc90247",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "d697a1979dc9a763",
+      "performanceEventsSha256": "9b6b7b4e2a239b703f35f205b4f19e7c967e769ae11f49c0a31f693af657aa1d",
+      "regionMapSha256": "bd27077655dc5593a2f6b327b8b96f31560fc72a074908a37e38c50e6a42f165",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "0b80614a2555bead44220bbd1e4cf8a4bd180c275577891c117535d29f13c549",
+        "glass": "f299b5530b39cc1ca3150f482295e5624663fd72a7d92fb8eeb4865d5bd0bc1d",
+        "mist": "3fc910cfd60f2e2f797d58ed280850b76a9a3189dc8080a4175b394cc648b453"
+      }
+    },
+    {
+      "index": 68,
+      "name": "纯绿",
+      "performanceStyle": "continuous",
+      "inputSha256": "d5e83c7f898e16c1f040834ec12907b3061b5a6825aa26f49db11e6a9b99d35c",
+      "imageHash": "ffd56dc51908ca6b92a53635ae5deb2fac2017b134c1cf61536fa4b5dfc9f2c1",
+      "fullScoreSha256": "6d2052be2c3cb75f2b47c17cbcddee2f7783291def61dd2b7a345101bb34a233",
+      "scoreHash": "de5fc3829611a900",
+      "mappingFingerprint": "6ee634532b8d5887",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "performanceEventsSha256": "b3a9834aae8062c5b7155a275589af4b3ecdb4063e593e0032fdb3faf216d445",
+      "regionMapSha256": "53eccb3614457976e2e3687f1ff1a81d71d02310b6a2490fa257880cec733938",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "2e74fa012d508bcdadf96ae5e902636fd31b11d18b7e9ea4aed67c5f2d32bdb1",
+        "glass": "9f1370e25b3caf76fa45747d6c22373933ceca6f872ed6dc800824a705cc915f",
+        "mist": "5867b87830ab71ac4facb7117750e4c8e99a70ae2c50b4b585e967de51c02aba"
+      }
+    },
+    {
+      "index": 69,
+      "name": "纯蓝",
+      "performanceStyle": "sparse",
+      "inputSha256": "598b260e87b55fbc5d652bc4c31e1f67ccb3165212b8c430f0d9658fd92bc2c8",
+      "imageHash": "f2b5a1c5bbd8726b11a34a3534509b2f0adddbb1cbadb7617214c8b5befc32c1",
+      "fullScoreSha256": "dc128049633d6f1581d010372b0b72434baddb296c9063044eae4e6826385f8e",
+      "scoreHash": "dc7991befef281d0",
+      "mappingFingerprint": "3cf5ba6fc4f633df",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "d697a1979dc9a763",
+      "performanceEventsSha256": "9b42cfbce9e99be9368fb35897e7b90f588390be63c41a3265b6b5600c477af4",
+      "regionMapSha256": "ebac4666c8b841093613a31e798f56af55e57e666d34351a4e5f420001c3b55d",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "7cb82714ce469531668bd9c095d4e72eb85f860136237b61d3e14981259ce151",
+        "glass": "2875b067db32e48ad0b498ca1d98d34a0748be50b039534f9dc092a4bc8705b0",
+        "mist": "b350b87aa0d54649cc2365709ee5df08c9b4a6b1f5b06994748f700eaae952bf"
+      }
+    },
+    {
+      "index": 69,
+      "name": "纯蓝",
+      "performanceStyle": "continuous",
+      "inputSha256": "598b260e87b55fbc5d652bc4c31e1f67ccb3165212b8c430f0d9658fd92bc2c8",
+      "imageHash": "f2b5a1c5bbd8726b11a34a3534509b2f0adddbb1cbadb7617214c8b5befc32c1",
+      "fullScoreSha256": "63a083f07f8554dcc6cd4d0b94d1a20be45747c42fe04a5079d592f967ee4e93",
+      "scoreHash": "776b6fd8c0aa247c",
+      "mappingFingerprint": "bad5ca171543774f",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "performanceEventsSha256": "3d2d77c1b7d0fd081b394614ee18904c9b8154a704abc27811ec8fbca0ed4ea9",
+      "regionMapSha256": "83e4483c1d3f06422e1bde9580b4bd3e95b9a34c31473f25ca4279cf175affb9",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "98e5a29b2bbf3349ce2801dc0834418a3d4d7c53572b3437c859ee9c10ccf5f4",
+        "glass": "5429b108f55dd0a2b09f2694edc6bed757468d2a506509a3f4b441733818f1e9",
+        "mist": "2eed7b9fc9d77b062a82880b1c6447162c665bcb1acc34cf7041a883a85d54bd"
+      }
+    },
+    {
+      "index": 70,
+      "name": "纯青",
+      "performanceStyle": "sparse",
+      "inputSha256": "59535865ce3e4179101661a1ba1e3416efe759545f62f4adf85316ce9b94e78b",
+      "imageHash": "83060dc543924a6bd5370e35b81deb2f504dbfb1cc63cf6114c1d4b50349f2c1",
+      "fullScoreSha256": "679460e79d2fd1eaf83e50831b5b0b55fd622009bb6c7ee652a6833c0ef8ba49",
+      "scoreHash": "0c280bd9bf2bb95d",
+      "mappingFingerprint": "f767c85f821b93e7",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "d697a1979dc9a763",
+      "performanceEventsSha256": "0e56da821a321dc51f9c8fc6c1f2e9c2e048fe8d42a8da2ceb87a1d08131b614",
+      "regionMapSha256": "a7d4fb9252d644418ec2a1ac3db6752763a7cd04d063fa6be3f578fcddda9be2",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "9b9e713543507d53827d04ba538dbda262c0d5e59344b897a12fcb246145427a",
+        "glass": "f6e9b9fb263e96d5a6412d4bffe319f4df26ffe859b969563e828a66e3e9eb44",
+        "mist": "ad7a156fc7822be20d41aa59bf29fe5622024a1f7586a3cc67636bce56f63ea1"
+      }
+    },
+    {
+      "index": 70,
+      "name": "纯青",
+      "performanceStyle": "continuous",
+      "inputSha256": "59535865ce3e4179101661a1ba1e3416efe759545f62f4adf85316ce9b94e78b",
+      "imageHash": "83060dc543924a6bd5370e35b81deb2f504dbfb1cc63cf6114c1d4b50349f2c1",
+      "fullScoreSha256": "e53f3e0be6bd07e4476075d26d5ecfa71c4616282f20142a3c6dd172d6d26a32",
+      "scoreHash": "e6e4c19765b90d69",
+      "mappingFingerprint": "a95a6b1f062b1f77",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "performanceEventsSha256": "fbb2c313737e1dffcd7be57f8c4144c751346029346d022294dba6b238d12c4c",
+      "regionMapSha256": "acfbc8a5a1f0d7d9a45f5dc7eb2be1cf9320011b38918c48524473bac2625a5a",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "6cbd2f23e84d536a0458ac46416f12ec344aee2c9f2202c7d4944ad20b1a69bf",
+        "glass": "00ec2186d3dc4e002b91ca96376376845cf690c9393d342859b9c91163bc7193",
+        "mist": "23ce7669e6aa6efc94b221e831e9b8de888abc85bf38b7afe98920e1865bf2d3"
+      }
+    },
+    {
+      "index": 71,
+      "name": "纯品红",
+      "performanceStyle": "sparse",
+      "inputSha256": "4d6373643beefee7cb3a1dbc9555e887cb606cb870082876483bdb49ba660f7f",
+      "imageHash": "57592dc571e20a6b4d540e350df4eb2f91e9ffb1c0ac8f61c844a4b56749f2c1",
+      "fullScoreSha256": "7e1a043e2f4dad42836b878c1fb3e82e9bbf1b8dcd1ae60b2264a0d8b3c88413",
+      "scoreHash": "ef6b57505639549a",
+      "mappingFingerprint": "98edc683c6bc8eef",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "d697a1979dc9a763",
+      "performanceEventsSha256": "381c4ef4b2f96d9287d08b268a52eb411eccc5bb562509ad2c1461524d3d7f96",
+      "regionMapSha256": "dc90d7aff331141874b86a6673105e3e6dee57b7ef01a4301ab5cea6b6427bd9",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "28e896c242bcfe2a2094e4a132438e27249b3a8070a761e11dba5fa3ffe22682",
+        "glass": "e47ad6c04041b4c0f08df8b9ba30e98ab9698a99dbcc6b44465cd28d81522d17",
+        "mist": "b0c99dd84417368a3ba88c65af9148eb8428fdc90fe2a04e221b70eab9c91ee3"
+      }
+    },
+    {
+      "index": 71,
+      "name": "纯品红",
+      "performanceStyle": "continuous",
+      "inputSha256": "4d6373643beefee7cb3a1dbc9555e887cb606cb870082876483bdb49ba660f7f",
+      "imageHash": "57592dc571e20a6b4d540e350df4eb2f91e9ffb1c0ac8f61c844a4b56749f2c1",
+      "fullScoreSha256": "32d2425a3c71292e2da70263c3ba1897f4b56be34b269d412a49c631ab9920c9",
+      "scoreHash": "1edf218e15d85f76",
+      "mappingFingerprint": "8c7e14b3ffe21d1f",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "performanceEventsSha256": "cf760b69103b3d025999f0ff2f7786e3b9ad84f3d139d211018d96670cbcc64a",
+      "regionMapSha256": "b021b94cdad254096b985c21e2957786b5087b8720f12ec702635afbe4d89412",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "bca7bcc2dfe1a7fa431e97a39a4838fabecdf46ce66f43d1a514b1fc014163d6",
+        "glass": "8cbb0818d5359cbb2be21209784db775dd3149c977db39e4dbb2e4e407d31ed0",
+        "mist": "98d7c697c0b2ebd997f43dae2132a8060b666bd2796e4aa7730ab79434ff9f58"
+      }
+    },
+    {
+      "index": 72,
+      "name": "纯白轻微噪声",
+      "performanceStyle": "sparse",
+      "inputSha256": "448bf7d1d4a5c39ee9f1f6abdbf941a49d6aae5c32f2665b39409b40c1766c34",
+      "imageHash": "79f0e832731b14fe8e8c9c02aecf6f46c5bf4bd6f3df30a42c88669ae45126e0",
+      "fullScoreSha256": "026cb91cec75c668db8e63e62c414d875965f9f539b735169438f3e97823d8b2",
+      "scoreHash": "38f838d547f1eaa7",
+      "mappingFingerprint": "d0a557209b84cd66",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "8c669b96014a3ab8",
+      "performanceEventsSha256": "772b82f400e35e6d92255720c9c6c96d39468a8ed3c4a25ff8988f83ea20a405",
+      "regionMapSha256": "6062096ba0e807b28c2094ff97ebb2a0d7bed4dfc40b042c327607a1fbcc943a",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "d500d3e0802a0dbb87ab01bca8e62dad0430b56c8c5a3c7ebcb5a8ef50d307af",
+        "glass": "5a8e960ba4b6aafe5a23667955ffa4085ecebebfa59461655699461cb2efcc43",
+        "mist": "02a5490ecb2eec26f6793b6cfc0bdbc0575c8730a26fdf5c5851ba9671c748d3"
+      }
+    },
+    {
+      "index": 72,
+      "name": "纯白轻微噪声",
+      "performanceStyle": "continuous",
+      "inputSha256": "448bf7d1d4a5c39ee9f1f6abdbf941a49d6aae5c32f2665b39409b40c1766c34",
+      "imageHash": "79f0e832731b14fe8e8c9c02aecf6f46c5bf4bd6f3df30a42c88669ae45126e0",
+      "fullScoreSha256": "3a52b53d14d1311cce6cfba93723eb1987c5c2a84a63c90fe0260b0ca7fc66a9",
+      "scoreHash": "34e9bab94e1871d3",
+      "mappingFingerprint": "db5305b4013784ae",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "performanceEventsSha256": "199b4d2f0153a824142873f7332cdaeba415e0546b71e08fab1ba6aa1014dfa5",
+      "regionMapSha256": "71fd201dcb2cd798a82852962eba32b995a40c3f1a5f1893ea2c61aa0c659457",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "f5a58f5e0a92bd1f7346c4a867b516b5cd17940acf29bd8b32f39c76192c68d3",
+        "glass": "fd4e9ae74c9f906a56a1a91f37e936f5bb9770d88fd524365b649c0fa2c6953f",
+        "mist": "3156b6f3c21d706e892b974581f1a35e5e3aad65610f05c64827ab1504858e91"
+      }
+    },
+    {
+      "index": 73,
+      "name": "纯灰轻微噪声",
+      "performanceStyle": "sparse",
+      "inputSha256": "4ee63a55462da4c3e28a5f17a69a0be71896f6d3c1d2f67054cc36410854b73b",
+      "imageHash": "bed01800e75c98489015c644ad957a280755b25cf68b06ea26c4c73c24b0d95e",
+      "fullScoreSha256": "b1754c60ba6a52b47c67ba23ff0b7c050a703b953555ecc181a0b2852022f648",
+      "scoreHash": "c04b158d8448dc59",
+      "mappingFingerprint": "3473e2eb52f7e11f",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "1cf6d20e0fbe63c2",
+      "performanceEventsSha256": "4dbbfc3dae34fce9f0de31b39e7555900e20cd7953e03969f38a9afe66b1a496",
+      "regionMapSha256": "e1d74315449e61f1b06c6715702d376a66268dae8fb7a0a54f429deb94b45be1",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "e8abaf8924bfa48a5334f04de6b31154eda6bea617d30ad53bc348ead3fb6a18",
+        "glass": "841b15a049871135c267f789eec88b87ad8fdeb3880afaf09f57ccfbbb4dfe0b",
+        "mist": "4a8e96a7bc4c69e4dc3a09c67235a99cbc81bac7d5475692eb9c5b25da6bfceb"
+      }
+    },
+    {
+      "index": 73,
+      "name": "纯灰轻微噪声",
+      "performanceStyle": "continuous",
+      "inputSha256": "4ee63a55462da4c3e28a5f17a69a0be71896f6d3c1d2f67054cc36410854b73b",
+      "imageHash": "bed01800e75c98489015c644ad957a280755b25cf68b06ea26c4c73c24b0d95e",
+      "fullScoreSha256": "a24001065f5738b80036b7ebfac2a42be01e8f616a842fe206d7ce198f95b90c",
+      "scoreHash": "953e44e063ccd932",
+      "mappingFingerprint": "b75a0ac32233a52f",
+      "imageRhythmFingerprint": "52a897e768eaaa21",
+      "rhythmFingerprint": "52a897e768eaaa21",
+      "performanceEventsSha256": "3ab84e7f0ae97fa3397f3bee6933813457aefed5bd99b7bd0bcbbb8823dd8c1c",
+      "regionMapSha256": "c87a87cf42355e5214591c1bbbbe2e2f8c93e5927894a28fedb4860621320a43",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "4740cb301f760e182383a70a19dfb783d94507b09ef65dd6970839f0864a80e3",
+        "glass": "5579e330393a34a7330dca39956029094539ec889f77fa987b923df73be31386",
+        "mist": "6789d1cc998a83b5359e7aa48dfd72eed623040380cb1f1bee061e0aff97d537"
+      }
+    },
+    {
+      "index": 74,
+      "name": "全范围横向灰阶渐变",
+      "performanceStyle": "sparse",
+      "inputSha256": "18ac1dfdfd812e786d3d012959e33cf2dc0dfc517af0af23ffb0aa7ac2358a98",
+      "imageHash": "54f881c512de226bd9d252359376eb2f872177b16e7a4f61301c6cb5e624f2c1",
+      "fullScoreSha256": "8c648007c0616e62983196b341278824dab58e96df2fbeea25445a8bce7648dc",
+      "scoreHash": "0171117962f2832f",
+      "mappingFingerprint": "8aa4439740399b75",
+      "imageRhythmFingerprint": "841c37f7cbd1b603",
+      "rhythmFingerprint": "841c37f7cbd1b603",
+      "performanceEventsSha256": "75827d50f859ecedecd93966f2a69c46075bc3aee6da8458bc0e69d87e778c4d",
+      "regionMapSha256": "ce552e6fe2b700b0b9d04c6756f134b1ca997759a5e2879366b20dbdc445d2f9",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "0c432b3d368d417eb73ed7f8ea3a83e34a6353d9e15a89be4b7fd98c07e06731",
+        "glass": "40335613a9b4147b76600357d01bc6722384abf8bab2ef3962263d8efc82418a",
+        "mist": "3dd42794944ace1f70d87b091021bf45635786366d25bf9437c408f005b4e590"
+      }
+    },
+    {
+      "index": 74,
+      "name": "全范围横向灰阶渐变",
+      "performanceStyle": "continuous",
+      "inputSha256": "18ac1dfdfd812e786d3d012959e33cf2dc0dfc517af0af23ffb0aa7ac2358a98",
+      "imageHash": "54f881c512de226bd9d252359376eb2f872177b16e7a4f61301c6cb5e624f2c1",
+      "fullScoreSha256": "d6f8fa55599260f1d8af526700e4ae3cbe9bdeec120aaaf08e2970f312423205",
+      "scoreHash": "0171117962f2832f",
+      "mappingFingerprint": "8aa4439740399b75",
+      "imageRhythmFingerprint": "841c37f7cbd1b603",
+      "rhythmFingerprint": "841c37f7cbd1b603",
+      "performanceEventsSha256": "75827d50f859ecedecd93966f2a69c46075bc3aee6da8458bc0e69d87e778c4d",
+      "regionMapSha256": "ce552e6fe2b700b0b9d04c6756f134b1ca997759a5e2879366b20dbdc445d2f9",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "0c432b3d368d417eb73ed7f8ea3a83e34a6353d9e15a89be4b7fd98c07e06731",
+        "glass": "40335613a9b4147b76600357d01bc6722384abf8bab2ef3962263d8efc82418a",
+        "mist": "3dd42794944ace1f70d87b091021bf45635786366d25bf9437c408f005b4e590"
+      }
+    },
+    {
+      "index": 75,
+      "name": "全范围纵向灰阶渐变",
+      "performanceStyle": "sparse",
+      "inputSha256": "7af58d5a8b3f00c99e84876b7b2ea708ad5ac983615ae13339e7d1bb74613cb3",
+      "imageHash": "21f4b9c5535a6a6bc8dc76352671bb2f7b389bb150325f6188fbc0b546af72c1",
+      "fullScoreSha256": "a8cf385aebc6fcea133540404cbaee1fefdd2fee5b6393d7ae83b18d33872654",
+      "scoreHash": "7fcf9feb20014b79",
+      "mappingFingerprint": "e5a8fe0310f3473f",
+      "imageRhythmFingerprint": "170a82734544176f",
+      "rhythmFingerprint": "170a82734544176f",
+      "performanceEventsSha256": "b15274f22c49429bf39e1171f591965c1dda17923fbe01d7638ea241ce9aa233",
+      "regionMapSha256": "669b0a794029f3afa4cb28fc5b89160636d7e59ed57fe17044ba665f958ae123",
+      "tempoMapSha256": "169313f459d64adeac2b416a7c4eaaff4e53576a1213a0e48c250f04990c9e2e",
+      "audioTraces": {
+        "warm": "99ab65a659933f53334f293754c812066c9d454a3583a217a7cd84bb248269cf",
+        "glass": "62f4d6b9c5549b4de367dbe0537ca14d4500beb35965d81164dc3f2ab630a5e4",
+        "mist": "24388bee9c463077f36e015b462dea51305a300490065cf825f9224ccd4f08bb"
+      }
+    },
+    {
+      "index": 75,
+      "name": "全范围纵向灰阶渐变",
+      "performanceStyle": "continuous",
+      "inputSha256": "7af58d5a8b3f00c99e84876b7b2ea708ad5ac983615ae13339e7d1bb74613cb3",
+      "imageHash": "21f4b9c5535a6a6bc8dc76352671bb2f7b389bb150325f6188fbc0b546af72c1",
+      "fullScoreSha256": "63897f3ee7684c8673fad29dccc79952aad0ec195d8c6c92848df3c5d0ddc57f",
+      "scoreHash": "7fcf9feb20014b79",
+      "mappingFingerprint": "e5a8fe0310f3473f",
+      "imageRhythmFingerprint": "170a82734544176f",
+      "rhythmFingerprint": "170a82734544176f",
+      "performanceEventsSha256": "b15274f22c49429bf39e1171f591965c1dda17923fbe01d7638ea241ce9aa233",
+      "regionMapSha256": "669b0a794029f3afa4cb28fc5b89160636d7e59ed57fe17044ba665f958ae123",
+      "tempoMapSha256": "169313f459d64adeac2b416a7c4eaaff4e53576a1213a0e48c250f04990c9e2e",
+      "audioTraces": {
+        "warm": "99ab65a659933f53334f293754c812066c9d454a3583a217a7cd84bb248269cf",
+        "glass": "62f4d6b9c5549b4de367dbe0537ca14d4500beb35965d81164dc3f2ab630a5e4",
+        "mist": "24388bee9c463077f36e015b462dea51305a300490065cf825f9224ccd4f08bb"
+      }
+    },
+    {
+      "index": 76,
+      "name": "白底局部红色块",
+      "performanceStyle": "sparse",
+      "inputSha256": "dc3f74fe02d5a4c4db83a4c18d35408c8ab5b27ccd5d3f4a1ae714e45910a211",
+      "imageHash": "dbf19bc5da1e466b2e4c5b35fe62c92f2b6663b15a1fdd616a0977b593977ac1",
+      "fullScoreSha256": "30d25ad6602b6d2baca40d8480e6ecd8185cd7e7703666603a2f39c348440034",
+      "scoreHash": "f966df639ace019b",
+      "mappingFingerprint": "33948d0e91d8950a",
+      "imageRhythmFingerprint": "dbf7d4bcdda70c34",
+      "rhythmFingerprint": "3c6bc8299103cb9f",
+      "performanceEventsSha256": "738febe9c68cd14f56b5e195c8c3a79668176cb31551b619425b134bf75e13de",
+      "regionMapSha256": "4e5d23d999ba472824514dd6845eefd565d46cc49930f4dc99b0dc4137a5c5c0",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "81d192b903f69f7fb04cab5bc1c21704af69dabcc34485f60717c277a3581e3a",
+        "glass": "41c89b3d84851db9b52087832610c7718f5153d85372012f50e0a28fab8187cd",
+        "mist": "a330f5e3232783ec301fe7057f9db57241aff30094fefe2e688ed6e64c9903a7"
+      }
+    },
+    {
+      "index": 76,
+      "name": "白底局部红色块",
+      "performanceStyle": "continuous",
+      "inputSha256": "dc3f74fe02d5a4c4db83a4c18d35408c8ab5b27ccd5d3f4a1ae714e45910a211",
+      "imageHash": "dbf19bc5da1e466b2e4c5b35fe62c92f2b6663b15a1fdd616a0977b593977ac1",
+      "fullScoreSha256": "f1b849e6f43fca5c3ca5ec8f8144fe3b6a6ae95f4a18303a9c79c442dcea06ec",
+      "scoreHash": "a7e14891e0dabf9d",
+      "mappingFingerprint": "5ae183f625f5a268",
+      "imageRhythmFingerprint": "dbf7d4bcdda70c34",
+      "rhythmFingerprint": "dbf7d4bcdda70c34",
+      "performanceEventsSha256": "6e535cc10d2fa4b0f58aaf87e58a5bf50f6db7ba541757158155d494e35ac2e2",
+      "regionMapSha256": "c9c3ef86ca526c614a8f80cce0df1c886d0892533b1d56179618ff7f384903b2",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "02f571fa90907fdccc222a29552e39a9cdb956b9249f357b909a744ae5fd2ed1",
+        "glass": "b8db9991865cef02e85cb6761f8256f515db094b0b493cfd91cd01ea5c622809",
+        "mist": "64b8320a09245ef04e45e5fe4a42b291e7c60cffe47d400274c11701acde8a29"
+      }
+    },
+    {
+      "index": 77,
+      "name": "同均值细棋盘",
+      "performanceStyle": "sparse",
+      "inputSha256": "e91e090e9479c58e3a47534d76af296502e1ddc3f04379a62453a09c607190d9",
+      "imageHash": "dbaf7dc51198fa6bef08ae35a115ab2fa3f3e7b1956dcf61c1be5cb58604f2c1",
+      "fullScoreSha256": "e0b9164ed9a5a07bb2325d3ee7f598862a8b7d69612238ab6b44495854d5b55f",
+      "scoreHash": "6ae14f4c9a1ba47a",
+      "mappingFingerprint": "7350b437d7f05d97",
+      "imageRhythmFingerprint": "2c2c035d9a7734e9",
+      "rhythmFingerprint": "2c2c035d9a7734e9",
+      "performanceEventsSha256": "2d97d73ef92dadc019b85543a3b622d7910e33fd148f4f2b8733136661225c18",
+      "regionMapSha256": "5897b756eb71b411c75198d94a88a76675df230a6605fa05cd02c1ba0881f9bb",
+      "tempoMapSha256": "eec72dacf214df61fedaddde62eff86daa970ca6e9ad4dd0cbbd77b1bade58db",
+      "audioTraces": {
+        "warm": "6ec61fb1f2352a5e4299a6039e647fa3ad4ed6c09c6192e4137fbb3a8f796e64",
+        "glass": "bdac0f1375c7eda28f4c1c46e699e3c3c1e8ba6c78005e7c94d641440c14d690",
+        "mist": "0bf39cd9ef6f3a841b14e3ab0492731af5dea18fa231be0fe27963c4bad3a4de"
+      }
+    },
+    {
+      "index": 77,
+      "name": "同均值细棋盘",
+      "performanceStyle": "continuous",
+      "inputSha256": "e91e090e9479c58e3a47534d76af296502e1ddc3f04379a62453a09c607190d9",
+      "imageHash": "dbaf7dc51198fa6bef08ae35a115ab2fa3f3e7b1956dcf61c1be5cb58604f2c1",
+      "fullScoreSha256": "4e1b6f3bf5668207bbd862c6753981232e6e52147f38149cbf15365b36b297ca",
+      "scoreHash": "6ae14f4c9a1ba47a",
+      "mappingFingerprint": "7350b437d7f05d97",
+      "imageRhythmFingerprint": "2c2c035d9a7734e9",
+      "rhythmFingerprint": "2c2c035d9a7734e9",
+      "performanceEventsSha256": "2d97d73ef92dadc019b85543a3b622d7910e33fd148f4f2b8733136661225c18",
+      "regionMapSha256": "5897b756eb71b411c75198d94a88a76675df230a6605fa05cd02c1ba0881f9bb",
+      "tempoMapSha256": "eec72dacf214df61fedaddde62eff86daa970ca6e9ad4dd0cbbd77b1bade58db",
+      "audioTraces": {
+        "warm": "6ec61fb1f2352a5e4299a6039e647fa3ad4ed6c09c6192e4137fbb3a8f796e64",
+        "glass": "bdac0f1375c7eda28f4c1c46e699e3c3c1e8ba6c78005e7c94d641440c14d690",
+        "mist": "0bf39cd9ef6f3a841b14e3ab0492731af5dea18fa231be0fe27963c4bad3a4de"
+      }
+    },
+    {
+      "index": 78,
+      "name": "同均值横纹",
+      "performanceStyle": "sparse",
+      "inputSha256": "618d0140fc774e17e91b77a8e5e9dc9a76de1c2b717ed7359c521d8feb05dce9",
+      "imageHash": "ced3bdc5fc1afa6b8f72b635bd15ab2f0810c7b11aa1cf614240a4b5c604f2c1",
+      "fullScoreSha256": "6c6abba821107353231fb59a8061ffeb35cf614ce855a6749bdc792b41f55a0b",
+      "scoreHash": "e0b61082009c9af2",
+      "mappingFingerprint": "ce6d1513f175897f",
+      "imageRhythmFingerprint": "6413e60210dfce5c",
+      "rhythmFingerprint": "6413e60210dfce5c",
+      "performanceEventsSha256": "209f78e5b7d5a359ac17c9c5cf32cd165319c90713314d4bce04090922953cf4",
+      "regionMapSha256": "fc4bceb4b040537fc7366d524601abbf7c6f331a1d6b7bc250b71c11be559fbb",
+      "tempoMapSha256": "eec72dacf214df61fedaddde62eff86daa970ca6e9ad4dd0cbbd77b1bade58db",
+      "audioTraces": {
+        "warm": "c6f768c52a25c5b0ee7a15bd609951b74ddd65f92fc6c9f407e3237e1971a8fe",
+        "glass": "35f3d7333025fe4fc61327b39a864fe3290b8b985029d9198ddd022ab26409e1",
+        "mist": "879d0faa1cd4d1dc4506849884776e07be2f02ac9acee381cc1ae7ea53abb3e1"
+      }
+    },
+    {
+      "index": 78,
+      "name": "同均值横纹",
+      "performanceStyle": "continuous",
+      "inputSha256": "618d0140fc774e17e91b77a8e5e9dc9a76de1c2b717ed7359c521d8feb05dce9",
+      "imageHash": "ced3bdc5fc1afa6b8f72b635bd15ab2f0810c7b11aa1cf614240a4b5c604f2c1",
+      "fullScoreSha256": "a404ecdc036765c7ad20c0cfeb4674a416a8d23cba730b8dc5578b1a237a8527",
+      "scoreHash": "e0b61082009c9af2",
+      "mappingFingerprint": "ce6d1513f175897f",
+      "imageRhythmFingerprint": "6413e60210dfce5c",
+      "rhythmFingerprint": "6413e60210dfce5c",
+      "performanceEventsSha256": "209f78e5b7d5a359ac17c9c5cf32cd165319c90713314d4bce04090922953cf4",
+      "regionMapSha256": "fc4bceb4b040537fc7366d524601abbf7c6f331a1d6b7bc250b71c11be559fbb",
+      "tempoMapSha256": "eec72dacf214df61fedaddde62eff86daa970ca6e9ad4dd0cbbd77b1bade58db",
+      "audioTraces": {
+        "warm": "c6f768c52a25c5b0ee7a15bd609951b74ddd65f92fc6c9f407e3237e1971a8fe",
+        "glass": "35f3d7333025fe4fc61327b39a864fe3290b8b985029d9198ddd022ab26409e1",
+        "mist": "879d0faa1cd4d1dc4506849884776e07be2f02ac9acee381cc1ae7ea53abb3e1"
+      }
+    },
+    {
+      "index": 79,
+      "name": "同均值纵纹",
+      "performanceStyle": "sparse",
+      "inputSha256": "e6c3326b06ed256091f5c1447b52a89c3cc7995bf5c1ad3dfd0a5e30cbb92ac0",
+      "imageHash": "583f1dc53ac6fa6b45900e353fe5ab2f6913e7b12ab7cf610c57fcb5cd04f2c1",
+      "fullScoreSha256": "0004de3a0121e632f60960eba2cb6c335811089ff591bdab3b23a14b63fd5601",
+      "scoreHash": "6ae14f4c9a1ba47a",
+      "mappingFingerprint": "7350b437d7f05d97",
+      "imageRhythmFingerprint": "2c2c035d9a7734e9",
+      "rhythmFingerprint": "2c2c035d9a7734e9",
+      "performanceEventsSha256": "c5b8bdc9ae83a0cd02824eff5199777312d70f5910635fe82efb2c855013fda6",
+      "regionMapSha256": "5897b756eb71b411c75198d94a88a76675df230a6605fa05cd02c1ba0881f9bb",
+      "tempoMapSha256": "eec72dacf214df61fedaddde62eff86daa970ca6e9ad4dd0cbbd77b1bade58db",
+      "audioTraces": {
+        "warm": "6ec61fb1f2352a5e4299a6039e647fa3ad4ed6c09c6192e4137fbb3a8f796e64",
+        "glass": "bdac0f1375c7eda28f4c1c46e699e3c3c1e8ba6c78005e7c94d641440c14d690",
+        "mist": "0bf39cd9ef6f3a841b14e3ab0492731af5dea18fa231be0fe27963c4bad3a4de"
+      }
+    },
+    {
+      "index": 79,
+      "name": "同均值纵纹",
+      "performanceStyle": "continuous",
+      "inputSha256": "e6c3326b06ed256091f5c1447b52a89c3cc7995bf5c1ad3dfd0a5e30cbb92ac0",
+      "imageHash": "583f1dc53ac6fa6b45900e353fe5ab2f6913e7b12ab7cf610c57fcb5cd04f2c1",
+      "fullScoreSha256": "8b82fae7e995c52df1b9f9ccad5824aef21cb63c9338f6d710421eeb74ae476a",
+      "scoreHash": "6ae14f4c9a1ba47a",
+      "mappingFingerprint": "7350b437d7f05d97",
+      "imageRhythmFingerprint": "2c2c035d9a7734e9",
+      "rhythmFingerprint": "2c2c035d9a7734e9",
+      "performanceEventsSha256": "c5b8bdc9ae83a0cd02824eff5199777312d70f5910635fe82efb2c855013fda6",
+      "regionMapSha256": "5897b756eb71b411c75198d94a88a76675df230a6605fa05cd02c1ba0881f9bb",
+      "tempoMapSha256": "eec72dacf214df61fedaddde62eff86daa970ca6e9ad4dd0cbbd77b1bade58db",
+      "audioTraces": {
+        "warm": "6ec61fb1f2352a5e4299a6039e647fa3ad4ed6c09c6192e4137fbb3a8f796e64",
+        "glass": "bdac0f1375c7eda28f4c1c46e699e3c3c1e8ba6c78005e7c94d641440c14d690",
+        "mist": "0bf39cd9ef6f3a841b14e3ab0492731af5dea18fa231be0fe27963c4bad3a4de"
+      }
+    },
+    {
+      "index": 80,
+      "name": "七像素有组织纹理",
+      "performanceStyle": "sparse",
+      "inputSha256": "9b10bb9c47b7d9543dcb73224271be17acdde81180cc92b83d15e228b212cb4f",
+      "imageHash": "cd10a9f5889c3e1ba919c815206ccf6fa3b6c391cf5585914da4ab45f6df05c1",
+      "fullScoreSha256": "5d53c68446a6ee4d68af232882834b2593246e424c34d65b1168ccdef0ded8f4",
+      "scoreHash": "1224101a01d1ea82",
+      "mappingFingerprint": "b6c686b8a5b02268",
+      "imageRhythmFingerprint": "6c9f9174efd1d054",
+      "rhythmFingerprint": "6c9f9174efd1d054",
+      "performanceEventsSha256": "127966ce41e33aa638653346f3805eebf01202d1d9d5248b17555de70276aaa3",
+      "regionMapSha256": "0a14acfd5d91874443310b6b2a2a8ffb52953e1377770e8817446ea6fe129b86",
+      "tempoMapSha256": "eb536347179aba59f047b51d6f5279e45e7ac06783ed0762aaaf88e565d35ecc",
+      "audioTraces": {
+        "warm": "041189b678c9c1831daa11677e274623026c26dc59a1c13f4a951959ba71956c",
+        "glass": "59fd1cd169319d96013215ef13034fe4057fa932ca48e478fe8052ca59465637",
+        "mist": "0a3224f591e1e15b8dc58827567e0cb21bcfb8ea52d0850e96ef862ad14c31e2"
+      }
+    },
+    {
+      "index": 80,
+      "name": "七像素有组织纹理",
+      "performanceStyle": "continuous",
+      "inputSha256": "9b10bb9c47b7d9543dcb73224271be17acdde81180cc92b83d15e228b212cb4f",
+      "imageHash": "cd10a9f5889c3e1ba919c815206ccf6fa3b6c391cf5585914da4ab45f6df05c1",
+      "fullScoreSha256": "188530aa007eade3097184899a68310719bc5e6955e3241c13393d8df22d7688",
+      "scoreHash": "1224101a01d1ea82",
+      "mappingFingerprint": "b6c686b8a5b02268",
+      "imageRhythmFingerprint": "6c9f9174efd1d054",
+      "rhythmFingerprint": "6c9f9174efd1d054",
+      "performanceEventsSha256": "127966ce41e33aa638653346f3805eebf01202d1d9d5248b17555de70276aaa3",
+      "regionMapSha256": "0a14acfd5d91874443310b6b2a2a8ffb52953e1377770e8817446ea6fe129b86",
+      "tempoMapSha256": "eb536347179aba59f047b51d6f5279e45e7ac06783ed0762aaaf88e565d35ecc",
+      "audioTraces": {
+        "warm": "041189b678c9c1831daa11677e274623026c26dc59a1c13f4a951959ba71956c",
+        "glass": "59fd1cd169319d96013215ef13034fe4057fa932ca48e478fe8052ca59465637",
+        "mist": "0a3224f591e1e15b8dc58827567e0cb21bcfb8ea52d0850e96ef862ad14c31e2"
+      }
+    },
+    {
+      "index": 81,
+      "name": "相同颜色分布打乱",
+      "performanceStyle": "sparse",
+      "inputSha256": "e7efcc650c0e30b7a03a899a8635cbe3f4e8dc941a03d5f93441cbbb97e1d148",
+      "imageHash": "02a8e239eb1223db7038ec196433179f73db5015c485fbd1f8d1f3699201ae01",
+      "fullScoreSha256": "0484e0c5543fb5f592deba3fb8b9098401742b1ad55b6f08ec953ba553f38581",
+      "scoreHash": "4f7fc0568010ffe2",
+      "mappingFingerprint": "2d843818c5ad0ac2",
+      "imageRhythmFingerprint": "c2c9d98d7fe2f475",
+      "rhythmFingerprint": "10ab68df67bb1895",
+      "performanceEventsSha256": "d231c938fe51c913ff52657d042a6d541b904112b5e805047ba800b9d155561e",
+      "regionMapSha256": "9a3e4b80ac3da3f30b7fa29839b640255df8b61879f854357e7ba08c22d0becc",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "06169a05d914b7090d23fc99ec8ae6066275ee4dd04b6e86877756e345d1d5d9",
+        "glass": "cc85828d74a85cbf8ca0bc567600c3f71e6747686362dfbf3d2213cab90d2f55",
+        "mist": "785203f716d736a4eb92053ce268a11726be4acfead615600897cfe5f07476f2"
+      }
+    },
+    {
+      "index": 81,
+      "name": "相同颜色分布打乱",
+      "performanceStyle": "continuous",
+      "inputSha256": "e7efcc650c0e30b7a03a899a8635cbe3f4e8dc941a03d5f93441cbbb97e1d148",
+      "imageHash": "02a8e239eb1223db7038ec196433179f73db5015c485fbd1f8d1f3699201ae01",
+      "fullScoreSha256": "2d70b4cc598d7e1c0e39397624e2469e54d47c50aa8b18c024d56e6984a4736e",
+      "scoreHash": "f297efd927c38493",
+      "mappingFingerprint": "88fe2bd8939736f0",
+      "imageRhythmFingerprint": "c2c9d98d7fe2f475",
+      "rhythmFingerprint": "c2c9d98d7fe2f475",
+      "performanceEventsSha256": "5199a1fbe9f0339c739db8c226b48d3334b5645e9bd5b701196342bf108d43cc",
+      "regionMapSha256": "1d3287f502eacb505b68ba731c30ad7f24fc1c2354b54c9d7ed8ccdaf8622d87",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "ea0c6c5dc6af9fb31315678c2b70f7b11a8a980c30d56d95ecb7fd4d2e765304",
+        "glass": "2712b4587140ad1dfba3c387c6d3633cda84ca58c8bdc36835c9566f86bb1627",
+        "mist": "2d674ca59be816f94c50a6c8803297d66aa6c20ef3cf0aafa8fd79b43e72f4cd"
+      }
+    },
+    {
+      "index": 82,
+      "name": "微小累积渐变",
+      "performanceStyle": "sparse",
+      "inputSha256": "fd47ca92af9d0579745a30ced492d55b39ba10c6e307a3021b9d1dbdfd93ffc3",
+      "imageHash": "05a8da058bc20c6b76d6e7f581d1332f794c2cf19a38f061549e5bf57ba2dac1",
+      "fullScoreSha256": "b9627d28d4d6bd84b6df8f264e3cd44dee577a0ca737ed3731a38550c6830ee0",
+      "scoreHash": "ba2b9b282bd39e7e",
+      "mappingFingerprint": "05e3f786aa46ffba",
+      "imageRhythmFingerprint": "e7440e9715b77de9",
+      "rhythmFingerprint": "d66266d8fffc73a6",
+      "performanceEventsSha256": "fb3a182b1fcbec2a3dd0c52eff5f4555acb1ffe80d9dcb5e7ca10e807a40461d",
+      "regionMapSha256": "54e329f171d06f5b2e55e7835413867da4c82a47a438fa0167c1571c2195db0e",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "c570367060663f350178be1563b96cc3e3fc4f740bfc62c00a7931169f97e348",
+        "glass": "224be89ffaf1741c5c2008ed1d7324d8bba580b007f273326d75f3c9e9943166",
+        "mist": "49b485c9a5c29b1571d0f14a47828194109d9fa7cbb2733a8934f3a2979aab3e"
+      }
+    },
+    {
+      "index": 82,
+      "name": "微小累积渐变",
+      "performanceStyle": "continuous",
+      "inputSha256": "fd47ca92af9d0579745a30ced492d55b39ba10c6e307a3021b9d1dbdfd93ffc3",
+      "imageHash": "05a8da058bc20c6b76d6e7f581d1332f794c2cf19a38f061549e5bf57ba2dac1",
+      "fullScoreSha256": "212db4160380870f537078a86c62d5f2cac2a21413dd52023bda52b16d3a4a15",
+      "scoreHash": "b06343d1e29ceec9",
+      "mappingFingerprint": "2e1f80f62494a7b2",
+      "imageRhythmFingerprint": "e7440e9715b77de9",
+      "rhythmFingerprint": "e7440e9715b77de9",
+      "performanceEventsSha256": "fc70de53fd08d69b3418775d8a8c0b5eaf0ba7c436f96a9f89817cc733551085",
+      "regionMapSha256": "5b30779962122a0bb6cea584f81367bc752162bafbf1cb9d7971f5b1f9c45355",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "8e50f8911826859ff7f26b22463322690a572c8bdeb83bac802d3c8b22baaa95",
+        "glass": "307d386905f67a4c71be3d2e36a8de21d32d379c8eab6e596e14d2a57139c10e",
+        "mist": "09a9e873ef10c7914590eda0e5707a5189fc278cb0fb223d1c3f43627ce70046"
+      }
+    },
+    {
+      "index": 83,
+      "name": "白底黑色区域",
+      "performanceStyle": "sparse",
+      "inputSha256": "9527304625b8626924bf646707dbf97db3b62e1cbd0192d732775e8c4e8b9dec",
+      "imageHash": "0310ecc57bd8ce6b4ed9143546c21b2fcd7aa6b1fb63cf618a374eb590bc72c1",
+      "fullScoreSha256": "d695823b93208870ea9d8f0512995121128b9ec83855dfcf30b64ab6b106ab46",
+      "scoreHash": "fb127d9aaf370a14",
+      "mappingFingerprint": "eecf83da6dfe166c",
+      "imageRhythmFingerprint": "9e6d6eec26561678",
+      "rhythmFingerprint": "6797a8a559ed6891",
+      "performanceEventsSha256": "5d972fb8bdc874e2aaa7bda615e1d64b71ed86d9953358deb8b132a8722257e4",
+      "regionMapSha256": "273a5299b5869d20cb7d42d1b46a5339ebf5a6d7f2ed2f6620f0a2f9d9734b59",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "f34e081b6162e8e7502122fda8e006ea0d35ef157dc63475e95a82e591bf6e6e",
+        "glass": "336b3d793bc3e0eb5623c1f2e509b9561d619bdc935545d0e2414b50a02cf307",
+        "mist": "12e08b73136240ae5265c02f77b581cbd46c684dc1182e09cb698825e80ca014"
+      }
+    },
+    {
+      "index": 83,
+      "name": "白底黑色区域",
+      "performanceStyle": "continuous",
+      "inputSha256": "9527304625b8626924bf646707dbf97db3b62e1cbd0192d732775e8c4e8b9dec",
+      "imageHash": "0310ecc57bd8ce6b4ed9143546c21b2fcd7aa6b1fb63cf618a374eb590bc72c1",
+      "fullScoreSha256": "67d586494e8ddaff40ddb0d1e536b8d017c165c8c118f51b86d3bd0f08140a76",
+      "scoreHash": "1ea6aa58568e23bc",
+      "mappingFingerprint": "9e2557bed8603f9e",
+      "imageRhythmFingerprint": "9e6d6eec26561678",
+      "rhythmFingerprint": "9e6d6eec26561678",
+      "performanceEventsSha256": "327c78d47d6d0c444bc6e4b99e7e2be0a83443c8c881dfc3211100b8af5e1c64",
+      "regionMapSha256": "9c3032426d9b4dcf33ac656396a41e3af416f6b66f31b88183d8951f2129e2f2",
+      "tempoMapSha256": "6dcf08db44bc96accbc56b261cc29c31f097ffed798227468018f28ac8cd1d19",
+      "audioTraces": {
+        "warm": "fbde02da14a8fc82e4372dc57e86b2bd0389e6125a4a4d4c3a1b2f006fa5e1c4",
+        "glass": "71cab29732a2c6f19b370ee1ba6bf7a3c8abced7cfe69a8294c958acc78d77b7",
+        "mist": "47a3fc98028274060315abd78c6a0a4613ed77c6322752eff474f7a905fd378a"
+      }
+    }
+  ]
+}

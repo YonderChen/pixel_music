@@ -1,0 +1,789 @@
+{
+  "schema": "pixelmusic-m0-regression-v1",
+  "scope": "M0 B01-B04 only",
+  "status": "passed",
+  "localDate": "2026-10-08",
+  "timezone": "Asia/Shanghai",
+  "startedAtUtc": "2026-10-08T00:34:38.571Z",
+  "finishedAtUtc": "2026-10-08T00:36:34.477Z",
+  "environment": {
+    "node": "v23.10.0",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "tests": [
+    {
+      "file": "tests/m0-baseline.test.cjs",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 52507,
+      "stdout": "{\"status\":\"passed\",\"frozenFiles\":10,\"images\":84,\"exactScores\":168,\"audioSchedulingCases\":504,\"resumeCases\":2016,\"frozenClassicScriptSnapshots\":168,\"realAudioRendered\":false}\n",
+      "stderr": "",
+      "error": null
+    },
+    {
+      "file": "tests/m0-contract.test.cjs",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 163,
+      "stdout": "{\"status\":\"passed\",\"rejectedMalformedExamples\":27,\"continuousAndSparseContractExamples\":true,\"multiEventRegionLinks\":true,\"fallbackPreservesPixelObject\":true,\"implementationEvidence\":\"specification-examples-only; contour runtime not implemented\"}\n",
+      "stderr": "",
+      "error": null
+    },
+    {
+      "file": "tests/m0-dataset.test.cjs",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 613,
+      "stdout": "{\"status\":\"passed\",\"inputs\":120,\"geometry\":24,\"realPhotos\":12,\"calibration\":24,\"holdout\":12,\"distinctPixelInputs\":119,\"pngRgbaMatches\":12,\"networkUsed\":false,\"contourAlgorithmEvaluated\":false}\n",
+      "stderr": "",
+      "error": null
+    },
+    {
+      "file": "tests/m0-acceptance.test.cjs",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 104,
+      "stdout": "{\"status\":\"passed\",\"geometryFixtures\":24,\"rejectedBadPredictionExamples\":75,\"metricsDefinitions\":\"nearest-rank-P95; coverage plus false-observation and gap checks\",\"contourAlgorithmMeasured\":false}\n",
+      "stderr": "",
+      "error": null
+    },
+    {
+      "file": "tests/m0-identity.test.cjs",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 34,
+      "stdout": "{\"status\":\"passed\",\"knownHashVectors\":3,\"canonicalNumberDigits\":9,\"classicScriptVmMatches\":true,\"productFingerprintImplementation\":false}\n",
+      "stderr": "",
+      "error": null
+    },
+    {
+      "file": "tests/articulation.test.cjs",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 6241,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"images\": 84,\n  \"alteredImages\": 26,\n  \"white\": {\n    \"attacks\": 22,\n    \"pitchCount\": 1,\n    \"intervalSeconds\": 2.3684210526315788,\n    \"firstNoteSeconds\": 0.986842105263158,\n    \"sourceRegions\": 120\n  },\n  \"results\": [\n    {\n      \"index\": 0,\n      \"name\": \"纯色\",\n      \"imageSegments\": 1,\n      \"attacks\": 20,\n      \"pulsedSegments\": 1,\n      \"scoreHash\": \"0d1568595236dd59\"\n    },\n    {\n      \"index\": 1,\n      \"name\": \"黑白棋盘\",\n      \"imageSegments\": 60,\n      \"attacks\": 60,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"74141d2961ff588f\"\n    },\n    {\n      \"index\": 2,\n      \"name\": \"明暗渐变\",\n      \"imageSegments\": 11,\n      \"attacks\": 11,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"e169d027c40b0a23\"\n    },\n    {\n      \"index\": 3,\n      \"name\": \"彩色渐变\",\n      \"imageSegments\": 24,\n      \"attacks\": 24,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"86bc9d51ac45051d\"\n    },\n    {\n      \"index\": 4,\n      \"name\": \"低饱和风景\",\n      \"imageSegments\": 25,\n      \"attacks\": 25,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"342cd5dd81aa8075\"\n    },\n    {\n      \"index\": 5,\n      \"name\": \"夕阳\",\n      \"imageSegments\": 87,\n      \"attacks\": 87,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"e4cceb1bf141c82d\"\n    },\n    {\n      \"index\": 6,\n      \"name\": \"高对比建筑\",\n      \"imageSegments\": 54,\n      \"attacks\": 54,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"b98de1c6d71e081e\"\n    },\n    {\n      \"index\": 7,\n      \"name\": \"几何人像\",\n      \"imageSegments\": 68,\n      \"attacks\": 68,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"4eb5d1d19cd2f765\"\n    },\n    {\n      \"index\": 8,\n      \"name\": \"抽象图案\",\n      \"imageSegments\": 114,\n      \"attacks\": 114,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"4d0591d03ff5e37a\"\n    },\n    {\n      \"index\": 9,\n      \"name\": \"密集纹理\",\n      \"imageSegments\": 14,\n      \"attacks\": 14,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"1224101a01d1ea82\"\n    },\n    {\n      \"index\": 10,\n      \"name\": \"噪声\",\n      \"imageSegments\": 30,\n      \"attacks\": 30,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"d99e4106be96fac2\"\n    },\n    {\n      \"index\": 11,\n      \"name\": \"局部变化对照\",\n      \"imageSegments\": 87,\n      \"attacks\": 87,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"d46369e31d6915f9\"\n    },\n    {\n      \"index\": 12,\n      \"name\": \"方向渐变 1\",\n      \"imageSegments\": 8,\n      \"attacks\": 8,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"fa2b7b3b75fbe23b\"\n    },\n    {\n      \"index\": 13,\n      \"name\": \"方向渐变 2\",\n      \"imageSegments\": 97,\n      \"attacks\": 97,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"e2323e7ec277a7c6\"\n    },\n    {\n      \"index\": 14,\n      \"name\": \"方向渐变 3\",\n      \"imageSegments\": 8,\n      \"attacks\": 8,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"0f9199d38c8bf4e7\"\n    },\n    {\n      \"index\": 15,\n      \"name\": \"方向渐变 4\",\n      \"imageSegments\": 97,\n      \"attacks\": 97,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"177c301560294897\"\n    },\n    {\n      \"index\": 16,\n      \"name\": \"方向渐变 5\",\n      \"imageSegments\": 9,\n      \"attacks\": 9,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"eb342bb00990bda4\"\n    },\n    {\n      \"index\": 17,\n      \"name\": \"方向渐变 6\",\n      \"imageSegments\": 97,\n      \"attacks\": 97,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"c385292e7ea93318\"\n    },\n    {\n      \"index\": 18,\n      \"name\": \"周期条纹 1\",\n      \"imageSegments\": 24,\n      \"attacks\": 24,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"ca99d19de30aa465\"\n    },\n    {\n      \"index\": 19,\n      \"name\": \"周期条纹 2\",\n      \"imageSegments\": 49,\n      \"attacks\": 49,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"43a91f3cdf9a53c2\"\n    },\n    {\n      \"index\": 20,\n      \"name\": \"周期条纹 3\",\n      \"imageSegments\": 12,\n      \"attacks\": 12,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"2ecd6037ee543d7f\"\n    },\n    {\n      \"index\": 21,\n      \"name\": \"周期条纹 4\",\n      \"imageSegments\": 73,\n      \"attacks\": 73,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"97e1e2f41c6e8c28\"\n    },\n    {\n      \"index\": 22,\n      \"name\": \"周期条纹 5\",\n      \"imageSegments\": 14,\n      \"attacks\": 19,\n      \"pulsedSegments\": 3,\n      \"scoreHash\": \"9087395ead43c0dc\"\n    },\n    {\n      \"index\": 23,\n      \"name\": \"周期条纹 6\",\n      \"imageSegments\": 97,\n      \"attacks\": 97,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"73a7c828783c8f9a\"\n    },\n    {\n      \"index\": 24,\n      \"name\": \"棋盘尺度 1\",\n      \"imageSegments\": 13,\n      \"attacks\": 13,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"4d4b026dee541901\"\n    },\n    {\n      \"index\": 25,\n      \"name\": \"棋盘尺度 2\",\n      \"imageSegments\": 56,\n      \"attacks\": 56,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"23190ea58fd733e1\"\n    },\n    {\n      \"index\": 26,\n      \"name\": \"棋盘尺度 3\",\n      \"imageSegments\": 108,\n      \"attacks\": 108,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"2bb39f7861e63818\"\n    },\n    {\n      \"index\": 27,\n      \"name\": \"棋盘尺度 4\",\n      \"imageSegments\": 91,\n      \"attacks\": 91,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"addb92919fb66823\"\n    },\n    {\n      \"index\": 28,\n      \"name\": \"棋盘尺度 5\",\n      \"imageSegments\": 104,\n      \"attacks\": 104,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"a7821bd0759db2a4\"\n    },\n    {\n      \"index\": 29,\n      \"name\": \"棋盘尺度 6\",\n      \"imageSegments\": 73,\n      \"attacks\": 73,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"7026c694d681f3d0\"\n    },\n    {\n      \"index\": 30,\n      \"name\": \"彩色波形 1\",\n      \"imageSegments\": 99,\n      \"attacks\": 99,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"edac3d5208a36e54\"\n    },\n    {\n      \"index\": 31,\n      \"name\": \"彩色波形 2\",\n      \"imageSegments\": 109,\n      \"attacks\": 109,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"87a304112fde1953\"\n    },\n    {\n      \"index\": 32,\n      \"name\": \"彩色波形 3\",\n      \"imageSegments\": 110,\n      \"attacks\": 110,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"4eb0f0924733b8f6\"\n    },\n    {\n      \"index\": 33,\n      \"name\": \"彩色波形 4\",\n      \"imageSegments\": 115,\n      \"attacks\": 115,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"3c92d571d42da09d\"\n    },\n    {\n      \"index\": 34,\n      \"name\": \"彩色波形 5\",\n      \"imageSegments\": 118,\n      \"attacks\": 118,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"a4fe650b49a3342f\"\n    },\n    {\n      \"index\": 35,\n      \"name\": \"彩色波形 6\",\n      \"imageSegments\": 117,\n      \"attacks\": 117,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"b95c4e964eb5e6a0\"\n    },\n    {\n      \"index\": 36,\n      \"name\": \"几何圆形 1\",\n      \"imageSegments\": 55,\n      \"attacks\": 59,\n      \"pulsedSegments\": 1,\n      \"scoreHash\": \"5d36a0c035fbe94e\"\n    },\n    {\n      \"index\": 37,\n      \"name\": \"几何圆形 2\",\n      \"imageSegments\": 56,\n      \"attacks\": 59,\n      \"pulsedSegments\": 1,\n      \"scoreHash\": \"2fe2cecfe4fcf3dd\"\n    },\n    {\n      \"index\": 38,\n      \"name\": \"几何圆形 3\",\n      \"imageSegments\": 61,\n      \"attacks\": 63,\n      \"pulsedSegments\": 1,\n      \"scoreHash\": \"df8d7d01c9b02dd3\"\n    },\n    {\n      \"index\": 39,\n      \"name\": \"几何圆形 4\",\n      \"imageSegments\": 69,\n      \"attacks\": 69,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"12ae11559d4c0493\"\n    },\n    {\n      \"index\": 40,\n      \"name\": \"几何圆形 5\",\n      \"imageSegments\": 75,\n      \"attacks\": 75,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"23a8b951bb31b179\"\n    },\n    {\n      \"index\": 41,\n      \"name\": \"几何圆形 6\",\n      \"imageSegments\": 71,\n      \"attacks\": 71,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"3d00bdd6c7087cc0\"\n    },\n    {\n      \"index\": 42,\n      \"name\": \"空间块面 1\",\n      \"imageSegments\": 104,\n      \"attacks\": 104,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"b987902719b735cf\"\n    },\n    {\n      \"index\": 43,\n      \"name\": \"空间块面 2\",\n      \"imageSegments\": 106,\n      \"attacks\": 106,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"efa8d2d9e7853ccb\"\n    },\n    {\n      \"index\": 44,\n      \"name\": \"空间块面 3\",\n      \"imageSegments\": 105,\n      \"attacks\": 105,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"b484e1d4ff7de480\"\n    },\n    {\n      \"index\": 45,\n      \"name\": \"空间块面 4\",\n      \"imageSegments\": 103,\n      \"attacks\": 103,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"c598d9c2be7e7ffa\"\n    },\n    {\n      \"index\": 46,\n      \"name\": \"空间块面 5\",\n      \"imageSegments\": 102,\n      \"attacks\": 102,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"930baf098efb5085\"\n    },\n    {\n      \"index\": 47,\n      \"name\": \"空间块面 6\",\n      \"imageSegments\": 100,\n      \"attacks\": 100,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"0147e8039a950ac1\"\n    },\n    {\n      \"index\": 48,\n      \"name\": \"放射环形 1\",\n      \"imageSegments\": 105,\n      \"attacks\": 105,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"a558381f8e33f5f3\"\n    },\n    {\n      \"index\": 49,\n      \"name\": \"放射环形 2\",\n      \"imageSegments\": 97,\n      \"attacks\": 97,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"a3e400fa3d448ee0\"\n    },\n    {\n      \"index\": 50,\n      \"name\": \"放射环形 3\",\n      \"imageSegments\": 68,\n      \"attacks\": 68,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"3fbb6c7e19bdab2e\"\n    },\n    {\n      \"index\": 51,\n      \"name\": \"放射环形 4\",\n      \"imageSegments\": 69,\n      \"attacks\": 69,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"9ec263e23160fcc6\"\n    },\n    {\n      \"index\": 52,\n      \"name\": \"放射环形 5\",\n      \"imageSegments\": 71,\n      \"attacks\": 71,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"544f08a8aac9500c\"\n    },\n    {\n      \"index\": 53,\n      \"name\": \"放射环形 6\",\n      \"imageSegments\": 67,\n      \"attacks\": 67,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"465f10d33594e2b3\"\n    },\n    {\n      \"index\": 54,\n      \"name\": \"噪声强度 1\",\n      \"imageSegments\": 1,\n      \"attacks\": 20,\n      \"pulsedSegments\": 1,\n      \"scoreHash\": \"03c565a510ba43c9\"\n    },\n    {\n      \"index\": 55,\n      \"name\": \"噪声强度 2\",\n      \"imageSegments\": 1,\n      \"attacks\": 20,\n      \"pulsedSegments\": 1,\n      \"scoreHash\": \"ce7f9e61c13a4179\"\n    },\n    {\n      \"index\": 56,\n      \"name\": \"噪声强度 3\",\n      \"imageSegments\": 1,\n      \"attacks\": 20,\n      \"pulsedSegments\": 1,\n      \"scoreHash\": \"e14d8ad143e76639\"\n    },\n    {\n      \"index\": 57,\n      \"name\": \"噪声强度 4\",\n      \"imageSegments\": 1,\n      \"attacks\": 1,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"6a0b4b6845313fb4\"\n    },\n    {\n      \"index\": 58,\n      \"name\": \"噪声强度 5\",\n      \"imageSegments\": 1,\n      \"attacks\": 1,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"e352f24f99323a2d\"\n    },\n    {\n      \"index\": 59,\n      \"name\": \"噪声强度 6\",\n      \"imageSegments\": 10,\n      \"attacks\": 10,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"e0dcb2ccf4c90132\"\n    },\n    {\n      \"index\": 60,\n      \"name\": \"精确纯白\",\n      \"imageSegments\": 1,\n      \"attacks\": 22,\n      \"pulsedSegments\": 1,\n      \"scoreHash\": \"492eed5b4cf0d783\"\n    },\n    {\n      \"index\": 61,\n      \"name\": \"精确纯黑\",\n      \"imageSegments\": 1,\n      \"attacks\": 19,\n      \"pulsedSegments\": 1,\n      \"scoreHash\": \"7dfed760ef11fb64\"\n    },\n    {\n      \"index\": 62,\n      \"name\": \"纯灰 32\",\n      \"imageSegments\": 1,\n      \"attacks\": 19,\n      \"pulsedSegments\": 1,\n      \"scoreHash\": \"f572d90161e598ff\"\n    },\n    {\n      \"index\": 63,\n      \"name\": \"纯灰 96\",\n      \"imageSegments\": 1,\n      \"attacks\": 20,\n      \"pulsedSegments\": 1,\n      \"scoreHash\": \"664500a5c1c65a89\"\n    },\n    {\n      \"index\": 64,\n      \"name\": \"纯灰 128\",\n      \"imageSegments\": 1,\n      \"attacks\": 20,\n      \"pulsedSegments\": 1,\n      \"scoreHash\": \"c04b158d8448dc59\"\n    },\n    {\n      \"index\": 65,\n      \"name\": \"纯灰 192\",\n      \"imageSegments\": 1,\n      \"attacks\": 20,\n      \"pulsedSegments\": 1,\n      \"scoreHash\": \"137e8155c1a11d19\"\n    },\n    {\n      \"index\": 66,\n      \"name\": \"接近纯白 254\",\n      \"imageSegments\": 1,\n      \"attacks\": 22,\n      \"pulsedSegments\": 1,\n      \"scoreHash\": \"be603d05fa5b9e7f\"\n    },\n    {\n      \"index\": 67,\n      \"name\": \"纯红\",\n      \"imageSegments\": 1,\n      \"attacks\": 19,\n      \"pulsedSegments\": 1,\n      \"scoreHash\": \"1c135ef7ced3514b\"\n    },\n    {\n      \"index\": 68,\n      \"name\": \"纯绿\",\n      \"imageSegments\": 1,\n      \"attacks\": 19,\n      \"pulsedSegments\": 1,\n      \"scoreHash\": \"58afb1fc93519264\"\n    },\n    {\n      \"index\": 69,\n      \"name\": \"纯蓝\",\n      \"imageSegments\": 1,\n      \"attacks\": 19,\n      \"pulsedSegments\": 1,\n      \"scoreHash\": \"dc7991befef281d0\"\n    },\n    {\n      \"index\": 70,\n      \"name\": \"纯青\",\n      \"imageSegments\": 1,\n      \"attacks\": 19,\n      \"pulsedSegments\": 1,\n      \"scoreHash\": \"0c280bd9bf2bb95d\"\n    },\n    {\n      \"index\": 71,\n      \"name\": \"纯品红\",\n      \"imageSegments\": 1,\n      \"attacks\": 19,\n      \"pulsedSegments\": 1,\n      \"scoreHash\": \"ef6b57505639549a\"\n    },\n    {\n      \"index\": 72,\n      \"name\": \"纯白轻微噪声\",\n      \"imageSegments\": 1,\n      \"attacks\": 22,\n      \"pulsedSegments\": 1,\n      \"scoreHash\": \"38f838d547f1eaa7\"\n    },\n    {\n      \"index\": 73,\n      \"name\": \"纯灰轻微噪声\",\n      \"imageSegments\": 1,\n      \"attacks\": 20,\n      \"pulsedSegments\": 1,\n      \"scoreHash\": \"c04b158d8448dc59\"\n    },\n    {\n      \"index\": 74,\n      \"name\": \"全范围横向灰阶渐变\",\n      \"imageSegments\": 14,\n      \"attacks\": 14,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"0171117962f2832f\"\n    },\n    {\n      \"index\": 75,\n      \"name\": \"全范围纵向灰阶渐变\",\n      \"imageSegments\": 97,\n      \"attacks\": 97,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"7fcf9feb20014b79\"\n    },\n    {\n      \"index\": 76,\n      \"name\": \"白底局部红色块\",\n      \"imageSegments\": 3,\n      \"attacks\": 23,\n      \"pulsedSegments\": 2,\n      \"scoreHash\": \"f966df639ace019b\"\n    },\n    {\n      \"index\": 77,\n      \"name\": \"同均值细棋盘\",\n      \"imageSegments\": 24,\n      \"attacks\": 24,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"6ae14f4c9a1ba47a\"\n    },\n    {\n      \"index\": 78,\n      \"name\": \"同均值横纹\",\n      \"imageSegments\": 97,\n      \"attacks\": 97,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"e0b61082009c9af2\"\n    },\n    {\n      \"index\": 79,\n      \"name\": \"同均值纵纹\",\n      \"imageSegments\": 24,\n      \"attacks\": 24,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"6ae14f4c9a1ba47a\"\n    },\n    {\n      \"index\": 80,\n      \"name\": \"七像素有组织纹理\",\n      \"imageSegments\": 14,\n      \"attacks\": 14,\n      \"pulsedSegments\": 0,\n      \"scoreHash\": \"1224101a01d1ea82\"\n    },\n    {\n      \"index\": 81,\n      \"name\": \"相同颜色分布打乱\",\n      \"imageSegments\": 7,\n      \"attacks\": 23,\n      \"pulsedSegments\": 4,\n      \"scoreHash\": \"4f7fc0568010ffe2\"\n    },\n    {\n      \"index\": 82,\n      \"name\": \"微小累积渐变\",\n      \"imageSegments\": 2,\n      \"attacks\": 21,\n      \"pulsedSegments\": 2,\n      \"scoreHash\": \"ba2b9b282bd39e7e\"\n    },\n    {\n      \"index\": 83,\n      \"name\": \"白底黑色区域\",\n      \"imageSegments\": 3,\n      \"attacks\": 23,\n      \"pulsedSegments\": 2,\n      \"scoreHash\": \"fb127d9aaf370a14\"\n    }\n  ]\n}\n",
+      "stderr": "",
+      "error": null
+    },
+    {
+      "file": "tests/articulation-audio.test.cjs",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 14442,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"schedulingCases\": 504,\n  \"actualMelodyAttacks\": 25716,\n  \"decayEnvelope\": true,\n  \"gapResume\": true,\n  \"cleanup\": true\n}\n",
+      "stderr": "",
+      "error": null
+    },
+    {
+      "file": "tests/articulation-browser.test.cjs",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 4940,
+      "stdout": "Passed: all 168 real-browser/Node sound, mapping, image-rhythm and performance-rhythm snapshots.\n",
+      "stderr": "",
+      "error": null
+    },
+    {
+      "file": "tests/fidelity.test.cjs",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 3713,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"samples\": 84,\n  \"constantAndNearConstantCases\": 14,\n  \"actualVoiceEvents\": 4071,\n  \"white\": {\n    \"onsets\": 1,\n    \"regions\": 120,\n    \"seconds\": 52.526315789473685\n  },\n  \"gradient\": {\n    \"events\": 14,\n    \"pitches\": 8\n  },\n  \"matchedHistogram\": {\n    \"organized\": 14,\n    \"noise\": 7\n  },\n  \"cases\": [\n    {\n      \"name\": \"纯色\",\n      \"onsets\": 1,\n      \"complexity\": 0,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 76,\n      \"scoreHash\": \"1a78cd61bec844eb\"\n    },\n    {\n      \"name\": \"黑白棋盘\",\n      \"onsets\": 60,\n      \"complexity\": 0.491647,\n      \"pitches\": 2,\n      \"periodicRetriggers\": 5,\n      \"rests\": 0,\n      \"bpm\": 90,\n      \"scoreHash\": \"baa6a22bbd54e9fb\"\n    },\n    {\n      \"name\": \"明暗渐变\",\n      \"onsets\": 11,\n      \"complexity\": 0.009224,\n      \"pitches\": 6,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 76,\n      \"scoreHash\": \"bbcd984dcc2e0d4f\"\n    },\n    {\n      \"name\": \"彩色渐变\",\n      \"onsets\": 24,\n      \"complexity\": 0.062736,\n      \"pitches\": 3,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 78,\n      \"scoreHash\": \"3d86ba53c0120921\"\n    },\n    {\n      \"name\": \"低饱和风景\",\n      \"onsets\": 25,\n      \"complexity\": 0.14576,\n      \"pitches\": 2,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 80,\n      \"scoreHash\": \"bf9c23dbb3d56c29\"\n    },\n    {\n      \"name\": \"夕阳\",\n      \"onsets\": 87,\n      \"complexity\": 0.330067,\n      \"pitches\": 5,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 86,\n      \"scoreHash\": \"205c2d2d77f4a459\"\n    },\n    {\n      \"name\": \"高对比建筑\",\n      \"onsets\": 54,\n      \"complexity\": 0.210727,\n      \"pitches\": 6,\n      \"periodicRetriggers\": 0,\n      \"rests\": 4,\n      \"bpm\": 82,\n      \"scoreHash\": \"982056bcac3837d2\"\n    },\n    {\n      \"name\": \"几何人像\",\n      \"onsets\": 68,\n      \"complexity\": 0.170947,\n      \"pitches\": 4,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 80,\n      \"scoreHash\": \"d2a813afe6404639\"\n    },\n    {\n      \"name\": \"抽象图案\",\n      \"onsets\": 114,\n      \"complexity\": 0.625129,\n      \"pitches\": 3,\n      \"periodicRetriggers\": 72,\n      \"rests\": 0,\n      \"bpm\": 94,\n      \"scoreHash\": \"11a5186e1722217e\"\n    },\n    {\n      \"name\": \"密集纹理\",\n      \"onsets\": 14,\n      \"complexity\": 0.103794,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 13,\n      \"rests\": 0,\n      \"bpm\": 78,\n      \"scoreHash\": \"76aed5a089154a5e\"\n    },\n    {\n      \"name\": \"噪声\",\n      \"onsets\": 30,\n      \"complexity\": 0.064092,\n      \"pitches\": 2,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 78,\n      \"scoreHash\": \"973c191cbaa033ee\"\n    },\n    {\n      \"name\": \"局部变化对照\",\n      \"onsets\": 87,\n      \"complexity\": 0.328467,\n      \"pitches\": 5,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 86,\n      \"scoreHash\": \"bafe8065cc6eb4dd\"\n    },\n    {\n      \"name\": \"方向渐变 1\",\n      \"onsets\": 8,\n      \"complexity\": 0.006126,\n      \"pitches\": 2,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 76,\n      \"scoreHash\": \"ad8cd5f973749407\"\n    },\n    {\n      \"name\": \"方向渐变 2\",\n      \"onsets\": 97,\n      \"complexity\": 0.234016,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 82,\n      \"scoreHash\": \"9e50ce74882c319a\"\n    },\n    {\n      \"name\": \"方向渐变 3\",\n      \"onsets\": 8,\n      \"complexity\": 0.008054,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 76,\n      \"scoreHash\": \"68844aadb1c5916b\"\n    },\n    {\n      \"name\": \"方向渐变 4\",\n      \"onsets\": 97,\n      \"complexity\": 0.272245,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 84,\n      \"scoreHash\": \"b75c4b0b28b43d33\"\n    },\n    {\n      \"name\": \"方向渐变 5\",\n      \"onsets\": 9,\n      \"complexity\": 0.012405,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 76,\n      \"scoreHash\": \"d80fb8a61cd801d8\"\n    },\n    {\n      \"name\": \"方向渐变 6\",\n      \"onsets\": 97,\n      \"complexity\": 0.307148,\n      \"pitches\": 2,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 84,\n      \"scoreHash\": \"53b23334bde256ec\"\n    },\n    {\n      \"name\": \"周期条纹 1\",\n      \"onsets\": 24,\n      \"complexity\": 0.227099,\n      \"pitches\": 3,\n      \"periodicRetriggers\": 15,\n      \"rests\": 0,\n      \"bpm\": 82,\n      \"scoreHash\": \"73a52bdf48aff5b9\"\n    },\n    {\n      \"name\": \"周期条纹 2\",\n      \"onsets\": 49,\n      \"complexity\": 0.144772,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 48,\n      \"rests\": 0,\n      \"bpm\": 80,\n      \"scoreHash\": \"c59fb0ea28047706\"\n    },\n    {\n      \"name\": \"周期条纹 3\",\n      \"onsets\": 12,\n      \"complexity\": 0.059583,\n      \"pitches\": 2,\n      \"periodicRetriggers\": 0,\n      \"rests\": 11,\n      \"bpm\": 78,\n      \"scoreHash\": \"6cf6684d997174a3\"\n    },\n    {\n      \"name\": \"周期条纹 4\",\n      \"onsets\": 73,\n      \"complexity\": 0.288521,\n      \"pitches\": 3,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 84,\n      \"scoreHash\": \"84f24cce9ca4d2e4\"\n    },\n    {\n      \"name\": \"周期条纹 5\",\n      \"onsets\": 14,\n      \"complexity\": 0.060154,\n      \"pitches\": 4,\n      \"periodicRetriggers\": 0,\n      \"rests\": 1,\n      \"bpm\": 78,\n      \"scoreHash\": \"25ea4dcff4ac339b\"\n    },\n    {\n      \"name\": \"周期条纹 6\",\n      \"onsets\": 97,\n      \"complexity\": 0.306369,\n      \"pitches\": 4,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 84,\n      \"scoreHash\": \"414da14a393bcf3e\"\n    },\n    {\n      \"name\": \"棋盘尺度 1\",\n      \"onsets\": 13,\n      \"complexity\": 0.138704,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 12,\n      \"rests\": 0,\n      \"bpm\": 80,\n      \"scoreHash\": \"30034a2bb3d2770d\"\n    },\n    {\n      \"name\": \"棋盘尺度 2\",\n      \"onsets\": 56,\n      \"complexity\": 0.462582,\n      \"pitches\": 2,\n      \"periodicRetriggers\": 7,\n      \"rests\": 0,\n      \"bpm\": 88,\n      \"scoreHash\": \"7624baff6ca1573d\"\n    },\n    {\n      \"name\": \"棋盘尺度 3\",\n      \"onsets\": 108,\n      \"complexity\": 0.584875,\n      \"pitches\": 4,\n      \"periodicRetriggers\": 6,\n      \"rests\": 0,\n      \"bpm\": 92,\n      \"scoreHash\": \"949af89229697a94\"\n    },\n    {\n      \"name\": \"棋盘尺度 4\",\n      \"onsets\": 91,\n      \"complexity\": 0.560417,\n      \"pitches\": 3,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 92,\n      \"scoreHash\": \"f374a5bb5433d907\"\n    },\n    {\n      \"name\": \"棋盘尺度 5\",\n      \"onsets\": 104,\n      \"complexity\": 0.535467,\n      \"pitches\": 6,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 90,\n      \"scoreHash\": \"2b78b78636756ab8\"\n    },\n    {\n      \"name\": \"棋盘尺度 6\",\n      \"onsets\": 73,\n      \"complexity\": 0.323075,\n      \"pitches\": 4,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 86,\n      \"scoreHash\": \"6241639a7cd9047c\"\n    },\n    {\n      \"name\": \"彩色波形 1\",\n      \"onsets\": 99,\n      \"complexity\": 0.45366,\n      \"pitches\": 5,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 88,\n      \"scoreHash\": \"b92100a4647ce400\"\n    },\n    {\n      \"name\": \"彩色波形 2\",\n      \"onsets\": 109,\n      \"complexity\": 0.547285,\n      \"pitches\": 5,\n      \"periodicRetriggers\": 4,\n      \"rests\": 0,\n      \"bpm\": 92,\n      \"scoreHash\": \"500ea1df0b87c7c7\"\n    },\n    {\n      \"name\": \"彩色波形 3\",\n      \"onsets\": 110,\n      \"complexity\": 0.55607,\n      \"pitches\": 5,\n      \"periodicRetriggers\": 23,\n      \"rests\": 0,\n      \"bpm\": 92,\n      \"scoreHash\": \"963303fc17725bca\"\n    },\n    {\n      \"name\": \"彩色波形 4\",\n      \"onsets\": 115,\n      \"complexity\": 0.613002,\n      \"pitches\": 5,\n      \"periodicRetriggers\": 43,\n      \"rests\": 0,\n      \"bpm\": 94,\n      \"scoreHash\": \"4648bc9bdee4e6e1\"\n    },\n    {\n      \"name\": \"彩色波形 5\",\n      \"onsets\": 118,\n      \"complexity\": 0.637542,\n      \"pitches\": 5,\n      \"periodicRetriggers\": 62,\n      \"rests\": 0,\n      \"bpm\": 94,\n      \"scoreHash\": \"2f8696a9940d1bd3\"\n    },\n    {\n      \"name\": \"彩色波形 6\",\n      \"onsets\": 117,\n      \"complexity\": 0.663241,\n      \"pitches\": 5,\n      \"periodicRetriggers\": 86,\n      \"rests\": 0,\n      \"bpm\": 94,\n      \"scoreHash\": \"a5c3fe8c4dc40814\"\n    },\n    {\n      \"name\": \"几何圆形 1\",\n      \"onsets\": 55,\n      \"complexity\": 0.21384,\n      \"pitches\": 3,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 82,\n      \"scoreHash\": \"783ace14e81883ee\"\n    },\n    {\n      \"name\": \"几何圆形 2\",\n      \"onsets\": 56,\n      \"complexity\": 0.216678,\n      \"pitches\": 3,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 82,\n      \"scoreHash\": \"ca735915d3d1ab89\"\n    },\n    {\n      \"name\": \"几何圆形 3\",\n      \"onsets\": 61,\n      \"complexity\": 0.24502,\n      \"pitches\": 3,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 82,\n      \"scoreHash\": \"d2b27d24c0e09be8\"\n    },\n    {\n      \"name\": \"几何圆形 4\",\n      \"onsets\": 69,\n      \"complexity\": 0.274792,\n      \"pitches\": 3,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 84,\n      \"scoreHash\": \"29ae459bd30c2da7\"\n    },\n    {\n      \"name\": \"几何圆形 5\",\n      \"onsets\": 75,\n      \"complexity\": 0.28732,\n      \"pitches\": 3,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 84,\n      \"scoreHash\": \"06eedc37a2e863f5\"\n    },\n    {\n      \"name\": \"几何圆形 6\",\n      \"onsets\": 71,\n      \"complexity\": 0.274758,\n      \"pitches\": 3,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 84,\n      \"scoreHash\": \"5aacbd94514f0b24\"\n    },\n    {\n      \"name\": \"空间块面 1\",\n      \"onsets\": 104,\n      \"complexity\": 0.429347,\n      \"pitches\": 4,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 88,\n      \"scoreHash\": \"81d0d9c90ca272b3\"\n    },\n    {\n      \"name\": \"空间块面 2\",\n      \"onsets\": 106,\n      \"complexity\": 0.414043,\n      \"pitches\": 4,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 88,\n      \"scoreHash\": \"cb7c96b7b8adc19f\"\n    },\n    {\n      \"name\": \"空间块面 3\",\n      \"onsets\": 105,\n      \"complexity\": 0.398174,\n      \"pitches\": 5,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 88,\n      \"scoreHash\": \"bde7a97ec117ba8c\"\n    },\n    {\n      \"name\": \"空间块面 4\",\n      \"onsets\": 103,\n      \"complexity\": 0.341264,\n      \"pitches\": 5,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 86,\n      \"scoreHash\": \"526f8344e2c94e86\"\n    },\n    {\n      \"name\": \"空间块面 5\",\n      \"onsets\": 102,\n      \"complexity\": 0.332331,\n      \"pitches\": 5,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 86,\n      \"scoreHash\": \"6d8c96737ae079c9\"\n    },\n    {\n      \"name\": \"空间块面 6\",\n      \"onsets\": 100,\n      \"complexity\": 0.319515,\n      \"pitches\": 5,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 84,\n      \"scoreHash\": \"4132b6a1f9e5c9e5\"\n    },\n    {\n      \"name\": \"放射环形 1\",\n      \"onsets\": 105,\n      \"complexity\": 0.485274,\n      \"pitches\": 2,\n      \"periodicRetriggers\": 21,\n      \"rests\": 0,\n      \"bpm\": 90,\n      \"scoreHash\": \"732f62011b469adf\"\n    },\n    {\n      \"name\": \"放射环形 2\",\n      \"onsets\": 97,\n      \"complexity\": 0.488658,\n      \"pitches\": 2,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 90,\n      \"scoreHash\": \"c1382fe843e37294\"\n    },\n    {\n      \"name\": \"放射环形 3\",\n      \"onsets\": 68,\n      \"complexity\": 0.34178,\n      \"pitches\": 2,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 86,\n      \"scoreHash\": \"c11057e85e7cba32\"\n    },\n    {\n      \"name\": \"放射环形 4\",\n      \"onsets\": 69,\n      \"complexity\": 0.387735,\n      \"pitches\": 2,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 86,\n      \"scoreHash\": \"9d39db8c675212aa\"\n    },\n    {\n      \"name\": \"放射环形 5\",\n      \"onsets\": 71,\n      \"complexity\": 0.403653,\n      \"pitches\": 2,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 88,\n      \"scoreHash\": \"aad654d698357200\"\n    },\n    {\n      \"name\": \"放射环形 6\",\n      \"onsets\": 67,\n      \"complexity\": 0.389568,\n      \"pitches\": 2,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 86,\n      \"scoreHash\": \"9852f7194a77a26f\"\n    },\n    {\n      \"name\": \"噪声强度 1\",\n      \"onsets\": 1,\n      \"complexity\": 0.001788,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 76,\n      \"scoreHash\": \"5a8bb0c4ba3d705e\"\n    },\n    {\n      \"name\": \"噪声强度 2\",\n      \"onsets\": 1,\n      \"complexity\": 0.010172,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 76,\n      \"scoreHash\": \"4b21222f9eb54177\"\n    },\n    {\n      \"name\": \"噪声强度 3\",\n      \"onsets\": 1,\n      \"complexity\": 0.022206,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 76,\n      \"scoreHash\": \"2d6784e7363e1cbf\"\n    },\n    {\n      \"name\": \"噪声强度 4\",\n      \"onsets\": 1,\n      \"complexity\": 0.039042,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 78,\n      \"scoreHash\": \"32c17906ba8710d8\"\n    },\n    {\n      \"name\": \"噪声强度 5\",\n      \"onsets\": 1,\n      \"complexity\": 0.052187,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 78,\n      \"scoreHash\": \"acc59525017818c9\"\n    },\n    {\n      \"name\": \"噪声强度 6\",\n      \"onsets\": 10,\n      \"complexity\": 0.0687,\n      \"pitches\": 2,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 78,\n      \"scoreHash\": \"89508de68c7aa086\"\n    },\n    {\n      \"name\": \"精确纯白\",\n      \"onsets\": 1,\n      \"complexity\": 0,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 76,\n      \"scoreHash\": \"36d2e573071f82fb\"\n    },\n    {\n      \"name\": \"精确纯黑\",\n      \"onsets\": 1,\n      \"complexity\": 0,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 76,\n      \"scoreHash\": \"1818a7e01fefa8d4\"\n    },\n    {\n      \"name\": \"纯灰 32\",\n      \"onsets\": 1,\n      \"complexity\": 0,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 76,\n      \"scoreHash\": \"2f7e4af59b95b577\"\n    },\n    {\n      \"name\": \"纯灰 96\",\n      \"onsets\": 1,\n      \"complexity\": 0,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 76,\n      \"scoreHash\": \"7a58b000eaef7890\"\n    },\n    {\n      \"name\": \"纯灰 128\",\n      \"onsets\": 1,\n      \"complexity\": 0,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 76,\n      \"scoreHash\": \"7acf15069bae8646\"\n    },\n    {\n      \"name\": \"纯灰 192\",\n      \"onsets\": 1,\n      \"complexity\": 0,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 76,\n      \"scoreHash\": \"01210211f019d6f3\"\n    },\n    {\n      \"name\": \"接近纯白 254\",\n      \"onsets\": 1,\n      \"complexity\": 0,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 76,\n      \"scoreHash\": \"99f609593ab11bbb\"\n    },\n    {\n      \"name\": \"纯红\",\n      \"onsets\": 1,\n      \"complexity\": 0,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 76,\n      \"scoreHash\": \"8bbaf8ef29b33cdb\"\n    },\n    {\n      \"name\": \"纯绿\",\n      \"onsets\": 1,\n      \"complexity\": 0,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 76,\n      \"scoreHash\": \"5d10d3740adbe5b4\"\n    },\n    {\n      \"name\": \"纯蓝\",\n      \"onsets\": 1,\n      \"complexity\": 0,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 76,\n      \"scoreHash\": \"96ef56cab4851340\"\n    },\n    {\n      \"name\": \"纯青\",\n      \"onsets\": 1,\n      \"complexity\": 0,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 76,\n      \"scoreHash\": \"1573819998f268bd\"\n    },\n    {\n      \"name\": \"纯品红\",\n      \"onsets\": 1,\n      \"complexity\": 0,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 76,\n      \"scoreHash\": \"190065e43822e39a\"\n    },\n    {\n      \"name\": \"纯白轻微噪声\",\n      \"onsets\": 1,\n      \"complexity\": 0,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 76,\n      \"scoreHash\": \"795c10a7e2d896e7\"\n    },\n    {\n      \"name\": \"纯灰轻微噪声\",\n      \"onsets\": 1,\n      \"complexity\": 0,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 76,\n      \"scoreHash\": \"7acf15069bae8646\"\n    },\n    {\n      \"name\": \"全范围横向灰阶渐变\",\n      \"onsets\": 14,\n      \"complexity\": 0.014433,\n      \"pitches\": 8,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 76,\n      \"scoreHash\": \"f0f685cf974cf7ab\"\n    },\n    {\n      \"name\": \"全范围纵向灰阶渐变\",\n      \"onsets\": 97,\n      \"complexity\": 0.514482,\n      \"pitches\": 5,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 90,\n      \"scoreHash\": \"40a697e52f07fd3d\"\n    },\n    {\n      \"name\": \"白底局部红色块\",\n      \"onsets\": 3,\n      \"complexity\": 0.00834,\n      \"pitches\": 2,\n      \"periodicRetriggers\": 0,\n      \"rests\": 1,\n      \"bpm\": 76,\n      \"scoreHash\": \"648d2ca7c2643541\"\n    },\n    {\n      \"name\": \"同均值细棋盘\",\n      \"onsets\": 24,\n      \"complexity\": 0.35,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 23,\n      \"rests\": 0,\n      \"bpm\": 86,\n      \"scoreHash\": \"1964312afa6e048e\"\n    },\n    {\n      \"name\": \"同均值横纹\",\n      \"onsets\": 97,\n      \"complexity\": 0.35,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 96,\n      \"rests\": 0,\n      \"bpm\": 86,\n      \"scoreHash\": \"0c61ef98fbdf2cce\"\n    },\n    {\n      \"name\": \"同均值纵纹\",\n      \"onsets\": 24,\n      \"complexity\": 0.35,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 23,\n      \"rests\": 0,\n      \"bpm\": 86,\n      \"scoreHash\": \"1964312afa6e048e\"\n    },\n    {\n      \"name\": \"七像素有组织纹理\",\n      \"onsets\": 14,\n      \"complexity\": 0.103794,\n      \"pitches\": 1,\n      \"periodicRetriggers\": 13,\n      \"rests\": 0,\n      \"bpm\": 78,\n      \"scoreHash\": \"76aed5a089154a5e\"\n    },\n    {\n      \"name\": \"相同颜色分布打乱\",\n      \"onsets\": 7,\n      \"complexity\": 0.017327,\n      \"pitches\": 2,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 76,\n      \"scoreHash\": \"de3616134bee2c37\"\n    },\n    {\n      \"name\": \"微小累积渐变\",\n      \"onsets\": 2,\n      \"complexity\": 0,\n      \"pitches\": 2,\n      \"periodicRetriggers\": 0,\n      \"rests\": 0,\n      \"bpm\": 76,\n      \"scoreHash\": \"c2a89e0733962fd5\"\n    },\n    {\n      \"name\": \"白底黑色区域\",\n      \"onsets\": 3,\n      \"complexity\": 0.008333,\n      \"pitches\": 2,\n      \"periodicRetriggers\": 0,\n      \"rests\": 1,\n      \"bpm\": 76,\n      \"scoreHash\": \"9232230663c4c910\"\n    }\n  ]\n}\n",
+      "stderr": "",
+      "error": null
+    },
+    {
+      "file": "tests/fidelity-audio.test.cjs",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 2860,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"scheduleCases\": 252,\n  \"actualMainEvents\": 12213,\n  \"regionBindings\": 30240,\n  \"resumeCases\": 336,\n  \"sustainPlateau\": true,\n  \"toneSwitchCrossfade\": true,\n  \"cleanup\": true,\n  \"wavEncoding\": true\n}\n",
+      "stderr": "",
+      "error": null
+    },
+    {
+      "file": "tests/fidelity-parameters.test.cjs",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 6100,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"syntheticCases\": 432,\n  \"solidGraySweep\": 256,\n  \"noiseSeeds\": 32,\n  \"organizedOnsets\": 14,\n  \"noiseOnsets\": {\n    \"min\": 3,\n    \"median\": 9,\n    \"max\": 15\n  },\n  \"localEdits\": [\n    {\n      \"col\": 2,\n      \"changedRegions\": [\n        12\n      ],\n      \"globalKeyOrModeChanged\": false,\n      \"globalBpmChanged\": false\n    },\n    {\n      \"col\": 8,\n      \"changedRegions\": [\n        42\n      ],\n      \"globalKeyOrModeChanged\": false,\n      \"globalBpmChanged\": false\n    },\n    {\n      \"col\": 14,\n      \"changedRegions\": [\n        72\n      ],\n      \"globalKeyOrModeChanged\": false,\n      \"globalBpmChanged\": false\n    },\n    {\n      \"col\": 20,\n      \"changedRegions\": [\n        102\n      ],\n      \"globalKeyOrModeChanged\": false,\n      \"globalBpmChanged\": false\n    }\n  ]\n}\n",
+      "stderr": "",
+      "error": null
+    },
+    {
+      "file": "tests/fidelity-timing.test.cjs",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 179,
+      "stdout": "Passed: 120 scan regions/one sustained voice, natural end, real rests, silent entrance and audible-only score fingerprints.\n",
+      "stderr": "",
+      "error": null
+    },
+    {
+      "file": "tests/fidelity-normalization.test.cjs",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 32,
+      "stdout": "Passed shared production normalization: landscape, portrait, canonical size and browser-canvas requirement.\n",
+      "stderr": "",
+      "error": null
+    },
+    {
+      "file": "tests/fidelity-browser.test.cjs",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 2442,
+      "stdout": "Passed: 84 actual browser/Node complete sound, mapping and rhythm snapshots.\n",
+      "stderr": "",
+      "error": null
+    },
+    {
+      "file": "tests/music.test.cjs",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 9359,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"syntheticCases\": 432,\n  \"legacyCases\": 432,\n  \"pixelFixtures\": 12,\n  \"fallbackCases\": 12,\n  \"syntheticFallbackCases\": 36,\n  \"fallbackCount\": 0,\n  \"maxComposeMs\": 23,\n  \"elapsedMs\": 9330,\n  \"localEditChangedByPhrase\": [\n    0,\n    4,\n    4,\n    0\n  ],\n  \"spatialEdits\": [\n    {\n      \"col\": 2,\n      \"row\": 2,\n      \"changedByPhrase\": [\n        3,\n        0,\n        0,\n        0\n      ],\n      \"globalDecisionsChanged\": false\n    },\n    {\n      \"col\": 8,\n      \"row\": 2,\n      \"changedByPhrase\": [\n        0,\n        3,\n        0,\n        0\n      ],\n      \"globalDecisionsChanged\": false\n    },\n    {\n      \"col\": 14,\n      \"row\": 2,\n      \"changedByPhrase\": [\n        0,\n        0,\n        3,\n        0\n      ],\n      \"globalDecisionsChanged\": false\n    },\n    {\n      \"col\": 20,\n      \"row\": 2,\n      \"changedByPhrase\": [\n        0,\n        0,\n        0,\n        3\n      ],\n      \"globalDecisionsChanged\": false\n    }\n  ],\n  \"fixtureHashes\": [\n    {\n      \"name\": \"纯色\",\n      \"scoreHash\": \"1f33d76ad30bb8f0\",\n      \"mode\": \"soft\",\n      \"root\": 6\n    },\n    {\n      \"name\": \"黑白棋盘\",\n      \"scoreHash\": \"0853af7bf72a3073\",\n      \"mode\": \"soft\",\n      \"root\": 0\n    },\n    {\n      \"name\": \"明暗渐变\",\n      \"scoreHash\": \"87b87e43c7054655\",\n      \"mode\": \"soft\",\n      \"root\": 0\n    },\n    {\n      \"name\": \"彩色渐变\",\n      \"scoreHash\": \"70d65a53699fea3b\",\n      \"mode\": \"bright\",\n      \"root\": 6\n    },\n    {\n      \"name\": \"低饱和风景\",\n      \"scoreHash\": \"2fb84b2a3fc67c56\",\n      \"mode\": \"soft\",\n      \"root\": 0\n    },\n    {\n      \"name\": \"夕阳\",\n      \"scoreHash\": \"b129a410776b6ec8\",\n      \"mode\": \"soft\",\n      \"root\": 0\n    },\n    {\n      \"name\": \"高对比建筑\",\n      \"scoreHash\": \"204b17a525252531\",\n      \"mode\": \"soft\",\n      \"root\": 6\n    },\n    {\n      \"name\": \"几何人像\",\n      \"scoreHash\": \"0cdc019da1f67eb5\",\n      \"mode\": \"soft\",\n      \"root\": 0\n    },\n    {\n      \"name\": \"抽象图案\",\n      \"scoreHash\": \"f7c399e5084ae067\",\n      \"mode\": \"soft\",\n      \"root\": 9\n    },\n    {\n      \"name\": \"密集纹理\",\n      \"scoreHash\": \"e7656aa92abbcc37\",\n      \"mode\": \"soft\",\n      \"root\": 2\n    },\n    {\n      \"name\": \"噪声\",\n      \"scoreHash\": \"0053b6c3d822a563\",\n      \"mode\": \"bright\",\n      \"root\": 5\n    },\n    {\n      \"name\": \"局部变化对照\",\n      \"scoreHash\": \"a9f39c8ef873e4b0\",\n      \"mode\": \"soft\",\n      \"root\": 0\n    }\n  ]\n}\n",
+      "stderr": "",
+      "error": null
+    },
+    {
+      "file": "tests/rhythm.test.cjs",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 6086,
+      "stdout": "{\n  \"status\": \"passed\",\n  \"imageCount\": 60,\n  \"fixedBpm\": 88,\n  \"baselineRhythms\": 1,\n  \"fixtureRhythms\": 12,\n  \"extendedRhythms\": 47,\n  \"simplifiedRhythms\": 12,\n  \"substantialOnsetThreshold\": 0.2,\n  \"contrastingPairs\": [\n    {\n      \"a\": \"纯色\",\n      \"b\": \"黑白棋盘\",\n      \"onsetJaccardDistance\": 0.32167832167832167\n    },\n    {\n      \"a\": \"明暗渐变\",\n      \"b\": \"抽象图案\",\n      \"onsetJaccardDistance\": 0.5093167701863355\n    },\n    {\n      \"a\": \"几何人像\",\n      \"b\": \"噪声\",\n      \"onsetJaccardDistance\": 0.38926174496644295\n    }\n  ],\n  \"localEditOnsetDistance\": 0.06451612903225812,\n  \"crossFamilyOnsetDistance\": {\n    \"min\": 0,\n    \"median\": 0.2978723404255319,\n    \"max\": 0.4713375796178344,\n    \"pairs\": 1008\n  },\n  \"tempos\": [\n    76,\n    78,\n    80,\n    82,\n    84,\n    86,\n    88,\n    90,\n    92,\n    94\n  ],\n  \"fixtures\": [\n    {\n      \"name\": \"纯色\",\n      \"bpm\": 76,\n      \"scoreHash\": \"1f33d76ad30bb8f0\",\n      \"rhythmFingerprint\": \"3219e364433aa86e\",\n      \"allocations\": [\n        [\n          7,\n          8,\n          8,\n          7\n        ],\n        [\n          7,\n          8,\n          8,\n          7\n        ],\n        [\n          7,\n          8,\n          8,\n          7\n        ],\n        [\n          7,\n          8,\n          8,\n          7\n        ]\n      ],\n      \"rests\": 8\n    },\n    {\n      \"name\": \"黑白棋盘\",\n      \"bpm\": 92,\n      \"scoreHash\": \"0853af7bf72a3073\",\n      \"rhythmFingerprint\": \"87f68a2073e9fddc\",\n      \"allocations\": [\n        [\n          7,\n          8,\n          8,\n          7\n        ],\n        [\n          8,\n          7,\n          8,\n          7\n        ],\n        [\n          8,\n          7,\n          8,\n          7\n        ],\n        [\n          8,\n          7,\n          8,\n          7\n        ]\n      ],\n      \"rests\": 3\n    },\n    {\n      \"name\": \"明暗渐变\",\n      \"bpm\": 76,\n      \"scoreHash\": \"87b87e43c7054655\",\n      \"rhythmFingerprint\": \"a181b2cc960a3cec\",\n      \"allocations\": [\n        [\n          7,\n          8,\n          8,\n          7\n        ],\n        [\n          7,\n          8,\n          8,\n          7\n        ],\n        [\n          7,\n          8,\n          8,\n          7\n        ],\n        [\n          7,\n          8,\n          8,\n          7\n        ]\n      ],\n      \"rests\": 8\n    },\n    {\n      \"name\": \"彩色渐变\",\n      \"bpm\": 78,\n      \"scoreHash\": \"70d65a53699fea3b\",\n      \"rhythmFingerprint\": \"989d06a95c02feeb\",\n      \"allocations\": [\n        [\n          8,\n          7,\n          8,\n          7\n        ],\n        [\n          7,\n          8,\n          8,\n          7\n        ],\n        [\n          8,\n          7,\n          8,\n          7\n        ],\n        [\n          7,\n          8,\n          8,\n          7\n        ]\n      ],\n      \"rests\": 8\n    },\n    {\n      \"name\": \"低饱和风景\",\n      \"bpm\": 82,\n      \"scoreHash\": \"2fb84b2a3fc67c56\",\n      \"rhythmFingerprint\": \"498eb6a681991dee\",\n      \"allocations\": [\n        [\n          8,\n          8,\n          7,\n          7\n        ],\n        [\n          8,\n          7,\n          8,\n          7\n        ],\n        [\n          8,\n          8,\n          7,\n          7\n        ],\n        [\n          8,\n          8,\n          7,\n          7\n        ]\n      ],\n      \"rests\": 8\n    },\n    {\n      \"name\": \"夕阳\",\n      \"bpm\": 88,\n      \"scoreHash\": \"b129a410776b6ec8\",\n      \"rhythmFingerprint\": \"7196d6674e4753f3\",\n      \"allocations\": [\n        [\n          8,\n          7,\n          8,\n          7\n        ],\n        [\n          8,\n          7,\n          8,\n          7\n        ],\n        [\n          7,\n          7,\n          8,\n          8\n        ],\n        [\n          8,\n          8,\n          7,\n          7\n        ]\n      ],\n      \"rests\": 2\n    },\n    {\n      \"name\": \"高对比建筑\",\n      \"bpm\": 86,\n      \"scoreHash\": \"204b17a525252531\",\n      \"rhythmFingerprint\": \"893c03f155699bf9\",\n      \"allocations\": [\n        [\n          7,\n          8,\n          8,\n          7\n        ],\n        [\n          7,\n          8,\n          8,\n          7\n        ],\n        [\n          7,\n          8,\n          8,\n          7\n        ],\n        [\n          7,\n          8,\n          8,\n          7\n        ]\n      ],\n      \"rests\": 5\n    },\n    {\n      \"name\": \"几何人像\",\n      \"bpm\": 84,\n      \"scoreHash\": \"0cdc019da1f67eb5\",\n      \"rhythmFingerprint\": \"f9289685af19be21\",\n      \"allocations\": [\n        [\n          8,\n          8,\n          7,\n          7\n        ],\n        [\n          7,\n          7,\n          9,\n          7\n        ],\n        [\n          8,\n          8,\n          8,\n          6\n        ],\n        [\n          8,\n          8,\n          7,\n          7\n        ]\n      ],\n      \"rests\": 7\n    },\n    {\n      \"name\": \"抽象图案\",\n      \"bpm\": 90,\n      \"scoreHash\": \"f7c399e5084ae067\",\n      \"rhythmFingerprint\": \"d9a31fffc9b44755\",\n      \"allocations\": [\n        [\n          8,\n          8,\n          7,\n          7\n        ],\n        [\n          8,\n          8,\n          7,\n          7\n        ],\n        [\n          8,\n          7,\n          8,\n          7\n        ],\n        [\n          8,\n          7,\n          8,\n          7\n        ]\n      ],\n      \"rests\": 2\n    },\n    {\n      \"name\": \"密集纹理\",\n      \"bpm\": 76,\n      \"scoreHash\": \"e7656aa92abbcc37\",\n      \"rhythmFingerprint\": \"39eb923154aa4bdb\",\n      \"allocations\": [\n        [\n          8,\n          8,\n          7,\n          7\n        ],\n        [\n          7,\n          8,\n          8,\n          7\n        ],\n        [\n          7,\n          8,\n          8,\n          7\n        ],\n        [\n          7,\n          8,\n          8,\n          7\n        ]\n      ],\n      \"rests\": 8\n    },\n    {\n      \"name\": \"噪声\",\n      \"bpm\": 84,\n      \"scoreHash\": \"0053b6c3d822a563\",\n      \"rhythmFingerprint\": \"a6583df88532c0d0\",\n      \"allocations\": [\n        [\n          8,\n          8,\n          7,\n          7\n        ],\n        [\n          7,\n          8,\n          8,\n          7\n        ],\n        [\n          7,\n          8,\n          8,\n          7\n        ],\n        [\n          7,\n          8,\n          8,\n          7\n        ]\n      ],\n      \"rests\": 5\n    },\n    {\n      \"name\": \"局部变化对照\",\n      \"bpm\": 88,\n      \"scoreHash\": \"a9f39c8ef873e4b0\",\n      \"rhythmFingerprint\": \"558315f0149dbc22\",\n      \"allocations\": [\n        [\n          8,\n          7,\n          8,\n          7\n        ],\n        [\n          8,\n          7,\n          8,\n          7\n        ],\n        [\n          7,\n          7,\n          8,\n          8\n        ],\n        [\n          8,\n          8,\n          7,\n          7\n        ]\n      ],\n      \"rests\": 2\n    }\n  ]\n}\n",
+      "stderr": "",
+      "error": null
+    },
+    {
+      "file": "tests/audio.test.cjs",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 1413,
+      "stdout": "Passed: nine compatibility profiles/tones plus 180 image/tone schedules (21600 region events), explicit bass/pads, tempo-aware starts/ends, tone-change continuity, cleanup, metrics and WAV encoding.\n",
+      "stderr": "",
+      "error": null
+    },
+    {
+      "file": "tests/timing.test.cjs",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 126,
+      "stdout": "Passed: constant/accelerating/decelerating timelines, monotonic inverse, continuous speed, duration, fingerprints and silent entrance.\n",
+      "stderr": "",
+      "error": null
+    },
+    {
+      "file": "tests/baseline.test.cjs",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 211,
+      "stdout": "Passed: all 12 frozen 0.4 score snapshots.\n",
+      "stderr": "",
+      "error": null
+    },
+    {
+      "file": "tests/legacy.test.cjs",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 545,
+      "stdout": "Passed 12 original 0.3 golden score/analysis regressions.\n",
+      "stderr": "",
+      "error": null
+    },
+    {
+      "file": "tests/listening.test.cjs",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 34,
+      "stdout": "Passed listening-statistics gates with synthetic data only; no human listening results were created.\n",
+      "stderr": "",
+      "error": null
+    },
+    {
+      "file": "tests/local-bundle.test.cjs",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 2622,
+      "stdout": "Passed all five local HTML resource graphs, classic-script exports/order, frozen history and canonical 0.6.1 performance scores. This is not a live file-protocol browser test.\n",
+      "stderr": "",
+      "error": null
+    },
+    {
+      "file": "tests/browser-snapshot.test.cjs",
+      "status": "passed",
+      "exitCode": 0,
+      "durationMs": 1119,
+      "stdout": "Passed: all 60 real-browser score snapshots match Node, including pitch, rhythm, performance, accompaniment and tempo.\n",
+      "stderr": "",
+      "error": null
+    }
+  ],
+  "sources": [
+    {
+      "path": ".gitattributes",
+      "sha256": "66fea356050992a8decacc5618a779d869337d277b8ad342d9059fc228714b5e"
+    },
+    {
+      "path": "dist/app.js",
+      "sha256": "dafa19050665845da863e0cae997c96680f33ef59fee4840f373252869f22079"
+    },
+    {
+      "path": "dist/audio.js",
+      "sha256": "e3605df751545b649998e1488069d5e420aedc9825154018690e0c9d75795df9"
+    },
+    {
+      "path": "dist/image-analysis.js",
+      "sha256": "16ce1d71ef065808cb526e3cfb61bacb90c2045198e42379e3386f4ad350b3b8"
+    },
+    {
+      "path": "dist/index.html",
+      "sha256": "f900ba036541243bcd105ab007d16db1c6de6c092d5417d9d20610107d1f62d4"
+    },
+    {
+      "path": "dist/legacy.js",
+      "sha256": "0e304227d72d65351f0e94b37a39d9f8e148f71d4b9654da5b5cbb94292ba102"
+    },
+    {
+      "path": "dist/music.js",
+      "sha256": "94588a50155085a9e8e2ee53811fa3149a8d1eb6a88fa64f37431fbece881aa1"
+    },
+    {
+      "path": "dist/rhythm.js",
+      "sha256": "44b68f8f694f54853403a04e7688aa6cc842e797e312eea8625bdcc28dd787fe"
+    },
+    {
+      "path": "dist/styles.css",
+      "sha256": "45989e9f1196f0745bb80b4e186eaa59692ed95730bd3572456dfec3ed451fcd"
+    },
+    {
+      "path": "dist/timing.js",
+      "sha256": "6fabfb1f4ceabb68b1488938d94c672d1cb0275aface9f968da6595f0b058783"
+    },
+    {
+      "path": "tests/.gitignore",
+      "sha256": "f162171ded7ff8c1d6032f7cb50317bc19cc4d1bbd4757be9f8ea75cdec540f1"
+    },
+    {
+      "path": "tests/articulation-audio.test.cjs",
+      "sha256": "f708ab88687b8120193ddb9a3d09cc7006cd047164b1bbb2ce61ae0e32038e3a"
+    },
+    {
+      "path": "tests/articulation-browser-snapshot.json",
+      "sha256": "0f1ccdc9f66bbd0341d8588d8bc2ddf58680ff0b7f4c41209feb22a2b59bc282"
+    },
+    {
+      "path": "tests/articulation-browser.test.cjs",
+      "sha256": "0a353029fbfa0ed8c1429ac8eedbc1104a6ac01686b6ec35d0a4f772eeecf30a"
+    },
+    {
+      "path": "tests/articulation-listen.html",
+      "sha256": "8e504a86e1a6c448743ea230acaa90569ea56e762dfea0eea4cb9f6be4b90bc7"
+    },
+    {
+      "path": "tests/articulation-listen.js",
+      "sha256": "6d3f6057a2f12facc6cb8e8170e73794cee4e9d153c85667b03b4adbaece6d4e"
+    },
+    {
+      "path": "tests/articulation-regression-summary.json",
+      "sha256": "02792cd98c48af5145332c4d64fb0f996bab8f5e823e686054d2a0ff15196319"
+    },
+    {
+      "path": "tests/articulation.test.cjs",
+      "sha256": "41c746cb086f75374789f33f422b5696299a055fc47db5b88be13431e5e83e74"
+    },
+    {
+      "path": "tests/audio.test.cjs",
+      "sha256": "361d2ec8ee0cc18054315f1c4e9d76b3450f25d495a1e1a42b684f74abafe553"
+    },
+    {
+      "path": "tests/baseline.test.cjs",
+      "sha256": "429a3cb4047922edb28e8ed55fed7b6466abcafc8f4463757bb7ae14d0f0f9ae"
+    },
+    {
+      "path": "tests/baseline/audio-v04.js",
+      "sha256": "45decb35911c6311df2599fc5fc327de75b9abafb14b52cd5cff67559a9d4976"
+    },
+    {
+      "path": "tests/baseline/audio-v05.js",
+      "sha256": "5d4b9cdbec0a6fd48abf27bbc7345737a4b326e32694365d73140f4dfaf7c57a"
+    },
+    {
+      "path": "tests/baseline/audio-v06.js",
+      "sha256": "3a6eeae03726143d895fb8d89a33b6b702c6870ea26ff9739f941b62aa1002e7"
+    },
+    {
+      "path": "tests/baseline/audio-v061.js",
+      "sha256": "d99a8420f9cc0e76eaed964ca01c3d4cb4ddb2e084c52e04ce529ba7e92ad14c"
+    },
+    {
+      "path": "tests/baseline/fake-audio-v061.cjs",
+      "sha256": "74d7cfb354e7f2872e771c1369cbb9f77342482186d8df64d8e1038c98218090"
+    },
+    {
+      "path": "tests/baseline/fidelity-fixtures-v061.js",
+      "sha256": "3613c035fc53de4709ee3b52f73762baa5c4991197bd2763917d48ea5d5c4af6"
+    },
+    {
+      "path": "tests/baseline/fixtures-v061.js",
+      "sha256": "41379638d1ad67a066e07d0cb5db5b65460385aa03399f699a7ff5757164f4d1"
+    },
+    {
+      "path": "tests/baseline/image-analysis-v04.js",
+      "sha256": "9ca3f3abc911aa0de35ceebd2c3d535b58d54bd80ae9b304017e6e5eb4748d1c"
+    },
+    {
+      "path": "tests/baseline/image-analysis-v05.js",
+      "sha256": "a6bb1d6796b7e13def985699e7ba2baf6638b39e42157009f3051200561b456b"
+    },
+    {
+      "path": "tests/baseline/image-analysis-v06.js",
+      "sha256": "2fee64b843ad76bb9409e078627e416135d6cec89e6c55b4c106e622443a58c9"
+    },
+    {
+      "path": "tests/baseline/image-analysis-v061.js",
+      "sha256": "811185605074822dfc7cd8fa4f37b3495c0af4c480309550acb2ea12f4f71396"
+    },
+    {
+      "path": "tests/baseline/music-v04.js",
+      "sha256": "893cb69b333262a245417f3f95d7ef37e4f94a9f6afd8c4e2e735761386eeca5"
+    },
+    {
+      "path": "tests/baseline/music-v05.js",
+      "sha256": "b41255f8f3bb1ca3428eae69ccb3d15bae1bd2de2e05808eb2561e297c8bea8b"
+    },
+    {
+      "path": "tests/baseline/music-v06.js",
+      "sha256": "ee64ffdeabecbb0883a853444f09cf653c2a3da2c4c27b202459f5c924bce03b"
+    },
+    {
+      "path": "tests/baseline/music-v061.js",
+      "sha256": "be832c1dfa7cdf64059aec98639c3452597d1085f485718ca04336e6d677a5fa"
+    },
+    {
+      "path": "tests/baseline/rhythm-fixtures-v061.js",
+      "sha256": "1697df7fdfc6b4e69e5cb3620d43b3a274ead3a9ad8fc2b0da8a8f0135858508"
+    },
+    {
+      "path": "tests/baseline/rhythm-v05.js",
+      "sha256": "8a9a133fb17807a7fdb84bc8f01dc6ca0147d10895df4a7593aa7ddbb79b06ce"
+    },
+    {
+      "path": "tests/baseline/rhythm-v06.js",
+      "sha256": "7cac552df8527d29a59fe2ed930365a227251813586c11cc3173143bb473f49e"
+    },
+    {
+      "path": "tests/baseline/rhythm-v061.js",
+      "sha256": "da2b21ecf3a945bb452ab5325861537a55ddfa6282e203df11859a33b0e3832c"
+    },
+    {
+      "path": "tests/baseline/timing-v05.js",
+      "sha256": "fb84d5bba57869bcc32f0d86b78a01bc944cc16e06f706e6f69d7ab98cc07067"
+    },
+    {
+      "path": "tests/baseline/timing-v06.js",
+      "sha256": "ac5625b7e6b545d7ac127ba541d260205dcc585d13b0e47c2311a0d6f45f7561"
+    },
+    {
+      "path": "tests/baseline/timing-v061.js",
+      "sha256": "f1613309742d13038a8b3789758f3f32107440b0d11aa4a79eb96318e2080fac"
+    },
+    {
+      "path": "tests/baseline/v061-manifest.json",
+      "sha256": "54c2878667e43e0eb515134fa47255dc3f4f3ae06c059030891c3741a7fd6862"
+    },
+    {
+      "path": "tests/baseline/v061-score-snapshot.json",
+      "sha256": "ddddf570af052b31f6ca8f0b07f9e82c9d28ddba6a8855c623afd2ca62f00746"
+    },
+    {
+      "path": "tests/browser-score-snapshot.json",
+      "sha256": "a075bc993e33ae2632380753d1f9c091c40e205f36694a2b50eff3b9afec7f50"
+    },
+    {
+      "path": "tests/browser-snapshot.test.cjs",
+      "sha256": "cfb76747ebba227f5750c82891803a1a72dde557747030a3af8bd5363ca2b6f1"
+    },
+    {
+      "path": "tests/export-fixtures.cjs",
+      "sha256": "c5a86d691734e3bc37f7db897397d1ca3a0c0886f80505d0299f3cd538ff316e"
+    },
+    {
+      "path": "tests/fake-audio.cjs",
+      "sha256": "74d7cfb354e7f2872e771c1369cbb9f77342482186d8df64d8e1038c98218090"
+    },
+    {
+      "path": "tests/fidelity-audio.test.cjs",
+      "sha256": "c477ae5a0f9cbaa67f1534ef02e2f18121c62f6e7a8b02393841855dfae91775"
+    },
+    {
+      "path": "tests/fidelity-browser-snapshot.json",
+      "sha256": "204f633c23511d2163dda7ccabbbf1947bd46347a3b2ea5b36f19fc2de789b2a"
+    },
+    {
+      "path": "tests/fidelity-browser.test.cjs",
+      "sha256": "57b1e9cdf23092eade98dc0ef2f4fb985cfb5323f9d9c17d5688e4e0561dbef6"
+    },
+    {
+      "path": "tests/fidelity-fixtures.js",
+      "sha256": "c01a2214a9d0f49b5b22afdfd06da78a226a9b23f99d905fedace3e723b679f7"
+    },
+    {
+      "path": "tests/fidelity-listen.html",
+      "sha256": "625c67e0a9a9b3cf2a205164cce365e4dbbc94466ec0ec90b6261af35423b826"
+    },
+    {
+      "path": "tests/fidelity-listen.js",
+      "sha256": "4f0e59c6e07a8166491e8f6441da1883fb5b2491e09fbfd9a889078c287f0784"
+    },
+    {
+      "path": "tests/fidelity-normalization.test.cjs",
+      "sha256": "8e86c66864c360e1f47c7be4cd827236261bfefbce4331d5ae156c694f51b0b2"
+    },
+    {
+      "path": "tests/fidelity-parameters.test.cjs",
+      "sha256": "7e1d8f05d620bb015e255fd41970367d1c7f4d193ace52fc6a5a94e004470327"
+    },
+    {
+      "path": "tests/fidelity-regression-summary.json",
+      "sha256": "02bd290b60627395f34625908565b97c0540c5e41b5934537596b46007c66d6d"
+    },
+    {
+      "path": "tests/fidelity-timing.test.cjs",
+      "sha256": "008cda556b234c13d39eb8a957ca9d259c4b7c4b922264eded23598746afeafb"
+    },
+    {
+      "path": "tests/fidelity.test.cjs",
+      "sha256": "9e07bbfd421a9325700b2708f966bcf5532bcb027c9f48ce53067a9ebfe9a8be"
+    },
+    {
+      "path": "tests/fixtures.js",
+      "sha256": "3bc0908962e3083629ed5b467e756531ad160e662d551753c038ee01bd88daca"
+    },
+    {
+      "path": "tests/legacy.test.cjs",
+      "sha256": "f6dc5d5883e34eb180c7d535b252302a59ffd8eb56a2c3a9d7c85b0d9708d778"
+    },
+    {
+      "path": "tests/listen.html",
+      "sha256": "5ffb0feb382abecf973ca8dff8e8a320451a49ece0a35e4ed136118df0d40ec4"
+    },
+    {
+      "path": "tests/listen.js",
+      "sha256": "35ffe67c3799352a3d30148809acb82c14f134b3f3c107c23840fd8e8a8a0fad"
+    },
+    {
+      "path": "tests/listening-metrics.js",
+      "sha256": "8ec3c63f6fa14f7debfa6e433ddb687c542c623f20e423df96e3a77622e1b493"
+    },
+    {
+      "path": "tests/listening.test.cjs",
+      "sha256": "76bbc813622cbd07ef65c092982a1edf82ac692bcb4fc806345f059c367e2f98"
+    },
+    {
+      "path": "tests/local-bundle.test.cjs",
+      "sha256": "9c88496e089172f8be0bd50442af15a024b03180446ec194d0cca2d6532fdb9d"
+    },
+    {
+      "path": "tests/m0-acceptance.test.cjs",
+      "sha256": "7dfb512698d8292ceab9a679115a373127e70a79787faccadb4220f674a7abed"
+    },
+    {
+      "path": "tests/m0-baseline.test.cjs",
+      "sha256": "556385a572b36b87cf27107b4397eee95881a91370d8b1875aa24d1aeb4a400e"
+    },
+    {
+      "path": "tests/m0-contract.cjs",
+      "sha256": "dcb49546b059358b78c66df73e85a27504c9fe35f09bb1850bb6da0f53f6f951"
+    },
+    {
+      "path": "tests/m0-contract.test.cjs",
+      "sha256": "bc868d7bfbbe80fdbd836c625d3bc99311df754e0ed828b7dac317d30575e437"
+    },
+    {
+      "path": "tests/m0-dataset.test.cjs",
+      "sha256": "c50511478ceb3931aa3bc476a81a74ed131d0519a78941a86bec23b97cb22c9c"
+    },
+    {
+      "path": "tests/m0-identity.test.cjs",
+      "sha256": "2ed7b03cccb736330edef7de13cac0305e1d65e382369ae3582db006cf545b41"
+    },
+    {
+      "path": "tests/m0/README.md",
+      "sha256": "cf73b2cfba496f376964c920f9957df63f72f4b949634faf91f745ee87e13056"
+    },
+    {
+      "path": "tests/m0/acceptance.cjs",
+      "sha256": "f0c6a59a9e03cc28dffcc3077aaaa0ca265de6dc5ea62f0795c7389bbdb8fa9f"
+    },
+    {
+      "path": "tests/m0/benchmark.cjs",
+      "sha256": "ac78748bb09a2a7d2ff53fd40cb15320c08ae65d9c8b10396817a00d56df2f1d"
+    },
+    {
+      "path": "tests/m0/capture-v061.cjs",
+      "sha256": "2cb8b588c9c6fcf2e117ac350b711676632c36aabd674776ee817038bcfc6ac0"
+    },
+    {
+      "path": "tests/m0/dataset-manifest.json",
+      "sha256": "5c8d88feaaff59cc0f5895dc71842813a1a9e7b1751f455d4618c3141fb72539"
+    },
+    {
+      "path": "tests/m0/dataset.cjs",
+      "sha256": "919ba79c7d1ecee564dab92a863e606333921bc5a341496f0708076a27f0cfdb"
+    },
+    {
+      "path": "tests/m0/fetch-photos.cjs",
+      "sha256": "33156a0cf25789f4946a17a1bab86a2757de821dccb129e35b3e37178179f9b8"
+    },
+    {
+      "path": "tests/m0/geometry-annotations.json",
+      "sha256": "f88c1cda569ea1b6016aa4ec021df6da6e9612cd034102e8ef641934602653ad"
+    },
+    {
+      "path": "tests/m0/geometry-fixtures.cjs",
+      "sha256": "4af8eb20e7698b2a0e69a1911a247463d81800dff5debc30e55d90ccafb8f6a8"
+    },
+    {
+      "path": "tests/m0/identity.cjs",
+      "sha256": "df38d49483519c9e6c8904f557053401d8f7ce277e75045d7a93ca92b47cf885"
+    },
+    {
+      "path": "tests/m0/photo-annotations.json",
+      "sha256": "0102a6a788c8ca3963277dfa0f31b0bf888fe08df8d626e96d11bae7cea122e6"
+    },
+    {
+      "path": "tests/m0/photo-pixels.json",
+      "sha256": "70ae47bea7fb781415abc65728ebd670e2e7fe2be0426f98f27873b2d5b8b027"
+    },
+    {
+      "path": "tests/m0/photo-sources.json",
+      "sha256": "c277eb65adaa659645e0bd61ce397b8be0ac742b462984322dcf49c987647f7b"
+    },
+    {
+      "path": "tests/m0/photos/photo-astronaut.png",
+      "sha256": "b6875fd520a46aab913b55c52b030e5ed80ffe2d5af83aefd80747e5d190a846"
+    },
+    {
+      "path": "tests/m0/photos/photo-astronaut.rgba",
+      "sha256": "eec2031b0f2fb6369ae9320d86d791ffc16c2bb81bc3b2f7f3506c32b34b21c2"
+    },
+    {
+      "path": "tests/m0/photos/photo-brick.png",
+      "sha256": "fe07fcdba9314b7cd0d6c730fee1dd1dc625623f3d8c90904fd89df207d8c0c5"
+    },
+    {
+      "path": "tests/m0/photos/photo-brick.rgba",
+      "sha256": "4d61dff9e5acedc467ef914fb23c36e078fd9fb8037dd0d8c9b3bde929824167"
+    },
+    {
+      "path": "tests/m0/photos/photo-camera.png",
+      "sha256": "acea0f2aa5b6a98ce586ab267e0b96a250df30f0f5d0be6dbc7896948dddcdb5"
+    },
+    {
+      "path": "tests/m0/photos/photo-camera.rgba",
+      "sha256": "f00112780a300415250ebedfd2daf191be97919accceaddc5731a8638c8cc49d"
+    },
+    {
+      "path": "tests/m0/photos/photo-chelsea.png",
+      "sha256": "9d0efedba7b9311616232b472dcd45a2dcbc400011911ab8ff74f61aec422558"
+    },
+    {
+      "path": "tests/m0/photos/photo-chelsea.rgba",
+      "sha256": "e1829c1f9395f24bede898153cab987a9e76c8fecdd3fb59e218641dfb7b8364"
+    },
+    {
+      "path": "tests/m0/photos/photo-clock.png",
+      "sha256": "681d11824afce283a07bd9d9c5306d38d4222a04274101711d9ed8e5ce151b17"
+    },
+    {
+      "path": "tests/m0/photos/photo-clock.rgba",
+      "sha256": "c67ba461885a0b6426875d122ae72253cdea75abb535e89c5ff4b89ca746897c"
+    },
+    {
+      "path": "tests/m0/photos/photo-coffee.png",
+      "sha256": "16b4fdbca864bca7c9a2deb8d89bf498867fbbed757e36151e47508a71ecbfae"
+    },
+    {
+      "path": "tests/m0/photos/photo-coffee.rgba",
+      "sha256": "ec47e4ce8622516fafd85d17bb5bc6541d7bcb3f4358392ff8ce505b439d15aa"
+    },
+    {
+      "path": "tests/m0/photos/photo-eagle.png",
+      "sha256": "9ed8ced249ff5c40b610a18b44f5a88d55cfb7ab77d68412a49e941cc4001b4a"
+    },
+    {
+      "path": "tests/m0/photos/photo-eagle.rgba",
+      "sha256": "605fe219cf4dcc90b6d35c835ee4d580d04d9de0c9223219794ca4ff71df868f"
+    },
+    {
+      "path": "tests/m0/photos/photo-earthrise.png",
+      "sha256": "b01aee5114237834665349a66b2ee5002d6c9ec77fd8a0777e9770f3f2dfd85f"
+    },
+    {
+      "path": "tests/m0/photos/photo-earthrise.rgba",
+      "sha256": "acb2a6b151c58c46e19a87b9278ef848e352c289f8ab16c5ae7b857547f3034d"
+    },
+    {
+      "path": "tests/m0/photos/photo-grass.png",
+      "sha256": "7337be705d7f0ea86c9bed0ab0ead1da665bfbc01d4a53687245f18cc2793e13"
+    },
+    {
+      "path": "tests/m0/photos/photo-grass.rgba",
+      "sha256": "b029c53c9d47b2cb5318e8a72b900bca29303dcf1e55d77938a061e09c5f2b83"
+    },
+    {
+      "path": "tests/m0/photos/photo-gravel.png",
+      "sha256": "e0ea3f0744504c965444f0e9fe7120dada4c65439e7bf9c2b2af65abbe03bf6c"
+    },
+    {
+      "path": "tests/m0/photos/photo-gravel.rgba",
+      "sha256": "fa082cb90f66fc5d4218156cf627a6a559d6dd0159468951a71c2421614eb11a"
+    },
+    {
+      "path": "tests/m0/photos/photo-mars-sunset.png",
+      "sha256": "519ba2637434401ad617660fcef45d31e9682d2121aec3e2f020ce46cabc6e4c"
+    },
+    {
+      "path": "tests/m0/photos/photo-mars-sunset.rgba",
+      "sha256": "f4d008c0af7d87b074a274787e3512ca271fc639261fd88891615be1b624b96e"
+    },
+    {
+      "path": "tests/m0/photos/photo-rocket.png",
+      "sha256": "9de524be405acee58d154cd53a7baae8af51d31bf47e1380a528251283578b5f"
+    },
+    {
+      "path": "tests/m0/photos/photo-rocket.rgba",
+      "sha256": "6ba45d88dac7f7396930a06a5ffe70c2d46f95ce74f88e6ee8f147ecfc978b96"
+    },
+    {
+      "path": "tests/m0/pixel-baseline-performance.json",
+      "sha256": "5790bc0f1fc368c02887cdce8bf2f1ea7e1a3aef77415b47331c3bfd32816220"
+    },
+    {
+      "path": "tests/m0/prepare-photos.py",
+      "sha256": "d2dc8f9fdcd599596ce3ed25f8b441300a905ca84bbcc49e5846419af82bee7e"
+    },
+    {
+      "path": "tests/m0/run.cjs",
+      "sha256": "f688829bebb04a4131db17a5e31a7d2be33d767011f4fabeac63d3e4f220fc32"
+    },
+    {
+      "path": "tests/m0/utils.cjs",
+      "sha256": "814f8d694d679e4ff78345a34e7895be0021cb79a3b0b53e4daf0b0b28718feb"
+    },
+    {
+      "path": "tests/music.test.cjs",
+      "sha256": "e9c1bd98948c7df7924e23c6b0764dd409497f9ddb368de9e587bc9111145db1"
+    },
+    {
+      "path": "tests/regression-summary.json",
+      "sha256": "f579c89ec79c75ee283c7e74c0b9c66a2c8271a51b69351f96a135fe45b78c67"
+    },
+    {
+      "path": "tests/rhythm-fixtures.js",
+      "sha256": "85f9efe80aa8a09bdd7c359fc1bc7c44d10c506e95572532f5f618acb68f35e3"
+    },
+    {
+      "path": "tests/rhythm-listen.html",
+      "sha256": "88a7f8ed0569780fa63a4821f21974eb25940c3390e378bc2566ec92001be0e1"
+    },
+    {
+      "path": "tests/rhythm-listen.js",
+      "sha256": "a66d0eeccb2721b9f8be7e50c0bcec55d5c82752a586bac40cc13aee4269abb0"
+    },
+    {
+      "path": "tests/rhythm-regression-summary.json",
+      "sha256": "b92609136f074c75c4a7ae8994a13ac69a26e1dfb2f97732dc764e80e2f8dc05"
+    },
+    {
+      "path": "tests/rhythm.test.cjs",
+      "sha256": "87d0d327b994299c349c947c628b783306938e076765ccec51c946f802359193"
+    },
+    {
+      "path": "tests/score-contract-v05.cjs",
+      "sha256": "6ee7bba7f6dd3e92a808fb69b9eaff7d39a8cfe4d8640f0fce262b395605beb3"
+    },
+    {
+      "path": "tests/score-contract-v06.cjs",
+      "sha256": "46de637a18db848fdbd0091006e9e00e349f73ae4b89aa8c2322837865854808"
+    },
+    {
+      "path": "tests/score-contract-v061.cjs",
+      "sha256": "811cf7cc5b7b994b53c9cf6b6cea99623bace91f56f6b07ec86385fc81b25ad0"
+    },
+    {
+      "path": "tests/score-contract.cjs",
+      "sha256": "9ab56375f9f1642097113ca5f342ce918cda8d8ef232c31913c41d92f16b781b"
+    },
+    {
+      "path": "tests/timing.test.cjs",
+      "sha256": "48cb84da20378ce5f15bd1a08e48b8debc45638371622ce249b011a00010cb53"
+    }
+  ],
+  "productionFreeze": {
+    "files": 9,
+    "matched": true
+  },
+  "dataset": {
+    "inputs": 120,
+    "geometry": 24,
+    "photos": 12,
+    "calibration": 24,
+    "holdout": 12
+  },
+  "benchmark": {
+    "path": "tests/m0/pixel-baseline-performance.json",
+    "evidenceType": "node-cpu-pixel-baseline-only",
+    "measuredCalls": 7200,
+    "p95Ms": 30.91279200000281,
+    "worstCaseP95Ms": 182.45091599998705
+  },
+  "newEvidence": {
+    "unitSuites": 23,
+    "realAudioRenders": 0,
+    "browserSessions": 0,
+    "userFileConfirmation": false,
+    "contourAlgorithmImplemented": false
+  },
+  "historicalEvidence": {
+    "path": "tests/articulation-regression-summary.json",
+    "sha256": "02792cd98c48af5145332c4d64fb0f996bab8f5e823e686054d2a0ff15196319",
+    "retainedNotRerendered": true
+  },
+  "gates": {
+    "G0": "passed",
+    "G1": "not-started",
+    "G2": "not-started",
+    "G3": "not-started",
+    "G4": "not-started",
+    "G5": "not-started",
+    "G6": "not-started"
+  },
+  "unresolvedM0Blockers": [],
+  "gateReview": {
+    "type": "manual-deliverable-and-local-link-audit",
+    "reviewedOn": "2026-10-08",
+    "documents": [
+      "M0_IMPLEMENTATION_REPORT.md",
+      "M0_CONTRACT_SPEC.md",
+      "M0_ACCEPTANCE_SPEC.md",
+      "tests/m0/README.md",
+      "VISUAL_SCORE_REDEVELOPMENT_PLAN.md",
+      "README.md"
+    ],
+    "localLinksChecked": 49,
+    "allExist": true,
+    "contractRuntimeScopeUnchanged": true,
+    "productionSourceUnchanged": true,
+    "scope": "B01-B04 only",
+    "coreTaskCount": 33,
+    "completedTaskIds": [
+      "B01",
+      "B02",
+      "B03",
+      "B04"
+    ]
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "schema": "pixelmusic-freeze-manifest-v1",
+  "version": "0.6.1",
+  "frozenOn": "2026-10-07",
+  "pairs": [
+    {
+      "source": "dist/timing.js",
+      "frozen": "tests/baseline/timing-v061.js",
+      "transform": "rename-umd-and-local-requires-v061",
+      "sourceSha256": "6fabfb1f4ceabb68b1488938d94c672d1cb0275aface9f968da6595f0b058783",
+      "frozenSha256": "f1613309742d13038a8b3789758f3f32107440b0d11aa4a79eb96318e2080fac"
+    },
+    {
+      "source": "dist/rhythm.js",
+      "frozen": "tests/baseline/rhythm-v061.js",
+      "transform": "rename-umd-and-local-requires-v061",
+      "sourceSha256": "44b68f8f694f54853403a04e7688aa6cc842e797e312eea8625bdcc28dd787fe",
+      "frozenSha256": "da2b21ecf3a945bb452ab5325861537a55ddfa6282e203df11859a33b0e3832c"
+    },
+    {
+      "source": "dist/music.js",
+      "frozen": "tests/baseline/music-v061.js",
+      "transform": "rename-umd-and-local-requires-v061",
+      "sourceSha256": "94588a50155085a9e8e2ee53811fa3149a8d1eb6a88fa64f37431fbece881aa1",
+      "frozenSha256": "be832c1dfa7cdf64059aec98639c3452597d1085f485718ca04336e6d677a5fa"
+    },
+    {
+      "source": "dist/image-analysis.js",
+      "frozen": "tests/baseline/image-analysis-v061.js",
+      "transform": "rename-umd-and-local-requires-v061",
+      "sourceSha256": "16ce1d71ef065808cb526e3cfb61bacb90c2045198e42379e3386f4ad350b3b8",
+      "frozenSha256": "811185605074822dfc7cd8fa4f37b3495c0af4c480309550acb2ea12f4f71396"
+    },
+    {
+      "source": "dist/audio.js",
+      "frozen": "tests/baseline/audio-v061.js",
+      "transform": "rename-umd-and-local-requires-v061",
+      "sourceSha256": "e3605df751545b649998e1488069d5e420aedc9825154018690e0c9d75795df9",
+      "frozenSha256": "d99a8420f9cc0e76eaed964ca01c3d4cb4ddb2e084c52e04ce529ba7e92ad14c"
+    },
+    {
+      "source": "tests/fixtures.js",
+      "frozen": "tests/baseline/fixtures-v061.js",
+      "transform": "rename-fixture-umd-and-local-requires-v061",
+      "sourceSha256": "3bc0908962e3083629ed5b467e756531ad160e662d551753c038ee01bd88daca",
+      "frozenSha256": "41379638d1ad67a066e07d0cb5db5b65460385aa03399f699a7ff5757164f4d1"
+    },
+    {
+      "source": "tests/rhythm-fixtures.js",
+      "frozen": "tests/baseline/rhythm-fixtures-v061.js",
+      "transform": "rename-fixture-umd-and-local-requires-v061",
+      "sourceSha256": "85f9efe80aa8a09bdd7c359fc1bc7c44d10c506e95572532f5f618acb68f35e3",
+      "frozenSha256": "1697df7fdfc6b4e69e5cb3620d43b3a274ead3a9ad8fc2b0da8a8f0135858508"
+    },
+    {
+      "source": "tests/fidelity-fixtures.js",
+      "frozen": "tests/baseline/fidelity-fixtures-v061.js",
+      "transform": "rename-fixture-umd-and-local-requires-v061",
+      "sourceSha256": "c01a2214a9d0f49b5b22afdfd06da78a226a9b23f99d905fedace3e723b679f7",
+      "frozenSha256": "3613c035fc53de4709ee3b52f73762baa5c4991197bd2763917d48ea5d5c4af6"
+    },
+    {
+      "source": "tests/fake-audio.cjs",
+      "frozen": "tests/baseline/fake-audio-v061.cjs",
+      "transform": "identity",
+      "sourceSha256": "74d7cfb354e7f2872e771c1369cbb9f77342482186d8df64d8e1038c98218090",
+      "frozenSha256": "74d7cfb354e7f2872e771c1369cbb9f77342482186d8df64d8e1038c98218090"
+    },
+    {
+      "source": "tests/score-contract.cjs",
+      "frozen": "tests/score-contract-v061.cjs",
+      "transform": "require-frozen-music",
+      "sourceSha256": "9ab56375f9f1642097113ca5f342ce918cda8d8ef232c31913c41d92f16b781b",
+      "frozenSha256": "811cf7cc5b7b994b53c9cf6b6cea99623bace91f56f6b07ec86385fc81b25ad0"
+    }
+  ],
+  "production": [
+    {
+      "path": "dist/index.html",
+      "sha256": "f900ba036541243bcd105ab007d16db1c6de6c092d5417d9d20610107d1f62d4"
+    },
+    {
+      "path": "dist/styles.css",
+      "sha256": "45989e9f1196f0745bb80b4e186eaa59692ed95730bd3572456dfec3ed451fcd"
+    },
+    {
+      "path": "dist/app.js",
+      "sha256": "dafa19050665845da863e0cae997c96680f33ef59fee4840f373252869f22079"
+    },
+    {
+      "path": "dist/legacy.js",
+      "sha256": "0e304227d72d65351f0e94b37a39d9f8e148f71d4b9654da5b5cbb94292ba102"
+    },
+    {
+      "path": "dist/timing.js",
+      "sha256": "6fabfb1f4ceabb68b1488938d94c672d1cb0275aface9f968da6595f0b058783"
+    },
+    {
+      "path": "dist/rhythm.js",
+      "sha256": "44b68f8f694f54853403a04e7688aa6cc842e797e312eea8625bdcc28dd787fe"
+    },
+    {
+      "path": "dist/music.js",
+      "sha256": "94588a50155085a9e8e2ee53811fa3149a8d1eb6a88fa64f37431fbece881aa1"
+    },
+    {
+      "path": "dist/image-analysis.js",
+      "sha256": "16ce1d71ef065808cb526e3cfb61bacb90c2045198e42379e3386f4ad350b3b8"
+    },
+    {
+      "path": "dist/audio.js",
+      "sha256": "e3605df751545b649998e1488069d5e420aedc9825154018690e0c9d75795df9"
+    }
+  ]
+}
