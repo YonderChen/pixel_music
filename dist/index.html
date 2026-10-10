@@ -14,7 +14,7 @@
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%2311110f'/%3E%3Cpath d='M17 19h30v26H17z' fill='none' stroke='%23f4f1e8' stroke-width='3'/%3E%3Cpath d='M25 37V25l15-3v12' fill='none' stroke='%23ff6b45' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='21' cy='39' r='5' fill='%23ff6b45'/%3E%3Ccircle cx='36' cy='36' r='5' fill='%23ff6b45'/%3E%3C/svg%3E"
     />
     <title>图鸣 · PixelMusic</title>
-    <link rel="stylesheet" href="./styles.css?v=0.6.3-exp-r2" />
+    <link rel="stylesheet" href="./styles.css?v=0.6.4-flow-r2" />
   </head>
   <body>
     <main class="app-shell">
@@ -93,19 +93,21 @@
             <label><input type="radio" name="tone" value="mist" /><span>弦雾</span></label>
           </fieldset>
 
-          <fieldset class="tone-picker performance-picker">
+          <fieldset class="tone-picker performance-picker expression-picker">
             <legend>像素音乐的表达</legend>
             <label><input type="radio" name="pixelExpression" value="off" /><span>原始映射</span></label>
-            <label><input type="radio" name="pixelExpression" value="on" checked /><span>升降律动 · v2</span></label>
+            <label><input type="radio" name="pixelExpression" value="on" /><span>升降律动 · v2</span></label>
+            <label><input type="radio" name="pixelExpression" value="flow" checked /><span>连绵演奏</span></label>
           </fieldset>
-          <p class="expression-hint" id="expressionHint">v2：保留像素颜色的主音，用不同的局部短句组织升降；每句限制连接音跨度，不统一套曲。</p>
+          <p class="expression-hint" id="expressionHint">简化连绵：只用像素主音，升降最多一个中转，不叠加v2回绕；主旋律持续发声，可切回旧版对照。</p>
           <div class="comparison-actions" aria-label="同图同音色同响度，前12秒对照">
             <button class="sample-button" id="abOriginalButton" type="button" disabled>12秒 · 原始</button>
             <button class="sample-button" id="abExpressionButton" type="button" disabled>12秒 · 律动</button>
+            <button class="sample-button" id="abFlowButton" type="button" disabled>12秒 · 连绵</button>
           </div>
 
           <fieldset class="tone-picker performance-picker">
-            <legend>稳定区域的奏法</legend>
+            <legend>旧版稳定区域奏法（原始／律动使用）</legend>
             <label><input type="radio" name="performanceStyle" value="sparse" checked /><span>轻奏留白</span></label>
             <label><input type="radio" name="performanceStyle" value="continuous" /><span>连续声景</span></label>
           </fieldset>
@@ -137,7 +139,7 @@
           <li><span>01</span><div><strong>横向位置决定时间</strong><p>图片被划分为 24 列，从左向右依次演奏。</p></div></li>
           <li><span>02</span><div><strong>120 个区域，不必敲击 120 次</strong><p>每个区域保留出处、都能点击试听。稳定长段默认轻奏同音、间隔留白，也可选择连续声景。</p></div></li>
           <li><span>03</span><div><strong>像素决定走向，规则组织律动</strong><p>仍按颜色、明暗和纹理计算主音，不提取轮廓。实验表达只在有升降的区间加入少量连接与回绕；纯色仍是同音，不补和弦。</p></div></li>
-          <li><span>04</span><div><strong>原始与实验，可以对照</strong><p>用“12秒 · 原始／律动”从同一位置试听，不必等到曲尾。原始映射保留0.6.1；短句版标记0.6.3-exp。主音仍来自各张图的颜色，加工音明确属于音乐规则。</p></div></li>
+          <li><span>04</span><div><strong>三种表达，可以对照</strong><p>原始、颗粒律动与连绵演奏从同一位置作12秒响度匹配对照。连绵版0.6.4-exp用一条持续声音平滑换音，不用长混响掩盖间断；延续留白属于演奏规则。</p></div></li>
         </ol>
       </section>
 
@@ -154,6 +156,7 @@
     <script src="./image-analysis.js?v=0.6.1-r1"></script>
     <script src="./audio.js?v=0.6.1-r1"></script>
     <script src="./pixel-expression.js?v=0.6.3-exp-r2"></script>
-    <script src="./app.js?v=0.6.3-exp-r2"></script>
+    <script src="./legato.js?v=0.6.4-flow-r2"></script>
+    <script src="./app.js?v=0.6.4-flow-r2"></script>
   </body>
 </html>

@@ -1,0 +1,266 @@
+{
+  "schema": "pixelmusic-legato-delivery-v1",
+  "finishedOn": "2026-10-10",
+  "version": "0.6.4-exp",
+  "rendererVersion": "legato-flow-v1",
+  "status": "passed-for-listening-experiment",
+  "sources": [
+    {
+      "path": "dist/legato.js",
+      "sha256": "8a63397356ef0eb344145ee577dd5e0fde2ae4221254841417343a68573ed13c"
+    },
+    {
+      "path": "dist/app.js",
+      "sha256": "3cbbafbef911289e26868815557107536ee3e6755b8847a18c2e9771974a9c4b"
+    },
+    {
+      "path": "dist/index.html",
+      "sha256": "0c78b53f0e1f6af22b3535e56dfbac96b81176fa85f9c3b1a0f89d1768b57adf"
+    },
+    {
+      "path": "dist/styles.css",
+      "sha256": "7f985fdb54951fc67e2df11516fa45bf04d4e09e0db6070eb8ecf0720e281145"
+    },
+    {
+      "path": "dist/music.js",
+      "sha256": "94588a50155085a9e8e2ee53811fa3149a8d1eb6a88fa64f37431fbece881aa1"
+    },
+    {
+      "path": "dist/image-analysis.js",
+      "sha256": "16ce1d71ef065808cb526e3cfb61bacb90c2045198e42379e3386f4ad350b3b8"
+    },
+    {
+      "path": "dist/rhythm.js",
+      "sha256": "44b68f8f694f54853403a04e7688aa6cc842e797e312eea8625bdcc28dd787fe"
+    },
+    {
+      "path": "dist/timing.js",
+      "sha256": "6fabfb1f4ceabb68b1488938d94c672d1cb0275aface9f968da6595f0b058783"
+    },
+    {
+      "path": "dist/audio.js",
+      "sha256": "e3605df751545b649998e1488069d5e420aedc9825154018690e0c9d75795df9"
+    },
+    {
+      "path": "tests/legato-flow.test.cjs",
+      "sha256": "95dc24c46ef662124545e91e64716adf0fd7a5d43a8575018a2a571fc3fc0fc1"
+    }
+  ],
+  "tests": [
+    {
+      "command": "node tests/legato-flow.test.cjs",
+      "status": "passed",
+      "output": "{\"status\":\"passed\",\"cases\":168,\"schedulingCases\":504,\"resumeCases\":1512,\"distinctHashes\":81,\"oneMelodyPartialBank\":true,\"noGainResets\":true,\"glideResume\":true,\"classicScriptMatch\":true,\"examples\":[{\"index\":5,\"style\":\"sparse\",\"targets\":99,\"pitchChanges\":74,\"melodyStarts\":1},{\"index\":5,\"style\":\"continuous\",\"targets\":99,\"pitchChanges\":74,\"melodyStarts\":1},{\"index\":60,\"style\":\"sparse\",\"targets\":1,\"pitchChanges\":0,\"melodyStarts\":1},{\"index\":60,\"style\":\"continuous\",\"targets\":1,\"pitchChanges\":0,\"melodyStarts\":1},{\"index\":74,\"style\":\"sparse\",\"targets\":14,\"pitchChanges\":7,\"melodyStarts\":1},{\"index\":74,\"style\":\"continuous\",\"targets\":14,\"pitchChanges\":7,\"melodyStarts\":1}],\"realAudio\":false}\n"
+    },
+    {
+      "command": "node tests/pixel-expression.test.cjs",
+      "status": "passed",
+      "output": "{\"status\":\"passed\",\"version\":\"pixel-phrase-v2\",\"cases\":168,\"changedCases\":104,\"addedNotes\":3212,\"schedulingCases\":504,\"resumeCases\":1512,\"classicScriptVmMatch\":true,\"patterns\":[\"neighbor-response\",\"step-connection\"],\"distinctChangedScoreHashes\":60,\"examples\":[{\"index\":5,\"name\":\"夕阳\",\"style\":\"sparse\",\"original\":87,\"experimental\":127,\"phrases\":22,\"firstConnectorSeconds\":0.174458},{\"index\":5,\"name\":\"夕阳\",\"style\":\"continuous\",\"original\":87,\"experimental\":127,\"phrases\":22,\"firstConnectorSeconds\":0.174458},{\"index\":60,\"name\":\"精确纯白\",\"style\":\"sparse\",\"original\":22,\"experimental\":22,\"phrases\":0,\"firstConnectorSeconds\":null},{\"index\":60,\"name\":\"精确纯白\",\"style\":\"continuous\",\"original\":1,\"experimental\":1,\"phrases\":0,\"firstConnectorSeconds\":null},{\"index\":74,\"name\":\"全范围横向灰阶渐变\",\"style\":\"sparse\",\"original\":14,\"experimental\":42,\"phrases\":7,\"firstConnectorSeconds\":0.394737},{\"index\":74,\"name\":\"全范围横向灰阶渐变\",\"style\":\"continuous\",\"original\":14,\"experimental\":42,\"phrases\":7,\"firstConnectorSeconds\":0.394737},{\"index\":75,\"name\":\"全范围纵向灰阶渐变\",\"style\":\"sparse\",\"original\":97,\"experimental\":126,\"phrases\":25,\"firstConnectorSeconds\":0.166667},{\"index\":75,\"name\":\"全范围纵向灰阶渐变\",\"style\":\"continuous\",\"original\":97,\"experimental\":126,\"phrases\":25,\"firstConnectorSeconds\":0.166667}],\"realAudio\":false}\n"
+    },
+    {
+      "command": "node tests/articulation-audio.test.cjs",
+      "status": "passed",
+      "output": "{\n  \"status\": \"passed\",\n  \"schedulingCases\": 504,\n  \"actualMelodyAttacks\": 25716,\n  \"decayEnvelope\": true,\n  \"gapResume\": true,\n  \"cleanup\": true\n}\n"
+    },
+    {
+      "command": "node tests/articulation-browser.test.cjs",
+      "status": "passed",
+      "output": "Passed: all 168 real-browser/Node sound, mapping, image-rhythm and performance-rhythm snapshots.\n"
+    },
+    {
+      "command": "node tests/local-bundle.test.cjs",
+      "status": "passed",
+      "output": "Passed all five local HTML resource graphs, classic-script exports/order, frozen history and canonical 0.6.1 performance scores. This is not a live file-protocol browser test.\n"
+    }
+  ],
+  "unit": {
+    "status": "passed",
+    "cases": 168,
+    "schedulingCases": 504,
+    "resumeCases": 1512,
+    "distinctHashes": 81,
+    "oneMelodyPartialBank": true,
+    "noGainResets": true,
+    "glideResume": true,
+    "classicScriptMatch": true,
+    "examples": [
+      {
+        "index": 5,
+        "style": "sparse",
+        "targets": 99,
+        "pitchChanges": 74,
+        "melodyStarts": 1
+      },
+      {
+        "index": 5,
+        "style": "continuous",
+        "targets": 99,
+        "pitchChanges": 74,
+        "melodyStarts": 1
+      },
+      {
+        "index": 60,
+        "style": "sparse",
+        "targets": 1,
+        "pitchChanges": 0,
+        "melodyStarts": 1
+      },
+      {
+        "index": 60,
+        "style": "continuous",
+        "targets": 1,
+        "pitchChanges": 0,
+        "melodyStarts": 1
+      },
+      {
+        "index": 74,
+        "style": "sparse",
+        "targets": 14,
+        "pitchChanges": 7,
+        "melodyStarts": 1
+      },
+      {
+        "index": 74,
+        "style": "continuous",
+        "targets": 14,
+        "pitchChanges": 7,
+        "melodyStarts": 1
+      }
+    ],
+    "realAudio": false
+  },
+  "requirements": {
+    "continuousWhole64Beats": true,
+    "noPerNoteReattack": true,
+    "rawPixelColoursNotContours": true,
+    "noV2Ornaments": true,
+    "maxOneBridgePerTransition": true,
+    "legacyOptionsRetained": true,
+    "pureColoursHoldSamePitch": true
+  },
+  "browser": {
+    "checkedOn": "2026-10-10",
+    "evidence": "independent-procedural-example-on-http",
+    "sample": "main-app-sunset",
+    "singleBridges": 4,
+    "melodyStarts": 1,
+    "pitchChanges": 102,
+    "targets": 106,
+    "fullPlaybackObserved": true,
+    "toneSwitchContinuesObserved": true,
+    "manualStopObserved": true,
+    "legacyV2SwitchObserved": true,
+    "excerptAutoStopObserved": true,
+    "consoleErrors": 0,
+    "comparison": {
+      "seconds": 12,
+      "tone": "glass",
+      "mode": "flow",
+      "rmsOriginal": 0.06385889758625284,
+      "rmsExpression": 0.02731444860791186,
+      "rmsFlow": 0.05808538650803672,
+      "gainOriginal": 0.42773128945764877,
+      "gainExpression": 1,
+      "gainFlow": 0.4702464810857826,
+      "targetRms": 0.02731444860791186
+    },
+    "screenshot": "tests/artifacts/legato-flow-controls.png",
+    "newRendererFirst12RmsMatchesDownloadedFileWithin1eMinus4": true
+  },
+  "realAudio": {
+    "originalRenderDate": "2026-10-08",
+    "filesRecheckedOn": "2026-10-10",
+    "downloadedWavs": {
+      "status": "passed",
+      "evidenceType": "downloaded-PCM-WAV-inspection",
+      "files": [
+        {
+          "source": "/Users/chenyongduo/Downloads/PixelMusic-0.6.4-exp-legato-flow-v1-cf7bbcfe1832a46c-warm.wav",
+          "sha256": "88d68b8f7f94ae0d7c4630093050b25cfb1e350f42c64b0c3c12accd8b1bff93",
+          "sampleRate": 22050,
+          "frames": 1030858,
+          "seconds": 46.75092970521542,
+          "peak": 0.10595703125,
+          "rms": 0.06544620782884289,
+          "tailPeak": 0,
+          "clipped": 0,
+          "headerValid": true
+        },
+        {
+          "source": "/Users/chenyongduo/Downloads/PixelMusic-0.6.4-exp-legato-flow-v1-cf7bbcfe1832a46c-glass.wav",
+          "sha256": "640429a97c6967428f7953f91f15973c43f5469c4ff5a54887cda241573c36c5",
+          "sampleRate": 22050,
+          "frames": 1030858,
+          "seconds": 46.75092970521542,
+          "peak": 0.090362548828125,
+          "rms": 0.057385566330451644,
+          "tailPeak": 0,
+          "clipped": 0,
+          "headerValid": true
+        },
+        {
+          "source": "/Users/chenyongduo/Downloads/PixelMusic-0.6.4-exp-legato-flow-v1-cf7bbcfe1832a46c-mist.wav",
+          "sha256": "7d12acd3e90010d4dda17b7105f4b2170873eb8f7819e690eaa75233ce03077d",
+          "sampleRate": 22050,
+          "frames": 1030858,
+          "seconds": 46.75092970521542,
+          "peak": 0.10205078125,
+          "rms": 0.06195079703768725,
+          "tailPeak": 0,
+          "clipped": 0,
+          "headerValid": true
+        }
+      ],
+      "subjectiveQualityNotProven": true
+    },
+    "wholeMelodyContinuity": {
+      "status": "passed",
+      "evidence": "full-downloaded-PCM-continuity",
+      "files": [
+        {
+          "tone": "warm",
+          "path": "/Users/chenyongduo/Downloads/PixelMusic-0.6.4-exp-legato-flow-v1-cf7bbcfe1832a46c-warm.wav",
+          "sha256": "88d68b8f7f94ae0d7c4630093050b25cfb1e350f42c64b0c3c12accd8b1bff93",
+          "windows": 888,
+          "quietWindows": 0,
+          "minRms": 0.06094581923347766,
+          "maxRms": 0.07204095645310875,
+          "first12Rms": 0.0662313271510314
+        },
+        {
+          "tone": "glass",
+          "path": "/Users/chenyongduo/Downloads/PixelMusic-0.6.4-exp-legato-flow-v1-cf7bbcfe1832a46c-glass.wav",
+          "sha256": "640429a97c6967428f7953f91f15973c43f5469c4ff5a54887cda241573c36c5",
+          "windows": 888,
+          "quietWindows": 0,
+          "minRms": 0.05349527672775869,
+          "maxRms": 0.06310778875417422,
+          "first12Rms": 0.05808365322161876
+        },
+        {
+          "tone": "mist",
+          "path": "/Users/chenyongduo/Downloads/PixelMusic-0.6.4-exp-legato-flow-v1-cf7bbcfe1832a46c-mist.wav",
+          "sha256": "7d12acd3e90010d4dda17b7105f4b2170873eb8f7819e690eaa75233ce03077d",
+          "windows": 888,
+          "quietWindows": 0,
+          "minRms": 0.0571959710732312,
+          "maxRms": 0.06907693621042864,
+          "first12Rms": 0.06264035595246119
+        }
+      ]
+    },
+    "allThreeSavedFilesConfirmed": true
+  },
+  "completionAudit": {
+    "scope": "continuous simple-bridge listening version; not old contour roadmap",
+    "passed": true,
+    "subjectiveFeedbackNotRequiredUntilAfterDelivery": true,
+    "noAlgorithmChangesDuringFinalization": true
+  },
+  "limits": [
+    "Direct file:// UI automation is blocked; resource graphs and independent HTTP interaction were checked. User's uploaded image was not inspected.",
+    "All 84 inputs and two source styles were checked as controls/schedules; full actual PCM audio was checked for the independent sunset sample in all three tones, not all 504 cases.",
+    "Continuous mode intentionally holds or bridges through old rests; this is a visible performance rule. Pure colours are sustained same-pitch tones.",
+    "Naturalness and resemblance to the reference website are subjective and await user listening; no claim of identical internals or unique music for every distinct image."
+  ]
+}
