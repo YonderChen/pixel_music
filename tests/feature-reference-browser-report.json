@@ -1,0 +1,92 @@
+{
+  "status": "passed",
+  "errors": [],
+  "checks": [
+    "real GS playback / pause-resume / seeking / source highlights / cell preview",
+    "same-picture original/feature comparison / RMS attenuation / retained 12-second boundary",
+    "horizontal colour / texture / pure colour / black / all settings use actual reference core",
+    "whole uncropped PNG/JPEG/WEBP / real stereo 44.1kHz WAV downloads / downloaded bytes match rendered engine audio",
+    "mobile geometry / file page connects to running loopback engine and plays"
+  ],
+  "renders": [
+    {
+      "sample": "hue",
+      "mainNotes": 8,
+      "distinctPitches": 4,
+      "metrics": {
+        "peak": 0.10889899873916448,
+        "rms": 0.014091244013513858,
+        "invalid": 0,
+        "clipped": 0,
+        "first12Rms": 0.01487452974495868,
+        "seconds": 24.90201814058957
+      }
+    },
+    {
+      "sample": "texture",
+      "mainNotes": 2,
+      "distinctPitches": 2,
+      "metrics": {
+        "peak": 0.11716827159987447,
+        "rms": 0.014403489504323406,
+        "invalid": 0,
+        "clipped": 0,
+        "first12Rms": 0.015113618918001203,
+        "seconds": 17.69065759637188
+      }
+    },
+    {
+      "sample": "grass",
+      "mainNotes": 72,
+      "distinctPitches": 4,
+      "metrics": {
+        "peak": 0.08051538669194398,
+        "rms": 0.013193727964083099,
+        "invalid": 0,
+        "clipped": 0,
+        "first12Rms": 0.01372372855557884,
+        "seconds": 25.22215419501134
+      }
+    },
+    {
+      "sample": "white",
+      "mainNotes": 1,
+      "distinctPitches": 1,
+      "metrics": {
+        "peak": 0.08534256128834036,
+        "rms": 0.011087865468324125,
+        "invalid": 0,
+        "clipped": 0,
+        "first12Rms": 0.013366980142429579,
+        "seconds": 30.8
+      }
+    },
+    {
+      "sample": "black",
+      "mainNotes": 0,
+      "distinctPitches": 0,
+      "metrics": {
+        "peak": 0.09981505300206911,
+        "rms": 0.008722094920521423,
+        "invalid": 0,
+        "clipped": 0,
+        "first12Rms": 0.01123551358885444,
+        "seconds": 30.8
+      }
+    }
+  ],
+  "subjectivelyApproved": false,
+  "checkedOn": "2026-10-10",
+  "sourceSha256": {
+    "scripts/reference_music.py": "75fe2fe696b9d9fde25f6de5ed1e951eaaec9d5fa57ac4ac6940bef023f960a7",
+    "scripts/reference_server.py": "2e6ff59ca1417af3cfefe2129e585813effd9ffb1b878acce5b3ac965336a266",
+    "dist/feature-music-app.js": "a7dd6ee9198bdb328686e6a086daa95e125d1047a67ea02448a95dd1d4dc0695",
+    "dist/feature-music.html": "a807260d384ebd687cfdacfe5dacfa7da5c81b240a7e5623db75ef2673400dea"
+  },
+  "finalUiCheck": {
+    "launcherServiceAlive": true,
+    "wholeImageGridLines": true,
+    "colorCenterLabel": true,
+    "realPlayback": true
+  }
+}

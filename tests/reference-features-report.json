@@ -1,0 +1,50 @@
+{
+  "status": "passed",
+  "checkedOn": "2026-10-10",
+  "upstream": "667d97c1e68de56fe2f5ef2d26784ee8a7308f3f",
+  "checks": [
+    "horizontal brightness changes pitch",
+    "equal luminance + unchanged vertical COM + horizontal hue changes pitch",
+    "saturation changes pitch without changing global mapping",
+    "local contrast and frequency/entropy texture change pitch",
+    "vertical details retain their own cell and pitch",
+    "uniform merges without fake contour / dark cells rest",
+    "20 independent spatial colour fixtures",
+    "unchanged upstream source / exact original event fields / real GS render / same non-main events"
+  ],
+  "photo": {
+    "tempo": 103.46239128255363,
+    "bars": 9,
+    "duration": 20.877151332227427,
+    "key_name": "C",
+    "scale_name": "Major pentatonic",
+    "main_instrument": "gm_104",
+    "texture_instrument": "gm_109",
+    "bass_instrument": "gm_036",
+    "pad_instrument": "gm_052",
+    "chord_instrument": "gm_053",
+    "solo_instrument": "gm_013",
+    "mood": "balanced, neutral, moderately dynamic, smooth, focused",
+    "mapping_summary": {
+      "Saliency": "drives the GeneralUser GS solo/accent layer"
+    }
+  },
+  "audio": {
+    "reference": {
+      "peak": 0.1478466641510096,
+      "rms": 0.018717234836886473,
+      "invalid": 0,
+      "clipped": 0,
+      "first12Rms": 0.019555375260482316,
+      "seconds": 21.677142857142858
+    },
+    "features": {
+      "peak": 0.13113311923555937,
+      "rms": 0.020562124151844125,
+      "invalid": 0,
+      "clipped": 0,
+      "first12Rms": 0.02141909224715481,
+      "seconds": 21.677142857142858
+    }
+  }
+}

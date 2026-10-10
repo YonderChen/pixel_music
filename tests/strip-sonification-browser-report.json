@@ -1,0 +1,293 @@
+{
+  "status": "passed",
+  "url": "http://127.0.0.1:4175/dist/sonification.html",
+  "errors": [],
+  "audio": [
+    {
+      "sample": "sunset",
+      "notes": 3,
+      "rows": [
+        {
+          "tone": "warm",
+          "peak": 0.17496581375598907,
+          "rms": 0.02848187463988998,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 2.5646709218563046e-06,
+          "seconds": 23.92562358276644
+        },
+        {
+          "tone": "glass",
+          "peak": 0.16045749187469482,
+          "rms": 0.026913760784637232,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 2.5646779704402434e-06,
+          "seconds": 23.92562358276644
+        },
+        {
+          "tone": "mist",
+          "peak": 0.16543062031269073,
+          "rms": 0.027711593180662568,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 2.5542567527736537e-06,
+          "seconds": 23.92562358276644
+        }
+      ]
+    },
+    {
+      "sample": "grass",
+      "notes": 1,
+      "rows": [
+        {
+          "tone": "warm",
+          "peak": 0.11567363888025284,
+          "rms": 0.02386062334781807,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 2.204629481639131e-06,
+          "seconds": 23.173061224489796
+        },
+        {
+          "tone": "glass",
+          "peak": 0.1027233898639679,
+          "rms": 0.022702637116426186,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 2.209812237197184e-06,
+          "seconds": 23.173061224489796
+        },
+        {
+          "tone": "mist",
+          "peak": 0.11278145760297775,
+          "rms": 0.023017486666224687,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 2.188800181102124e-06,
+          "seconds": 23.173061224489796
+        }
+      ]
+    },
+    {
+      "sample": "up",
+      "notes": 5,
+      "rows": [
+        {
+          "tone": "warm",
+          "peak": 0.1638191193342209,
+          "rms": 0.02495393129613947,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 1.7843875639300677e-06,
+          "seconds": 23.173061224489796
+        },
+        {
+          "tone": "glass",
+          "peak": 0.1509443074464798,
+          "rms": 0.023303273117757005,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 1.813549943108228e-06,
+          "seconds": 23.173061224489796
+        },
+        {
+          "tone": "mist",
+          "peak": 0.1613968461751938,
+          "rms": 0.024281729239495745,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 1.797989398255595e-06,
+          "seconds": 23.173061224489796
+        }
+      ]
+    },
+    {
+      "sample": "down",
+      "notes": 6,
+      "rows": [
+        {
+          "tone": "warm",
+          "peak": 0.16597704589366913,
+          "rms": 0.026881880402950913,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 1.8975472357851686e-06,
+          "seconds": 23.173061224489796
+        },
+        {
+          "tone": "glass",
+          "peak": 0.1515997350215912,
+          "rms": 0.024983299250962536,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 1.8987827843375271e-06,
+          "seconds": 23.173061224489796
+        },
+        {
+          "tone": "mist",
+          "peak": 0.16065648198127747,
+          "rms": 0.025838517574265352,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 1.8923493598776986e-06,
+          "seconds": 23.173061224489796
+        }
+      ]
+    },
+    {
+      "sample": "low",
+      "notes": 1,
+      "rows": [
+        {
+          "tone": "warm",
+          "peak": 0.11248692125082016,
+          "rms": 0.02283795092701787,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 2.4422599835816072e-06,
+          "seconds": 24.732562358276645
+        },
+        {
+          "tone": "glass",
+          "peak": 0.1000012531876564,
+          "rms": 0.02193042633864977,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 2.4753499019425362e-06,
+          "seconds": 24.732562358276645
+        },
+        {
+          "tone": "mist",
+          "peak": 0.1097320020198822,
+          "rms": 0.022359337951352812,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 2.453415845593554e-06,
+          "seconds": 24.732562358276645
+        }
+      ]
+    },
+    {
+      "sample": "high",
+      "notes": 1,
+      "rows": [
+        {
+          "tone": "warm",
+          "peak": 0.11248691380023956,
+          "rms": 0.022584752206847768,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 8.326776992362284e-07,
+          "seconds": 21.600045351473923
+        },
+        {
+          "tone": "glass",
+          "peak": 0.1000012531876564,
+          "rms": 0.021558446855627827,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 8.145805736603506e-07,
+          "seconds": 21.600045351473923
+        },
+        {
+          "tone": "mist",
+          "peak": 0.1097320094704628,
+          "rms": 0.021961734348494934,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 8.188781634999032e-07,
+          "seconds": 21.600045351473923
+        }
+      ]
+    },
+    {
+      "sample": "white",
+      "notes": 1,
+      "rows": [
+        {
+          "tone": "warm",
+          "peak": 0.12309350073337555,
+          "rms": 0.02958064052634908,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 3.3518979307700647e-06,
+          "seconds": 25.6
+        },
+        {
+          "tone": "glass",
+          "peak": 0.10906664282083511,
+          "rms": 0.028327572948730218,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 3.1862875857768813e-06,
+          "seconds": 25.6
+        },
+        {
+          "tone": "mist",
+          "peak": 0.11984196305274963,
+          "rms": 0.029204691744801094,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 3.3972644359892e-06,
+          "seconds": 25.6
+        }
+      ]
+    },
+    {
+      "sample": "black",
+      "notes": 0,
+      "rows": [
+        {
+          "tone": "warm",
+          "peak": 0,
+          "rms": 0,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 0,
+          "seconds": 25.6
+        },
+        {
+          "tone": "glass",
+          "peak": 0,
+          "rms": 0,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 0,
+          "seconds": 25.6
+        },
+        {
+          "tone": "mist",
+          "peak": 0,
+          "rms": 0,
+          "invalid": 0,
+          "clipped": 0,
+          "tailPeak": 0,
+          "seconds": 25.6
+        }
+      ]
+    }
+  ],
+  "checks": [
+    "pause freezes / resume / playing seek / audio-clock highlight / matching region preview",
+    "both comparison modes / RMS attenuation / comparison stays 12s after pause and seek / accompaniment and tone resume / cancelled preparation",
+    "24 real OfflineAudio renders / silent black / no invented black pitch / merged-white sources",
+    "PNG/JPEG/WEBP uploads / stable score after mode switches / actual WAV download",
+    "natural end / restart / mobile no overflow / source geometry after resize",
+    "direct file:// launch / both photos / uploaded image / real playback / actual WAV download"
+  ],
+  "screenshots": [
+    "desktop.png",
+    "mobile.png"
+  ],
+  "subjectivelyApproved": false,
+  "checkedOn": "2026-10-10",
+  "sourceSha256": {
+    "dist/strip-sonification.js": "38044e236bf0aaed65fda8b508ba4468f4f6ebdbbf43d31517699fa2b0ac0e2c",
+    "dist/sonification-app.js": "0a491221efb0d5be80a79791f776e09a990ddb87439ad9439276ca026015d6fd",
+    "dist/sonification.html": "a322f6b97d3777276f134dd12957f75b556da037241e92331a6f1392fc0f8718",
+    "dist/sonification.css": "d811b65ccf6ff4f65d76d5dd38b77e80fd6d3c3af50428c828499a12cfd3436b",
+    "dist/sonification-samples.js": "eb23700330c2677af08147526a09dc97ce0ff0f178ac5c7c8f2ca2a2b9c0145a",
+    "tests/strip-sonification-browser.cjs": "c9a7a7487a614d7da91703b05e6f19d46ed5970a953127be8486677e8abf7560"
+  }
+}

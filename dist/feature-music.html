@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="图鸣区域声化实验：听见图片，并看见每个音符的来源。图片和声音在本机处理。">
+  <title>图鸣 · 全图特征旋律 Demo</title>
+  <link rel="stylesheet" href="./sonification.css?v=1">
+<style>.connection{padding:18px;border:1px solid #f36343;margin-bottom:24px;font-size:13px}.image-stage{margin:auto}.regions{grid-template-rows:repeat(4,1fr)}.regions .region{border-bottom:1px solid #fff2}.settings{flex-wrap:wrap}.inspection .selection-metrics dd{font-family:inherit}.region.selected{outline:2px solid #f36343;outline-offset:-2px}</style>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 fill=%27%23d7ff48%27/%3E%3Cpath d=%27M6 21V11M12 25V6M18 21V14M24 25V10%27 stroke=%27%23191b17%27 stroke-width=%273%27/%3E%3C/svg%3E">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="./index.html"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>图鸣 <small>PIXEL MUSIC</small></a>
+      <span class="privacy"><i></i>图片与声音，仅在本机处理</span>
+    </header>
+    <section class="intro">
+      <div><p class="eyebrow">IMAGE → NOTES → MUSIC · DEMO 0.2</p><h1>让图片，<br>慢慢唱出来。</h1></div>
+      <p class="intro-copy">颜色、明暗与纹理，共同改变旋律。<br>从左到右听一张图片，也看见每个声音的来处。<br><span>二维全图采样 · 参考项目编曲与采样音源</span></p>
+    </section>
+    <div id="connection" class="connection" hidden>先双击项目中的“启动全图特征Demo.command”，再打开本页。原项目音源在本机运行。</div>
+    <section class="studio" aria-label="图片音乐工作台">
+      <div class="visual-column">
+        <div class="stage-heading"><span id="workName">载入样本…</span><span id="mappingLabel">全图特征旋律</span></div>
+        <div class="image-stage" id="imageStage" aria-label="图片声音来源；可点击区域试听">
+          <canvas id="picture" width="192" height="120" aria-label="实际参与分析的图片"></canvas>
+          <div id="regions" class="regions"></div>
+          <svg id="centroids" class="centroids" viewBox="0 0 192 120" aria-hidden="true"></svg>
+          <div id="scan" class="scan" hidden><span id="scanNote"></span></div>
+          <div id="dropHint" class="drop-hint" hidden>松开以更换图片</div>
+        </div>
+        <div class="stage-caption"><span><i class="legend active"></i>当前音符来源</span><span>颜色 · 明暗 · 对比 · 纹理</span><span>点击图片短试听</span></div>
+        <div class="timeline-heading"><strong>旋律时间轴</strong><span id="eventCount">—</span></div>
+        <div class="timeline-frame"><span class="pitch-top" id="pitchTop">C5</span><span class="pitch-bottom" id="pitchBottom">C3</span><svg id="timeline" viewBox="0 0 640 130" preserveAspectRatio="none" role="img" aria-label="实际音符时间轴"></svg></div>
+        <div class="timeline-scale"><span>0 秒</span><span id="middleTime">—</span><span id="endTime">—</span></div>
+      </div>
+      <aside class="control-panel">
+        <div class="panel-heading"><div><p class="eyebrow">LISTEN TO THE IMAGE</p><h2>图片的乐章</h2></div><span id="status" class="status" role="status">准备中</span></div>
+        <div class="mode-tabs" aria-label="演奏版本"><button id="featureMode" type="button" aria-pressed="true">全图特征 <small>新版旋律</small></button><button id="referenceMode" type="button" aria-pressed="false">参考原谱 <small>原项目核心</small></button></div>
+        <dl class="metrics"><div><dt>颜色中心 / 调式</dt><dd id="key">—</dd></div><div><dt>速度</dt><dd id="tempo">—</dd></div><div><dt>旋律音符</dt><dd id="noteCount">—</dd></div><div><dt>音乐时长</dt><dd id="duration">—</dd></div></dl>
+        <p class="mapping-hint" id="mappingHint">二维区域的色相、饱和度、明暗、对比度和纹理共同决定音高。</p>
+        <div class="settings"><label>音源 <select id="tone"><option value="GeneralUser GS">参考 GS 采样</option><option value="Simple">参考 Simple 合成</option></select></label><label>速度规则 <select id="mappingStyle"><option value="Scientific">参考 Scientific</option><option value="Balanced">参考 Balanced</option><option value="Musical">参考 Musical</option></select></label><label class="switch-label"><input id="backing" type="checkbox" checked>完整编曲</label></div>
+        <div id="backingStatus" class="backing-status">完整编曲 · 参考项目自动配器</div>
+        <button id="play" class="play" type="button" disabled><span id="playIcon" aria-hidden="true">▶</span><span id="playText">开始演奏</span><small id="currentNote">—</small></button>
+        <div class="progress"><label for="seek" class="sr-only">播放进度</label><input id="seek" type="range" min="0" max="24" value="0" step="0.01"><div><output id="clock">00:00 / 00:00</output><button id="restart" type="button">↺ 重新播放</button></div></div>
+        <div class="comparison"><div class="section-label">同一张图，听听区别</div><div class="comparison-buttons"><button id="abFeatures" type="button">12 秒 · 全图特征</button><button id="abReference" type="button">12 秒 · 参考原谱</button></div><p id="comparisonHint">同图、同音色，匹配响度；保留各自速度。</p></div>
+        <div class="image-actions"><label class="upload" for="file">↑ 上传图片</label><input id="file" class="sr-only" type="file" accept="image/png,image/jpeg,image/webp"><button id="export" type="button">↓ 保存 WAV</button></div>
+        <label class="sample-label" for="sample">也可以试试验收样本</label><select id="sample"></select>
+        <p id="credit" class="credit"></p>
+      </aside>
+    </section>
+    <section class="inspection" aria-label="当前区域说明">
+      <div><p class="eyebrow">ALL IMAGE FEATURES → MELODY</p><h3 id="selectedTitle">选择一个区域</h3><p id="selectedReason">点击图片中的区域，查看它怎样变成音符。</p></div>
+      <dl class="selection-metrics"><div><dt>当前区域</dt><dd id="selectedLocation">—</dd></div><div><dt>局部特征</dt><dd id="selectedFeatures">—</dd></div><div><dt>目标 → 实际音高</dt><dd id="selectedPitch">—</dd></div><div><dt>音符时间</dt><dd id="selectedTime">—</dd></div></dl>
+    </section>
+    <details class="acceptance" open><summary>人工验收 · 建议按这个顺序试</summary><div class="acceptance-grid"><p><b>01 / 看映射</b>选择“等亮横向色带”，检查颜色变化能否改变旋律；再试灰阶与纹理样本。</p><p><b>02 / 看同步</b>播放时暂停、继续并拖动进度；声音、扫描线、音符高亮应跟随同一个位置。</p><p><b>03 / 听区别</b>上传你的图片，用两个 12 秒按钮比较；关闭伴奏，单独判断主旋律是否自然。</p><p><b>04 / 试边界</b>试纯白与全黑。新模式不按坐标补出旋律；参考原谱保持原项目实际规则。</p></div></details>
+    <footer><span>规则映射的声音实验 · 是否更好听，留给你来判断。</span><a href="https://github.com/trungtin-dinh/photo_sonification" target="_blank" rel="noreferrer">方法参考：Photo Sonification ↗</a><a href="./sonification.html">打开上一版 Demo ↗</a></footer>
+  </main>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <script src="./sonification-samples.js"></script><script src="./sonification-assets/photos.js"></script><script src="./feature-music-app.js"></script>
+</body>
+</html>
