@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "checkedOn": "2026-10-11",
+  "version": "0.6.2",
+  "url": "http://127.0.0.1:4176/feature-music.html#parallel",
+  "recipe": "feature-original",
+  "sample": "pitch",
+  "checks": [
+    "页面显示循环播放开关，勾选后实际状态为循环演奏",
+    "超过一遍时长后仍在演奏，进度按整曲周期回绕",
+    "暂停后显示已暂停并保留播放位置",
+    "取消勾选并继续播放后，在当前这一遍末尾自然停止",
+    "恢复待试听状态，循环与移动试听均开启，整曲未自动播放",
+    "页面控制台无错误或警告"
+  ],
+  "wrapObservation": {
+    "durationSeconds": 19.26702947845805,
+    "elapsedSeconds": 31.028,
+    "beforePositionSeconds": 1.79,
+    "afterPositionSeconds": 13.51,
+    "afterStatus": "循环演奏"
+  },
+  "loopDisabledEnd": {
+    "clock": "00:19 / 00:19",
+    "status": "演奏结束",
+    "playLabel": "再次演奏"
+  },
+  "finalState": {
+    "loopEnabled": true,
+    "hoverEnabled": true,
+    "clock": "00:00 / 00:19",
+    "status": "可以演奏"
+  },
+  "screenshot": "/private/tmp/pixelmusic-loop-playback.png"
+}

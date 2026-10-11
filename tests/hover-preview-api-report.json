@@ -1,0 +1,43 @@
+{
+  "status": "passed",
+  "checkedOn": "2026-10-11",
+  "checks": [
+    "four retained performances expose playable hover banks",
+    "event lookup complete and offsets fit real stereo PCM",
+    "bank and audio responses reuse cached bytes"
+  ],
+  "cases": [
+    {
+      "variant": "parallel",
+      "method": "transition",
+      "profile": "original",
+      "toneCount": 8,
+      "preparationSeconds": 0.3573817919823341,
+      "bytes": 1411244
+    },
+    {
+      "variant": "parallel",
+      "method": "reference",
+      "profile": "soft",
+      "toneCount": 12,
+      "preparationSeconds": 0.17289408296346664,
+      "bytes": 2116844
+    },
+    {
+      "variant": "parallel",
+      "method": "features",
+      "profile": "soft",
+      "toneCount": 13,
+      "preparationSeconds": 0.19120779196964577,
+      "bytes": 2293244
+    },
+    {
+      "variant": "reference",
+      "method": "reference",
+      "profile": "original",
+      "toneCount": 5,
+      "preparationSeconds": 0.15673504199367017,
+      "bytes": 882044
+    }
+  ]
+}

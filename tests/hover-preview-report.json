@@ -1,0 +1,53 @@
+{
+  "status": "passed",
+  "checkedOn": "2026-10-11",
+  "checks": [
+    "four retained performances use their actual pitch and instrument vocabulary",
+    "one GS render per instrument, no unused full-song or backing renders",
+    "cached bank reused without synthesis",
+    "bounded stereo audio, smooth boundaries, measured fundamental",
+    "scores and composition settings unchanged"
+  ],
+  "cases": [
+    {
+      "variant": "parallel",
+      "method": "transition",
+      "profile": "original",
+      "toneCount": 8,
+      "GSRenderCalls": 3,
+      "preparationSeconds": 0.24093766597798094,
+      "wavBytes": 1411244,
+      "sha256": "651266fc3cba35abf2b0a002f2fcf47ac2bb2b332b6108f6e6fb4577e1e0d74b"
+    },
+    {
+      "variant": "parallel",
+      "method": "reference",
+      "profile": "soft",
+      "toneCount": 12,
+      "GSRenderCalls": 0,
+      "preparationSeconds": 0.17040025000460446,
+      "wavBytes": 2116844,
+      "sha256": "a890ed87c7b6f99e254c217ba9bbf3718969232c827140dccc65ed67ebc5e585"
+    },
+    {
+      "variant": "parallel",
+      "method": "features",
+      "profile": "soft",
+      "toneCount": 13,
+      "GSRenderCalls": 0,
+      "preparationSeconds": 0.19061974994838238,
+      "wavBytes": 2293244,
+      "sha256": "086701802749aa713da83adc259f67eb8f709cfeb0b6fd6b1e7db0e5eaccbda0"
+    },
+    {
+      "variant": "reference",
+      "method": "reference",
+      "profile": "original",
+      "toneCount": 5,
+      "GSRenderCalls": 1,
+      "preparationSeconds": 0.09685491595882922,
+      "wavBytes": 882044,
+      "sha256": "8215586cbe85cb4b52aa5c1210a4f06c2e8d4afad44150c1d26d4cc76cdc8302"
+    }
+  ]
+}

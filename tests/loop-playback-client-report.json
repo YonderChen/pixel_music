@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "checkedOn": "2026-10-11",
+  "checks": [
+    "default single playback; switch can be enabled or disabled during playback",
+    "three consecutive repeats start from zero and reuse decoded audio without requests",
+    "one animation chain per repeat",
+    "pause invalidates stale end callbacks and resume preserves position",
+    "seek and restart work during loop playback",
+    "reference and soft mix loop; setting survives recipe changes",
+    "single-note previews and 12-second comparisons do not loop",
+    "page exit stops playback without restarting"
+  ],
+  "repeats": 6
+}

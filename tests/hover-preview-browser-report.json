@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "checkedOn": "2026-10-11",
+  "url": "http://127.0.0.1:4176/feature-music.html#parallel",
+  "version": "0.6.1",
+  "image": "音高转换验收 · 多特征渐变",
+  "checks": [
+    "移动试听开关可启用，音色准备后显示可试听状态",
+    "鼠标跨区域时显示对应音符，整曲进度保持 00:00 / 00:19",
+    "移出图片后回到移动试听就绪状态",
+    "三种保留组合与参考原谱都能完成音色准备和区域试听",
+    "关闭移动试听后恢复点击试听提示",
+    "页面控制台无错误或警告"
+  ],
+  "observations": [
+    { "performance": "多特征音高转换 · 新 / 原有叠加", "notes": ["G4", "C5"] },
+    { "performance": "行内参考条带 / 柔和合成混音", "notes": ["D5"] },
+    { "performance": "局部多特征法 / 柔和合成混音", "notes": ["A4"] },
+    { "performance": "参考原谱", "notes": ["D5"] }
+  ],
+  "interactionMethod": "原生坐标输入移动至目标区域；移动试听开启时普通鼠标点击不会再次触发点击试听。纯 pointermove、快速划过、同一区域去重及取消行为另由客户端测试验证。",
+  "screenshot": "/private/tmp/pixelmusic-hover-preview.png",
+  "subjectiveSoundAcceptance": "等待用户试听"
+}

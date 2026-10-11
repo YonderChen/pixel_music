@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "checkedOn": "2026-10-11",
+  "checks": [
+    "no audio prep on open",
+    "latest region only while loading and during fast sweeps",
+    "same region does not repeat",
+    "no HTTP requests while moving",
+    "rests stop the previous sound",
+    "leave cancels notes immediately",
+    "touch and drag do not trigger mouse audition",
+    "click mode and touch tap preserved",
+    "toggle reuses bank",
+    "cancelled mode preparation cannot play stale data",
+    "reference uses original voice",
+    "full-song time unchanged",
+    "entering hover pauses full playback and preserves its position"
+  ],
+  "noteStarts": 7
+}

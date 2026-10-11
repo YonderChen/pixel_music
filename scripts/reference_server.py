@@ -8,12 +8,26 @@ import pathlib
 import threading
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 import reference_music as engine
+import hover_preview
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 CACHE = collections.OrderedDict()
 LOCK = threading.Lock()
 SCORE_LOCK = threading.Lock()
 RENDER_LOCK = threading.RLock()
+
+def ensure_hover_bank(cached, variant, profile):
+    if variant not in ('parallel','reference'):raise ValueError('移动试听版本无效')
+    if profile not in ('soft','original'):raise ValueError('移动试听音色无效')
+    profile=profile if variant=='parallel' else 'original'
+    key=variant+'-'+profile
+    with RENDER_LOCK:
+        banks=cached.setdefault('hoverBanks',{})
+        if key not in banks:
+            wav,metadata=hover_preview.build(engine,cached['payload']['variants'][variant],cached['context']['info'],cached['context']['synth'],profile)
+            metadata['audioUrl']=f"/api/hover-audio/{cached['payload']['key']}/{key}.wav"
+            banks[key]={'wav':wav,'metadata':metadata}
+        return banks[key]
 
 def prepare_entry(image, options, key):
     with LOCK: cached=CACHE.get(key)
@@ -100,7 +114,15 @@ class Handler(SimpleHTTPRequestHandler):
         self.send(204,b'')
     def do_GET(self):
         if self.path == '/api/health':
-            return self.send(200,json.dumps({'engine':'pixelmusic-reference-v2','upstream':engine.UPSTREAM_SHA,'capabilities':['horizontal-row-ensemble-v1','soft-row-mix-v1','lazy-audio-v1','feature-contour-v1','multi-feature-pitch-v1']}).encode())
+            return self.send(200,json.dumps({'engine':'pixelmusic-reference-v2','upstream':engine.UPSTREAM_SHA,'capabilities':['horizontal-row-ensemble-v1','soft-row-mix-v1','lazy-audio-v1','feature-contour-v1','multi-feature-pitch-v1','hover-note-atlas-v1']}).encode())
+        if self.path.startswith('/api/hover-audio/'):
+            parts=self.path.split('/')
+            if len(parts)!=5:return self.send(404,b'{}')
+            with LOCK:cached=CACHE.get(parts[3])
+            bank=cached.get('hoverBanks',{}).get(parts[4].removesuffix('.wav')) if cached else None
+            if bank is None:return self.send(404,b'{}')
+            try:return self.send(200,bank['wav'],'audio/wav')
+            except (BrokenPipeError,ConnectionResetError):return
         if self.path.startswith('/api/audio/'):
             parts=self.path.split('/')
             if len(parts)!=5: return self.send(404,b'{}')
@@ -134,6 +156,11 @@ class Handler(SimpleHTTPRequestHandler):
                 ensure_audio(cached,'parallel-soft' if profile=='soft' else 'parallel')
                 data,metrics=engine.mix_row_stems(cached['mixer'],request['rows'],bool(request.get('background',True)),profile)
                 return self.send_audio(data,metrics)
+            if self.path=='/api/hover-bank':
+                with LOCK:cached=CACHE.get(request['key'])
+                if cached is None:raise ValueError('乐谱缓存已失效，请点击“重新生成”。')
+                bank=ensure_hover_bank(cached,request['variant'],request.get('profile','original'))
+                return self.send(200,json.dumps(bank['metadata'],allow_nan=False).encode())
             if self.path=='/api/preview':
                 with LOCK: cached=CACHE[request['key']]
                 variant=cached['payload']['variants'][request['variant']]

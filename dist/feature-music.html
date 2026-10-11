@@ -5,7 +5,7 @@
   <meta name="description" content="图鸣区域声化实验：听见图片，并看见每个音符的来源。图片和声音在本机处理。">
   <title>图鸣 · 多行叠奏 Demo</title>
   <link rel="stylesheet" href="./sonification.css?v=1">
-<style>.connection{padding:18px;border:1px solid #f36343;margin-bottom:24px;font-size:13px}.image-stage{margin:auto}.regions{grid-template-rows:repeat(4,1fr)}.regions .region{border-bottom:1px solid #fff2}.settings{flex-wrap:wrap}.inspection .selection-metrics dd{font-family:inherit}.region.selected{outline:2px solid #f36343;outline-offset:-2px}.parallel-controls{border-bottom:1px solid var(--line);padding:14px 0}.row-settings{display:flex;flex-wrap:wrap;gap:12px;font-size:11px}.row-settings select{font-size:10px;background:transparent;border:1px solid var(--line);padding:5px}.row-tracks{display:grid;gap:7px;margin-top:12px}.row-track{display:flex;align-items:center;gap:8px;font-size:11px}.row-track label{display:flex;align-items:center;gap:6px;flex:1}.row-track small{font-size:9px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:120px}.row-track input{accent-color:var(--voice-color)}.row-track button{border:1px solid var(--line);padding:4px 9px;font-size:10px;background:transparent}.row-track button[aria-pressed=true]{background:var(--ink);color:white}.row-track i{width:7px;height:7px;background:var(--voice-color);display:block}.parallel-controls p{font-size:10px;line-height:1.7;color:var(--muted);margin:9px 0 0}#regions.parallel .region.active{background:color-mix(in srgb,var(--voice-color) 32%,transparent);box-shadow:inset 0 0 0 1px var(--voice-color)}#timeline .row-note{fill:var(--voice-color);opacity:.7}#timeline .row-note.muted{opacity:.18}#timeline .row-note.active{opacity:1;stroke:var(--ink);stroke-width:1}#timeline .row-note.selected{stroke:var(--ink);stroke-width:1.5}.comparison-buttons{flex-wrap:wrap}.comparison-buttons button{min-width:90px}.mode-tabs button{font-size:11px}</style>
+<style>.pointer-preview{display:flex;align-items:center;gap:12px;margin:0 0 12px;font-size:11px;line-height:1.6}.pointer-preview label{display:flex;align-items:center;gap:5px;white-space:nowrap}.pointer-preview input{accent-color:var(--accent)}.pointer-preview span{color:var(--muted);font-size:10px;flex:1}.pointer-preview input:disabled{cursor:wait}.connection{padding:18px;border:1px solid #f36343;margin-bottom:24px;font-size:13px}.image-stage{margin:auto}.regions{grid-template-rows:repeat(4,1fr)}.regions .region{border-bottom:1px solid #fff2}.settings{flex-wrap:wrap}.inspection .selection-metrics dd{font-family:inherit}.region.selected{outline:2px solid #f36343;outline-offset:-2px}.parallel-controls{border-bottom:1px solid var(--line);padding:14px 0}.row-settings{display:flex;flex-wrap:wrap;gap:12px;font-size:11px}.row-settings select{font-size:10px;background:transparent;border:1px solid var(--line);padding:5px}.row-tracks{display:grid;gap:7px;margin-top:12px}.row-track{display:flex;align-items:center;gap:8px;font-size:11px}.row-track label{display:flex;align-items:center;gap:6px;flex:1}.row-track small{font-size:9px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:120px}.row-track input{accent-color:var(--voice-color)}.row-track button{border:1px solid var(--line);padding:4px 9px;font-size:10px;background:transparent}.row-track button[aria-pressed=true]{background:var(--ink);color:white}.row-track i{width:7px;height:7px;background:var(--voice-color);display:block}.parallel-controls p{font-size:10px;line-height:1.7;color:var(--muted);margin:9px 0 0}#regions.parallel .region.active{background:color-mix(in srgb,var(--voice-color) 32%,transparent);box-shadow:inset 0 0 0 1px var(--voice-color)}#timeline .row-note{fill:var(--voice-color);opacity:.7}#timeline .row-note.muted{opacity:.18}#timeline .row-note.active{opacity:1;stroke:var(--ink);stroke-width:1}#timeline .row-note.selected{stroke:var(--ink);stroke-width:1.5}.comparison-buttons{flex-wrap:wrap}.comparison-buttons button{min-width:90px}.mode-tabs button{font-size:11px}</style>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 fill=%27%23d7ff48%27/%3E%3Cpath d=%27M6 21V11M12 25V6M18 21V14M24 25V10%27 stroke=%27%23191b17%27 stroke-width=%273%27/%3E%3C/svg%3E">
 </head>
 <body>
@@ -15,7 +15,7 @@
       <span class="privacy"><i></i>图片与声音，仅在本机处理</span>
     </header>
     <section class="intro">
-      <div><p class="eyebrow">IMAGE → NOTES → MUSIC · DEMO 0.6</p><h1>让图片，<br>慢慢唱出来。</h1></div>
+      <div><p class="eyebrow">IMAGE → NOTES → MUSIC · DEMO 0.6.2</p><h1>让图片，<br>慢慢唱出来。</h1></div>
       <p class="intro-copy">颜色、明暗与纹理，共同改变旋律。<br>从左到右听一张图片，也看见每个声音的来处。<br><span>多行横向叠奏 · 三种保留组合 / 参考原谱</span></p>
     </section>
     <div id="connection" class="connection" hidden><span id="connectionMessage">先双击项目中的“启动全图特征Demo.command”，再打开本页。</span> <button id="retry" type="button">重新生成</button></div>
@@ -23,6 +23,7 @@
     <section class="studio" aria-label="图片音乐工作台">
       <div class="visual-column">
         <div class="stage-heading"><span id="workName">载入样本…</span><span id="mappingLabel">多行横向叠奏</span></div>
+        <div class="pointer-preview"><label><input id="hoverToggle" type="checkbox">移动试听</label><span id="hoverState" role="status">开启后，鼠标移到哪里就弹奏哪个区域。</span></div>
         <div class="image-stage" id="imageStage" aria-label="图片声音来源；可点击区域试听">
           <canvas id="picture" width="192" height="120" aria-label="实际参与分析的图片"></canvas>
           <div id="regions" class="regions"></div>
@@ -30,7 +31,7 @@
           <div id="scan" class="scan" hidden><span id="scanNote"></span></div>
           <div id="dropHint" class="drop-hint" hidden>松开以更换图片</div>
         </div>
-        <div class="stage-caption"><span><i class="legend active"></i>当前音符来源</span><span>颜色 · 明暗 · 对比 · 纹理</span><span>点击图片短试听</span></div>
+        <div class="stage-caption"><span><i class="legend active"></i>当前音符来源</span><span>颜色 · 明暗 · 对比 · 纹理</span><span>点击或开启移动试听</span></div>
         <div class="timeline-heading"><strong>旋律时间轴</strong><span id="eventCount">—</span></div>
         <div class="timeline-frame"><span class="pitch-top" id="pitchTop">C5</span><span class="pitch-bottom" id="pitchBottom">C3</span><svg id="timeline" viewBox="0 0 640 130" preserveAspectRatio="none" role="img" aria-label="实际音符时间轴"></svg></div>
         <div class="timeline-scale"><span>0 秒</span><span id="middleTime">—</span><span id="endTime">—</span></div>
@@ -51,6 +52,7 @@
         <div id="backingStatus" class="backing-status">完整编曲 · 参考项目自动配器</div>
         <button id="play" class="play" type="button" disabled><span id="playIcon" aria-hidden="true">▶</span><span id="playText">开始演奏</span><small id="currentNote">—</small></button>
         <div class="progress"><label for="seek" class="sr-only">播放进度</label><input id="seek" type="range" min="0" max="24" value="0" step="0.01"><div><output id="clock">00:00 / 00:00</output><button id="restart" type="button">↺ 重新播放</button></div></div>
+        <label class="switch-label" style="margin-top:12px;font-size:11px" title="整曲播完后从头继续；12 秒对照与单音试听单次播放"><input id="loopToggle" type="checkbox" disabled>循环播放</label>
         <div class="comparison"><div class="section-label">同一张图，听听区别</div><div class="comparison-buttons"><button id="abParallel" type="button">12 秒 · 当前组合</button><button id="abReference" type="button">12 秒 · 参考原谱</button></div><p id="comparisonHint">同图、同速度，匹配响度。</p></div>
         <div class="image-actions"><label class="upload" for="file">↑ 上传图片</label><input id="file" class="sr-only" type="file" accept="image/png,image/jpeg,image/webp"><button id="export" type="button">↓ 保存 WAV</button></div>
         <label class="sample-label" for="sample">也可以试试验收样本</label><select id="sample"></select>
