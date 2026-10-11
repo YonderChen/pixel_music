@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "checkedOn": "2026-10-11",
+  "scoreSeconds": 0.17364729201653972,
+  "firstSoftSeconds": 1.025371499999892,
+  "duringOriginalRender": {
+    "healthSeconds": 0.0022997080232016742,
+    "pageSeconds": 0.0037247909931465983,
+    "cachedScoreSeconds": 0.006013500038534403
+  },
+  "checks": [
+    "HTTP page opening responds before audio rendering",
+    "actual WAV RMS and SHA headers support comparisons",
+    "current soft full mix export reproducible",
+    "static files and cached scores respond during original rendering",
+    "both styles preserve all-muted silence"
+  ],
+  "inAppBrowserCheck": {
+    "url": "http://127.0.0.1:4176/feature-music.html#parallel",
+    "version": "0.4.1",
+    "readyStatus": "可以演奏",
+    "modeSwitch": true,
+    "playbackClock": "00:13 / 00:21",
+    "pauseConfirmed": true,
+    "matchedMixComparisonConfirmed": true,
+    "screenshot": "/private/tmp/pixelmusic-startup-fixed.jpg"
+  }
+}

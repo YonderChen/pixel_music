@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "checkedOn": "2026-10-11",
+  "checks": [
+    "network failure restores a retry action and clears generation state",
+    "image preview is available before server response",
+    "retry recovers without reload",
+    "mode controls respond during delayed generation",
+    "cancel aborts pending generation",
+    "cancelled work cannot overwrite a later successful retry"
+  ],
+  "generationRequests": 3
+}

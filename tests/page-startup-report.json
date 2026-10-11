@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "checkedOn": "2026-10-11",
+  "scorePreparationSeconds": 0.13965729100164026,
+  "firstSoftAudioSeconds": 1.0149481249973178,
+  "audioRendersOnOpen": 0,
+  "GSCallsForSoftPlayback": 1,
+  "checks": [
+    "on-open score and image only",
+    "soft playback does not render unused variants",
+    "cache remains available during heavy rendering",
+    "lazy WAVs equal eager WAVs byte for byte",
+    "image scores unchanged",
+    "all-muted silence",
+    "bounded FFT equals original filter numerically"
+  ]
+}

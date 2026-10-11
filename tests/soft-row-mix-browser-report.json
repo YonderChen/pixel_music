@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "checkedOn": "2026-10-11",
+  "checks": [
+    "default soft timbres / changing sound while playing retains progress and the exact score, without regeneration",
+    "both 12-second mix comparisons attenuate to the same measured RMS",
+    "region preview uses soft renderer / solo export matches selected profile byte-for-byte / un-solo restores muted row",
+    "two-row and feature mapping profiles / all-muted PCM silence / silent comparisons finite / original reference remains playable",
+    "desktop and phone layout / new sound controls accessible without overflow"
+  ],
+  "errors": [],
+  "subjectivelyApproved": false,
+  "scoreSha256": "8cfaaf515e990a9a39c47900a25d52c3cebcbf9315e73a00995001aa8c76ad7e",
+  "productionCheck": {
+    "url": "http://127.0.0.1:4176/feature-music.html#parallel",
+    "capabilities": [
+      "horizontal-row-ensemble-v1",
+      "soft-row-mix-v1"
+    ],
+    "profile": "soft",
+    "sample": "rows",
+    "audioClock": 0.375,
+    "fetchedSoftWav": true
+  }
+}

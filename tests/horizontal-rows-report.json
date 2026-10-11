@@ -1,0 +1,44 @@
+{
+  "status": "passed",
+  "checkedOn": "2026-10-11",
+  "checks": [
+    "2/3/4 rows × two mapping methods: simultaneous start, horizontal time, shared scale, bounded jumps, exact pixel coverage and sources",
+    "bottom-row edit does not alter other rows at fixed global constraints",
+    "all 32 mute/background combinations: no clipping; full mix exactly reproducible; all-muted silence",
+    "real GS stems use independent renderers; reference and snake outputs unchanged byte for byte"
+  ],
+  "parallel": {
+    "rows": 4,
+    "columns": 72,
+    "voices": [
+      {
+        "id": "row-0",
+        "instrumentName": "Banjo",
+        "noteCount": 72
+      },
+      {
+        "id": "row-1",
+        "instrumentName": "Banjo",
+        "noteCount": 72
+      },
+      {
+        "id": "row-2",
+        "instrumentName": "Shamisen",
+        "noteCount": 72
+      },
+      {
+        "id": "row-3",
+        "instrumentName": "Cello",
+        "noteCount": 72
+      }
+    ],
+    "metrics": {
+      "peak": 0.11730159808500978,
+      "rms": 0.01794945742933119,
+      "invalid": 0,
+      "clipped": 0,
+      "first12Rms": 0.01876176252136098,
+      "seconds": 21.677142857142858
+    }
+  }
+}

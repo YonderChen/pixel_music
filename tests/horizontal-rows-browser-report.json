@@ -1,0 +1,39 @@
+{
+  "status": "passed",
+  "checkedOn": "2026-10-11",
+  "errors": [],
+  "checks": [
+    "simultaneous audible rows / exact source highlights / pause / true solo / exported solo matches backend mix",
+    "un-solo restores previous mix / real mute / muted notes and regions / seek retains selected voices",
+    "parallel/original RMS comparison / 12-second stop after resume and seek / mode switching preserves original controls",
+    "2/3/4 row settings / two row mapping methods / Simple renderer / all-muted true silence",
+    "mobile no overflow / actual grid geometry matches source rectangles"
+  ],
+  "subjectivelyApproved": false,
+  "sourceSha256": {
+    "scripts/reference_music.py": "ebe48f68d0b9a0f416488b4ce5abce5e24567994a9b9a21efffb9bbd0de18c3f",
+    "scripts/reference_server.py": "21e3da03af8f2d46746f0c147ce14a19e7e1b8e8d47377f94047eb0f340594db",
+    "dist/feature-music-app.js": "8ed61343e63fa119e54f804b39faae7059038cd6e30ac180984ae3f52c485cc9",
+    "dist/feature-music.html": "182e3a5fa0212ee74470711c47fe855576ad32ed4278913a54f39c475d4744cf"
+  },
+  "finalProductionCheck": {
+    "realService": true,
+    "parallelEntry": true,
+    "sampleSelectorCorrect": true,
+    "realAudioClock": true
+  },
+  "demo04Regression": {
+    "status": "passed",
+    "checkedOn": "2026-10-11",
+    "errors": [],
+    "checks": [
+      "simultaneous audible rows / exact source highlights / pause / true solo / exported solo matches backend mix",
+      "un-solo restores previous mix / real mute / muted notes and regions / seek retains selected voices",
+      "parallel/original RMS comparison / 12-second stop after resume and seek / mode switching preserves original controls",
+      "2/3/4 row settings / two row mapping methods / Simple renderer / all-muted true silence",
+      "mobile no overflow / actual grid geometry matches source rectangles"
+    ],
+    "subjectivelyApproved": false,
+    "mixProfile": "original"
+  }
+}

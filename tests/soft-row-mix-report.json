@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "checkedOn": "2026-10-11",
+  "checks": [
+    "pinned upstream code remains byte-identical",
+    "all four soft timbres preserve the supplied fundamental and release into silence",
+    "echo rejects bass buildup while retaining midrange space",
+    "32 mute/background combinations: bounded peaks, finite samples, identical duration, true silence",
+    "full mixes reproducible; same image score; reference and snake WAVs unchanged"
+  ],
+  "subjectivelyApproved": false,
+  "referenceSite": "https://playmusictheory.net/play",
+  "scoreSha256": "ea00cfc662d45687ddf4208804eca01c576eb1084cdcbc53b3bbc94428d733bf",
+  "original": {
+    "peak": 0.11730159808500978,
+    "rms": 0.01794945742933119,
+    "invalid": 0,
+    "clipped": 0,
+    "first12Rms": 0.01876176252136098,
+    "seconds": 21.677142857142858
+  },
+  "soft": {
+    "peak": 0.4047782588141316,
+    "rms": 0.08426860712351342,
+    "invalid": 0,
+    "clipped": 0,
+    "first12Rms": 0.07966205894907195,
+    "seconds": 21.677142857142858
+  },
+  "maximumSubsetPeak": 0.4047782588141316
+}
