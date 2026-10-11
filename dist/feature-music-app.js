@@ -5,6 +5,7 @@
   ids.push('connectionMessage','retry','loadState','loadMessage','cancelWork');
   ids.push('hoverToggle','hoverState');
   ids.push('loopToggle');
+  ids.push('musicArt');
   const E = Object.fromEntries(ids.map(id => [id,$(id)]));
   const API = location.protocol === 'file:' ? 'http://127.0.0.1:4176' : location.origin;
   const RECIPES=Object.freeze([
@@ -61,6 +62,7 @@
     E.rowCount.disabled=E.recipe.disabled=S.busy;
     E.hoverToggle.disabled=!S.payload||S.busy;
     E.loopToggle.disabled=!S.payload||S.busy;
+    E.musicArt.setAttribute('aria-disabled',!S.payload||S.busy);
     E.hoverState.textContent=!E.hoverToggle.checked?'开启后，鼠标移到哪里就弹奏哪个区域。':S.busy?'正在生成乐谱，完成后自动准备移动试听。':S.hoverLoading?'准备音色中…完成后移动即可弹奏，可取消。':!S.hoverBank?'音色尚未准备，关闭后重新开启可重试。':S.hoverIndex!==null&&S.hoverIndex!==undefined?`移动试听 · ${S.mode==='parallel'?'第 '+(view().regions[S.hoverIndex].row+1)+' 行 · ':''}${note(view().regions[S.hoverIndex].midi)}`:'移动试听已开启 · 跨区域弹奏，移出图片停止。';
     E.retry.disabled=S.busy||!S.image;workIndicator();
   }
@@ -376,6 +378,13 @@
     const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();
     setTimeout(()=>URL.revokeObjectURL(url),2000);toast('完整 WAV 已交给浏览器保存。');
   }catch(error){toast(error.message);}});
+  E.musicArt.addEventListener('click',event=>{
+    if(!S.payload||S.busy){event.preventDefault();toast('乐谱生成完成后即可送入绘画工作台。');return;}
+    try{
+      const score=window.MusicArtCore.fromPerformance(S.payload,{mode:S.mode,profile:recipe().profile,rows:S.enabledRows,backing:S.mode==='parallel'?includeRowBackground():E.backing.checked,title:E.workName.textContent+' / '+(S.mode==='parallel'?recipe().name:'参考原谱')});
+      localStorage.setItem(window.MusicArtCore.STORAGE_KEY,JSON.stringify(score));stop();
+    }catch(error){event.preventDefault();toast('乐曲送入失败：'+error.message);}
+  });
   for(const type of ['dragenter','dragover'])E.imageStage.addEventListener(type,event=>{event.preventDefault();E.dropHint.hidden=false;});
   E.imageStage.addEventListener('dragleave',()=>E.dropHint.hidden=true);E.imageStage.addEventListener('drop',event=>{event.preventDefault();E.dropHint.hidden=true;upload(event.dataTransfer.files[0]);});
   window.addEventListener('resize',geometry);window.addEventListener('pagehide',()=>{invalidateHoverBank();S.loadOperation++;S.loadAbort?.abort();S.busy=false;stop();S.context?.close();});

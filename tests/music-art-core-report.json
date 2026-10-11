@@ -1,0 +1,58 @@
+{
+  "status": "passed",
+  "checkedOn": "2026-10-11",
+  "checks": [
+    "deterministic for the same score and visual settings",
+    "pitch, rhythm, velocity, tempo and instrument change both visual styles",
+    "different tunes produce different compositions",
+    "bridge preserves active rows and backing and discards every image field",
+    "picture-only mutations cannot change transferred music or its artwork",
+    "silent and dense scores remain bounded",
+    "MIDI tempo changes, sustain, running status, programs and truncated-file handling"
+  ],
+  "largeScoreRenderMilliseconds": 8,
+  "records": [
+    {
+      "sample": "slow",
+      "style": "ribbons",
+      "noteCount": 24,
+      "marks": 24,
+      "svgSha256": "1839a5f237b9866b5cbc58cf91f793c10dc17f46288f87a59f1efdaeeccd35e2"
+    },
+    {
+      "sample": "slow",
+      "style": "geometry",
+      "noteCount": 24,
+      "marks": 24,
+      "svgSha256": "89a0ba9f4f3b4048dda99435fcc05ffa16326ee4ed2182ae0cd1675cf3c85254"
+    },
+    {
+      "sample": "fast",
+      "style": "ribbons",
+      "noteCount": 96,
+      "marks": 96,
+      "svgSha256": "02a917f5ef1859b097a2c088313e4d141bb6291c295bb22165db5e666c8bf3b1"
+    },
+    {
+      "sample": "fast",
+      "style": "geometry",
+      "noteCount": 96,
+      "marks": 58,
+      "svgSha256": "bbf9b3a590245180883caf8f5b8c9be11551adf96cd454e03d8e7b7b9b5c9a82"
+    },
+    {
+      "sample": "woven",
+      "style": "ribbons",
+      "noteCount": 72,
+      "marks": 72,
+      "svgSha256": "f6305a68e5f85cabf4438b8bcb9d2d9c69df88f7855f5d5143f0d947a01909ca"
+    },
+    {
+      "sample": "woven",
+      "style": "geometry",
+      "noteCount": 72,
+      "marks": 65,
+      "svgSha256": "836ad4146b1980096dc19d5c5c10ce0fccb292af7b328ab1440a70bcdb56c9c4"
+    }
+  ]
+}

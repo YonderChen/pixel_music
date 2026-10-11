@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "checkedOn": "2026-10-11",
+  "checks": [
+    "page opens with a complete image and no audio preparation",
+    "original sound plays and resumes from cached audio",
+    "style changes preserve music, timing and source",
+    "loop wrap and disabling loop retain current position",
+    "seek resumes at the selected time",
+    "late synthesis and file reads cannot overwrite a later selection",
+    "samples synthesize their actual score notes",
+    "PNG filename stays attached to the clicked score and style",
+    "JSON import works and original preparation can be cancelled",
+    "page exit stops sound and ignores stale end callbacks"
+  ]
+}

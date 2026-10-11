@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "checkedOn": "2026-10-11",
+  "url": "http://127.0.0.1:4176/music-art.html",
+  "screenshot": "/private/tmp/pixelmusic-music-art-demo.png",
+  "checks": [
+    "工作台打开即显示完整画作，样曲与两种风格可切换",
+    "560 像素窄屏没有横向溢出，画面、播放和设置可操作",
+    "实际 MIDI 导入显示 3 个音符，循环时光点出现，暂停正常",
+    "实际 JSON 导入显示交织的声部，72 个音符",
+    "演奏页入口在临时页面实际送入当前混音，静音第二行且关闭伴奏后绘画页显示 160 个音符、3 个声部",
+    "送入的实际原音源可播放至结尾，显示 00:19 / 00:19",
+    "PNG 可见预览实际尺寸为 2400 × 1800，图片媒体和 SVG 链接均能保存到本机",
+    "本机 Pillow 检查 PNG 文件完整，XML 检查 SVG 有效",
+    "绘画工作台控制台无错误或警告"
+  ],
+  "exports": [
+    "artifacts/music-art/current-ribbons.png",
+    "artifacts/music-art/woven-geometry.png",
+    "artifacts/music-art/woven-geometry.svg"
+  ],
+  "downloadVerification": "浏览器下载事件等待未返回有效结果；改由页面可见的导出预览与 SVG 链接读取实际媒体文件，再核对本机文件。PNG 生成后保留预览和再次保存链接。",
+  "originalPage": "保留用户已上传图片的原演奏页状态；送入入口在独立临时演奏页验收。",
+  "subjectiveArtAcceptance": "等待用户比较两种画风的构图、层次与音乐关联"
+}
