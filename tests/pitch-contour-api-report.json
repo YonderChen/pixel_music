@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "checkedOn": "2026-10-11",
+  "cases": [
+    {
+      "transition": "scale",
+      "scoreSeconds": 0.11888645798899233,
+      "audioSeconds": 0.49017616600031033
+    },
+    {
+      "transition": "glide",
+      "scoreSeconds": 0.128724958980456,
+      "audioSeconds": 0.49860479100607336
+    }
+  ],
+  "checks": [
+    "score-only HTTP generation",
+    "scale and glide produce distinct real WAVs with common quantized targets",
+    "RMS and SHA response headers",
+    "full mix byte reproducibility",
+    "solo, all-muted and region preview use chosen soft performance"
+  ]
+}

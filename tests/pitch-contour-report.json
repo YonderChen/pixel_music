@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "checkedOn": "2026-10-11",
+  "subjectivelyApproved": false,
+  "referenceSite": "https://playmusictheory.net/play",
+  "checks": [
+    "four real image rows retain rising, falling, peak and valley pitch contours",
+    "a large image turn survives without a fabricated staircase or jump cap",
+    "color-only and texture changes still affect audible pitch without a vertical outline",
+    "2/3/4 row coverage and timing, independent rows, traceable sources, no coordinate melody on uniform inputs, black rests",
+    "actual fractional fundamental, phase and envelope continuity, distinct snap/glide, pitch history resets after rests",
+    "score-only startup preserved, scale/glide share image targets, finite complete WAV, all-muted silence",
+    "old row mappings, reference/snake events, legacy soft waveforms and pinned upstream are unchanged"
+  ],
+  "rows": 4,
+  "columns": 32,
+  "scorePreparationSeconds": 0.11526575003517792,
+  "softAudioSeconds": 0.5056354579865001,
+  "metrics": {
+    "peak": 0.3802514537030134,
+    "rms": 0.08417618744434921,
+    "invalid": 0,
+    "clipped": 0,
+    "first12Rms": 0.08417618744434921,
+    "seconds": 10.315328798185941
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "checkedOn": "2026-10-11",
+  "checks": [
+    "three retained pairs use their correct score and audio profile",
+    "full playback and row mixes reproduce identical WAV bytes",
+    "all-muted silence and region preview in every pair",
+    "reference score identical across combinations and reference audio playable"
+  ],
+  "cases": [
+    {
+      "recipe": "feature-original",
+      "method": "transition",
+      "profile": "original",
+      "firstAudioSeconds": 9.984616000030655,
+      "wavSha256": "a18adc8d929d900c4e1d8a9e6b01f878f69143b9e8e55306c97e1f58bfb5c881"
+    },
+    {
+      "recipe": "reference-soft",
+      "method": "reference",
+      "profile": "soft",
+      "firstAudioSeconds": 0.982752709009219,
+      "wavSha256": "3b66dd8c5102b3cb9feb19da5fb20a2ca78db7be834a4e14413d4f9a45b3d119"
+    },
+    {
+      "recipe": "local-soft",
+      "method": "features",
+      "profile": "soft",
+      "firstAudioSeconds": 0.7192480419762433,
+      "wavSha256": "ac8b4599c76a9338ec44bc02c9f2b476cda8c88e4b08641fc30563dfceebedf3"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "checkedOn": "2026-10-11",
+  "version": "0.5.2",
+  "url": "http://127.0.0.1:4176/feature-music.html#full-pitch",
+  "subjectivelyApproved": false,
+  "checks": [
+    "full-image default is multi-feature pitch conversion with continuous glide",
+    "continuous playback clock advances and pause verified in product browser",
+    "clear-scale conversion playback and pause verified in test browser",
+    "region preview shows feature-based continuous target",
+    "parallel mode defaults to the same pitch conversion; solo reaches the end and ensemble selection restores",
+    "no contour/centroid markers in the new full-image view",
+    "WAV export action completes without a page error; filename/mode race verified by client test",
+    "browser warning/error log empty"
+  ],
+  "export": {
+    "wavGenerationVerifiedByHTTP": true,
+    "nativeFileSaveVerified": false,
+    "clientFilenameRegression": "tests/page-startup-client-report.json"
+  },
+  "screenshot": "/private/tmp/pixelmusic-feature-pitch-controls.jpg"
+}

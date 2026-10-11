@@ -60,7 +60,12 @@ def ensure_audio(cached, variant):
                     cached['audioMetrics']['parallel-'+key]=engine.audio_metrics(engine._pcm(data),44100)
                 payload['variants']['parallel']['mixProfiles']['original']['metrics']=metrics
         elif variant in ('reference','features'):
-            wav,metrics,message=engine.render_score(payload['variants'][variant]['events'],context['info'],context['synth'])
+            records=payload['variants'][variant]['events']
+            if variant=='features' and payload['variants'][variant].get('featureMethod') in ('contour','transition'):
+                if context['backing'] and cached['background'] is None:
+                    cached['background']=engine.render_score([e for e in context['reference'] if e['layer']!='main'],context['info'],context['synth'])[0]
+                wav,metrics,message=engine.render_feature_transition(records,context['info'],context['synth'],cached['background'])
+            else: wav,metrics,message=engine.render_score(records,context['info'],context['synth'])
             payload['variants'][variant].update(metrics=metrics,backend=message)
         elif variant.startswith('parallel-') and variant.removeprefix('parallel-') in [v['id'] for v in context['voices']]+['background']:
             ensure_audio(cached,'parallel')
@@ -95,7 +100,7 @@ class Handler(SimpleHTTPRequestHandler):
         self.send(204,b'')
     def do_GET(self):
         if self.path == '/api/health':
-            return self.send(200,json.dumps({'engine':'pixelmusic-reference-v2','upstream':engine.UPSTREAM_SHA,'capabilities':['horizontal-row-ensemble-v1','soft-row-mix-v1','lazy-audio-v1']}).encode())
+            return self.send(200,json.dumps({'engine':'pixelmusic-reference-v2','upstream':engine.UPSTREAM_SHA,'capabilities':['horizontal-row-ensemble-v1','soft-row-mix-v1','lazy-audio-v1','feature-contour-v1','multi-feature-pitch-v1']}).encode())
         if self.path.startswith('/api/audio/'):
             parts=self.path.split('/')
             if len(parts)!=5: return self.send(404,b'{}')
@@ -133,8 +138,8 @@ class Handler(SimpleHTTPRequestHandler):
                 with LOCK: cached=CACHE[request['key']]
                 variant=cached['payload']['variants'][request['variant']]
                 record=next(row for row in variant['events'] if row['id']==request['eventId'])
-                if request['variant']=='parallel' and request.get('profile')=='soft':
-                    samples=engine.soft_row_mixer.preview(record,variant['rows'])
+                if (request['variant']=='parallel' and request.get('profile')=='soft') or (request['variant']=='features' and variant.get('featureMethod') in ('contour','transition')):
+                    samples=engine.soft_row_mixer.preview(record,variant['rows'] if request['variant']=='parallel' else 1)
                 else:
                     with RENDER_LOCK:
                         event=engine.NoteEvent(0,min(.65,record['duration']),record['midi'],record['velocity'],record['instrument'],record['pan'],'main')

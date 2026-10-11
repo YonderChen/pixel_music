@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "checkedOn": "2026-10-11",
+  "url": "http://127.0.0.1:4176/feature-music.html#contour",
+  "subjectivelyApproved": false,
+  "checks": [
+    "version 0.5 and contour/glide entry visibly selected",
+    "clear-scale playback and pause in test browser",
+    "glide playback clock advances, row 1 solo and pause verified in product browser",
+    "four-row ensemble restores after solo",
+    "original profile explains quantized pitch and disables glide selector",
+    "complete current glide WAV saved by in-app browser and file headers verified",
+    "narrow viewport layout inspected, no horizontal overflow visible",
+    "same-page #contour navigation selects contour/glide and cancels stale score generation"
+  ],
+  "export": {
+    "filename": "图鸣-起伏转折-连续滑接-柔和混音-GeneralUser GS.wav",
+    "seconds": 21.25249433106576,
+    "sampleRate": 44100,
+    "channels": 2,
+    "bytes": 3748984,
+    "sha256": "f557d883591c5cf13101e4555495745c9196828cf27c07175b4f08ed75258a63",
+    "modified": "2026-10-11T11:44:03.099418"
+  },
+  "screenshots": [
+    "/private/tmp/pixelmusic-pitch-contour-controls.jpg",
+    "/private/tmp/pixelmusic-pitch-contour-page.jpg"
+  ]
+}

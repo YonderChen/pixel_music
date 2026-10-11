@@ -29,6 +29,80 @@ VERSION = 'full-image-features-v2'
 PARALLEL_VERSION = 'horizontal-row-ensemble-v1'
 WEIGHTS = np.array([.46, .20, .10, .12, .12])
 FEATURE_NAMES = ['亮度', '色相', '饱和度', '对比度', '纹理']
+CONTOUR_VERSION = 'feature-contour-v1'
+PITCH_TRANSITION_VERSION = 'multi-feature-pitch-v1'
+
+def feature_pitch_events(regions, allowed, voice_id, row, instrument, pan, transition):
+    """Features set targets; scale snapping/glide sets how the targets are played.
+
+    No image height, contour, centroid or region coordinates enter the pitch.
+    """
+    events=[]
+    for region in regions:
+        position=float(np.clip(sum(region['contributions'].values()),0,1))
+        index=position*(len(allowed)-1)
+        continuous=float(np.interp(index,np.arange(len(allowed)),allowed))
+        midi=allowed[round(index)]
+        region.update(pitchPosition=position,curveMidi=continuous,targetMidi=midi)
+        if region['features']['brightness']<.012:
+            region['reason']='暗区休止；不跨休止连接音高';continue
+        record={'id':f'{voice_id}-note-{len(events)}','start':region['start'],
+            'duration':region['end']-region['start'],'coverageEnd':region['end'],'midi':midi,
+            'curveMidi':continuous,'pitchTransition':transition,
+            'velocity':float(np.clip(.40+.18*region['features']['saturation']+.3*region['features']['contrast'],.3,.8)),
+            'instrument':instrument,'pan':pan,'layer':'main','rowId':voice_id,'row':row,
+            'sources':[{'regionId':region['id'],'rect':region['rect']}]}
+        region.update(midi=midi,eventId=record['id'],
+            reason='颜色、明暗、饱和度、对比度与纹理决定音高；'+('保留连续音高并平滑滑接' if transition=='glide' else '吸附到共用音阶并持续连奏'))
+        events.append(record)
+    return events
+
+def contour_position(rgb, luminance):
+    """One auditable height per column, not object recognition or line tracing.
+
+    Color distance from the column background also detects dark/colored lines.
+    Uniform columns have no height evidence, so their pitch uses local features.
+    """
+    background = np.median(rgb, axis=0, keepdims=True)
+    distance = np.sqrt(np.mean((rgb-background)**2, axis=2))
+    vertical_edge = np.zeros_like(luminance)
+    if len(luminance) > 1:
+        vertical_edge[1:] = np.abs(np.diff(luminance, axis=0))
+    salience = distance + .22*vertical_edge
+    confidence = float(np.clip(np.mean(salience)/.035, 0, 1))
+    total = float(np.sum(salience))
+    height = float(np.sum(salience*np.linspace(1,0,len(luminance))[:,None])/total) if total>1e-9 else .5
+    return height, confidence
+
+def contour_row_events(regions, rgb, luminance, allowed, voice_id, row, instrument, pan, transition):
+    events = []
+    for region in regions:
+        rect = region['rect']; h,w=luminance.shape
+        y0,y1=round(rect['y']*h),round((rect['y']+rect['height'])*h)
+        x0,x1=round(rect['x']*w),round((rect['x']+rect['width'])*w)
+        height,confidence=contour_position(rgb[y0:y1,x0:x1],luminance[y0:y1,x0:x1])
+        feature_position=sum(region['contributions'].values())
+        shape_weight=.62*confidence
+        position=float(np.clip(shape_weight*height+(1-shape_weight)*feature_position,0,1))
+        index=position*(len(allowed)-1)
+        continuous=float(np.interp(index,np.arange(len(allowed)),allowed))
+        midi=allowed[round(index)]
+        region['features'].update(contourHeight=height,contourConfidence=confidence)
+        region.update(contourWeight=shape_weight,curveMidi=continuous,targetMidi=midi,
+            contourPoint={'x':rect['x']+rect['width']/2,'y':rect['y']+(1-height)*rect['height']})
+        if region['features']['brightness']<.012 and confidence<.05:
+            region['reason']='无明显结构的暗区休止；不跨休止连接';continue
+        # No jump cap: a peak/valley is retained at its actual image time.
+        record={'id':f'{voice_id}-note-{len(events)}','start':region['start'],
+            'duration':region['end']-region['start'],'coverageEnd':region['end'],'midi':midi,
+            'curveMidi':continuous,'pitchTransition':transition,'velocity':float(np.clip(.40+.18*region['features']['saturation']+.3*region['features']['contrast'],.3,.8)),
+            'instrument':instrument,'pan':pan,'layer':'main','rowId':voice_id,'row':row,
+            'sources':[{'regionId':region['id'],'rect':rect}]}
+        reason='显著区域上移升音、下移降音；局部颜色、明暗与纹理共同修正，不压缩跳进'
+        if confidence<.05:reason='本列无明显上下结构；由局部颜色、明暗与纹理决定音高'
+        region.update(midi=midi,eventId=record['id'],reason=reason)
+        events.append(record)
+    return events
 
 def root_note(features):
     key = int(round(features['dominant_hue'] * 12)) % 12
@@ -50,7 +124,11 @@ def original_composition(analysis, options=None):
     )
     return events, info
 
-def full_feature_melody(analysis, info):
+def full_feature_melody(analysis, info, options=None):
+    options=options or {}
+    method=options.get('featureMethod','features')
+    if method not in ('features','contour','transition'):raise ValueError('全图映射设置无效')
+    if method in ('contour','transition'):return full_mapped_melody(analysis,info,options.get('featurePitchTransition','glide'),method)
     rgb, lum = analysis['maps']['rgb'], analysis['maps']['luminance']
     h, w = lum.shape
     cols, rows = info.bars * 2, 4
@@ -123,6 +201,40 @@ def full_feature_melody(analysis, info):
             regions.append(region); previous_vector, previous_midi = vector, midi
     return events, regions, cols, rows
 
+def full_mapped_melody(analysis, info, transition='glide', method='transition'):
+    """The same pitch mapper as row playback, sequenced as one snake voice."""
+    if transition not in ('scale','glide'):raise ValueError('全图音高转折设置无效')
+    rgb,lum=analysis['maps']['rgb'],analysis['maps']['luminance']
+    h,w=lum.shape;cols,rows=min(info.bars*2,w),min(4,h)
+    slot=info.duration/(cols*rows)
+    root=root_note(analysis['features'])
+    allowed=upstream_composition.build_scale_notes(root,upstream_composition.SCALES[info.scale_name],root+10,root+31)
+    regions=[]
+    for col in range(cols):
+        for row in (range(rows) if col%2==0 else reversed(range(rows))):
+            x0,x1=round(col*w/cols),round((col+1)*w/cols)
+            y0,y1=round(row*h/rows),round((row+1)*h/rows)
+            features,vector=_local_features(rgb[y0:y1,x0:x1],lum[y0:y1,x0:x1])
+            index=len(regions)
+            regions.append({'id':f'cell-{index}','index':index,'col':col,'row':row,
+                'rect':{'x':x0/w,'y':y0/h,'width':(x1-x0)/w,'height':(y1-y0)/h},
+                'start':index*slot,'end':(index+1)*slot,'features':features,
+                'contributions':dict(zip(FEATURE_NAMES,(vector*WEIGHTS).tolist())),
+                'midi':None,'targetMidi':None,'eventId':None})
+    if method=='contour':
+        # Historical 0.5 experiment, retained for reproducing its API/test results.
+        events=contour_row_events(regions,rgb,lum,allowed,'feature-main',0,info.main_instrument,0,transition)
+    else:events=feature_pitch_events(regions,allowed,'feature-main',0,info.main_instrument,0,transition)
+    for region in regions:
+        region['reason']='全图蛇形单旋律；'+region['reason']
+    return events,regions,cols,rows
+
+def feature_pitch_metadata(options):
+    method=options.get('featureMethod','transition')
+    return {'featureMethod':method,'pitchVersion':PITCH_TRANSITION_VERSION if method=='transition' else CONTOUR_VERSION,
+        'pitchTransition':options.get('featurePitchTransition','glide'),'voiceName':'暖键 · 连奏',
+        'scanOrder':'column-snake','voiceCount':1}
+
 def serialize_reference(events, analysis, info):
     h, w = analysis['maps']['luminance'].shape
     slices = upstream_composition.time_slice_statistics(analysis['maps']['luminance'], info.bars * 8)
@@ -172,11 +284,13 @@ def horizontal_row_melodies(analysis, info, options=None):
     options = options or {}
     count = int(options.get('rowCount', 4))
     method = options.get('rowMethod', 'reference')
-    if count not in (2, 3, 4) or method not in ('reference', 'features'): raise ValueError('行数或行内映射设置无效')
+    transition=options.get('pitchTransition','scale')
+    if count not in (2, 3, 4) or method not in ('reference', 'features', 'contour', 'transition'): raise ValueError('行数或行内映射设置无效')
+    if transition not in ('scale','glide'):raise ValueError('音高转折设置无效')
     rgb, lum = analysis['maps']['rgb'], analysis['maps']['luminance']
     h, w = lum.shape
     if h < count: raise ValueError('图片高度不足以分割成所选行数')
-    cols = min(info.bars * (8 if method == 'reference' else 4), w)
+    cols = min(info.bars * (4 if method == 'features' else 8), w)
     allowed = upstream_composition.build_scale_notes(root_note(analysis['features']),
         upstream_composition.SCALES[info.scale_name], root_note(analysis['features']) + 10, root_note(analysis['features']) + 31)
     events, regions, voices = [], [], []
@@ -205,7 +319,11 @@ def horizontal_row_melodies(analysis, info, options=None):
         previous = previous_vector = None
         row_events = []
         pan = -.4 + .8 * row / max(1, count-1)
-        if method == 'reference':
+        if method=='transition':
+            row_events=feature_pitch_events(row_regions,allowed,voice_id,row,instrument,pan,transition)
+        elif method == 'contour':
+            row_events=contour_row_events(row_regions,rgb,lum,allowed,voice_id,row,instrument,pan,transition)
+        elif method == 'reference':
             raw, _ = upstream_composition.generate_composition(row_analysis,info.bars,f['auto_complexity'],f['auto_variation_strength'],
                 info.scale_name,synth,'Automatic','Soft piano','Harp','Cello-like bass','Warm pad','Soft piano','Flute',
                 'Manual',info.tempo,0,-2,0,-8,-3,-1)
@@ -320,25 +438,31 @@ def build(image_bytes, options=None, include_parallel=False):
     analysis = upstream_analysis.analyze_image(image, random_factor=0)
     original, info = original_composition(analysis, options)
     reference, reference_regions = serialize_reference(original, analysis, info)
-    feature_main, feature_regions, cols, rows = full_feature_melody(analysis, info)
+    feature_main, feature_regions, cols, rows = full_feature_melody(analysis, info, options)
     feature = [row for row in reference if row['layer'] != 'main'] + feature_main
     feature.sort(key=lambda row: (row['start'], row['layer'], row['midi']))
     synth = options.get('synth', 'GeneralUser GS')
     variants, waves = {}, {}
     for variant, records, regions, width, height in [('reference', reference, reference_regions, info.bars * 8, 1), ('features', feature, feature_regions, cols, rows)]:
         audible = [row for row in records if options.get('backing', True) or row['layer'] == 'main']
-        events = [NoteEvent(**{name: row[name] for name in ['start','duration','midi','velocity','instrument','pan','layer']}) for row in audible]
-        samples, message = upstream_audio.render_backend(events, info, synth)
-        if synth == 'GeneralUser GS' and 'through FluidSynth' not in message:
-            raise RuntimeError('GeneralUser GS 音源未能启动；请先运行准备脚本，或明确选择原版 Simple 音源。')
-        # Match upstream UI's final master normalization as well.
-        samples = upstream_audio.normalize_master_audio(samples)
-        wav = upstream_audio.audio_to_wav_bytes(samples, 44100)
+        if variant=='features' and options.get('featureMethod') in ('contour','transition'):
+            wav,metrics,message=render_feature_transition(audible,info,synth)
+            samples=_pcm(wav)
+        else:
+            events = [NoteEvent(**{name: row[name] for name in ['start','duration','midi','velocity','instrument','pan','layer']}) for row in audible]
+            samples, message = upstream_audio.render_backend(events, info, synth)
+            if synth == 'GeneralUser GS' and 'through FluidSynth' not in message:
+                raise RuntimeError('GeneralUser GS 音源未能启动；请先运行准备脚本，或明确选择原版 Simple 音源。')
+            # Match upstream UI's final master normalization as well.
+            samples = upstream_audio.normalize_master_audio(samples)
+            wav = upstream_audio.audio_to_wav_bytes(samples, 44100)
+            metrics=audio_metrics(samples,44100)
         waves[variant] = wav
         variants[variant] = {'events': audible, 'regions': regions, 'cols': width, 'rows': height,
             'mainCount': sum(row['layer'] == 'main' for row in audible), 'layerCounts': dict(Counter(row['layer'] for row in audible)),
-            'duration': len(samples) / 44100, 'metrics': audio_metrics(samples, 44100), 'wavSha256': hashlib.sha256(wav).hexdigest(),
+            'duration': len(samples) / 44100, 'metrics': metrics, 'wavSha256': hashlib.sha256(wav).hexdigest(),
             'scoreSha256': hashlib.sha256(json.dumps(audible, sort_keys=True).encode()).hexdigest(), 'backend': message}
+        if variant=='features' and options.get('featureMethod') in ('contour','transition'):variants[variant].update(feature_pitch_metadata(options))
     parallel_storage=None
     if include_parallel:
         row_events,row_regions,row_cols,row_count,voices=horizontal_row_melodies(analysis,info,options)
@@ -358,6 +482,10 @@ def build(image_bytes, options=None, include_parallel=False):
             'original':{'name':'原有叠加','metrics':metrics,'wavSha256':hashlib.sha256(parallel_wav).hexdigest()},
             'soft':dict(parallel_storage['profiles']['soft']['metadata'],name='柔和合成混音',metrics=soft_metrics,
                 wavSha256=hashlib.sha256(soft_wav).hexdigest())}
+        if options.get('rowMethod')=='contour':
+            variants['parallel'].update(contourVersion=CONTOUR_VERSION,pitchTransition=options.get('pitchTransition','scale'))
+        if options.get('rowMethod')=='transition':
+            variants['parallel'].update(pitchVersion=PITCH_TRANSITION_VERSION,pitchTransition=options.get('pitchTransition','scale'))
         for key,data in parallel_storage['wav'].items(): waves['parallel-'+key]=data
     rgb = np.clip(np.round(analysis['maps']['rgb'] * 255), 0, 255).astype(np.uint8)
     preview = io.BytesIO(); Image.fromarray(rgb).save(preview, format='PNG')
@@ -378,7 +506,7 @@ def prepare_scores(image_bytes, options=None):
     analysis=upstream_analysis.analyze_image(image,random_factor=0)
     original,info=original_composition(analysis,options)
     reference,reference_regions=serialize_reference(original,analysis,info)
-    feature_main,feature_regions,cols,rows=full_feature_melody(analysis,info)
+    feature_main,feature_regions,cols,rows=full_feature_melody(analysis,info,options)
     feature=[r for r in reference if r['layer']!='main']+feature_main
     feature.sort(key=lambda e:(e['start'],e['layer'],e['midi']))
     row_events,row_regions,row_cols,row_count,voices=horizontal_row_melodies(analysis,info,options)
@@ -395,6 +523,11 @@ def prepare_scores(image_bytes, options=None):
     variants['parallel'].update(version=PARALLEL_VERSION,voices=voices,rowMethod=options.get('rowMethod','reference'),
         mixProfiles={'original':{'name':'原有叠加'},'soft':{'name':'柔和合成混音','version':soft_row_mixer.VERSION,
             'voices':[soft_row_mixer.VOICES[i]['name'] for i in range(row_count)]}})
+    if options.get('rowMethod')=='contour':
+        variants['parallel'].update(contourVersion=CONTOUR_VERSION,pitchTransition=options.get('pitchTransition','scale'))
+    if options.get('rowMethod')=='transition':
+        variants['parallel'].update(pitchVersion=PITCH_TRANSITION_VERSION,pitchTransition=options.get('pitchTransition','scale'))
+    if options.get('featureMethod') in ('contour','transition'):variants['features'].update(feature_pitch_metadata(options))
     rgb=np.clip(np.round(analysis['maps']['rgb']*255),0,255).astype(np.uint8)
     preview=io.BytesIO();Image.fromarray(rgb).save(preview,format='PNG')
     payload={'version':VERSION,'upstream':UPSTREAM_SHA,'info':dataclasses.asdict(info),'features':analysis['features'],
@@ -421,3 +554,11 @@ def render_soft_rows(context, background_wav=None):
         'rowGain':1,'masterGain':gain,'metadata':metadata}}}
     wav,metrics=mix_row_stems(storage,profile='soft')
     return wav,metrics,storage,metadata
+
+def render_feature_transition(records, info, synth, background_wav=None):
+    main=[e for e in records if e['layer']=='main']
+    background=[e for e in records if e['layer']!='main']
+    if background and background_wav is None:background_wav=render_score(background,info,synth)[0]
+    context={'rowEvents':main,'voices':[{'id':'feature-main'}],'info':info}
+    wav,metrics,_,_=render_soft_rows(context,background_wav if background else None)
+    return wav,metrics,'Full-image multi-feature pitch, one continuous warm-key voice; shared reference backing.'

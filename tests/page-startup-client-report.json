@@ -7,7 +7,10 @@
     "retry recovers without reload",
     "mode controls respond during delayed generation",
     "cancel aborts pending generation",
-    "cancelled work cannot overwrite a later successful retry"
+    "cancelled work cannot overwrite a later successful retry",
+    "exactly three approved method/profile pairs; changes send the correct score options",
+    "removed full-image/mix controls are never accessed; old full-image hash opens parallel mode",
+    "WAV filename keeps the selected combination when mode changes during asynchronous export"
   ],
-  "generationRequests": 3
+  "generationRequests": 6
 }

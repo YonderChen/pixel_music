@@ -1,8 +1,8 @@
 {
   "status": "passed",
   "checkedOn": "2026-10-11",
-  "scorePreparationSeconds": 0.13965729100164026,
-  "firstSoftAudioSeconds": 1.0149481249973178,
+  "scorePreparationSeconds": 0.2780302920145914,
+  "firstSoftAudioSeconds": 1.6655137079651468,
   "audioRendersOnOpen": 0,
   "GSCallsForSoftPlayback": 1,
   "checks": [

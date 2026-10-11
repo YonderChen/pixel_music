@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "checkedOn": "2026-10-11",
+  "version": "0.6",
+  "url": "http://127.0.0.1:4176/feature-music.html#parallel",
+  "retainedRecipes": [
+    "多特征音高转换 · 新 / 原有叠加",
+    "行内参考条带 / 柔和合成混音",
+    "局部多特征法 / 柔和合成混音"
+  ],
+  "checks": [
+    "recipe dropdown has exactly the three selected pairs",
+    "full-image entry and independent mapping/mix/glide controls removed",
+    "new multi-feature/original combination plays to the end",
+    "reference-strip/soft and local-feature/soft play with advancing clocks and pause",
+    "reference-original mode is available and its 12-second comparison plays with RMS matching",
+    "prior sunset sample and no-backing setting restored",
+    "legacy full-image URL opens retained parallel mode",
+    "browser error log empty"
+  ],
+  "screenshot": "/private/tmp/pixelmusic-retained-combinations.jpg"
+}

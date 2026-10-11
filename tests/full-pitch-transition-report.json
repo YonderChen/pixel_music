@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "checkedOn": "2026-10-11",
+  "subjectivelyApproved": false,
+  "checks": [
+    "one non-overlapping snake voice, complete pixel coverage, traceable sources, pitch independent of contour and coordinates",
+    "equal-brightness colors and texture affect pitch; uniform inputs do not fabricate a coordinate melody; black rests",
+    "new default option changes the actual feature score, scale/glide share targets but produce different WAVs; lazy rendering only prepares the selected voice",
+    "lazy/eager feature WAV equality, real GS backing shared once with parallel playback, complete black-image silence"
+  ],
+  "scorePreparationSeconds": 0.10278541699517518,
+  "firstFeatureAudioSeconds": 0.14685399999143556,
+  "regions": 32,
+  "voices": 1,
+  "metrics": {
+    "peak": 0.23464474295263005,
+    "rms": 0.0844651411089117,
+    "invalid": 0,
+    "clipped": 0,
+    "first12Rms": 0.0844651411089117,
+    "seconds": 10.315328798185941
+  }
+}

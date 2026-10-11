@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "checkedOn": "2026-10-11",
+  "checks": [
+    "full-image transition/scale/legacy options reach the actual server",
+    "no on-open audio render metadata",
+    "real stereo WAVs differ between all three performances",
+    "SHA/RMS headers and cached byte equality",
+    "region preview uses the selected full-image performance",
+    "parallel mapping also generates real sound without contour metadata"
+  ],
+  "cases": [
+    {
+      "method": "transition",
+      "transition": "glide",
+      "scoreSeconds": 0.12235725001664832,
+      "audioSeconds": 0.14360479195602238
+    },
+    {
+      "method": "transition",
+      "transition": "scale",
+      "scoreSeconds": 0.11631687497720122,
+      "audioSeconds": 0.1420829999842681
+    },
+    {
+      "method": "features",
+      "transition": "glide",
+      "scoreSeconds": 0.11950174998492002,
+      "audioSeconds": 1.8515162090188824
+    }
+  ]
+}

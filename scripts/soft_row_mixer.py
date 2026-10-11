@@ -17,6 +17,8 @@ VOICES = [
 ]
 
 def render_voice(events, frames, row, count):
+    if events and events[0].get('pitchTransition') in ('scale','glide'):
+        return render_connected_voice(events,frames,row,count)
     preset = VOICES[row % len(VOICES)]
     samples = np.zeros((frames, 2), dtype=np.float64)
     activity = np.zeros(frames, dtype=np.float32)
@@ -49,6 +51,62 @@ def render_voice(events, frames, row, count):
         samples[start:start + size] += (signal * envelope * level)[:, None] * stereo
         activity[start:start + size] += envelope * velocity
     return samples, activity
+
+def pitch_segment(target, previous, size, seconds, transition):
+    """Smooth frequency, keeping phase integration independent of note changes."""
+    tau=.002 if transition=='scale' else min(.09,max(.02,seconds/6))
+    t=np.arange(size,dtype=np.float64)/SR
+    frequency=target+(previous-target)*np.exp(-t/tau)
+    return frequency, float(target+(previous-target)*math.exp(-size/(SR*tau)))
+
+def render_connected_voice(events, frames, row, count):
+    """Sustain each adjacent phrase; rests end the phrase and its pitch history."""
+    preset=VOICES[row%len(VOICES)]
+    samples=np.zeros((frames,2));activity=np.zeros(frames,dtype=np.float32)
+    pan=0 if count==1 else -.48+.96*row/(count-1)
+    stereo=np.array([math.cos((pan+1)*math.pi/4),math.sin((pan+1)*math.pi/4)])
+    phrases=[]
+    for event in sorted(events,key=lambda e:e['start']):
+        if not phrases or event['start']>phrases[-1][-1]['start']+phrases[-1][-1]['duration']+1/SR:
+            phrases.append([])
+        phrases[-1].append(event)
+    for phrase in phrases:
+        start=max(0,round(phrase[0]['start']*SR))
+        gate_end=round((phrase[-1]['start']+phrase[-1]['duration'])*SR)
+        gate=max(1,gate_end-start)
+        size=min(frames-start,gate+round(preset['release']*5*SR))
+        if size<=0:continue
+        frequency=np.empty(size);velocity=np.empty(size)
+        previous=None;previous_velocity=phrase[0]['velocity'];cursor=0
+        for event in phrase:
+            end=min(size,round((event['start']+event['duration'])*SR)-start)
+            length=end-cursor
+            if length<=0:continue
+            pitch=event['curveMidi'] if event['pitchTransition']=='glide' else event['midi']
+            target=440*2**((pitch-69)/12)
+            if previous is None:previous=target
+            frequency[cursor:end],previous=pitch_segment(target,previous,length,event['duration'],event['pitchTransition'])
+            decay=np.exp(-np.arange(length)/(SR*.025))
+            velocity[cursor:end]=event['velocity']+(previous_velocity-event['velocity'])*decay
+            previous_velocity=float(event['velocity']+(previous_velocity-event['velocity'])*math.exp(-length/(SR*.025)))
+            cursor=end
+        frequency[cursor:]=previous;velocity[cursor:]=previous_velocity
+        # A single phase and amplitude envelope for the phrase, including turns.
+        phase=2*math.pi*np.concatenate(([0.],np.cumsum(frequency[:-1])))/SR
+        t=np.arange(size)/SR;held=np.minimum(t,gate/SR)
+        envelope=(1-np.exp(-held/preset['attack']))*(.48+.52*np.exp(-held/preset['decay']))
+        envelope*=np.exp(-np.maximum(0,t-gate/SR)/preset['release'])
+        signal=np.zeros(size);energy=np.zeros(size)
+        for harmonic,amplitude in enumerate(preset['partials'],1):
+            hz=harmonic*frequency
+            amplitude=amplitude/np.sqrt(1+(hz/preset['cutoff'])**4)*(hz<SR*.45)
+            signal+=amplitude*np.sin(harmonic*phase)
+            energy+=amplitude**2
+        signal/=np.sqrt(np.maximum(energy,1e-9))
+        level=.14*preset['gain']*np.sqrt(np.clip(velocity,0,1))*np.clip((440/np.maximum(60,frequency))**.16,.82,1.3)
+        samples[start:start+size]+=(signal*envelope*level)[:,None]*stereo
+        activity[start:start+size]+=envelope*velocity
+    return samples,activity
 
 def lowpass(samples, hz):
     """Causal one-pole filter with bounded FFT work buffers."""
@@ -104,6 +162,7 @@ def prepare(events, row_ids, frames, background=None):
     rms = float(np.sqrt(np.mean(full ** 2)))
     gain = min(3.5, .085 / max(rms, 1e-9))
     return stems, gain, {'version': VERSION, 'voices': [VOICES[i]['name'] for i in range(len(row_ids))],
+        'pitchTransition':next((e['pitchTransition'] for e in events if 'pitchTransition' in e),'struck'),
         'echoSeconds': .28, 'echoWet': .13, 'echoLowCutHz': 240,
         'fixedSoloGain': True, 'masterGain': gain, 'peakCeiling': .9}
 
