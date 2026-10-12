@@ -1,9 +1,9 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),Core=require('../dist/music-art-core.js');
-const downloads=[],nodes=new Map(),windows={},requests=[],sources=[],renders=[];let createdContext,holdAudio=false,holdSynth=false,holdImage=false;const pendingAudio=[],pendingSynth=[],pendingImages=[];
+const downloads=[],downloadUrls=[],nodes=new Map(),windows={},requests=[],sources=[],renders=[];let createdContext,holdAudio=false,holdSynth=false,holdImage=false;const pendingAudio=[],pendingSynth=[],pendingImages=[];
 class Element{
  constructor(){this.handlers={};this.value='';this.checked=false;this.style={};this.attrs={};this.innerHTML='';this.disabled=false;}
  addEventListener(k,fn){this.handlers[k]=fn;}setAttribute(k,v){this.attrs[k]=v;}appendChild(){}remove(){}scrollIntoView(){}
- click(){if(this.download)downloads.push(this.download);}getContext(){return {drawImage(){}};}toBlob(fn){queueMicrotask(()=>fn(new Blob(['png'])));}
+ click(){if(this.download){downloads.push(this.download);downloadUrls.push(this.href);}}getContext(){return {drawImage(){}};}toBlob(fn){queueMicrotask(()=>fn(new Blob(['png'])));}
 }
 const get=id=>{if(!nodes.has(id))nodes.set(id,new Element());return nodes.get(id);};get('palette').value='auto';get('detail').value='.6';
 const param=()=>({value:1,setValueAtTime(){},linearRampToValueAtTime(){},cancelScheduledValues(){},setTargetAtTime(){}});
@@ -21,10 +21,11 @@ class OfflineAudioContext{
  startRendering(){const result={duration:this.duration};return holdSynth?new Promise(resolve=>pendingSynth.push(()=>resolve(result))):Promise.resolve(result);}
 }
 class Image{set src(v){if(holdImage)pendingImages.push(()=>this.onload());else queueMicrotask(()=>this.onload());}}
-const imported={...Core.samples()[2],audioRef:{kind:'wave',url:'/api/audio/'+'a'.repeat(64)+'/parallel-soft.wav'}};
+const audioRef={kind:'browser-score',variant:'parallel',profile:'soft',synth:'Simple',info:{duration:19,tempo:88},events:Core.samples()[2].events,rows:['row-0'],voices:[{id:'row-0'}]};
+const imported={...Core.samples()[2],audioRef};
 const fetch=async(url,options)=>{requests.push(url);if(holdAudio)return new Promise((resolve,reject)=>{pendingAudio.push(()=>resolve({ok:true,arrayBuffer:async()=>new ArrayBuffer(4)}));options.signal.addEventListener('abort',()=>reject(new Error('cancelled')));});return {ok:true,arrayBuffer:async()=>new ArrayBuffer(4)};};
-const window={MusicArtCore:Core,AudioContext,OfflineAudioContext,addEventListener:(k,fn)=>windows[k]=fn};
-const context=vm.createContext({window,document:{getElementById:get,querySelector:()=>new Element(),createElement:()=>new Element(),body:new Element()},localStorage:{getItem:()=>JSON.stringify(imported)},location:{protocol:'http:',hash:'#current'},innerWidth:1000,Image,fetch,AbortController,Float32Array,Blob,URL,performance,setTimeout,clearTimeout,requestAnimationFrame:fn=>setTimeout(fn,1),cancelAnimationFrame:clearTimeout,console});
+const window={MusicArtCore:Core,PixelMusicBrowser:{request:fetch},AudioContext,OfflineAudioContext,addEventListener:(k,fn)=>windows[k]=fn};
+const context=vm.createContext({window,document:{getElementById:get,querySelector:()=>new Element(),createElement:()=>new Element(),body:new Element()},localStorage:{getItem:()=>JSON.stringify(imported)},location:{protocol:'file:',hash:'#current'},innerWidth:1000,Image,fetch,AbortController,Float32Array,Blob,URL,performance,setTimeout,clearTimeout,requestAnimationFrame:fn=>setTimeout(fn,1),cancelAnimationFrame:clearTimeout,console});
 vm.runInContext(fs.readFileSync(path.join(__dirname,'../dist/music-art-app.js'),'utf8'),context);
 const state=()=>window.PixelMusicArtDemo.snapshot(),click=id=>get(id).handlers.click();
 const until=async(fn)=>{for(let i=0;i<2000;i++){if(fn())return;await new Promise(r=>setTimeout(r,1));}throw new Error('state did not settle');};
@@ -32,6 +33,7 @@ const choose=id=>{get('score').value=id;get('score').handlers.change();};
 (async()=>{
  assert.equal(state().score,'current');assert.equal(state().playing,false);assert.equal(requests.length,0,'no audio work on open');assert.ok(get('artwork').innerHTML.startsWith('<svg'));
  await click('play');assert.equal(state().playing,true);assert.equal(requests.length,1);
+ click('saveScore');const saved=await(await globalThis.fetch(downloadUrls.at(-1))).json();assert.equal(saved.audioRef.kind,'browser-score','saved JSON keeps portable original audio settings');
  createdContext.currentTime=.8;const source=sources.at(-1),fingerprint=state().fingerprint;click('geometry');assert.equal(state().playing,true);assert.equal(sources.at(-1),source);assert.equal(state().fingerprint,fingerprint);
  get('loop').checked=true;get('loop').handlers.change();assert.equal(source.loop,true);
  createdContext.currentTime+=source.buffer.duration+1;assert.ok(state().time<2);
@@ -45,7 +47,7 @@ const choose=id=>{get('score').value=id;get('score').handlers.change();};
  get('json').files=[{size:20,text:async()=>JSON.stringify(Core.samples()[1])}];await get('json').handlers.change();assert.equal(state().notes,96);assert.match(state().score,/upload-/);
  choose('current');holdAudio=true;
  // Use a fresh source key to test cancellation before decode (clear the existing cache via a new incoming score).
- windows.storage({key:Core.STORAGE_KEY,newValue:JSON.stringify({...imported,audioRef:{kind:'wave',url:'/api/audio/'+'b'.repeat(64)+'/parallel.wav'}})});
+ windows.storage({key:Core.STORAGE_KEY,newValue:JSON.stringify({...imported,audioRef:{...audioRef,profile:'original'}})});
  const waiting=click('play');await until(()=>pendingAudio.length===1);click('play');pendingAudio.shift()();await waiting;assert.equal(state().playing,false);assert.equal(state().loading,false);
  holdAudio=false;await click('play');const exiting=sources.at(-1),staleEnd=exiting.onended;windows.pagehide();staleEnd();assert.equal(state().playing,false);assert.equal(createdContext.state,'closed');
  const report={status:'passed',checkedOn:'2026-10-11',checks:['page opens with a complete image and no audio preparation','original sound plays and resumes from cached audio','style changes preserve music, timing and source','loop wrap and disabling loop retain current position','seek resumes at the selected time','late synthesis and file reads cannot overwrite a later selection','samples synthesize their actual score notes','PNG filename stays attached to the clicked score and style','JSON import works and original preparation can be cancelled','page exit stops sound and ignores stale end callbacks']};

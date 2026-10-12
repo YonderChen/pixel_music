@@ -30,6 +30,7 @@ const fetch=async(url,options={})=>{
  throw new Error('unexpected audio request '+url);
 };
 const windows={},window={AudioContext,addEventListener:(k,v)=>windows[k]=v,PixelMusicStripSamples:{entries:[]}};
+window.PixelMusicBrowser={request:fetch};
 class Image{constructor(){this.width=192;this.height=120;}set src(v){queueMicrotask(()=>this.onload());}}
 const context=vm.createContext({window,document:{getElementById:get,createElement:()=>new Element()},location:{protocol:'http:',origin:'http://127.0.0.1:4177',hash:'#parallel'},innerHeight:900,Image,fetch,AbortController,performance,setTimeout,clearTimeout,setInterval,clearInterval,requestAnimationFrame(){},cancelAnimationFrame(){},URL,Map,Set,console});
 vm.runInContext(fs.readFileSync(path.join(__dirname,'../dist/feature-music-app.js'),'utf8'),context);
@@ -40,7 +41,7 @@ const move=(i,extra={})=>get('imageStage').handlers.pointermove({pointerType:'mo
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
 (async()=>{
  await until(()=>window.PixelMusicFeaturesDemo.payload()&&!state().busy);
- assert.equal(requests.length,2,'page opening must not request a hover bank');
+ assert.equal(requests.length,1,'page opening must not request a hover bank');
  get('hoverToggle').checked=true;get('hoverToggle').handlers.change();await until(()=>held.length===1);
  move(0);move(1);move(3);assert.equal(plays.length,0);assert.equal(state().hoverRegion,3);
  held.shift()();await until(()=>plays.length===1);assert.equal(plays[0][1],2,'only the latest region plays after loading');

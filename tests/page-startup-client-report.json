@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "checkedOn": "2026-10-11",
+  "checkedOn": "2026-10-12",
   "checks": [
     "network failure restores a retry action and clears generation state",
     "image preview is available before server response",
@@ -12,5 +12,5 @@
     "removed full-image/mix controls are never accessed; old full-image hash opens parallel mode",
     "WAV filename keeps the selected combination when mode changes during asynchronous export"
   ],
-  "generationRequests": 6
+  "generationRequests": 7
 }

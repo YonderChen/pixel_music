@@ -25,6 +25,7 @@ const fetch=async(url,options={})=>{
  throw new Error('unexpected request '+url);
 };
 const windows={},window={AudioContext,addEventListener:(k,v)=>windows[k]=v,PixelMusicStripSamples:{entries:[]}};
+window.PixelMusicBrowser={request:fetch};
 class Image{constructor(){this.width=192;this.height=120;}set src(v){queueMicrotask(()=>this.onload());}}
 const context=vm.createContext({window,document:{getElementById:get,createElement:()=>new Element()},location:{protocol:'http:',origin:'http://127.0.0.1:4176',hash:'#parallel'},innerHeight:900,Image,fetch,AbortController,performance,setTimeout,clearTimeout,setInterval,clearInterval,requestAnimationFrame(fn){const id=++frameId;frames.set(id,fn);return id;},cancelAnimationFrame(id){frames.delete(id);},URL,Map,Set,console});
 vm.runInContext(fs.readFileSync(path.join(__dirname,'../dist/feature-music-app.js'),'utf8'),context);

@@ -1,0 +1,20 @@
+{
+  "version": "0.7.0",
+  "pyodide": "0.27.7",
+  "jsSynthesizer": "1.13.0",
+  "fluidSynth": "2.4.6",
+  "assets": {
+    "compute-data.js": {
+      "bytes": 22019828,
+      "sha256": "71d25fef7dd84e093247cfabffb91e186500c826580051afb458dd5a3bb1e6f9"
+    },
+    "soundfont-data.js": {
+      "bytes": 43092617,
+      "sha256": "9fa773db50ae1888950ff4d2b365334d5ea40467c746db44a3846331629445cf"
+    },
+    "sources-data.js": {
+      "bytes": 2182475,
+      "sha256": "1f03dd6617f9e4636871f65faa5f6c820180e939b645c48466a746cdc2b2e33c"
+    }
+  }
+}

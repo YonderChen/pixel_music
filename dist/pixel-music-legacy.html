@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#11110f" />
+    <meta
+      name="description"
+      content="图鸣 PixelMusic：把图片的像素、颜色与纹理确定性地映射成一段可复现的旋律。"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%2311110f'/%3E%3Cpath d='M17 19h30v26H17z' fill='none' stroke='%23f4f1e8' stroke-width='3'/%3E%3Cpath d='M25 37V25l15-3v12' fill='none' stroke='%23ff6b45' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='21' cy='39' r='5' fill='%23ff6b45'/%3E%3Ccircle cx='36' cy='36' r='5' fill='%23ff6b45'/%3E%3C/svg%3E"
+    />
+    <title>图鸣 · PixelMusic</title>
+    <link rel="stylesheet" href="./styles.css?v=0.6.4-flow-r2" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="图鸣首页">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span>图鸣</span>
+          <small>PIXELMUSIC</small>
+        </a>
+        <div class="privacy-note"><span></span> 图片仅在本机处理</div>
+      </header>
+
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">把图像当作乐谱</p>
+        <h1 id="page-title">听见一张图片<br />本来的旋律。</h1>
+        <p class="intro-copy">
+          不识别物体，不猜测情绪。图鸣读取像素的颜色、明暗与纹理，按照固定规则写成一段可复现的音乐。
+        </p>
+      </section>
+
+      <section class="studio" aria-label="听画工作台">
+        <div class="visual-stage" id="dropZone">
+          <canvas id="imageCanvas" aria-label="待演奏的图片"></canvas>
+          <div class="empty-state" id="emptyState">
+            <span class="upload-glyph" aria-hidden="true">＋</span>
+            <strong>选择一张图片</strong>
+            <span>JPG、PNG 或 WEBP</span>
+          </div>
+          <div class="scan-line" id="scanLine" aria-hidden="true">
+            <span></span>
+          </div>
+          <div class="region-grid" id="regionGrid" aria-label="图片声音区域"></div>
+          <div class="stage-topline">
+            <span id="stageLabel">等待图像</span>
+            <span id="stepLabel">000 / 120</span>
+          </div>
+          <div class="note-rail" id="noteRail" aria-hidden="true"></div>
+        </div>
+
+        <div class="control-panel">
+          <div class="control-heading">
+            <div>
+              <p class="eyebrow">声音指纹</p>
+              <h2 id="workTitle">尚未生成</h2>
+            </div>
+            <span class="status-pill" id="statusPill">等待图片</span>
+          </div>
+
+          <dl class="metrics">
+            <div><dt>调式</dt><dd id="keyMetric">—</dd></div>
+            <div><dt>速度</dt><dd id="tempoMetric">—</dd></div>
+            <div><dt>色彩</dt><dd id="colorMetric">—</dd></div>
+            <div><dt>纹理</dt><dd id="textureMetric">—</dd></div>
+          </dl>
+
+          <div class="fingerprint">
+            <span>IMAGE SIGNATURE</span>
+            <code id="fingerprintValue">–––– –––– –––– ––––</code>
+            <span class="score-signature-label">SCORE SIGNATURE · 乐谱版本</span>
+            <code class="score-signature" id="scoreHashValue">0.6.1 · 等待图像</code>
+            <span class="score-signature-label">RHYTHM SIGNATURE · 实际演奏</span>
+            <code class="score-signature" id="rhythmHashValue">等待图像</code>
+            <span class="score-signature-label">REGION MAPPING · 区域出处</span>
+            <code class="score-signature" id="mappingHashValue">等待图像</code>
+          </div>
+
+          <div class="phrase-tracker" id="phraseTracker" aria-label="图像位置">
+            <span>第一段</span><span>第二段</span><span>第三段</span><span>第四段</span>
+          </div>
+          <p class="phrase-label" id="phraseLabel">第一段 · 第二段 · 第三段 · 第四段</p>
+
+          <fieldset class="tone-picker">
+            <legend>演奏材质</legend>
+            <label><input type="radio" name="tone" value="glass" /><span>晶体</span></label>
+            <label><input type="radio" name="tone" value="warm" checked /><span>暖键</span></label>
+            <label><input type="radio" name="tone" value="mist" /><span>弦雾</span></label>
+          </fieldset>
+
+          <fieldset class="tone-picker performance-picker expression-picker">
+            <legend>像素音乐的表达</legend>
+            <label><input type="radio" name="pixelExpression" value="off" /><span>原始映射</span></label>
+            <label><input type="radio" name="pixelExpression" value="on" /><span>升降律动 · v2</span></label>
+            <label><input type="radio" name="pixelExpression" value="flow" checked /><span>连绵演奏</span></label>
+          </fieldset>
+          <p class="expression-hint" id="expressionHint">简化连绵：只用像素主音，升降最多一个中转，不叠加v2回绕；主旋律持续发声，可切回旧版对照。</p>
+          <div class="comparison-actions" aria-label="同图同音色同响度，前12秒对照">
+            <button class="sample-button" id="abOriginalButton" type="button" disabled>12秒 · 原始</button>
+            <button class="sample-button" id="abExpressionButton" type="button" disabled>12秒 · 律动</button>
+            <button class="sample-button" id="abFlowButton" type="button" disabled>12秒 · 连绵</button>
+          </div>
+
+          <fieldset class="tone-picker performance-picker">
+            <legend>旧版稳定区域奏法（原始／律动使用）</legend>
+            <label><input type="radio" name="performanceStyle" value="sparse" checked /><span>轻奏留白</span></label>
+            <label><input type="radio" name="performanceStyle" value="continuous" /><span>连续声景</span></label>
+          </fieldset>
+
+          <div class="actions">
+            <label class="button button-primary" for="fileInput">
+              <input id="fileInput" type="file" accept="image/jpeg,image/png,image/webp" />
+              <span id="uploadLabel">选择图片</span>
+            </label>
+            <button class="button button-play" id="playButton" type="button" disabled>
+              <span class="play-icon" aria-hidden="true"></span>
+              <span id="playLabel">开始听画</span>
+            </button>
+          </div>
+          <button class="sample-button" id="sampleButton" type="button">先用示例图体验</button>
+          <button class="sample-button" id="gradientSampleButton" type="button">听听渐变图片的升降律动</button>
+          <button class="sample-button" id="whiteSampleButton" type="button">也试试纯白图片</button>
+          <button class="sample-button" id="exportButton" type="button" disabled>保存这张图的音乐 · WAV</button>
+          <a class="comparison-link" href="../tests/articulation-listen.html">轻奏与长音 · 本地对照试听</a>
+        </div>
+      </section>
+
+      <section class="method" aria-labelledby="method-title">
+        <div>
+          <p class="eyebrow">映射规则 01</p>
+          <h2 id="method-title">每一个声音<br />都有图像出处。</h2>
+        </div>
+        <ol>
+          <li><span>01</span><div><strong>横向位置决定时间</strong><p>图片被划分为 24 列，从左向右依次演奏。</p></div></li>
+          <li><span>02</span><div><strong>120 个区域，不必敲击 120 次</strong><p>每个区域保留出处、都能点击试听。稳定长段默认轻奏同音、间隔留白，也可选择连续声景。</p></div></li>
+          <li><span>03</span><div><strong>像素决定走向，规则组织律动</strong><p>仍按颜色、明暗和纹理计算主音，不提取轮廓。实验表达只在有升降的区间加入少量连接与回绕；纯色仍是同音，不补和弦。</p></div></li>
+          <li><span>04</span><div><strong>三种表达，可以对照</strong><p>原始、颗粒律动与连绵演奏从同一位置作12秒响度匹配对照。连绵版0.6.4-exp用一条持续声音平滑换音，不用长混响掩盖间断；延续留白属于演奏规则。</p></div></li>
+        </ol>
+      </section>
+
+      <footer>
+        <span>图鸣 · PixelMusic</span>
+        <span>万象成音，一图一曲。</span>
+      </footer>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="./timing.js?v=0.6.1-r1"></script>
+    <script src="./rhythm.js?v=0.6.1-r1"></script>
+    <script src="./music.js?v=0.6.1-r1"></script>
+    <script src="./image-analysis.js?v=0.6.1-r1"></script>
+    <script src="./audio.js?v=0.6.1-r1"></script>
+    <script src="./pixel-expression.js?v=0.6.3-exp-r2"></script>
+    <script src="./legato.js?v=0.6.4-flow-r2"></script>
+    <script src="./app.js?v=0.6.4-flow-r2"></script>
+  </body>
+</html>

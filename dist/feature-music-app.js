@@ -7,7 +7,7 @@
   ids.push('loopToggle');
   ids.push('musicArt');
   const E = Object.fromEntries(ids.map(id => [id,$(id)]));
-  const API = location.protocol === 'file:' ? 'http://127.0.0.1:4176' : location.origin;
+  const API = '';
   const RECIPES=Object.freeze([
     {id:'feature-original',method:'transition',profile:'original',name:'多特征音高转换 · 新 / 原有叠加',filename:'多特征音高转换-原有叠加',hint:'颜色、明暗、饱和度、对比度与纹理共同决定音高；各行使用参考音源演奏量化音阶，再按原有方式叠加。'},
     {id:'reference-soft',method:'reference',profile:'soft',name:'行内参考条带 / 柔和合成混音',filename:'行内参考条带-柔和合成混音',hint:'各行采用参考条带法生成旋律，以暖键、柔拨弦、圆木琴和轻铃演奏，使用柔和合成混音。'},
@@ -32,11 +32,11 @@
       if(!S.workTimer)S.workTimer=setInterval(workIndicator,500);
     }else{clearInterval(S.workTimer);S.workTimer=null;}
   }
-  async function request(url,options={},timeout=45000){
+  async function request(url,options={},timeout=180000){
     const controller=options.controller||new AbortController();let expired=false;
     const timer=setTimeout(()=>{expired=true;controller.abort();},timeout);
     const {controller:_,...fetchOptions}=options;
-    try{return await fetch(url,{...fetchOptions,signal:controller.signal});}
+    try{return await window.PixelMusicBrowser.request(url,{...fetchOptions,signal:controller.signal});}
     catch(error){if(expired)throw new Error('本机处理超时，可以取消后重试。');throw error;}
     finally{clearTimeout(timer);}
   }
@@ -221,20 +221,18 @@
     const operation=++S.loadOperation, image=S.image;
     try {
       await showInput(image,operation);if(operation!==S.loadOperation)return;
-      const health=await request(API+'/api/health',{controller:S.loadAbort},4000);if(!health.ok)throw new Error('请先双击“启动全图特征Demo.command”。');
-      const response=await request(API+'/api/generate',{method:'POST',controller:S.loadAbort,headers:{'Content-Type':'application/json'},body:JSON.stringify({image:image.base64,options:{synth:E.tone.value,mapping:E.mappingStyle.value,backing:E.backing.checked,rowCount:Number(E.rowCount.value),rowMethod:recipe().method,pitchTransition:'scale',featureMethod:'features'}})},20000);
+      const response=await request(API+'/api/generate',{method:'POST',controller:S.loadAbort,body:JSON.stringify({image:image.base64,options:{synth:E.tone.value,mapping:E.mappingStyle.value,backing:E.backing.checked,rowCount:Number(E.rowCount.value),rowMethod:recipe().method,pitchTransition:'scale',featureMethod:'features'}})});
       const payload=await response.json();if(!response.ok)throw new Error(payload.error||'生成失败');
       if(operation!==S.loadOperation)return;
       S.payload=payload;S.buffers.clear();S.mixMetrics.clear();S.time=0;E.connection.hidden=true;S.solo=null;
       const count=payload.variants.parallel?.rows??4;S.enabledRows=Array.from({length:count},()=>true);
-      if(recipe().profile==='soft'&&!payload.variants.parallel?.mixProfiles?.soft)throw new Error('当前音源不支持柔和合成混音，请重启本机服务。');
-      if(!payload.variants.parallel){if(S.mode==='parallel')S.mode='reference';E.connection.hidden=false;E.connectionMessage.textContent='当前音源是旧版，请重启本机 demo 服务以开启多行叠奏。';}
+      if(!payload.variants.parallel?.mixProfiles?.soft)throw new Error('乐谱数据不完整，请重新生成。');
       const photo=await new Promise((resolve,reject)=>{const p=new Image();p.onload=()=>resolve(p);p.onerror=()=>reject(new Error('图片显示失败'));p.src=payload.image.src;});
       if(operation!==S.loadOperation)return;
       S.previewSize=payload.image;E.picture.width=payload.image.width;E.picture.height=payload.image.height;E.picture.getContext('2d').drawImage(photo,0,0);
       E.workName.textContent=image.name;E.credit.textContent=image.credit||'你的图片 · 原项目按整张图分析，最长边 512 像素';
       S.busy=false;E.comparisonHint.textContent='同图、同速度，匹配响度；对比原谱与新旋律。';render();if(E.hoverToggle.checked)prepareHoverBank();
-    }catch(error){if(operation!==S.loadOperation)return;S.busy=false;E.connection.hidden=false;E.connectionMessage.textContent=`${error.message} 可以点击“重新生成”；若服务未启动，请双击“启动全图特征Demo.command”。`;E.status.textContent='生成失败';E.playText.textContent='生成失败 · 请重试';controls();toast(error.message);}
+    }catch(error){if(operation!==S.loadOperation)return;S.busy=false;E.connection.hidden=false;E.connectionMessage.textContent=`${error.message} 可以点击“重新生成”；请检查静态文件夹是否完整。`;E.status.textContent='生成失败';E.playText.textContent='生成失败 · 请重试';controls();toast(error.message);}
     finally{if(operation===S.loadOperation){S.busy=false;S.loadAbort=null;controls();}}
   }
   async function showInput(image,operation){
@@ -382,7 +380,9 @@
     if(!S.payload||S.busy){event.preventDefault();toast('乐谱生成完成后即可送入绘画工作台。');return;}
     try{
       const score=window.MusicArtCore.fromPerformance(S.payload,{mode:S.mode,profile:recipe().profile,rows:S.enabledRows,backing:S.mode==='parallel'?includeRowBackground():E.backing.checked,title:E.workName.textContent+' / '+(S.mode==='parallel'?recipe().name:'参考原谱')});
-      localStorage.setItem(window.MusicArtCore.STORAGE_KEY,JSON.stringify(score));stop();
+      const raw=JSON.stringify(score);
+      try{localStorage.setItem(window.MusicArtCore.STORAGE_KEY,raw);}catch(_){}
+      E.musicArt.href='./music-art.html#score='+encodeURIComponent(raw);stop();
     }catch(error){event.preventDefault();toast('乐曲送入失败：'+error.message);}
   });
   for(const type of ['dragenter','dragover'])E.imageStage.addEventListener(type,event=>{event.preventDefault();E.dropHint.hidden=false;});

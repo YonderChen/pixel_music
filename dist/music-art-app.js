@@ -9,15 +9,18 @@
   let toastTimer;
   function toast(message){clearTimeout(toastTimer);E.toast.textContent=message;E.toast.hidden=false;toastTimer=setTimeout(()=>E.toast.hidden=true,5000);}
   function audioRef(ref){
-    if(ref?.kind==='wave'&&/^\/api\/audio\/[a-f0-9]{64}\/(parallel(?:-soft)?|reference)\.wav$/.test(ref.url))return {kind:'wave',url:ref.url};
-    if(ref?.kind==='rowmix'&&/^[a-f0-9]{64}$/.test(ref.key)&&['soft','original'].includes(ref.profile)&&Array.isArray(ref.rows)&&ref.rows.every(r=>/^row-[0-3]$/.test(r)))return {kind:'rowmix',key:ref.key,rows:ref.rows,background:!!ref.background,profile:ref.profile};
+    if(ref?.kind==='browser-score'&&['parallel','reference'].includes(ref.variant)&&['soft','original'].includes(ref.profile)&&['Simple','GeneralUser GS'].includes(ref.synth)&&ref.info?.duration>0&&ref.info.duration<=180&&Array.isArray(ref.events)&&ref.events.length<=5000&&Array.isArray(ref.voices)&&ref.voices.length<=4&&Array.isArray(ref.rows)&&ref.rows.every(r=>/^row-[0-3]$/.test(r))){
+      Core.normalize({duration:ref.info.duration,events:ref.events,tempo:ref.info.tempo});
+      return ref;
+    }
     return null;
   }
-  function readCurrent(raw){const score=Core.normalize(JSON.parse(raw)),data=JSON.parse(raw);score.audioRef=audioRef(data.audioRef);return score;}
+  function readCurrent(raw){const data=JSON.parse(raw),score=Core.normalize(data);score.audioRef=audioRef(data.audioRef);score.legacyAudio=!!data.audioRef&&!score.audioRef;return score;}
   function options(){E.score.innerHTML='';for(const [id,score] of S.library){const option=document.createElement('option');option.value=id;option.textContent=(id==='current'?'当前乐曲 · ':id.startsWith('upload-')?'导入 · ':'样曲 · ')+score.title;E.score.appendChild(option);}}
   Core.samples().forEach(score=>S.library.set(score.id,score));
   let imported=false;
   try{const raw=localStorage.getItem(Core.STORAGE_KEY);if(raw){S.library.set('current',readCurrent(raw));imported=true;}}catch(error){toast('当前乐曲未能读取：'+error.message);}
+  if(location.hash.startsWith('#score='))try{S.library.set('current',readCurrent(decodeURIComponent(location.hash.slice(7))));imported=true;}catch(error){toast('送入的乐曲未能读取：'+error.message);}
   options();
   function current(){
     if(!S.playing)return S.time;
@@ -32,7 +35,7 @@
   function select(id){
     S.importOperation++;stop(true);S.score=S.library.get(id);if(!S.score)return;E.score.value=id;S.layout=0;S.audio=null;
     E.audioChoice.hidden=!S.score.audioRef;E.audioMode.value=S.score.audioRef?'original':'synth';
-    E.sourceHint.textContent=id==='current'?'使用送入时的音符与声部，试听音源对应当时的组合及静音选择。':id.startsWith('upload-')?'使用导入乐谱的音高、时序、力度与声部；以本机合成音色试听。':'三首原创演示样曲用不同的旋律与节奏作对照。';
+    E.sourceHint.textContent=S.score.legacyAudio?'已读取旧版乐谱，当前采用乐谱合成试听；从图片演奏页重新送入即可恢复原组合音色。':S.score.audioRef?'使用送入时的音符与声部，试听音源对应当时的组合及静音选择。':id.startsWith('upload-')?'使用导入乐谱的音高、时序、力度与声部；以本机合成音色试听。':'三首原创演示样曲用不同的旋律与节奏作对照。';
     draw();
   }
   function draw(){
@@ -81,13 +84,11 @@
     if(S.buffers.has(key))return S.buffers.get(key);
     let audio;
     if(original){
-      if(location.protocol==='file:')throw new Error('原乐曲音源需要通过本机 Demo 地址打开，也可切换乐谱合成试听。');
-      const controller=new AbortController();S.abort=controller;const timer=setTimeout(()=>controller.abort(),45000),ref=S.score.audioRef;
-      try{
-        const response=await fetch(ref.kind==='wave'?ref.url:'/api/rowmix',ref.kind==='wave'?{signal:controller.signal}:{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(ref),signal:controller.signal});
-        if(!response.ok)throw new Error('原音源缓存已过期，请从图片演奏重新送入；也可切换乐谱合成试听。');
-        audio=await S.context.decodeAudioData(await response.arrayBuffer());
-      }finally{clearTimeout(timer);if(S.abort===controller)S.abort=null;}
+      if(S.score.audioRef.kind==='browser-score'){
+        const controller=new AbortController();S.abort=controller;
+        try{const response=await window.PixelMusicBrowser.request('/api/performance',{body:JSON.stringify(S.score.audioRef),signal:controller.signal});audio=await S.context.decodeAudioData(await response.arrayBuffer());}
+        finally{if(S.abort===controller)S.abort=null;}
+      }else throw new Error('请从图片演奏页重新送入当前乐曲。');
     }else audio=await synthesize(S.score,operation);
     if(operation!==S.operation)return null;S.buffers.set(key,audio);while(S.buffers.size>3)S.buffers.delete(S.buffers.keys().next().value);return audio;
   }
@@ -113,12 +114,15 @@
       download(blob,'png',title,style);toast('PNG 已生成 · 可点击下方链接或右键预览图片保存。');
     }catch(error){toast(error.message);}finally{URL.revokeObjectURL(url);S.exporting=false;E.png.disabled=false;}
   });
-  E.saveScore.addEventListener('click',()=>download(new Blob([JSON.stringify(Core.normalize(S.score),null,2)],{type:'application/json'}),'json'));
+  E.saveScore.addEventListener('click',()=>{
+    const score=Core.normalize(S.score);if(S.score.audioRef?.kind==='browser-score')score.audioRef=S.score.audioRef;
+    download(new Blob([JSON.stringify(score,null,2)],{type:'application/json'}),'json');
+  });
   let uploadId=0;
   async function upload(file,kind){
     if(!file)return;if(file.size>2*1024*1024){toast('请导入小于 2MB 的乐谱文件。');return;}
     const operation=++S.importOperation;
-    try{const raw=kind==='midi'?window.MusicArtMidi.parse(await file.arrayBuffer(),file.name.replace(/\.midi?$/i,'')):JSON.parse(await file.text());if(operation!==S.importOperation)return;const score=Core.normalize(raw),id='upload-'+(++uploadId);S.library.set(id,score);options();select(id);toast('已根据导入的乐谱生成画作。');}catch(error){if(operation===S.importOperation)toast(error.message);}finally{E[kind].value='';}
+    try{const raw=kind==='midi'?window.MusicArtMidi.parse(await file.arrayBuffer(),file.name.replace(/\.midi?$/i,'')):JSON.parse(await file.text());if(operation!==S.importOperation)return;const score=kind==='json'?readCurrent(JSON.stringify(raw)):Core.normalize(raw),id='upload-'+(++uploadId);S.library.set(id,score);options();select(id);toast('已根据导入的乐谱生成画作。');}catch(error){if(operation===S.importOperation)toast(error.message);}finally{E[kind].value='';}
   }
   E.midi.addEventListener('change',()=>upload(E.midi.files[0],'midi'));E.json.addEventListener('change',()=>upload(E.json.files[0],'json'));
   E.score.addEventListener('change',()=>select(E.score.value));
@@ -132,5 +136,5 @@
   window.addEventListener('storage',event=>{if(event.key!==Core.STORAGE_KEY||!event.newValue)return;try{const value=readCurrent(event.newValue),chosen=E.score.value;S.library.set('current',value);options();E.score.value=chosen;if(chosen==='current'&&!S.playing&&!S.loading)select('current');else toast('收到新的当前乐曲，可以在选择框中打开。');}catch(error){toast(error.message);}});
   window.addEventListener('pagehide',()=>{stop();S.context?.close();if(S.svgUrl)URL.revokeObjectURL(S.svgUrl);if(S.pngUrl)URL.revokeObjectURL(S.pngUrl);});
   window.PixelMusicArtDemo={snapshot:()=>({style:S.style,score:E.score.value,fingerprint:S.model?.fingerprint,layout:S.layout,playing:S.playing,loading:S.loading,time:current(),notes:S.score?.events.length,voices:S.model?.stats.voices.length}),score:()=>Core.normalize(S.score)};
-  select(imported&&location.hash==='#current'?'current':'slow');
+  select(imported&&(location.hash==='#current'||location.hash.startsWith('#score='))?'current':'slow');
 })();

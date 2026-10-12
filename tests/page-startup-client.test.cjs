@@ -24,7 +24,7 @@ let fail=true,delay=false,aborted=false,generationRequests=0;const sentOptions=[
 const fetch=async(url,options={})=>{
  if(url.endsWith('/api/health')){if(fail)throw new TypeError('Failed to fetch');return {ok:true};}
  if(url.endsWith('/api/generate')){
-  generationRequests++;
+  generationRequests++;if(fail)throw new TypeError('Failed to load browser assets');
   const settings=JSON.parse(options.body).options;sentOptions.push(settings);
   if(delay)return new Promise((resolve,reject)=>options.signal.addEventListener('abort',()=>{aborted=true;reject(new Error('aborted'));},{once:true}));
   const result=structuredClone(payload);result.variants.parallel.rowMethod=settings.rowMethod;
@@ -34,6 +34,7 @@ const fetch=async(url,options={})=>{
  throw new Error('opening the page unexpectedly requested audio');
 };
 const windows={};const window={addEventListener:(k,v)=>windows[k]=v,PixelMusicStripSamples:{entries:[]}};
+window.PixelMusicBrowser={request:fetch};
 class Image{constructor(){this.width=192;this.height=120;}set src(value){queueMicrotask(()=>this.onload());}}
 const context=vm.createContext({window,document:{getElementById:get,createElement:()=>new Element(),body:new Element()},location:{protocol:'http:',origin:'http://127.0.0.1:4177',hash:'#parallel'},innerHeight:900,Image,fetch,AbortController,performance,setTimeout,clearTimeout,setInterval,clearInterval,requestAnimationFrame(){},cancelAnimationFrame(){},URL,Map,Set,console});
 vm.runInContext(fs.readFileSync(path.join(__dirname,'../dist/feature-music-app.js'),'utf8'),context);
@@ -45,7 +46,7 @@ const until=async(fn)=>{for(let i=0;i<1000;i++){if(fn())return;await new Promise
  assert.equal(get('parallelMode').disabled,false);assert.equal(get('referenceMode').disabled,false);assert.ok(get('picture').width>0);assert.equal(get('loadState').hidden,true);
  fail=false;get('retry').handlers.click();await until(()=>window.PixelMusicFeaturesDemo.payload()&&!state().busy);
  assert.equal(get('play').disabled,false);assert.equal(get('status').textContent,'可以演奏');
- delay=true;get('retry').handlers.click();await until(()=>generationRequests===2);
+ delay=true;get('retry').handlers.click();await until(()=>generationRequests===3);
  get('referenceMode').handlers.click();assert.equal(state().mode,'reference');assert.equal(get('loadState').hidden,false);
  get('cancelWork').handlers.click();await until(()=>aborted);assert.equal(state().busy,false);assert.equal(get('retry').disabled,false);assert.equal(get('loadState').hidden,true);
  delay=false;get('retry').handlers.click();await until(()=>window.PixelMusicFeaturesDemo.payload()&&!state().busy);

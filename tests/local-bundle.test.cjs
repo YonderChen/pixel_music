@@ -14,7 +14,7 @@ function localAsset(page, source) {
   assert.ok(fs.statSync(resolved).isFile(), `missing asset: ${source}`);
   return resolved;
 }
-for (const relativePage of ['dist/index.html', 'tests/listen.html', 'tests/rhythm-listen.html', 'tests/fidelity-listen.html', 'tests/articulation-listen.html']) {
+for (const relativePage of ['dist/pixel-music-legacy.html', 'tests/listen.html', 'tests/rhythm-listen.html', 'tests/fidelity-listen.html', 'tests/articulation-listen.html']) {
   const page = path.join(projectRoot, relativePage), html = fs.readFileSync(page, 'utf8');
   const sandbox = {}; sandbox.window = sandbox;
   const context = vm.createContext(sandbox);

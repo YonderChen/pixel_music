@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "checkedOn": "2026-10-11",
+  "checkedOn": "2026-10-12",
   "checks": [
     "deterministic for the same score and visual settings",
     "pitch, rhythm, velocity, tempo and instrument change both visual styles",
@@ -10,7 +10,7 @@
     "silent and dense scores remain bounded",
     "MIDI tempo changes, sustain, running status, programs and truncated-file handling"
   ],
-  "largeScoreRenderMilliseconds": 8,
+  "largeScoreRenderMilliseconds": 9,
   "records": [
     {
       "sample": "slow",

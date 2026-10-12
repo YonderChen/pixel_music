@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "version": "0.7.0",
+  "files": 27,
+  "archiveBytes": 42140419,
+  "checks": [
+    "ZIP CRC integrity",
+    "all HTML relative resources present",
+    "three embedded runtime bundles match SHA256 manifest",
+    "no native backend required in archive"
+  ]
+}

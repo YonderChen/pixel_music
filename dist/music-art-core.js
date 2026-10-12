@@ -31,6 +31,11 @@
     const events=value.events.filter(e=>!parallel||e.layer!=='main'||selection.rows[e.row]).filter(e=>e.layer==='main'||selection.backing).map(e=>({start:e.start,duration:e.duration,midi:e.midi,velocity:e.velocity,instrument:parallel&&selection.profile==='soft'&&e.layer==='main'?value.mixProfiles.soft.voices?.[e.row]??e.instrument:e.instrument,pan:e.pan,voice:e.rowId??e.layer,layer:e.layer}));
     const score=normalize({title:selection.title,tempo:payload.info.tempo,duration:value.duration,events});
     const key=payload.key,profile=selection.profile;
+    if(payload.browserEngine){
+      const fields=['id','start','duration','midi','velocity','instrument','pan','layer','rowId','row','pitchTransition','curveMidi'];
+      score.audioRef={kind:'browser-score',variant:selection.mode,profile,synth:payload.settings.synth,backing:payload.settings.backing,background:selection.backing,rows:selection.rows.map((on,i)=>on?'row-'+i:null).filter(Boolean),info:payload.info,voices:(value.voices||[]).map(v=>({id:v.id,row:v.row,name:v.name})),events:value.events.map(e=>Object.fromEntries(fields.filter(f=>e[f]!==undefined).map(f=>[f,e[f]])))};
+      return score;
+    }
     score.audioRef=parallel&&selection.rows.some(on=>!on)?{kind:'rowmix',key,rows:selection.rows.map((on,i)=>on?'row-'+i:null).filter(Boolean),background:selection.backing,profile}:
       {kind:'wave',url:parallel?value.mixProfiles[profile].audioUrl:value.audioUrl};
     return score;

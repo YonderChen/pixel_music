@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "checkedOn": "2026-10-11",
+  "checkedOn": "2026-10-12",
   "checks": [
     "page opens with a complete image and no audio preparation",
     "original sound plays and resumes from cached audio",
