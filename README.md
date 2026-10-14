@@ -6,13 +6,20 @@
 
 现在无需启动本机计算服务。上传完整 `dist` 文件夹即可发布；本地可双击 `dist/index.html` 或 `dist/feature-music.html`。三种保留组合、参考原谱、GS／Simple 音源、移动试听、循环和乐曲成画均使用浏览器计算。可选 `.command` 现在只打开文件。
 
-[静态部署与验收说明](./STATIC_WEB_DEMO.md)；现成上传包为 `图鸣-静态网页版.zip`，解压后上传全部文件。资源均随包提供，首次加载较大；服务器建议开启 gzip／Brotli。双击路径已做代码验证，实际浏览器双击验收仍请人工确认。
+[静态部署与验收说明](./STATIC_WEB_DEMO.md)。需要 ZIP 交付包时，在项目根目录按需生成：
+
+```sh
+node scripts/package_classical_midi.cjs
+python3 scripts/package_browser_runtime.py --archive
+```
+
+输出为本地 `图鸣-静态网页版.zip`，已加入 Git 忽略规则；日常提交只更新页面、资源和生成脚本。解压后上传全部文件即可发布。资源均随包提供，首次加载较大；服务器建议开启 gzip／Brotli。双击路径已做代码验证，实际浏览器双击验收仍请人工确认。
 
 下面记录此前实验版本。旧版原生服务与 Python 脚本保留作算法对照，不再是当前网页的运行前提。原像素连绵工作台移至 `dist/pixel-music-legacy.html`。
 
 ## 新方向：乐曲成画 Demo 0.1
 
-新增 [乐曲成画工作台](http://127.0.0.1:4176/music-art.html)：将乐谱生成“曲线色层”或“几何色块”抽象画，支持三首样曲对照、现有乐曲送入、MIDI／乐谱 JSON 导入、边听边看、循环及 PNG／SVG 导出。绘画只读取音乐数据。[使用与验收](./MUSIC_ART_DEMO.md)。
+新增 [乐曲成画工作台](http://127.0.0.1:4176/music-art.html)：将乐谱生成“曲线色层”或“几何色块”抽象画，支持六首古典 MIDI 候选、三首原创样曲对照、现有乐曲送入、MIDI／乐谱 JSON 导入、边听边看、循环及 PNG／SVG 导出。绘画只读取音乐数据。[使用与验收](./MUSIC_ART_DEMO.md)。
 
 ## 历史：三种保留组合 Demo 0.6
 

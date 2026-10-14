@@ -4,3 +4,6 @@
 .venv
 .reference-runtime/
 __pycache__/
+
+# Generated delivery archive; rebuild locally when needed.
+/图鸣-静态网页版.zip

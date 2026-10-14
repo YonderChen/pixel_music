@@ -19,8 +19,8 @@ manifest={'version':'0.7.0','pyodide':'0.27.7','jsSynthesizer':'1.13.0','fluidSy
 (v.parent/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
 print('Asset bundles:',[(p.name,p.stat().st_size) for p in v.parent.glob('*data.js')])
 if args.archive:
- names=['index.html','feature-music.html','feature-music-app.js','browser-engine.js','sonification.css','sonification-samples.js','sonification-assets/photos.js','music-art.html','music-art-app.js','music-art-core.js','music-art-midi.js','music-art.css']
- paths=[root/'dist'/name for name in names]+list((root/'dist/browser-runtime').glob('*.js'))+[v.parent/'manifest.json',v.parent/'THIRD_PARTY.md']+sorted(v.glob('LICENSE*'))
+ names=['index.html','feature-music.html','feature-music-app.js','browser-engine.js','sonification.css','sonification-samples.js','sonification-assets/photos.js','music-art.html','music-art-app.js','music-art-core.js','music-art-midi.js','music-art-classics.js','music-art.css']
+ paths=[root/'dist'/name for name in names]+sorted((root/'dist/classical-midi').glob('*'))+list((root/'dist/browser-runtime').glob('*.js'))+[v.parent/'manifest.json',v.parent/'THIRD_PARTY.md']+sorted(v.glob('LICENSE*'))
  archive=root/'图鸣-静态网页版.zip'
  with ZipFile(archive,'w',compression=ZIP_DEFLATED,compresslevel=6) as z:
   for p in paths:z.write(p,str(p.relative_to(root/'dist')))

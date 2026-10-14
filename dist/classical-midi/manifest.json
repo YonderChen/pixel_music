@@ -1,0 +1,88 @@
+{
+  "downloadedOn": "2026-10-14",
+  "source": "Mutopia Project",
+  "pieces": [
+    {
+      "id": "classical-beethoven-fur-elise",
+      "title": "致爱丽丝",
+      "composer": "贝多芬",
+      "work": "WoO 59",
+      "instrumentation": "钢琴",
+      "file": "beethoven-fur-elise.mid",
+      "sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=931",
+      "midiUrl": "https://www.mutopiaproject.org/ftp/BeethovenLv/WoO59/fur_Elise_WoO59/fur_Elise_WoO59.mid",
+      "typesetter": "Stelios Samelis",
+      "license": "Public Domain",
+      "licenseUrl": "https://www.mutopiaproject.org/legal.html"
+    },
+    {
+      "id": "classical-bach-prelude-c-major",
+      "title": "C 大调前奏曲",
+      "composer": "巴赫",
+      "work": "BWV 846",
+      "instrumentation": "钢琴",
+      "file": "bach-prelude-c-major.mid",
+      "sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=5",
+      "midiUrl": "https://www.mutopiaproject.org/ftp/BachJS/BWV846/wtk1-prelude1/wtk1-prelude1.mid",
+      "typesetter": "Tobias Erbsland",
+      "license": "Public Domain",
+      "licenseUrl": "https://www.mutopiaproject.org/legal.html"
+    },
+    {
+      "id": "classical-mozart-rondo-alla-turca",
+      "title": "土耳其进行曲",
+      "composer": "莫扎特",
+      "work": "K. 331 · 第三乐章",
+      "instrumentation": "钢琴",
+      "excerptSeconds": 150,
+      "file": "mozart-rondo-alla-turca.mid",
+      "sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=108",
+      "midiUrl": "https://www.mutopiaproject.org/ftp/MozartWA/KV331/KV331_3_RondoAllaTurca/KV331_3_RondoAllaTurca.mid",
+      "typesetter": "Rune Zedeler and Chris Sawer",
+      "license": "Public Domain",
+      "licenseUrl": "https://www.mutopiaproject.org/legal.html"
+    },
+    {
+      "id": "classical-chopin-minute-waltz",
+      "title": "小狗圆舞曲",
+      "composer": "肖邦",
+      "work": "Op. 64 No. 1",
+      "instrumentation": "钢琴",
+      "file": "chopin-minute-waltz.mid",
+      "sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=483",
+      "midiUrl": "https://www.mutopiaproject.org/ftp/ChopinFF/O64/chopin_valse_op64_no1/chopin_valse_op64_no1.mid",
+      "typesetter": "Magnus Lewis-Smith",
+      "license": "Public Domain",
+      "licenseUrl": "https://www.mutopiaproject.org/legal.html"
+    },
+    {
+      "id": "classical-debussy-clair-de-lune",
+      "title": "月光",
+      "composer": "德彪西",
+      "work": "《贝加莫组曲》L. 75 · 第三乐章",
+      "instrumentation": "钢琴",
+      "excerptSeconds": 150,
+      "file": "debussy-clair-de-lune.mid",
+      "sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1778",
+      "midiUrl": "https://www.mutopiaproject.org/ftp/DebussyC/L75/debussy_Ste_Bergamesq_Clair/debussy_Ste_Bergamesq_Clair.mid",
+      "typesetter": "Keith OHara",
+      "license": "Public Domain",
+      "licenseUrl": "https://www.mutopiaproject.org/legal.html"
+    },
+    {
+      "id": "classical-pachelbel-canon-in-d",
+      "title": "D 大调卡农",
+      "composer": "帕赫贝尔",
+      "work": "Canon per 3 Violini e Basso",
+      "instrumentation": "三把小提琴与大提琴",
+      "excerptSeconds": 150,
+      "file": "pachelbel-canon-in-d.mid",
+      "archiveEntry": "canon_per_3_violini_e_basso.mid",
+      "sourceUrl": "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=2047",
+      "midiUrl": "https://www.mutopiaproject.org/ftp/PachelbelJ/Canon_per_3_Violini_e_Basso/Canon_per_3_Violini_e_Basso-mids.zip",
+      "typesetter": "Michael Fischer v. Mollard",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  ]
+}

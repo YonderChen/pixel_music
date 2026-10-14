@@ -27,6 +27,19 @@
 
 ## 资源与部署
 
+当前 `dist` 同时包含手写 HTML／CSS／JavaScript 页面、第三方运行资源和生成文件，仍作为开发与部署目录提交。`index.html` 是 `feature-music.html` 的副本；`music-art-classics.js` 由古典 MIDI 文件与清单生成；浏览器运行时的 `compute-data.js`、`soundfont-data.js`、`sources-data.js` 和 `manifest.json` 由打包脚本生成。
+
+日常修改页面可直接预览。修改古典 MIDI 清单或文件后，运行 `node scripts/package_classical_midi.cjs`；修改浏览器运行时所用 Python 算法或第三方资源后，运行 `python3 scripts/package_browser_runtime.py`。后者默认只重建运行资源，不生成 ZIP。
+
+需要交付 ZIP 时，在项目根目录运行：
+
+```sh
+node scripts/package_classical_midi.cjs
+python3 scripts/package_browser_runtime.py --archive
+```
+
+生成的 `图鸣-静态网页版.zip` 仅用于本地交付，已加入 Git 忽略规则，不随日常代码提交更新。网页运行不读取这个 ZIP，可直接发布完整 `dist` 目录。
+
 为保留现有音乐效果，图片分析与编曲继续执行同一套规则：Pyodide 0.27.7 在 WebAssembly 中运行原算法和 NumPy／Pillow；GS 使用同一份 GeneralUser GS 音色库与 FluidSynth WebAssembly 2.4.6；Simple 与柔和混音沿用原合成算法。
 
 核心离线资源约 64 MiB，包含约 41 MiB 的 GS 音色脚本；音色按首次试听需要加载。服务器建议启用 gzip／Brotli 和静态缓存。网页加载后不需要后端接口、跨域权限、账户或密钥。使用限制性 CSP 时，需要允许 `script-src 'self' blob:`、`worker-src blob:`、WebAssembly 编译和 `img-src 'self' data: blob:`；现有内联样式也需要相应许可。

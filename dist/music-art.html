@@ -23,6 +23,7 @@
       <aside class="controls">
         <p class="eyebrow">YOUR MUSIC, YOUR COMPOSITION</p><h2>让音乐决定形态</h2>
         <label class="field-label" for="score">选择乐曲</label><select id="score"></select><p id="sourceHint" class="hint">三首样曲用不同的旋律与节奏作对照。</p>
+        <p id="classicalSource" class="hint compact" hidden><a id="midiSource" target="_blank" rel="noopener noreferrer">乐谱来源</a> · <a id="midiOriginal">下载原始 MIDI（完整曲）</a><br><span id="midiCredit"></span><a id="midiLicense" target="_blank" rel="noopener noreferrer"></a></p>
         <div class="import-row"><label class="import" for="midi">↑ 导入 MIDI</label><input id="midi" type="file" accept=".mid,.midi,audio/midi,audio/x-midi" class="sr-only"><label class="import" for="json">↑ 导入乐谱 JSON</label><input id="json" type="file" accept=".json,application/json" class="sr-only"></div>
         <p class="hint compact">也可从「图片演奏」把当前乐曲送入。此版支持乐谱与 MIDI，最长 3 分钟。</p>
         <fieldset><legend>画面风格</legend><div class="style-tabs"><button id="ribbons" type="button" aria-pressed="true"><span class="style-icon">≋</span>曲线色层<small>线条交织，流动与留白</small></button><button id="geometry" type="button" aria-pressed="false"><span class="style-icon">◒</span>几何色块<small>形态重复，疏密与呼应</small></button></div></fieldset>
@@ -38,6 +39,6 @@
     <footer><span>图片与声音在本机处理 · 抽象绘画实验</span><a href="./feature-music.html#parallel">回到图片演奏 ↗</a></footer>
   </main>
   <div id="toast" class="toast" role="status" hidden></div>
-  <script src="./music-art-core.js"></script><script src="./music-art-midi.js"></script><script src="./browser-engine.js"></script><script src="./music-art-app.js"></script>
+  <script src="./music-art-core.js"></script><script src="./music-art-midi.js"></script><script src="./music-art-classics.js"></script><script src="./browser-engine.js"></script><script src="./music-art-app.js"></script>
 </body>
 </html>

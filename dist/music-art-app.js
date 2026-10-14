@@ -2,7 +2,7 @@
   'use strict';
   const Core=window.MusicArtCore,$=id=>document.getElementById(id);
   const E=Object.fromEntries(['score','sourceHint','ribbons','geometry','palette','detail','arrange','artwork','artTitle','artEdition','paletteName','musicSignature','noteCount','voiceCount','tempo','pitchRange','play','playIcon','playText','restart','loop','clock','seek','playStatus','listeningOverlay','png','svg','saveScore','midi','json','toast','audioChoice','audioMode'].map(id=>[id,$(id)]));
-  for(const id of ['exportResult','pngFile','exportPreview'])E[id]=$(id);
+  for(const id of ['exportResult','pngFile','exportPreview','classicalSource','midiSource','midiOriginal','midiCredit','midiLicense'])E[id]=$(id);
   const S={library:new Map(),score:null,model:null,style:'ribbons',layout:0,context:null,playing:false,loading:false,time:0,operation:0,importOperation:0,buffers:new Map(),exporting:false};
   const fmt=t=>`${String(Math.floor(t/60)).padStart(2,'0')}:${String(Math.floor(t%60)).padStart(2,'0')}`;
   const pitch=m=>['C','C♯','D','E♭','E','F','F♯','G','A♭','A','B♭','B'][m%12]+(Math.floor(m/12)-1);
@@ -15,9 +15,23 @@
     }
     return null;
   }
-  function readCurrent(raw){const data=JSON.parse(raw),score=Core.normalize(data);score.audioRef=audioRef(data.audioRef);score.legacyAudio=!!data.audioRef&&!score.audioRef;return score;}
-  function options(){E.score.innerHTML='';for(const [id,score] of S.library){const option=document.createElement('option');option.value=id;option.textContent=(id==='current'?'当前乐曲 · ':id.startsWith('upload-')?'导入 · ':'样曲 · ')+score.title;E.score.appendChild(option);}}
+  function readCurrent(raw){
+    const data=JSON.parse(raw),score=Core.normalize(data);score.audioRef=audioRef(data.audioRef);score.legacyAudio=!!data.audioRef&&!score.audioRef;
+    const source=Array.from(S.library.values()).find(s=>s.source&&s.source.id===data.source?.id&&s.source.sha256===data.source?.sha256)?.source;
+    if(source)score.source=source;return score;
+  }
+  function options(){
+    E.score.innerHTML='';
+    const groups=[['当前与导入乐曲',([id])=>id==='current'||id.startsWith('upload-')],['古典名曲 · MIDI',([id,score])=>id!=='current'&&!id.startsWith('upload-')&&!!score.source],['原创演示样曲',([id,score])=>id!=='current'&&!id.startsWith('upload-')&&!score.source]];
+    for(const [label,match] of groups){
+      const entries=Array.from(S.library).filter(match);if(!entries.length)continue;
+      const group=document.createElement('optgroup');group.label=label;
+      for(const [id,score] of entries){const option=document.createElement('option');option.value=id;option.textContent=(id==='current'?'当前乐曲 · ':id.startsWith('upload-')?'导入 · ':'')+score.title;group.appendChild(option);}
+      E.score.appendChild(group);
+    }
+  }
   Core.samples().forEach(score=>S.library.set(score.id,score));
+  window.MusicArtClassics.samples().forEach(score=>S.library.set(score.id,score));
   let imported=false;
   try{const raw=localStorage.getItem(Core.STORAGE_KEY);if(raw){S.library.set('current',readCurrent(raw));imported=true;}}catch(error){toast('当前乐曲未能读取：'+error.message);}
   if(location.hash.startsWith('#score='))try{S.library.set('current',readCurrent(decodeURIComponent(location.hash.slice(7))));imported=true;}catch(error){toast('送入的乐曲未能读取：'+error.message);}
@@ -35,7 +49,12 @@
   function select(id){
     S.importOperation++;stop(true);S.score=S.library.get(id);if(!S.score)return;E.score.value=id;S.layout=0;S.audio=null;
     E.audioChoice.hidden=!S.score.audioRef;E.audioMode.value=S.score.audioRef?'original':'synth';
-    E.sourceHint.textContent=S.score.legacyAudio?'已读取旧版乐谱，当前采用乐谱合成试听；从图片演奏页重新送入即可恢复原组合音色。':S.score.audioRef?'使用送入时的音符与声部，试听音源对应当时的组合及静音选择。':id.startsWith('upload-')?'使用导入乐谱的音高、时序、力度与声部；以本机合成音色试听。':'三首原创演示样曲用不同的旋律与节奏作对照。';
+    const source=S.score.source;E.classicalSource.hidden=!source;
+    if(source){
+      E.sourceHint.textContent=source.work+' · '+source.instrumentation+' · '+(source.excerptSeconds?'开头 2 分 30 秒节选':'完整 MIDI 乐谱')+'；以本机合成音色试听。';
+      E.midiSource.href=source.sourceUrl;E.midiOriginal.href='./classical-midi/'+source.file;E.midiOriginal.download=source.file;
+      E.midiCredit.textContent='MIDI 编谱／维护：'+source.typesetter+' · Mutopia Project · ';E.midiLicense.textContent=source.license;E.midiLicense.href=source.licenseUrl;
+    }else E.sourceHint.textContent=S.score.legacyAudio?'已读取旧版乐谱，当前采用乐谱合成试听；从图片演奏页重新送入即可恢复原组合音色。':S.score.audioRef?'使用送入时的音符与声部，试听音源对应当时的组合及静音选择。':id.startsWith('upload-')?'使用导入乐谱的音高、时序、力度与声部；以本机合成音色试听。':'三首原创演示样曲用不同的旋律与节奏作对照。';
     draw();
   }
   function draw(){
@@ -116,6 +135,7 @@
   });
   E.saveScore.addEventListener('click',()=>{
     const score=Core.normalize(S.score);if(S.score.audioRef?.kind==='browser-score')score.audioRef=S.score.audioRef;
+    if(S.score.source)score.source=S.score.source;
     download(new Blob([JSON.stringify(score,null,2)],{type:'application/json'}),'json');
   });
   let uploadId=0;
