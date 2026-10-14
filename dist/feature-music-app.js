@@ -307,7 +307,8 @@
       startBuffer(audio,0,audio.duration,1,operation,true);
     }catch(error){toast(error.message);}
   }
-  const entries=[...window.PixelMusicStripSamples.entries,{id:'pitch',name:'音高转换验收 · 多特征渐变'},{id:'rows',name:'结构对照 · 四行线条'},{id:'turns',name:'结构对照 · 上下线条'},{id:'hue',name:'验收 · 等亮横向色带'},{id:'texture',name:'验收 · 同明暗纹理变化'}];
+  const paintings=window.PixelMusicPaintings||[];
+  const entries=[...paintings,...window.PixelMusicStripSamples.entries,{id:'pitch',name:'音高转换验收 · 多特征渐变'},{id:'rows',name:'结构对照 · 四行线条'},{id:'turns',name:'结构对照 · 上下线条'},{id:'hue',name:'验收 · 等亮横向色带'},{id:'texture',name:'验收 · 同明暗纹理变化'}];
   function custom(id) {
     const canvas=document.createElement('canvas');canvas.width=192;canvas.height=120;const c=canvas.getContext('2d');
     if(id==='pitch'){
@@ -395,5 +396,5 @@
   E.imageStage.addEventListener('dragleave',()=>E.dropHint.hidden=true);E.imageStage.addEventListener('drop',event=>{event.preventDefault();E.dropHint.hidden=true;upload(event.dataTransfer.files[0]);});
   window.addEventListener('resize',geometry);window.addEventListener('pagehide',()=>{invalidateHoverBank();S.loadOperation++;S.loadAbort?.abort();S.busy=false;stop();S.context?.close();});
   window.PixelMusicFeaturesDemo={snapshot:()=>({mode:S.mode,recipe:recipe().id,mixProfile:recipe().profile,rowMethod:recipe().method,playing:S.playing,busy:S.busy,audioLoading:!!S.audioLoading,loopEnabled:!!E.loopToggle.checked,hoverEnabled:E.hoverToggle.checked,hoverLoading:!!S.hoverLoading,hoverRegion:S.hoverIndex,hoverAudible:!!S.hoverAudible,time:current(),sample:S.sample,selected:S.selected,recipes:RECIPES.map(r=>({id:r.id,method:r.method,profile:r.profile,name:r.name})),comparison:S.comparison,enabledRows:S.enabledRows.slice(),solo:S.solo}),payload:()=>S.payload};
-  controls();mode(S.mode);sample(S.mode==='parallel'?'pitch':'sunset');
+  controls();mode(S.mode);sample(paintings.length?paintings[0].id:S.mode==='parallel'?'pitch':'sunset');
 })();
