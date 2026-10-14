@@ -56,8 +56,7 @@ def ensure_audio(cached, variant):
         payload,context=cached['payload'],cached['context']
         if variant in ('parallel','parallel-soft'):
             if context['backing'] and cached['background'] is None:
-                records=[e for e in context['reference'] if e['layer']!='main']
-                cached['background']=engine.render_score(records,context['info'],context['synth'])[0]
+                cached['background']=engine.render_backing(context)
             if variant=='parallel-soft':
                 wav,metrics,mixer,meta=engine.render_soft_rows(context,cached['background'])
                 if cached['mixer'] is None: cached['mixer']=mixer

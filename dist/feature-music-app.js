@@ -9,7 +9,9 @@
   const E = Object.fromEntries(ids.map(id => [id,$(id)]));
   const API = '';
   const RECIPES=Object.freeze([
+    {id:'arranged',method:'arranged',profile:'original',name:'编曲版 · 新 / 声部分工与和声',filename:'编曲版-声部分工与和声',hint:'各行担任主旋律、副旋律、分解和弦与低音，分处不同音区；只有图片变化才换和弦、加密节奏、移动旋律，特征不变处连成长音；乐器按图片情绪从固定组合中选择。'},
     {id:'feature-original',method:'transition',profile:'original',name:'多特征音高转换 · 新 / 原有叠加',filename:'多特征音高转换-原有叠加',hint:'颜色、明暗、饱和度、对比度与纹理共同决定音高；各行使用参考音源演奏量化音阶，再按原有方式叠加。'},
+    {id:'reference-soft-plus',method:'reference-plus',profile:'soft',name:'行内参考条带 · 优化 / 柔和合成混音',filename:'行内参考条带优化-柔和合成混音',hint:'沿用行内参考条带的音高与节奏；各行按图片上下分到不同八度，配合音区的柔和音色；伴奏改为由各行实际音符推出的和声铺底，图片不变时和弦也不变。'},
     {id:'reference-soft',method:'reference',profile:'soft',name:'行内参考条带 / 柔和合成混音',filename:'行内参考条带-柔和合成混音',hint:'各行采用参考条带法生成旋律，以暖键、柔拨弦、圆木琴和轻铃演奏，使用柔和合成混音。'},
     {id:'local-soft',method:'features',profile:'soft',name:'局部多特征法 / 柔和合成混音',filename:'局部多特征法-柔和合成混音',hint:'各行采用局部多特征与原有跳进控制生成旋律，以暖键、柔拨弦、圆木琴和轻铃演奏，使用柔和合成混音。'},
   ]);
@@ -180,7 +182,7 @@
     E.referenceMode.setAttribute('aria-pressed',S.mode==='reference');
     E.parallelMode.setAttribute('aria-pressed',S.mode==='parallel');E.parallelControls.hidden=S.mode!=='parallel';
     E.mappingLabel.textContent=S.mode==='parallel'?`${value.rows} 行 × ${value.cols} 列 · 横向叠奏`:'参考原谱 · 原项目条带采样';
-    E.key.textContent=`${info.key_name} · ${{'Major pentatonic':'大调五声','Minor pentatonic':'小调五声','Major':'大调','Natural minor':'自然小调','Dorian':'多利亚','Lydian':'利底亚'}[info.scale_name]||info.scale_name}`;
+    E.key.textContent=`${(S.mode==='parallel'&&(value.arrangement||value.harmony)?.key)||info.key_name} · ${{'Major pentatonic':'大调五声','Minor pentatonic':'小调五声','Major':'大调','Natural minor':'自然小调','Dorian':'多利亚','Lydian':'利底亚'}[info.scale_name]||info.scale_name}`;
     E.tempo.textContent=`${info.tempo.toFixed(1)} BPM`;E.noteCount.textContent=`${value.mainCount} 个${pitchMappedView()?'音高片段':'音符'}`;E.duration.textContent=`${info.duration.toFixed(1)} 秒＋余韵`;
     E.mappingHint.textContent=S.mode==='parallel'?`各行独立分析并从左到右同时演奏；${recipe().hint} 整体伴奏只保留一份。`:'直接运行 Photo Sonification 原始分析、编曲和音源；参考原谱未重新改写旋律。';
     E.regions.style.gridTemplateColumns=`repeat(${value.cols},1fr)`;E.regions.style.gridTemplateRows=`repeat(${value.rows},1fr)`;
@@ -205,7 +207,9 @@
     const p=S.payload?.variants.parallel;if(!p)return;
     const soft=recipe().profile==='soft'&&p.mixProfiles?.soft;
     E.recipeHint.textContent=recipe().hint;
-    E.mixHint.textContent=soft?'柔和合成混音 · 暖键、柔拨弦、圆木琴与轻铃；整体伴奏退后，共用轻回声。':'原有叠加 · 各行使用参考音源自动选出的乐器，播放量化音阶，共用一份整体伴奏。';
+    const arrangement=p.arrangement;
+    const harmony=p.harmony;
+    E.mixHint.textContent=harmony&&soft?`柔和合成混音 · ${soft.voices.join('、')}；和声铺底 ${harmony.progression.join(' → ')}（图片推动 ${harmony.harmonyChanges} 次换和弦），共用轻回声。`:arrangement?`编曲版 · ${arrangement.ensemble}（${arrangement.ensembleReason}）· 和弦 ${arrangement.progression.join(' → ')}（图片推动 ${arrangement.harmonyChanges} 次换和弦）；各声部按角色平衡音量，带混响，共用柔和铺底。`:soft?'柔和合成混音 · 暖键、柔拨弦、圆木琴与轻铃；整体伴奏退后，共用轻回声。':'原有叠加 · 各行使用参考音源自动选出的乐器，播放量化音阶，共用一份整体伴奏。';
     E.rowTracks.innerHTML=p.voices.map((v,i)=>`<div class="row-track" style="--voice-color:${rowColors[i]}"><label><input type="checkbox" data-row-toggle="${i}" ${S.enabledRows[i]?'checked':''}><i></i>${v.name} <small>${soft?soft.voices[i]:v.instrumentName}</small></label><button type="button" data-row-solo="${i}" aria-pressed="${S.solo===i}">独听</button></div>`).join('');
   }
   function changeMixer(index,solo,desired){
@@ -329,7 +333,9 @@
   }
   async function sample(id) {
     stop(true);E.sample.value=id;const entry=entries.find(e=>e.id===id);
-    if(entry.path) {
+    if(entry.data) {
+      S.image={base64:entry.data.split(',')[1],name:entry.name.replace(/^名画 · /,''),credit:entry.credit};
+    } else if(entry.path) {
       const data=window.PixelMusicStripPhotoData[id];S.image={base64:data.split(',')[1],name:entry.name,
         credit:id==='sunset'?'NASA / JPL / Texas A&M / Cornell · 火星日落 · 本地信息演示样本':'DeviantArt / scikit-image · 草地 · CC0'};
     } else {

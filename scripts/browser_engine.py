@@ -35,7 +35,7 @@ def ensure_audio(cached, variant):
     payload, context = cached['payload'], cached['context']
     if variant in ('parallel', 'parallel-soft'):
         if context['backing'] and cached['background'] is None:
-            cached['background'] = engine.render_score([e for e in context['reference'] if e['layer'] != 'main'], context['info'], context['synth'])[0]
+            cached['background'] = engine.render_backing(context)
         if variant == 'parallel-soft':
             wav, metrics, mixer, meta = engine.render_soft_rows(context, cached['background'])
             if cached['mixer'] is None: cached['mixer'] = mixer
@@ -71,7 +71,7 @@ def handle(raw):
         info = engine.CompositionInfo(**ref['info'])
         for record in records:
             if not (0 <= record['start'] <= 180 and 0 < record['duration'] <= 180 and 0 <= record['midi'] <= 127): raise ValueError('乐谱音符无效。')
-        context = {'info': info, 'synth': ref['synth'], 'rowEvents': [e for e in records if e['layer'] == 'main'], 'reference': records, 'voices': ref['voices'], 'backing': ref['backing']}
+        context = {'info': info, 'synth': ref['synth'], 'rowEvents': [e for e in records if e['layer'] == 'main'], 'reference': records, 'voices': ref['voices'], 'backing': ref['backing'], 'fixedMidi': engine.fixed_midi(ref['voices'])}
         cached = {'context': context, 'payload': {'variants': {'reference': {'events': records}, 'parallel': {'mixProfiles': {'soft': {}}}}}, 'waves': {}, 'audioMetrics': {}, 'mixer': None, 'background': None}
         if ref['variant'] == 'reference': return wave_reply(*ensure_audio(cached, 'reference'))
         ensure_audio(cached, 'parallel-soft' if ref['profile'] == 'soft' else 'parallel')
@@ -103,7 +103,8 @@ def handle(raw):
         profile = data['profile'] if variant == 'parallel' else 'original'
         key = variant + '-' + profile
         if key not in cached['hoverBanks']:
-            wav, meta = hover_preview.build(engine, cached['payload']['variants'][variant], cached['context']['info'], cached['context']['synth'], profile)
+            with engine.arranged_midi(cached['context'].get('fixedMidi', False)):
+                wav, meta = hover_preview.build(engine, cached['payload']['variants'][variant], cached['context']['info'], cached['context']['synth'], profile)
             meta['audioUrl'] = f'/api/hover-audio/{data["key"]}/{key}.wav'
             cached['hoverBanks'][key] = (wav, meta)
         return json.dumps(cached['hoverBanks'][key][1])
@@ -119,6 +120,7 @@ def handle(raw):
         else:
             event = engine.NoteEvent(0, min(.65, record['duration']), record['midi'], record['velocity'], record['instrument'], record['pan'], 'main')
             info = dataclasses.replace(cached['context']['info'], duration=.7)
-            samples, _ = engine.upstream_audio.render_backend([event], info, cached['context']['synth'])
+            with engine.arranged_midi(cached['context'].get('fixedMidi', False)):
+                samples, _ = engine.upstream_audio.render_backend([event], info, cached['context']['synth'])
         return wave_reply(engine.upstream_audio.audio_to_wav_bytes(samples, 44100))
     raise ValueError('未知浏览器计算操作')

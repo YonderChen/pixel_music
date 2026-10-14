@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "checkedOn": "2026-10-12",
+  "checkedOn": "2026-10-11",
   "checks": [
     "network failure restores a retry action and clears generation state",
     "image preview is available before server response",
@@ -8,9 +8,9 @@
     "mode controls respond during delayed generation",
     "cancel aborts pending generation",
     "cancelled work cannot overwrite a later successful retry",
-    "exactly three approved method/profile pairs; changes send the correct score options",
+    "five approved method/profile pairs (arranged, refined reference + three retained); changes send the correct score options",
     "removed full-image/mix controls are never accessed; old full-image hash opens parallel mode",
     "WAV filename keeps the selected combination when mode changes during asynchronous export"
   ],
-  "generationRequests": 7
+  "generationRequests": 9
 }

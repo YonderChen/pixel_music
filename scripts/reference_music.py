@@ -23,6 +23,13 @@ import composition as upstream_composition
 import image_analysis as upstream_analysis
 from utils import NoteEvent, CompositionInfo
 import soft_row_mixer
+import arranger
+import contextlib
+
+# Refined reference layout: upper image rows sound higher, each with a register-suited soft voice.
+OCTAVE_LAYOUT = {2: [0, -12], 3: [12, 0, -12], 4: [12, 0, -12, -24]}
+SOFT_LAYOUT = {2: [0, 4], 3: [3, 0, 4], 4: [3, 0, 1, 4]}
+OCTAVE_NAMES = {2: ['中音', '低音'], 3: ['高音', '中音', '低音'], 4: ['高音', '中音', '中低音', '低音']}
 
 UPSTREAM_SHA = '667d97c1e68de56fe2f5ef2d26784ee8a7308f3f'
 VERSION = 'full-image-features-v2'
@@ -285,7 +292,7 @@ def horizontal_row_melodies(analysis, info, options=None):
     count = int(options.get('rowCount', 4))
     method = options.get('rowMethod', 'reference')
     transition=options.get('pitchTransition','scale')
-    if count not in (2, 3, 4) or method not in ('reference', 'features', 'contour', 'transition'): raise ValueError('行数或行内映射设置无效')
+    if count not in (2, 3, 4) or method not in ('reference', 'reference-plus', 'features', 'contour', 'transition'): raise ValueError('行数或行内映射设置无效')
     if transition not in ('scale','glide'):raise ValueError('音高转折设置无效')
     rgb, lum = analysis['maps']['rgb'], analysis['maps']['luminance']
     h, w = lum.shape
@@ -323,7 +330,9 @@ def horizontal_row_melodies(analysis, info, options=None):
             row_events=feature_pitch_events(row_regions,allowed,voice_id,row,instrument,pan,transition)
         elif method == 'contour':
             row_events=contour_row_events(row_regions,rgb,lum,allowed,voice_id,row,instrument,pan,transition)
-        elif method == 'reference':
+        elif method in ('reference', 'reference-plus'):
+            # The refined layout keeps every pitch class and contour, moving whole rows by octaves.
+            offset = OCTAVE_LAYOUT[count][row] if method == 'reference-plus' else 0
             raw, _ = upstream_composition.generate_composition(row_analysis,info.bars,f['auto_complexity'],f['auto_variation_strength'],
                 info.scale_name,synth,'Automatic','Soft piano','Harp','Cello-like bass','Warm pad','Soft piano','Flute',
                 'Manual',info.tempo,0,-2,0,-8,-3,-1)
@@ -336,11 +345,14 @@ def horizontal_row_melodies(analysis, info, options=None):
                 candidates = allowed if previous is None else [n for n in allowed if abs(n-previous)<=5]
                 midi = min(candidates,key=lambda n:(abs(n-target),n))
                 record = dataclasses.asdict(event)
-                record.update(id=f'{voice_id}-note-{len(row_events)}',midi=midi,rowId=voice_id,row=row,
+                played = midi + offset
+                while played < 31: played += 12
+                record.update(id=f'{voice_id}-note-{len(row_events)}',midi=played,rowId=voice_id,row=row,
                     pan=float(np.clip(.55*event.pan+.45*pan,-.75,.75)),
                     sources=[{'regionId':region['id'],'rect':region['rect']}])
-                region.update(eventId=record['id'],midi=midi,targetMidi=target,
-                    reason='行内参考条带法；统一到全图音阶与速度', originalMidi=event.midi)
+                if method == 'reference-plus': record['voicePreset'] = SOFT_LAYOUT[count][row]
+                region.update(eventId=record['id'],midi=played,targetMidi=target+offset,
+                    reason='行内参考条带法；统一到全图音阶与速度'+('；按图片上下分到不同八度' if offset else ''), originalMidi=event.midi)
                 row_events.append(record); previous=midi
         else:
             for region in row_regions:
@@ -376,9 +388,103 @@ def horizontal_row_melodies(analysis, info, options=None):
                 region.update(midi=midi,eventId=last['id'],reason=reason)
                 previous,previous_vector=midi,vector
         voices[-1]['noteCount']=len(row_events)
+        if method == 'reference-plus':
+            voices[-1].update(fixedMidi=True, name=f'第 {row + 1} 行 · {OCTAVE_NAMES[count][row]}')
         events.extend(row_events)
     events.sort(key=lambda e:(e['start'],e['row'],e['midi']))
     return events,regions,cols,count,voices
+
+def arranged_rows(analysis, info, options=None):
+    """Rows keep their image regions; the arranger gives each row a musical role."""
+    options = options or {}
+    count = int(options.get('rowCount', 4))
+    if count not in (2, 3, 4): raise ValueError('行数或行内映射设置无效')
+    rgb, lum = analysis['maps']['rgb'], analysis['maps']['luminance']
+    h, w = lum.shape
+    if h < count: raise ValueError('图片高度不足以分割成所选行数')
+    beat = 60 / info.tempo
+    bars = max(1, int(info.duration / (4 * beat) + 1e-6))
+    cols = min(bars * 4, w)
+    bars = cols // 4; cols = bars * 4
+    synth = options.get('synth', 'GeneralUser GS')
+    rows, regions = [], []
+    for row in range(count):
+        y0, y1 = round(row * h / count), round((row + 1) * h / count)
+        row_regions = []
+        for col in range(cols):
+            x0, x1 = round(col * w / cols), max(round(col * w / cols) + 1, round((col + 1) * w / cols))
+            features, vector = _local_features(rgb[y0:y1, x0:x1], lum[y0:y1, x0:x1])
+            region = {'id': f'parallel-{row}-{col}', 'index': len(regions), 'row': row, 'col': col, 'rowId': f'row-{row}',
+                'rect': {'x': x0 / w, 'y': y0 / h, 'width': (x1 - x0) / w, 'height': (y1 - y0) / h},
+                'start': col * beat, 'end': (col + 1) * beat, 'features': features,
+                'contributions': dict(zip(FEATURE_NAMES, (vector * WEIGHTS).tolist())), 'targetMidi': None,
+                'midi': None, 'eventId': None, 'reason': '暗区休止，或由前一个音延续'}
+            row_regions.append(region); regions.append(region)
+        rows.append(row_regions)
+    parts, backing, meta = arranger.arrange(analysis['features'], info, root_note(analysis['features']), rows, synth)
+    reasons = {'melody': '主旋律：本行特征在全图中的相对高低决定旋律走向，强拍落在和弦音上；纹理与对比决定节奏疏密',
+        'counter': '副旋律：本行特征选择和弦内音，以长音衬在主旋律下方并避开碰撞',
+        'arpeggio': '分解和弦：本行明暗决定音区，纹理与对比决定分解速度',
+        'bass': '低音：每小节奏和弦根音，本行纹理与对比决定低音律动'}
+    events, voices = [], []
+    for row in range(count):
+        part = parts[row]; role = part['role']; voice_id = f'row-{row}'
+        y0, y1 = round(row * h / count), round((row + 1) * h / count)
+        row_events = []
+        for note in part['notes']:
+            first, last = note.pop('cells')
+            covered = rows[row][first:max(first + 1, min(last, cols))]
+            record = dict(note, id=f'{voice_id}-note-{len(row_events)}', instrument=part['instrument'],
+                pan=arranger.ROLE_PAN[role], layer='main', rowId=voice_id, row=row, role=role,
+                coverageEnd=note['start'] + note['duration'],
+                sources=[{'regionId': r['id'], 'rect': r['rect']} for r in covered])
+            for region in covered:
+                # The first note starting in a region owns it; held notes cover the rest.
+                starts_here = region['start'] - 1e-7 <= record['start'] < region['end'] - 1e-7
+                if (starts_here and not region.get('_owner')) or region['eventId'] is None:
+                    region.update(eventId=record['id'], midi=record['midi'], targetMidi=record['midi'], reason=reasons[role])
+                    if starts_here: region['_owner'] = True
+            row_events.append(record)
+        events.extend(row_events)
+        voices.append({'id': voice_id, 'row': row, 'name': f'第 {row + 1} 行 · {arranger.ROLE_NAMES[role]}',
+            'instrument': part['instrument'], 'instrumentName': upstream_composition.instrument_label(part['instrument']),
+            'rect': {'x': 0, 'y': y0 / h, 'width': 1, 'height': (y1 - y0) / h}, 'noteCount': len(row_events),
+            'role': role, 'gain': arranger.ROLE_GAIN[role]})
+    for region in regions: region.pop('_owner', None)
+    events.sort(key=lambda e: (e['start'], e['row'], e['midi']))
+    backing.sort(key=lambda e: (e['start'], e['midi']))
+    return events, regions, cols, count, voices, backing, meta
+
+@contextlib.contextmanager
+def arranged_midi(enabled=True):
+    """Use the correct MIDI writer (with reverb send) only for the arranged combination."""
+    if not enabled:
+        yield; return
+    original = upstream_audio.midi_bytes_from_events
+    upstream_audio.midi_bytes_from_events = arranger.midi_bytes
+    try: yield
+    finally: upstream_audio.midi_bytes_from_events = original
+
+def is_arranged(voices):
+    return any(v.get('role') for v in voices)
+
+def fixed_midi(voices):
+    return any(v.get('role') or v.get('fixedMidi') for v in voices)
+
+def backing_records(context):
+    return context.get('backingEvents') or [e for e in context['reference'] if e['layer'] != 'main']
+
+def render_backing(context):
+    with arranged_midi(context.get('fixedMidi', False)):
+        return render_score(backing_records(context), context['info'], context['synth'])[0]
+
+def _level_gain(samples, target=.1):
+    """Gain that brings the RMS of the sounding blocks (silence excluded) to the target."""
+    block=2048;size=len(samples)//block*block
+    if size==0:return 1.
+    energy=np.mean(samples[:size].reshape(-1,block,2)**2,axis=(1,2))
+    loud=energy[energy>max(float(np.max(energy))*1e-3,1e-10)]
+    return float(min(8,target/math.sqrt(float(np.mean(loud))))) if len(loud) else 1.
 
 def _pcm(wav):
     with wave.open(io.BytesIO(wav),'rb') as reader:
@@ -391,9 +497,10 @@ def mix_row_stems(storage, enabled_rows=None, include_background=True, profile='
     if profile not in ('original','soft'): raise ValueError('未知混音风格')
     source=storage if profile=='original' else storage['profiles']['soft']
     size=storage['frames'];samples=np.zeros((size,2))
+    voice_gain=source.get('voiceGain',{})
     for key in ids:
-        samples+=_pcm(source['wav'][key])*source['rowGain']
-    if include_background and 'background' in source['wav']: samples+=_pcm(source['wav']['background'])
+        samples+=_pcm(source['wav'][key])*source['rowGain']*voice_gain.get(key,1)
+    if include_background and 'background' in source['wav']: samples+=_pcm(source['wav']['background'])*source.get('backgroundGain',1)
     # Keep the full-mix gain when muting rows; a solo is not secretly boosted.
     samples-=np.mean(samples,axis=0)
     samples=soft_row_mixer.master(samples,source['masterGain']) if profile=='soft' else np.clip(samples*source['masterGain'],-.98,.98)
@@ -401,7 +508,13 @@ def mix_row_stems(storage, enabled_rows=None, include_background=True, profile='
     return wav,audio_metrics(samples,44100)
 
 def render_parallel(events, reference, info, synth, voices, backing=True, include_soft=True, background_wav=None):
+    with arranged_midi(fixed_midi(voices)):
+        return _render_parallel(events, reference, info, synth, voices, backing, include_soft, background_wav)
+
+def _render_parallel(events, reference, info, synth, voices, backing, include_soft, background_wav):
     stems={};metadata={};row_ids=[v['id'] for v in voices]
+    voice_gain={v['id']:float(v.get('gain',1)) for v in voices}
+    background_gain=arranger.BACKING_GAIN if is_arranged(voices) else 1
     for key in row_ids+(['background'] if backing else []):
         if key=='background' and background_wav is not None:
             stems[key]=background_wav
@@ -414,16 +527,23 @@ def render_parallel(events, reference, info, synth, voices, backing=True, includ
         if synth=='GeneralUser GS' and 'through FluidSynth' not in message: raise RuntimeError('多行 GS 音源未能启动')
         stems[key]=upstream_audio.audio_to_wav_bytes(upstream_audio.normalize_master_audio(samples),44100)
         metadata[key]={'metrics':audio_metrics(samples,44100),'wavSha256':hashlib.sha256(stems[key]).hexdigest(),'backend':message}
+    if is_arranged(voices):
+        # Stems differ widely in raw level; align their audible loudness before role weights.
+        for key in row_ids: voice_gain[key]*=_level_gain(_pcm(stems[key]))
+        if 'background' in stems: background_gain*=_level_gain(_pcm(stems['background']))
     frames=len(_pcm(stems[row_ids[0]]));row_gain=.8/math.sqrt(len(row_ids))
     full=np.zeros((frames,2))
-    for key in row_ids: full+=_pcm(stems[key])*row_gain
-    if 'background' in stems: full+=_pcm(stems['background'])
+    for key in row_ids: full+=_pcm(stems[key])*row_gain*voice_gain[key]
+    if 'background' in stems: full+=_pcm(stems['background'])*background_gain
     dc=np.mean(full,axis=0);full-=dc
     rms=float(np.sqrt(np.mean(full**2)));master_gain=min(1,.16/max(rms,1e-12))
-    bound=sum(float(np.max(np.abs(_pcm(stems[key]))))*row_gain for key in row_ids)
-    if 'background' in stems: bound+=float(np.max(np.abs(_pcm(stems['background']))))
+    # Arranged stems are level-aligned, so a sparse score may be raised to the soft mix's loudness.
+    if is_arranged(voices):master_gain=min(4,.085/max(rms,1e-12))
+    bound=sum(float(np.max(np.abs(_pcm(stems[key]))))*row_gain*voice_gain[key] for key in row_ids)
+    if 'background' in stems: bound+=float(np.max(np.abs(_pcm(stems['background']))))*background_gain
     master_gain=min(master_gain,.86/max(bound+1e-6,1e-12))
     storage={'wav':stems,'rowIds':row_ids,'frames':frames,'rowGain':row_gain,'masterGain':master_gain,'dc':dc.tolist()}
+    if is_arranged(voices): storage.update(voiceGain=voice_gain,backgroundGain=background_gain)
     storage['profiles']={}
     if include_soft:
         soft_stems,soft_gain,soft_meta=soft_row_mixer.prepare(events,row_ids,frames,_pcm(stems['background']) if 'background' in stems else None)
@@ -509,8 +629,17 @@ def prepare_scores(image_bytes, options=None):
     feature_main,feature_regions,cols,rows=full_feature_melody(analysis,info,options)
     feature=[r for r in reference if r['layer']!='main']+feature_main
     feature.sort(key=lambda e:(e['start'],e['layer'],e['midi']))
-    row_events,row_regions,row_cols,row_count,voices=horizontal_row_melodies(analysis,info,options)
-    parallel=row_events+([e for e in reference if e['layer']!='main'] if options.get('backing',True) else [])
+    arranged=options.get('rowMethod')=='arranged'
+    if arranged:
+        row_events,row_regions,row_cols,row_count,voices,backing_events,arrangement=arranged_rows(analysis,info,options)
+    else:
+        row_events,row_regions,row_cols,row_count,voices=horizontal_row_melodies(analysis,info,options)
+        backing_events=[e for e in reference if e['layer']!='main']
+    harmony=None
+    if options.get('rowMethod')=='reference-plus':
+        beat=60/info.tempo
+        backing_events,harmony=arranger.harmonize(row_events,info,root_note(analysis['features']),max(1,int(info.duration/(4*beat)+1e-6)),options.get('synth','GeneralUser GS'))
+    parallel=row_events+(backing_events if options.get('backing',True) else [])
     parallel.sort(key=lambda e:(e['start'],e['layer'],e['midi']))
     duration=round((info.duration+.8)*44100)/44100
     variants={}
@@ -522,11 +651,13 @@ def prepare_scores(image_bytes, options=None):
             'scoreSha256':hashlib.sha256(json.dumps(audible,sort_keys=True).encode()).hexdigest(),'audioStatus':'on-demand'}
     variants['parallel'].update(version=PARALLEL_VERSION,voices=voices,rowMethod=options.get('rowMethod','reference'),
         mixProfiles={'original':{'name':'原有叠加'},'soft':{'name':'柔和合成混音','version':soft_row_mixer.VERSION,
-            'voices':[soft_row_mixer.VOICES[i]['name'] for i in range(row_count)]}})
+            'voices':[soft_row_mixer.VOICES[soft_row_mixer.preset_index([e for e in row_events if e.get('rowId')==v['id']],i)]['name'] for i,v in enumerate(voices)]}})
     if options.get('rowMethod')=='contour':
         variants['parallel'].update(contourVersion=CONTOUR_VERSION,pitchTransition=options.get('pitchTransition','scale'))
     if options.get('rowMethod')=='transition':
         variants['parallel'].update(pitchVersion=PITCH_TRANSITION_VERSION,pitchTransition=options.get('pitchTransition','scale'))
+    if arranged:variants['parallel'].update(arrangement=arrangement)
+    if harmony:variants['parallel'].update(harmony=harmony)
     if options.get('featureMethod') in ('contour','transition'):variants['features'].update(feature_pitch_metadata(options))
     rgb=np.clip(np.round(analysis['maps']['rgb']*255),0,255).astype(np.uint8)
     preview=io.BytesIO();Image.fromarray(rgb).save(preview,format='PNG')
@@ -537,6 +668,7 @@ def prepare_scores(image_bytes, options=None):
         'variants':variants}
     context={'info':info,'synth':options.get('synth','GeneralUser GS'),'rowEvents':row_events,'reference':reference,
         'voices':voices,'backing':options.get('backing',True)}
+    if arranged or harmony:context.update(backingEvents=backing_events,fixedMidi=True)
     return payload,context
 
 def render_score(records, info, synth):

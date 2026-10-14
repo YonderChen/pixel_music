@@ -14,12 +14,18 @@ VOICES = [
     {'name': '柔拨弦', 'partials': [1, .12, .17, .04, .045], 'attack': .014, 'decay': .36, 'sustain': .13, 'release': .12, 'cutoff': 2200, 'gain': .96},
     {'name': '圆木琴', 'partials': [1, .045, .015, .16], 'attack': .010, 'decay': .27, 'sustain': .10, 'release': .10, 'cutoff': 3100, 'gain': 1.05},
     {'name': '轻铃', 'partials': [1, .06, .025, .12, .012], 'attack': .016, 'decay': .82, 'sustain': .12, 'release': .18, 'cutoff': 4500, 'gain': .88},
+    # Only selected through an event's voicePreset (low rows of the refined reference layout).
+    {'name': '柔低音', 'partials': [1, .32, .09, .03], 'attack': .02, 'decay': .9, 'sustain': .3, 'release': .2, 'cutoff': 1100, 'gain': 1.05},
 ]
+ROW_VOICES = 4  # Rows without a voicePreset keep the original four-voice cycle.
+
+def preset_index(events, row):
+    return events[0].get('voicePreset', row % ROW_VOICES) if events else row % ROW_VOICES
 
 def render_voice(events, frames, row, count):
     if events and events[0].get('pitchTransition') in ('scale','glide'):
         return render_connected_voice(events,frames,row,count)
-    preset = VOICES[row % len(VOICES)]
+    preset = VOICES[preset_index(events, row)]
     samples = np.zeros((frames, 2), dtype=np.float64)
     activity = np.zeros(frames, dtype=np.float32)
     pan = 0 if count == 1 else -.48 + .96 * row / (count - 1)
@@ -61,7 +67,7 @@ def pitch_segment(target, previous, size, seconds, transition):
 
 def render_connected_voice(events, frames, row, count):
     """Sustain each adjacent phrase; rests end the phrase and its pitch history."""
-    preset=VOICES[row%len(VOICES)]
+    preset=VOICES[preset_index(events,row)]
     samples=np.zeros((frames,2));activity=np.zeros(frames,dtype=np.float32)
     pan=0 if count==1 else -.48+.96*row/(count-1)
     stereo=np.array([math.cos((pan+1)*math.pi/4),math.sin((pan+1)*math.pi/4)])
@@ -161,7 +167,8 @@ def prepare(events, row_ids, frames, background=None):
     full = sum(stems.values(), np.zeros((frames, 2)))
     rms = float(np.sqrt(np.mean(full ** 2)))
     gain = min(3.5, .085 / max(rms, 1e-9))
-    return stems, gain, {'version': VERSION, 'voices': [VOICES[i]['name'] for i in range(len(row_ids))],
+    names = [VOICES[preset_index([e for e in events if e.get('rowId') == key], row)]['name'] for row, key in enumerate(row_ids)]
+    return stems, gain, {'version': VERSION, 'voices': names,
         'pitchTransition':next((e['pitchTransition'] for e in events if 'pitchTransition' in e),'struck'),
         'echoSeconds': .28, 'echoWet': .13, 'echoLowCutHz': 240,
         'fixedSoloGain': True, 'masterGain': gain, 'peakCeiling': .9}

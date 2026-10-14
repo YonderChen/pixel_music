@@ -51,7 +51,7 @@ const until=async(fn)=>{for(let i=0;i<1000;i++){if(fn())return;await new Promise
  get('cancelWork').handlers.click();await until(()=>aborted);assert.equal(state().busy,false);assert.equal(get('retry').disabled,false);assert.equal(get('loadState').hidden,true);
  delay=false;get('retry').handlers.click();await until(()=>window.PixelMusicFeaturesDemo.payload()&&!state().busy);
  assert.equal(state().mode,'reference');assert.equal(get('play').disabled,false);assert.equal(get('status').textContent,'可以演奏');
- const expected=[['feature-original','transition','original'],['reference-soft','reference','soft'],['local-soft','features','soft']];
+ const expected=[['arranged','arranged','original'],['feature-original','transition','original'],['reference-soft-plus','reference-plus','soft'],['reference-soft','reference','soft'],['local-soft','features','soft']];
  assert.deepEqual(JSON.parse(JSON.stringify(state().recipes.map(r=>[r.id,r.method,r.profile]))),expected);
  for(const [id,method,profile] of expected){
   get('recipe').value=id;get('recipe').handlers.change();await until(()=>window.PixelMusicFeaturesDemo.payload()&&!state().busy);
@@ -63,6 +63,6 @@ const until=async(fn)=>{for(let i=0;i<1000;i++){if(fn())return;await new Promise
  get('referenceMode').handlers.click();finishExport(new Blob(['audio']));await exporting;
  assert.equal(downloads[0],'图鸣-多行叠奏-局部多特征法-柔和合成混音-GeneralUser GS.wav');
  windows.pagehide();
- const report={status:'passed',checkedOn:'2026-10-11',checks:['network failure restores a retry action and clears generation state','image preview is available before server response','retry recovers without reload','mode controls respond during delayed generation','cancel aborts pending generation','cancelled work cannot overwrite a later successful retry','exactly three approved method/profile pairs; changes send the correct score options','removed full-image/mix controls are never accessed; old full-image hash opens parallel mode','WAV filename keeps the selected combination when mode changes during asynchronous export'],generationRequests};
+ const report={status:'passed',checkedOn:'2026-10-11',checks:['network failure restores a retry action and clears generation state','image preview is available before server response','retry recovers without reload','mode controls respond during delayed generation','cancel aborts pending generation','cancelled work cannot overwrite a later successful retry','five approved method/profile pairs (arranged, refined reference + three retained); changes send the correct score options','removed full-image/mix controls are never accessed; old full-image hash opens parallel mode','WAV filename keeps the selected combination when mode changes during asynchronous export'],generationRequests};
  fs.writeFileSync(path.join(__dirname,'page-startup-client-report.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));
 })().catch(e=>{console.error(e);process.exitCode=1;});
