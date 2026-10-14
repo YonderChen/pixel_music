@@ -7,3 +7,6 @@ __pycache__/
 
 # Generated delivery archive; rebuild locally when needed.
 /图鸣-静态网页版.zip
+
+# Local preview server config for Claude Code.
+/.claude/launch.json
