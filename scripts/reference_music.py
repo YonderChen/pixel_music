@@ -24,6 +24,7 @@ import image_analysis as upstream_analysis
 from utils import NoteEvent, CompositionInfo
 import soft_row_mixer
 import arranger
+import region_music
 import contextlib
 
 # Refined reference layout: upper image rows sound higher, each with a register-suited soft voice.
@@ -389,7 +390,7 @@ def horizontal_row_melodies(analysis, info, options=None):
                 previous,previous_vector=midi,vector
         voices[-1]['noteCount']=len(row_events)
         if method == 'reference-plus':
-            voices[-1].update(fixedMidi=True, name=f'第 {row + 1} 行 · {OCTAVE_NAMES[count][row]}')
+            voices[-1].update(fixedMidi=True, voicePreset=SOFT_LAYOUT[count][row], name=f'第 {row + 1} 行 · {OCTAVE_NAMES[count][row]}')
         events.extend(row_events)
     events.sort(key=lambda e:(e['start'],e['row'],e['midi']))
     return events,regions,cols,count,voices
@@ -630,13 +631,16 @@ def prepare_scores(image_bytes, options=None):
     feature=[r for r in reference if r['layer']!='main']+feature_main
     feature.sort(key=lambda e:(e['start'],e['layer'],e['midi']))
     arranged=options.get('rowMethod')=='arranged'
+    segmented=None
     if arranged:
         row_events,row_regions,row_cols,row_count,voices,backing_events,arrangement=arranged_rows(analysis,info,options)
+    elif options.get('rowMethod')=='regions':
+        row_events,row_regions,row_cols,row_count,voices,segmented=region_music.build(analysis,info,options,sys.modules[__name__])
     else:
         row_events,row_regions,row_cols,row_count,voices=horizontal_row_melodies(analysis,info,options)
         backing_events=[e for e in reference if e['layer']!='main']
     harmony=None
-    if options.get('rowMethod')=='reference-plus':
+    if options.get('rowMethod') in ('reference-plus','regions'):
         beat=60/info.tempo
         backing_events,harmony=arranger.harmonize(row_events,info,root_note(analysis['features']),max(1,int(info.duration/(4*beat)+1e-6)),options.get('synth','GeneralUser GS'))
     parallel=row_events+(backing_events if options.get('backing',True) else [])
@@ -651,13 +655,14 @@ def prepare_scores(image_bytes, options=None):
             'scoreSha256':hashlib.sha256(json.dumps(audible,sort_keys=True).encode()).hexdigest(),'audioStatus':'on-demand'}
     variants['parallel'].update(version=PARALLEL_VERSION,voices=voices,rowMethod=options.get('rowMethod','reference'),
         mixProfiles={'original':{'name':'原有叠加'},'soft':{'name':'柔和合成混音','version':soft_row_mixer.VERSION,
-            'voices':[soft_row_mixer.VOICES[soft_row_mixer.preset_index([e for e in row_events if e.get('rowId')==v['id']],i)]['name'] for i,v in enumerate(voices)]}})
+            'voices':soft_voice_names(row_events,voices)}})
     if options.get('rowMethod')=='contour':
         variants['parallel'].update(contourVersion=CONTOUR_VERSION,pitchTransition=options.get('pitchTransition','scale'))
     if options.get('rowMethod')=='transition':
         variants['parallel'].update(pitchVersion=PITCH_TRANSITION_VERSION,pitchTransition=options.get('pitchTransition','scale'))
     if arranged:variants['parallel'].update(arrangement=arrangement)
     if harmony:variants['parallel'].update(harmony=harmony)
+    if segmented:variants['parallel'].update(segmentation=segmented)
     if options.get('featureMethod') in ('contour','transition'):variants['features'].update(feature_pitch_metadata(options))
     rgb=np.clip(np.round(analysis['maps']['rgb']*255),0,255).astype(np.uint8)
     preview=io.BytesIO();Image.fromarray(rgb).save(preview,format='PNG')
@@ -678,10 +683,16 @@ def render_score(records, info, synth):
     samples=upstream_audio.normalize_master_audio(samples)
     return upstream_audio.audio_to_wav_bytes(samples,44100),audio_metrics(samples,44100),message
 
+def soft_voice_names(events, voices):
+    # A voice's own preset wins, so a silent voice still shows its intended timbre.
+    return [soft_row_mixer.VOICES[v['voicePreset'] if 'voicePreset' in v else soft_row_mixer.preset_index([e for e in events if e.get('rowId')==v['id']],i)]['name']
+        for i,v in enumerate(voices)]
+
 def render_soft_rows(context, background_wav=None):
     frames=round((context['info'].duration+.8)*44100)
     ids=[v['id'] for v in context['voices']]
     stems,gain,metadata=soft_row_mixer.prepare(context['rowEvents'],ids,frames,_pcm(background_wav) if background_wav is not None else None)
+    if any('voicePreset' in v for v in context['voices']):metadata['voices']=soft_voice_names(context['rowEvents'],context['voices'])
     storage={'rowIds':ids,'frames':frames,'profiles':{'soft':{'wav':{key:upstream_audio.audio_to_wav_bytes(data,44100) for key,data in stems.items()},
         'rowGain':1,'masterGain':gain,'metadata':metadata}}}
     wav,metrics=mix_row_stems(storage,profile='soft')

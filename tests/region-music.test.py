@@ -1,0 +1,35 @@
+"""Region music: salience order, timing and fidelity (run: python3 tests/region-music.test.py)."""
+import io, pathlib, sys
+import numpy as np
+from PIL import Image
+
+ROOT = pathlib.Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'scripts'))
+import reference_music as engine
+
+def png(array):
+    buffer = io.BytesIO(); Image.fromarray(array.astype(np.uint8)).save(buffer, format='PNG'); return buffer.getvalue()
+
+images = {'white': png(np.full((120, 192, 3), 255)), 'starry-night': (ROOT / 'dist/sonification-assets/paintings/starry-night.jpg').read_bytes(),
+    'impression-sunrise': (ROOT / 'dist/sonification-assets/paintings/impression-sunrise.jpg').read_bytes()}
+for name, image in images.items():
+    for method in ('grow', 'quadtree', 'slic'):
+        for rows in (2, 4):
+            payload, context = engine.prepare_scores(image, {'rowCount': rows, 'rowMethod': 'regions', 'segmentMethod': method, 'synth': 'Simple'})
+            info, variant = payload['info'], payload['variants']['parallel']
+            main = [e for e in variant['events'] if e['layer'] == 'main']
+            regions = {r['id']: r for r in variant['regions']}
+            assert variant['segmentation']['regionCount'] == len(variant['regions']) and variant['rows'] == rows
+            assert len({e['id'] for e in main}) == len(main)
+            for e in main:
+                assert 0 <= e['start'] and e['start'] + e['duration'] <= info['duration'] + 1e-6, (name, method, e)
+                assert regions[e['sources'][0]['regionId']]['eventId'] == e['id']
+            for lane in range(rows):
+                lane_events = sorted((e for e in main if e['row'] == lane), key=lambda e: e['start'])
+                ranks = [regions[e['sources'][0]['regionId']]['salienceRank'] for e in lane_events]
+                assert ranks == sorted(ranks), f'{name}/{method}: lane {lane} not in salience order'
+                for a, b in zip(lane_events, lane_events[1:]): assert a['start'] + a['duration'] <= b['start'] + 1e-6
+            if name == 'white':
+                assert len(variant['regions']) == 1 and len(main) == 1 and main[0]['duration'] > info['duration'] * .9
+            print(f'{name:18s} {method:8s} rows {rows}: {len(variant["regions"]):3d} regions, {len(main):3d} notes, chords {"→".join(variant["harmony"]["progression"])}')
+print('passed: salience order per voice, one region owns each note, no overlaps, white is one held note')

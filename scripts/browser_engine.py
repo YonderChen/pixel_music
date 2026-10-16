@@ -114,7 +114,7 @@ def handle(raw):
     if path == '/api/preview':
         cached = entry(data['key'])
         variant = cached['payload']['variants'][data['variant']]
-        record = next(e for e in variant['events'] if e['id'] == data['eventId'])
+        record = next(e for e in variant['events'] if e.get('id') == data['eventId'])
         if data['variant'] == 'parallel' and data.get('profile') == 'soft':
             samples = engine.soft_row_mixer.preview(record, variant['rows'])
         else:

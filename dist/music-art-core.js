@@ -33,7 +33,7 @@
     const key=payload.key,profile=selection.profile;
     if(payload.browserEngine){
       const fields=['id','start','duration','midi','velocity','instrument','pan','layer','rowId','row','pitchTransition','curveMidi','voicePreset'];
-      score.audioRef={kind:'browser-score',variant:selection.mode,profile,synth:payload.settings.synth,backing:payload.settings.backing,background:selection.backing,rows:selection.rows.map((on,i)=>on?'row-'+i:null).filter(Boolean),info:payload.info,voices:(value.voices||[]).map(v=>Object.fromEntries(Object.entries({id:v.id,row:v.row,name:v.name,role:v.role,gain:v.gain,fixedMidi:v.fixedMidi}).filter(([,x])=>x!==undefined))),events:value.events.map(e=>Object.fromEntries(fields.filter(f=>e[f]!==undefined).map(f=>[f,e[f]])))};
+      score.audioRef={kind:'browser-score',variant:selection.mode,profile,synth:payload.settings.synth,backing:payload.settings.backing,background:selection.backing,rows:selection.rows.map((on,i)=>on?'row-'+i:null).filter(Boolean),info:payload.info,voices:(value.voices||[]).map(v=>Object.fromEntries(Object.entries({id:v.id,row:v.row,name:v.name,role:v.role,gain:v.gain,fixedMidi:v.fixedMidi,voicePreset:v.voicePreset}).filter(([,x])=>x!==undefined))),events:value.events.map(e=>Object.fromEntries(fields.filter(f=>e[f]!==undefined).map(f=>[f,e[f]])))};
       return score;
     }
     score.audioRef=parallel&&selection.rows.some(on=>!on)?{kind:'rowmix',key,rows:selection.rows.map((on,i)=>on?'row-'+i:null).filter(Boolean),background:selection.backing,profile}:

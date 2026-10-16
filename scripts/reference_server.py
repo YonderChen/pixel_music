@@ -163,7 +163,7 @@ class Handler(SimpleHTTPRequestHandler):
             if self.path=='/api/preview':
                 with LOCK: cached=CACHE[request['key']]
                 variant=cached['payload']['variants'][request['variant']]
-                record=next(row for row in variant['events'] if row['id']==request['eventId'])
+                record=next(row for row in variant['events'] if row.get('id')==request['eventId'])
                 if (request['variant']=='parallel' and request.get('profile')=='soft') or (request['variant']=='features' and variant.get('featureMethod') in ('contour','transition')):
                     samples=engine.soft_row_mixer.preview(record,variant['rows'] if request['variant']=='parallel' else 1)
                 else:

@@ -8,9 +8,9 @@
     "mode controls respond during delayed generation",
     "cancel aborts pending generation",
     "cancelled work cannot overwrite a later successful retry",
-    "five approved method/profile pairs (arranged, refined reference + three retained); changes send the correct score options",
+    "six approved method/profile pairs (regions, arranged, refined reference + three retained); changes send the correct score options",
     "removed full-image/mix controls are never accessed; old full-image hash opens parallel mode",
     "WAV filename keeps the selected combination when mode changes during asynchronous export"
   ],
-  "generationRequests": 9
+  "generationRequests": 10
 }
