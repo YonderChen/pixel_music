@@ -1,0 +1,174 @@
+{
+  "version": "segmentation-v1",
+  "detail": 0.5,
+  "images": {
+    "great-wave": {
+      "grow": {
+        "regions": 63,
+        "seconds": 0.186
+      },
+      "quadtree": {
+        "regions": 217,
+        "seconds": 0.056
+      },
+      "slic": {
+        "regions": 55,
+        "seconds": 0.313
+      }
+    },
+    "impression-sunrise": {
+      "grow": {
+        "regions": 8,
+        "seconds": 0.06
+      },
+      "quadtree": {
+        "regions": 124,
+        "seconds": 0.036
+      },
+      "slic": {
+        "regions": 54,
+        "seconds": 0.161
+      }
+    },
+    "mona-lisa": {
+      "grow": {
+        "regions": 50,
+        "seconds": 0.086
+      },
+      "quadtree": {
+        "regions": 214,
+        "seconds": 0.054
+      },
+      "slic": {
+        "regions": 64,
+        "seconds": 0.171
+      }
+    },
+    "pearl-earring": {
+      "grow": {
+        "regions": 44,
+        "seconds": 0.088
+      },
+      "quadtree": {
+        "regions": 181,
+        "seconds": 0.047
+      },
+      "slic": {
+        "regions": 48,
+        "seconds": 0.172
+      }
+    },
+    "starry-night": {
+      "grow": {
+        "regions": 85,
+        "seconds": 0.121
+      },
+      "quadtree": {
+        "regions": 244,
+        "seconds": 0.059
+      },
+      "slic": {
+        "regions": 71,
+        "seconds": 0.255
+      }
+    },
+    "the-kiss": {
+      "grow": {
+        "regions": 55,
+        "seconds": 0.114
+      },
+      "quadtree": {
+        "regions": 202,
+        "seconds": 0.051
+      },
+      "slic": {
+        "regions": 50,
+        "seconds": 0.204
+      }
+    },
+    "thousand-li": {
+      "grow": {
+        "regions": 38,
+        "seconds": 0.09
+      },
+      "quadtree": {
+        "regions": 178,
+        "seconds": 0.047
+      },
+      "slic": {
+        "regions": 47,
+        "seconds": 0.184
+      }
+    },
+    "mars-sunset": {
+      "grow": {
+        "regions": 7,
+        "seconds": 0.053
+      },
+      "quadtree": {
+        "regions": 127,
+        "seconds": 0.034
+      },
+      "slic": {
+        "regions": 46,
+        "seconds": 0.149
+      }
+    },
+    "grass": {
+      "grow": {
+        "regions": 35,
+        "seconds": 0.12
+      },
+      "quadtree": {
+        "regions": 124,
+        "seconds": 0.034
+      },
+      "slic": {
+        "regions": 45,
+        "seconds": 0.339
+      }
+    },
+    "white": {
+      "grow": {
+        "regions": 1,
+        "seconds": 0.044
+      },
+      "quadtree": {
+        "regions": 1,
+        "seconds": 0.011
+      },
+      "slic": {
+        "regions": 1,
+        "seconds": 0.137
+      }
+    },
+    "gradient": {
+      "grow": {
+        "regions": 6,
+        "seconds": 0.048
+      },
+      "quadtree": {
+        "regions": 88,
+        "seconds": 0.028
+      },
+      "slic": {
+        "regions": 10,
+        "seconds": 0.149
+      }
+    },
+    "checker": {
+      "grow": {
+        "regions": 40,
+        "seconds": 0.057
+      },
+      "quadtree": {
+        "regions": 160,
+        "seconds": 0.04
+      },
+      "slic": {
+        "regions": 40,
+        "seconds": 0.149
+      }
+    }
+  }
+}
