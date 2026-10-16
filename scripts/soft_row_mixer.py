@@ -37,18 +37,26 @@ def render_voice(events, frames, row, count):
         if size <= 0: continue
         t = np.arange(size, dtype=np.float64) / SR
         held = np.minimum(t, gate)
-        envelope = (1 - np.exp(-held / preset['attack'])) * (preset['sustain'] + (1 - preset['sustain']) * np.exp(-held / preset['decay']))
+        # Optional per-note shaping (region outlines): attack time, brightness and a glide.
+        attack = preset['attack'] * event.get('attackScale', 1)
+        cutoff = preset['cutoff'] * event.get('toneScale', 1)
+        bend = event.get('bend', 0)
+        envelope = (1 - np.exp(-held / attack)) * (preset['sustain'] + (1 - preset['sustain']) * np.exp(-held / preset['decay']))
         envelope *= np.exp(-np.maximum(0, t - gate) / preset['release'])
         frequency = 440 * 2 ** ((event['midi'] - 69) / 12)
+        if bend:
+            # Glide over the held part of the note, integrating phase so the pitch moves smoothly.
+            curve = frequency * 2 ** (bend * held / gate / 12)
+            phase = 2 * math.pi * np.concatenate(([0.], np.cumsum(curve[:-1]))) / SR
         signal = np.zeros(size)
         energy = 0
         for harmonic, amplitude in enumerate(preset['partials'], 1):
             hz = harmonic * frequency
             if hz >= SR * .45: continue
-            amplitude /= math.sqrt(1 + (hz / preset['cutoff']) ** 4)
+            amplitude /= math.sqrt(1 + (hz / cutoff) ** 4)
             # Upper partials settle sooner, leaving a rounder sustained tone.
             partial_decay = 1 if harmonic == 1 else .35 + .65 * np.exp(-t / .32)
-            signal += amplitude * partial_decay * np.sin(2 * math.pi * hz * t)
+            signal += amplitude * partial_decay * (np.sin(harmonic * phase) if bend else np.sin(2 * math.pi * hz * t))
             energy += amplitude ** 2
         signal /= math.sqrt(max(energy, 1e-9))
         velocity = np.clip(event['velocity'], 0, 1)

@@ -4,7 +4,7 @@
   const ids = ['workName','mappingLabel','picture','regions','centroids','scan','scanNote','dropHint','timeline','eventCount','pitchTop','pitchBottom','middleTime','endTime','status','referenceMode','parallelMode','parallelControls','rowCount','rowTracks','mixHint','recipe','recipeHint','key','tempo','noteCount','duration','mappingHint','tone','mappingStyle','backing','backingStatus','play','playText','playIcon','currentNote','seek','clock','restart','abReference','abParallel','comparisonHint','file','export','sample','credit','selectedTitle','selectedReason','selectedLocation','selectedFeatures','selectedPitch','selectedTime','toast','imageStage','connection'];
   ids.push('connectionMessage','retry','loadState','loadMessage','cancelWork');
   ids.push('hoverToggle','hoverState');
-  ids.push('segments','segmentMethod','segmentSetting','segmentOrder','orderSetting');
+  ids.push('segments','segmentMethod','segmentSetting','segmentOrder','orderSetting','contourToggle','contourSetting');
   ids.push('loopToggle');
   ids.push('musicArt');
   const E = Object.fromEntries(ids.map(id => [id,$(id)]));
@@ -63,8 +63,8 @@
     E.referenceMode.disabled=E.parallelMode.disabled=false;
     E.abParallel.disabled=!S.payload?.variants.parallel||S.busy;
     for(const el of E.rowTracks.querySelectorAll('input,button'))el.disabled=S.busy;
-    E.rowCount.disabled=E.recipe.disabled=E.segmentMethod.disabled=E.segmentOrder.disabled=S.busy;
-    E.segmentSetting.hidden=E.orderSetting.hidden=recipe().method!=='regions';
+    E.rowCount.disabled=E.recipe.disabled=E.segmentMethod.disabled=E.segmentOrder.disabled=E.contourToggle.disabled=S.busy;
+    E.segmentSetting.hidden=E.orderSetting.hidden=E.contourSetting.hidden=recipe().method!=='regions';
     E.hoverToggle.disabled=!S.payload||S.busy;
     E.loopToggle.disabled=!S.payload||S.busy;
     E.musicArt.setAttribute('aria-disabled',!S.payload||S.busy);
@@ -145,7 +145,7 @@
     const lit=value.segmentation?.order==='path'&&active.length?[active.reduce((a,b)=>b.start>a.start?b:a)]:active;
     const activeIds=new Set(hover?[hover.id]:show?lit.flatMap(e=>e.sources.map(ref=>ref.regionId)):[]);
     E.regions.querySelectorAll('button').forEach(button=>button.classList.toggle('active',activeIds.has(button.dataset.region)));
-    const segmented=segmentView();if(segmented)drawSegments(activeIds);
+    const segmented=segmentView();if(segmented){drawSegments(activeIds);traceContours(value,hover?value.events.filter(e=>e.id===hover.eventId):show?lit:[]);}
     E.timeline.querySelectorAll('.note').forEach(rect=>{rect.classList.toggle('active',show&&active.some(e=>e.id===rect.dataset.event));rect.classList.toggle('muted',S.mode==='parallel'&&!S.enabledRows[Number(rect.dataset.row)]);});
     const playhead=E.timeline.querySelector('.playhead');
     if(playhead){const x=Math.min(640,(hover?hover.start:time)/S.payload.info.duration*640);playhead.setAttribute('x1',x);playhead.setAttribute('x2',x);}
@@ -180,7 +180,7 @@
     E.selectedReason.textContent=region.reason;
     E.selectedLocation.textContent=segmented?`重心 横向 ${(region.centroid.x*100).toFixed(1)}% · 纵向 ${(region.centroid.y*100).toFixed(1)}% · 面积 ${(region.features.area*100).toFixed(1)}%`:`图片横向 ${(region.rect.x*100).toFixed(1)}% · 纵向 ${(region.rect.y*100).toFixed(1)}%`;
     const f=region.features;
-    E.selectedFeatures.textContent=S.mode!=='reference'?`色相 ${(f.hue*360).toFixed(0)}° · 饱和 ${(f.saturation*100).toFixed(0)}% · 亮度 ${f.brightness.toFixed(2)} · 对比 ${f.contrast.toFixed(2)} · 纹理 ${f.texture.toFixed(2)}${f.saliency!==undefined?` · 显著 ${f.saliency.toFixed(2)}`:''}`:`亮度 ${f.brightness.toFixed(2)} · 对比 ${f.contrast.toFixed(2)} · 重心 ${(f.centroid*100).toFixed(1)}%`;
+    E.selectedFeatures.textContent=S.mode!=='reference'?`色相 ${(f.hue*360).toFixed(0)}° · 饱和 ${(f.saturation*100).toFixed(0)}% · 亮度 ${f.brightness.toFixed(2)} · 对比 ${f.contrast.toFixed(2)} · 纹理 ${f.texture.toFixed(2)}${f.saliency!==undefined?` · 显著 ${f.saliency.toFixed(2)}`:''}${f.compactness!==undefined?` · 紧凑 ${f.compactness.toFixed(2)} · 实心 ${f.solidity.toFixed(2)} · 方向 ${f.angle.toFixed(0)}° · 伸展 ${f.elongation.toFixed(2)}`:''}`:`亮度 ${f.brightness.toFixed(2)} · 对比 ${f.contrast.toFixed(2)} · 重心 ${(f.centroid*100).toFixed(1)}%`;
     E.selectedPitch.textContent=`${note(region.targetMidi)} → ${note(region.midi)}`;
     const event=view().events.find(e=>e.id===region.eventId);
     E.selectedTime.textContent=event?`${event.start.toFixed(2)}–${(event.start+event.duration).toFixed(2)} 秒`:`${region.start.toFixed(2)}–${region.end.toFixed(2)} 秒 · 未起音`;
@@ -215,6 +215,19 @@
     }
     E.segments.getContext('2d').putImageData(image,0,0);
   }
+  // With outlines taking part, show the traced edge of each sounding region and a dot on the current note.
+  function traceContours(value,sounding){
+    if(!value.segmentation?.contour){E.centroids.innerHTML='';return;}
+    const w=S.payload.image.width,h=S.payload.image.height,key=sounding.map(e=>e.id).join();
+    if(E.centroids.dataset.key===key)return;E.centroids.dataset.key=key;
+    const byId=new Map(value.regions.map(r=>[r.id,r]));let svg='';
+    for(const e of sounding){
+      const r=byId.get(e.sources[0]?.regionId),color=rowColors[(e.row??0)%4];if(!r?.contour)continue;
+      svg+=`<polyline points="${r.contour.map(([x,y])=>`${(x*w).toFixed(1)},${(y*h).toFixed(1)}`).join(' ')}" style="stroke:${color};stroke-width:${(w/192).toFixed(2)};opacity:.95"/>`;
+      if(e.point)svg+=`<circle cx="${(e.point[0]*w).toFixed(1)}" cy="${(e.point[1]*h).toFixed(1)}" r="${(w/64).toFixed(1)}" style="fill:${color};stroke:#151b12;stroke-width:${(w/384).toFixed(2)}"/>`;
+    }
+    E.centroids.innerHTML=svg;
+  }
   function segmentAt(event){
     const g=segmentView();if(!g)return null;
     const box=E.segments.getBoundingClientRect();
@@ -230,11 +243,11 @@
     prepareSegments(seg);
     E.key.textContent=`${(S.mode==='parallel'&&(value.arrangement||value.harmony)?.key)||info.key_name} · ${{'Major pentatonic':'大调五声','Minor pentatonic':'小调五声','Major':'大调','Natural minor':'自然小调','Dorian':'多利亚','Lydian':'利底亚'}[info.scale_name]||info.scale_name}`;
     E.tempo.textContent=`${info.tempo.toFixed(1)} BPM`;E.noteCount.textContent=`${value.mainCount} 个${pitchMappedView()?'音高片段':'音符'}`;E.duration.textContent=`${info.duration.toFixed(1)} 秒＋余韵`;
-    E.mappingHint.textContent=seg?`${seg.orderHint} 当前 ${seg.methodName}，共 ${seg.regionCount} 个区域；区域越大音越长，伴奏由实际音符推出和声铺底。`:S.mode==='parallel'?`各行独立分析并从左到右同时演奏；${recipe().hint} 整体伴奏只保留一份。`:'直接运行 Photo Sonification 原始分析、编曲和音源；参考原谱未重新改写旋律。';
+    E.mappingHint.textContent=seg?`${seg.orderHint}${seg.contour?' 轮廓参与：边缘起伏成旋律动机，圆润/尖锐决定连奏或断奏与音色，边缘软硬决定起音，斜向伸展滑音、内凹加倚音，被包围的区域由外层给出持续低音。':''} 当前 ${seg.methodName}，共 ${seg.regionCount} 个区域；区域越大音越长，伴奏由实际音符推出和声铺底。`:S.mode==='parallel'?`各行独立分析并从左到右同时演奏；${recipe().hint} 整体伴奏只保留一份。`:'直接运行 Photo Sonification 原始分析、编曲和音源；参考原谱未重新改写旋律。';
     E.regions.style.gridTemplateColumns=`repeat(${value.cols},1fr)`;E.regions.style.gridTemplateRows=`repeat(${value.rows},1fr)`;
     E.regions.classList.toggle('parallel',S.mode==='parallel');
     E.regions.innerHTML=seg?'':value.regions.map((r,i)=>`<button type="button" class="region" data-index="${i}" data-region="${r.id}" style="grid-column:${r.col+1};grid-row:${r.row+1};--voice-color:${rowColors[r.row%4]}" aria-label="列 ${r.col+1} 区域 ${r.row+1}，${note(r.midi)}" title="${note(r.midi)}"></button>`).join('');
-    E.centroids.innerHTML='';
+    E.centroids.innerHTML='';if(E.centroids.dataset)E.centroids.dataset.key='';
     E.centroids.setAttribute('viewBox',`0 0 ${S.payload.image.width} ${S.payload.image.height}`);
     const lo=Math.min(48,...main.map(e=>e.midi)),hi=Math.max(84,...main.map(e=>e.midi));
     const chartHeight=S.mode==='parallel'?value.rows*60:130;
@@ -271,7 +284,7 @@
     const operation=++S.loadOperation, image=S.image;
     try {
       await showInput(image,operation);if(operation!==S.loadOperation)return;
-      const response=await request(API+'/api/generate',{method:'POST',controller:S.loadAbort,body:JSON.stringify({image:image.base64,options:{synth:E.tone.value,mapping:E.mappingStyle.value,backing:E.backing.checked,rowCount:Number(E.rowCount.value),rowMethod:recipe().method,segmentMethod:E.segmentMethod.value,segmentOrder:E.segmentOrder.value,pitchTransition:'scale',featureMethod:'features'}})});
+      const response=await request(API+'/api/generate',{method:'POST',controller:S.loadAbort,body:JSON.stringify({image:image.base64,options:{synth:E.tone.value,mapping:E.mappingStyle.value,backing:E.backing.checked,rowCount:Number(E.rowCount.value),rowMethod:recipe().method,segmentMethod:E.segmentMethod.value,segmentOrder:E.segmentOrder.value,contourMusic:E.contourToggle.checked,pitchTransition:'scale',featureMethod:'features'}})});
       const payload=await response.json();if(!response.ok)throw new Error(payload.error||'生成失败');
       if(operation!==S.loadOperation)return;
       S.payload=payload;S.buffers.clear();S.mixMetrics.clear();S.time=0;E.connection.hidden=true;S.solo=null;
@@ -403,7 +416,7 @@
   E.cancelWork.addEventListener('click',()=>{if(S.busy){S.loadOperation++;S.loadAbort?.abort();S.busy=false;E.status.textContent='已取消';E.playText.textContent='已取消 · 可重新生成';E.connectionMessage.textContent='已取消生成，可以更换图片或重新生成。';E.connection.hidden=false;controls();}else if(S.hoverLoading){E.hoverToggle.checked=false;invalidateHoverBank(false);stop();}else stop();});
   E.referenceMode.addEventListener('click',()=>mode('reference'));E.parallelMode.addEventListener('click',()=>mode('parallel'));
   E.abParallel.addEventListener('click',()=>{mode('parallel');play(true);});E.abReference.addEventListener('click',()=>{mode('reference');play(true);});
-  E.rowCount.addEventListener('change',generate);E.segmentMethod.addEventListener('change',generate);E.segmentOrder.addEventListener('change',generate);
+  E.rowCount.addEventListener('change',generate);E.segmentMethod.addEventListener('change',generate);E.segmentOrder.addEventListener('change',generate);E.contourToggle.addEventListener('change',generate);
   E.recipe.addEventListener('change',()=>{if(!RECIPES.some(r=>r.id===E.recipe.value))E.recipe.value=RECIPES[0].id;mode('parallel');generate();});
   window.addEventListener('hashchange',()=>{const next=RECIPES.find(r=>'#'+r.id===location.hash);if(next&&next.id!==recipe().id){E.recipe.value=next.id;mode('parallel');generate();}else mode(location.hash==='#reference'?'reference':'parallel');});
   E.rowTracks.addEventListener('change',event=>{if(event.target.matches('[data-row-toggle]'))changeMixer(Number(event.target.dataset.rowToggle),false,event.target.checked);});

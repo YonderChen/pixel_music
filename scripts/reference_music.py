@@ -643,6 +643,8 @@ def prepare_scores(image_bytes, options=None):
     if options.get('rowMethod') in ('reference-plus','regions'):
         beat=60/info.tempo
         backing_events,harmony=arranger.harmonize(row_events,info,root_note(analysis['features']),max(1,int(info.duration/(4*beat)+1e-6)),options.get('synth','GeneralUser GS'))
+        if segmented and segmented.get('pedal'):backing_events=sorted(backing_events+segmented['pedal'],key=lambda e:(e['start'],e['midi']))
+    if segmented:segmented.pop('pedal',None)
     parallel=row_events+(backing_events if options.get('backing',True) else [])
     parallel.sort(key=lambda e:(e['start'],e['layer'],e['midi']))
     duration=round((info.duration+.8)*44100)/44100

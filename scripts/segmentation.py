@@ -246,6 +246,69 @@ def describe(labels, rgb, lab):
             'spread': float(math.sqrt(pixels.var(axis=0).sum()))})
     return regions
 
+def _hull_area(points):
+    """Convex hull area (monotone chain + shoelace) of integer corner points."""
+    pts = sorted(set(points))
+    if len(pts) < 3: return 0.
+    def cross(o, a, b): return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+    lower, upper = [], []
+    for p in pts:
+        while len(lower) >= 2 and cross(lower[-2], lower[-1], p) <= 0: lower.pop()
+        lower.append(p)
+    for p in reversed(pts):
+        while len(upper) >= 2 and cross(upper[-2], upper[-1], p) <= 0: upper.pop()
+        upper.append(p)
+    hull = lower[:-1] + upper[:-1]
+    return abs(sum(hull[i][0] * hull[i - 1][1] - hull[i - 1][0] * hull[i][1] for i in range(len(hull)))) / 2
+
+def shapes(labels):
+    """Outline features per region, in pixels of the label image (square pixels).
+
+    compactness: 4*pi*area / perimeter^2, scaled so a square is 1 (jagged or thin -> 0)
+    angle: major-axis direction in degrees; positive rises to the right
+    elongation: 0 for round or square, towards 1 for a thin line
+    solidity: area / convex-hull area (a crescent is low)
+    profile: the top edge (the bottom edge for a region hanging from the image top),
+        one height per column, as (x, y) pixel pairs
+    """
+    H, W = labels.shape
+    n = int(labels.max()) + 1
+    out = []
+    for index in range(n):
+        mask = labels == index
+        ys, xs = np.nonzero(mask)
+        area = len(xs)
+        padded = np.pad(mask, 1)
+        core = padded[1:-1, 1:-1]
+        perimeter = int(np.sum(core & ~padded[:-2, 1:-1]) + np.sum(core & ~padded[2:, 1:-1])
+            + np.sum(core & ~padded[1:-1, :-2]) + np.sum(core & ~padded[1:-1, 2:]))
+        compactness = float(min(1., 4 * math.pi * area / max(perimeter, 1) ** 2 / (math.pi / 4)))
+        if area > 1:
+            cx, cy = xs.mean(), ys.mean()
+            sxx, syy, sxy = np.mean((xs - cx) ** 2) + 1 / 12, np.mean((ys - cy) ** 2) + 1 / 12, np.mean((xs - cx) * (ys - cy))
+            # Image y points down, so a negative covariance rises to the right.
+            angle = float(math.degrees(.5 * math.atan2(-2 * sxy, sxx - syy)))
+            spread = math.sqrt((sxx - syy) ** 2 + 4 * sxy ** 2)
+            major, minor = (sxx + syy + spread) / 2, max((sxx + syy - spread) / 2, 1e-9)
+            elongation = float(1 - math.sqrt(minor / major))
+        else:
+            angle, elongation = 0., 0.
+        edge = core & ~(padded[:-2, 1:-1] & padded[2:, 1:-1] & padded[1:-1, :-2] & padded[1:-1, 2:])
+        by, bx = np.nonzero(edge)
+        corners = [(x + dx, y + dy) for x, y in zip(bx.tolist(), by.tolist()) for dx in (0, 1) for dy in (0, 1)]
+        solidity = float(min(1., area / max(_hull_area(corners), 1)))
+        columns = np.nonzero(mask.any(axis=0))[0]
+        tops = mask.argmax(axis=0)
+        bottoms = H - 1 - mask[::-1].argmax(axis=0)
+        # A region hanging from the image's top edge (a sky) shows its shape along the bottom.
+        hanging = float(np.mean(tops[columns] == 0)) > .5 and float(np.mean(bottoms[columns] == H - 1)) < .5
+        out.append({'perimeter': perimeter, 'compactness': compactness, 'angle': angle, 'elongation': elongation,
+            'solidity': solidity, 'edgeSide': 'bottom' if hanging else 'top',
+            'profile': [(int(x), int((bottoms if hanging else tops)[x])) for x in columns],
+            'border': bool(xs.min() == 0 or ys.min() == 0 or xs.max() == W - 1 or ys.max() == H - 1),
+            'boundary': edge})
+    return out
+
 def segment(rgb, method='grow', detail=.5):
     """rgb: HxWx3 floats in 0..1 (the analysis image). Returns labels and region records."""
     if method not in METHODS: raise ValueError('未知分割方式')

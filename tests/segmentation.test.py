@@ -40,4 +40,16 @@ for method in seg.METHODS:
 strips = seg.segment(gradient, 'grow')
 assert all(r['rect']['height'] == 1 for r in strips['regions']) and len(strips['regions']) >= 3
 assert len(seg.segment(checker, 'grow')['regions']) == 40
-print('passed: one region for white, deterministic, consecutive ids, connected regions, gradient strips, checker squares')
+# Outline features on known shapes.
+shape = np.zeros((120, 192), np.int32)
+disc = (yy - 60) ** 2 + (xx - 40) ** 2 < 400; shape[disc] = 1
+shape[(yy > 20) & (yy < 26) & (xx > 80) & (xx < 180)] = 2
+shape[(np.abs((xx - 120) - (60 - yy)) < 3) & (xx > 100) & (xx < 170) & (yy > 30) & (yy < 110) & (shape == 0)] = 3
+outline = {int(shape[y, x]): o for o, (y, x) in zip(seg.shapes(shape), [tuple(np.argwhere(shape == v)[0]) for v in range(4)])}
+assert outline[1]['compactness'] > .75 and outline[1]['elongation'] < .1 and outline[1]['solidity'] > .9, outline[1]
+assert outline[2]['elongation'] > .9 and abs(outline[2]['angle']) < 5
+assert outline[3]['elongation'] > .9 and 40 < outline[3]['angle'] < 50
+sky = np.zeros((120, 192), np.int32); sky[60:] = 1; sky[40:60, 60:120] = 1
+top = seg.shapes(sky)[0]
+assert top['edgeSide'] == 'bottom' and len({y for _, y in top['profile']}) == 2  # the skyline, not the frame
+print('passed: shape features (disc, bar, diagonal, skyline), one region for white, deterministic, consecutive ids, connected regions, gradient strips, checker squares')
