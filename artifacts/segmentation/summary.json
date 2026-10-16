@@ -5,15 +5,15 @@
     "great-wave": {
       "grow": {
         "regions": 63,
-        "seconds": 0.186
+        "seconds": 0.156
       },
       "quadtree": {
-        "regions": 217,
-        "seconds": 0.056
+        "regions": 237,
+        "seconds": 0.075
       },
       "slic": {
         "regions": 55,
-        "seconds": 0.313
+        "seconds": 0.301
       }
     },
     "impression-sunrise": {
@@ -22,36 +22,36 @@
         "seconds": 0.06
       },
       "quadtree": {
-        "regions": 124,
-        "seconds": 0.036
+        "regions": 46,
+        "seconds": 0.039
       },
       "slic": {
         "regions": 54,
-        "seconds": 0.161
+        "seconds": 0.153
       }
     },
     "mona-lisa": {
       "grow": {
         "regions": 50,
-        "seconds": 0.086
+        "seconds": 0.08
       },
       "quadtree": {
-        "regions": 214,
-        "seconds": 0.054
+        "regions": 206,
+        "seconds": 0.071
       },
       "slic": {
         "regions": 64,
-        "seconds": 0.171
+        "seconds": 0.17
       }
     },
     "pearl-earring": {
       "grow": {
         "regions": 44,
-        "seconds": 0.088
+        "seconds": 0.092
       },
       "quadtree": {
-        "regions": 181,
-        "seconds": 0.047
+        "regions": 173,
+        "seconds": 0.068
       },
       "slic": {
         "regions": 48,
@@ -61,29 +61,29 @@
     "starry-night": {
       "grow": {
         "regions": 85,
-        "seconds": 0.121
+        "seconds": 0.126
       },
       "quadtree": {
-        "regions": 244,
-        "seconds": 0.059
+        "regions": 312,
+        "seconds": 0.099
       },
       "slic": {
         "regions": 71,
-        "seconds": 0.255
+        "seconds": 0.253
       }
     },
     "the-kiss": {
       "grow": {
         "regions": 55,
-        "seconds": 0.114
+        "seconds": 0.11
       },
       "quadtree": {
-        "regions": 202,
-        "seconds": 0.051
+        "regions": 189,
+        "seconds": 0.07
       },
       "slic": {
         "regions": 50,
-        "seconds": 0.204
+        "seconds": 0.205
       }
     },
     "thousand-li": {
@@ -92,8 +92,8 @@
         "seconds": 0.09
       },
       "quadtree": {
-        "regions": 178,
-        "seconds": 0.047
+        "regions": 171,
+        "seconds": 0.067
       },
       "slic": {
         "regions": 47,
@@ -106,26 +106,26 @@
         "seconds": 0.053
       },
       "quadtree": {
-        "regions": 127,
+        "regions": 38,
         "seconds": 0.034
       },
       "slic": {
         "regions": 46,
-        "seconds": 0.149
+        "seconds": 0.15
       }
     },
     "grass": {
       "grow": {
         "regions": 35,
-        "seconds": 0.12
+        "seconds": 0.119
       },
       "quadtree": {
-        "regions": 124,
-        "seconds": 0.034
+        "regions": 99,
+        "seconds": 0.067
       },
       "slic": {
         "regions": 45,
-        "seconds": 0.339
+        "seconds": 0.331
       }
     },
     "white": {
@@ -135,7 +135,7 @@
       },
       "quadtree": {
         "regions": 1,
-        "seconds": 0.011
+        "seconds": 0.026
       },
       "slic": {
         "regions": 1,
@@ -145,29 +145,29 @@
     "gradient": {
       "grow": {
         "regions": 6,
-        "seconds": 0.048
+        "seconds": 0.051
       },
       "quadtree": {
-        "regions": 88,
-        "seconds": 0.028
+        "regions": 9,
+        "seconds": 0.027
       },
       "slic": {
         "regions": 10,
-        "seconds": 0.149
+        "seconds": 0.14
       }
     },
     "checker": {
       "grow": {
         "regions": 40,
-        "seconds": 0.057
+        "seconds": 0.053
       },
       "quadtree": {
-        "regions": 160,
-        "seconds": 0.04
+        "regions": 57,
+        "seconds": 0.038
       },
       "slic": {
         "regions": 40,
-        "seconds": 0.149
+        "seconds": 0.146
       }
     }
   }

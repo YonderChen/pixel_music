@@ -11,7 +11,7 @@ import numpy as np
 
 VERSION = 'segmentation-v1'
 METHODS = ('grow', 'quadtree', 'slic')
-METHOD_NAMES = {'grow': '方格种子 · 区域生长', 'quadtree': '四叉树 · 方差分裂', 'slic': 'SLIC 超像素'}
+METHOD_NAMES = {'grow': '方格种子 · 区域生长', 'quadtree': '四叉树 · 分裂合并', 'slic': 'SLIC 超像素'}
 MAX_W, MAX_H = 192, 120
 MIN_AREA = 24
 SEED_STEP = 16
@@ -94,8 +94,8 @@ def quadtree(lab, detail):
         labels[y0:y1, x0:x1] = count[0]; count[0] += 1
     def visit(y0, x0, y1, x1):
         """Returns the block if it stays whole (for the parent to consider), else None."""
-        # Children stay at least 5x5 px, so no block falls under the minimum area.
-        if y1 - y0 < 10 or x1 - x0 < 10: return (y0, x0, y1, x1)
+        # Finest blocks are 3-6 px a side; the split-and-merge pass joins them again.
+        if y1 - y0 < 6 or x1 - x0 < 6: return (y0, x0, y1, x1)
         ym, xm = (y0 + y1) // 2, (x0 + x1) // 2
         quarters = [(y0, x0, ym, xm), (y0, xm, ym, x1), (ym, x0, y1, xm), (ym, xm, y1, x1)]
         kept = [visit(*q) for q in quarters]
@@ -260,8 +260,12 @@ def segment(rgb, method='grow', detail=.5):
         labels = merge(labels, lab, lambda a, b, d: min(a, b) < quarter)
         # Superpixels split flat areas by count; neighbours of the same colour become one region.
         labels = merge(labels, lab, lambda a, b, d: d < 2.)
-    if method != 'quadtree':
-        labels = merge(labels, lab, lambda a, b, d: min(a, b) < MIN_AREA)
+    if method == 'quadtree':
+        # Split and merge: neighbouring blocks of similar colour join, across tree boundaries,
+        # so shapes are built from blocks instead of a uniform grid.
+        similar = threshold(detail) * .5
+        labels = merge(labels, lab, lambda a, b, d: d < similar)
+    labels = merge(labels, lab, lambda a, b, d: min(a, b) < MIN_AREA)
     labels = relabel(labels)
     return {'version': VERSION, 'method': method, 'detail': float(detail), 'width': labels.shape[1], 'height': labels.shape[0],
         'labels': labels, 'regions': describe(labels, small, lab)}
