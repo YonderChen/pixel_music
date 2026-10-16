@@ -4,7 +4,7 @@
   const ids = ['workName','mappingLabel','picture','regions','centroids','scan','scanNote','dropHint','timeline','eventCount','pitchTop','pitchBottom','middleTime','endTime','status','referenceMode','parallelMode','parallelControls','rowCount','rowTracks','mixHint','recipe','recipeHint','key','tempo','noteCount','duration','mappingHint','tone','mappingStyle','backing','backingStatus','play','playText','playIcon','currentNote','seek','clock','restart','abReference','abParallel','comparisonHint','file','export','sample','credit','selectedTitle','selectedReason','selectedLocation','selectedFeatures','selectedPitch','selectedTime','toast','imageStage','connection'];
   ids.push('connectionMessage','retry','loadState','loadMessage','cancelWork');
   ids.push('hoverToggle','hoverState');
-  ids.push('segments','segmentMethod','segmentSetting','segmentOrder','orderSetting','contourToggle','contourSetting');
+  ids.push('segments','segmentMethod','segmentSetting','segmentOrder','orderSetting','contourToggle','contourSetting','softToggle','softSetting');
   ids.push('loopToggle');
   ids.push('musicArt');
   const E = Object.fromEntries(ids.map(id => [id,$(id)]));
@@ -63,8 +63,8 @@
     E.referenceMode.disabled=E.parallelMode.disabled=false;
     E.abParallel.disabled=!S.payload?.variants.parallel||S.busy;
     for(const el of E.rowTracks.querySelectorAll('input,button'))el.disabled=S.busy;
-    E.rowCount.disabled=E.recipe.disabled=E.segmentMethod.disabled=E.segmentOrder.disabled=E.contourToggle.disabled=S.busy;
-    E.segmentSetting.hidden=E.orderSetting.hidden=E.contourSetting.hidden=recipe().method!=='regions';
+    E.rowCount.disabled=E.recipe.disabled=E.segmentMethod.disabled=E.segmentOrder.disabled=E.contourToggle.disabled=E.softToggle.disabled=S.busy;
+    E.segmentSetting.hidden=E.orderSetting.hidden=E.contourSetting.hidden=E.softSetting.hidden=recipe().method!=='regions';
     E.hoverToggle.disabled=!S.payload||S.busy;
     E.loopToggle.disabled=!S.payload||S.busy;
     E.musicArt.setAttribute('aria-disabled',!S.payload||S.busy);
@@ -195,10 +195,52 @@
     const raw=atob(seg.labels),labels=new Uint16Array(seg.width*seg.height);
     for(let i=0;i<labels.length;i++)labels[i]=raw.charCodeAt(2*i)|raw.charCodeAt(2*i+1)<<8;
     E.segments.width=seg.width;E.segments.height=seg.height;
+    // Pixel outlines stay crisp when scaled up; smooth curves are drawn at screen resolution.
+    E.segments.style.imageRendering=seg.outlines?'auto':'pixelated';
     S.segment={source:seg,width:seg.width,height:seg.height,labels,drawn:null};
+  }
+  // Softened outlines arrive as simplified rings (half pixels); Chaikin rounds them into curves.
+  function chaikin(points,closed,passes=3){
+    for(let pass=0;pass<passes;pass++){
+      const out=closed?[]:[points[0]],n=points.length,last=closed?n:n-1;
+      for(let k=0;k<last;k++){const a=points[k],b=points[(k+1)%n];out.push([.75*a[0]+.25*b[0],.75*a[1]+.25*b[1]],[.25*a[0]+.75*b[0],.25*a[1]+.75*b[1]]);}
+      if(!closed)out.push(points[n-1]);points=out;
+    }
+    return points;
+  }
+  function outlinePaths(g,w,h){
+    const sx=w/(2*g.width),sy=h/(2*g.height);
+    const toPoints=flat=>{const p=[];for(let i=0;i<flat.length;i+=2)p.push([flat[i]*sx,flat[i+1]*sy]);return p;};
+    const trace=(path,points,closed)=>{if(points.length<2)return;path.moveTo(points[0][0],points[0][1]);for(const q of points.slice(1))path.lineTo(q[0],q[1]);if(closed)path.closePath();};
+    return g.source.outlines.map(rings=>{
+      const fill=new Path2D(),stroke=new Path2D();
+      for(const ring of rings){
+        const closed=chaikin(toPoints(ring.p),true);trace(fill,closed,true);
+        if(!ring.open)trace(stroke,closed,true);else for(const chain of ring.open)trace(stroke,chaikin(toPoints(chain),false),false);
+      }
+      return {fill,stroke};
+    });
+  }
+  function drawOutlines(g,regions,activeIds){
+    const box=E.segments.getBoundingClientRect(),dpr=window.devicePixelRatio||1;
+    const w=Math.max(1,Math.round(box.width*dpr)),h=Math.max(1,Math.round(box.height*dpr));
+    const key=[...activeIds].sort().join()+'|'+S.selected+'|'+w+'x'+h;if(g.drawn===key)return;g.drawn=key;
+    if(E.segments.width!==w||E.segments.height!==h||!g.paths){E.segments.width=w;E.segments.height=h;g.paths=outlinePaths(g,w,h);}
+    const c=E.segments.getContext('2d'),dim=activeIds.size>0,tint=(hex,a)=>`rgba(${[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)).join()},${a})`;
+    c.clearRect(0,0,w,h);c.lineJoin=c.lineCap='round';
+    if(dim){c.fillStyle='rgba(0,0,0,.32)';c.fillRect(0,0,w,h);}
+    const lit=[];regions.forEach((r,i)=>{if(activeIds.has(r.id))lit.push(i);});
+    for(const i of lit){c.save();c.globalCompositeOperation='destination-out';c.fill(g.paths[i].fill);c.restore();c.fillStyle=tint(rowColors[regions[i].row%4],.42);c.fill(g.paths[i].fill);}
+    if(!activeIds.size&&regions[S.selected]){c.fillStyle='rgba(215,255,72,.18)';c.fill(g.paths[S.selected].fill);}
+    c.strokeStyle=`rgba(255,255,255,${dim?.32:.58})`;c.lineWidth=1.1*dpr;
+    regions.forEach((r,i)=>{if(!activeIds.has(r.id)&&i!==S.selected)c.stroke(g.paths[i].stroke);});
+    c.lineWidth=2.4*dpr;
+    if(regions[S.selected]&&!activeIds.has(regions[S.selected].id)){c.strokeStyle='#d7ff48';c.stroke(g.paths[S.selected].stroke);}
+    for(const i of lit){c.strokeStyle=rowColors[regions[i].row%4];c.stroke(g.paths[i].stroke);}
   }
   function drawSegments(activeIds=S.segment?.activeIds||new Set()){
     const g=segmentView();if(!g)return;g.activeIds=activeIds;
+    if(g.source.outlines)return drawOutlines(g,view().regions,activeIds);
     const regions=view().regions,key=[...activeIds].sort().join()+'|'+S.selected;
     if(g.drawn===key)return;g.drawn=key;
     const {width:w,height:h,labels}=g,image=new ImageData(w,h),d=image.data;
@@ -223,7 +265,7 @@
     const byId=new Map(value.regions.map(r=>[r.id,r]));let svg='';
     for(const e of sounding){
       const r=byId.get(e.sources[0]?.regionId),color=rowColors[(e.row??0)%4];if(!r?.contour)continue;
-      svg+=`<polyline points="${r.contour.map(([x,y])=>`${(x*w).toFixed(1)},${(y*h).toFixed(1)}`).join(' ')}" style="stroke:${color};stroke-width:${(w/192).toFixed(2)};opacity:.95"/>`;
+      svg+=`<polyline points="${(r.contour.length>2?chaikin(r.contour,false,2):r.contour).map(([x,y])=>`${(x*w).toFixed(1)},${(y*h).toFixed(1)}`).join(' ')}" style="stroke:${color};stroke-width:${(w/192).toFixed(2)};opacity:.95"/>`;
       if(e.point)svg+=`<circle cx="${(e.point[0]*w).toFixed(1)}" cy="${(e.point[1]*h).toFixed(1)}" r="${(w/64).toFixed(1)}" style="fill:${color};stroke:#151b12;stroke-width:${(w/384).toFixed(2)}"/>`;
     }
     E.centroids.innerHTML=svg;
@@ -284,7 +326,7 @@
     const operation=++S.loadOperation, image=S.image;
     try {
       await showInput(image,operation);if(operation!==S.loadOperation)return;
-      const response=await request(API+'/api/generate',{method:'POST',controller:S.loadAbort,body:JSON.stringify({image:image.base64,options:{synth:E.tone.value,mapping:E.mappingStyle.value,backing:E.backing.checked,rowCount:Number(E.rowCount.value),rowMethod:recipe().method,segmentMethod:E.segmentMethod.value,segmentOrder:E.segmentOrder.value,contourMusic:E.contourToggle.checked,pitchTransition:'scale',featureMethod:'features'}})});
+      const response=await request(API+'/api/generate',{method:'POST',controller:S.loadAbort,body:JSON.stringify({image:image.base64,options:{synth:E.tone.value,mapping:E.mappingStyle.value,backing:E.backing.checked,rowCount:Number(E.rowCount.value),rowMethod:recipe().method,segmentMethod:E.segmentMethod.value,segmentOrder:E.segmentOrder.value,contourMusic:E.contourToggle.checked,segmentSoft:E.softToggle.checked,pitchTransition:'scale',featureMethod:'features'}})});
       const payload=await response.json();if(!response.ok)throw new Error(payload.error||'生成失败');
       if(operation!==S.loadOperation)return;
       S.payload=payload;S.buffers.clear();S.mixMetrics.clear();S.time=0;E.connection.hidden=true;S.solo=null;
@@ -416,7 +458,7 @@
   E.cancelWork.addEventListener('click',()=>{if(S.busy){S.loadOperation++;S.loadAbort?.abort();S.busy=false;E.status.textContent='已取消';E.playText.textContent='已取消 · 可重新生成';E.connectionMessage.textContent='已取消生成，可以更换图片或重新生成。';E.connection.hidden=false;controls();}else if(S.hoverLoading){E.hoverToggle.checked=false;invalidateHoverBank(false);stop();}else stop();});
   E.referenceMode.addEventListener('click',()=>mode('reference'));E.parallelMode.addEventListener('click',()=>mode('parallel'));
   E.abParallel.addEventListener('click',()=>{mode('parallel');play(true);});E.abReference.addEventListener('click',()=>{mode('reference');play(true);});
-  E.rowCount.addEventListener('change',generate);E.segmentMethod.addEventListener('change',generate);E.segmentOrder.addEventListener('change',generate);E.contourToggle.addEventListener('change',generate);
+  E.rowCount.addEventListener('change',generate);E.segmentMethod.addEventListener('change',generate);E.segmentOrder.addEventListener('change',generate);E.contourToggle.addEventListener('change',generate);E.softToggle.addEventListener('change',generate);
   E.recipe.addEventListener('change',()=>{if(!RECIPES.some(r=>r.id===E.recipe.value))E.recipe.value=RECIPES[0].id;mode('parallel');generate();});
   window.addEventListener('hashchange',()=>{const next=RECIPES.find(r=>'#'+r.id===location.hash);if(next&&next.id!==recipe().id){E.recipe.value=next.id;mode('parallel');generate();}else mode(location.hash==='#reference'?'reference':'parallel');});
   E.rowTracks.addEventListener('change',event=>{if(event.target.matches('[data-row-toggle]'))changeMixer(Number(event.target.dataset.rowToggle),false,event.target.checked);});
@@ -454,7 +496,7 @@
   });
   for(const type of ['dragenter','dragover'])E.imageStage.addEventListener(type,event=>{event.preventDefault();E.dropHint.hidden=false;});
   E.imageStage.addEventListener('dragleave',()=>E.dropHint.hidden=true);E.imageStage.addEventListener('drop',event=>{event.preventDefault();E.dropHint.hidden=true;upload(event.dataTransfer.files[0]);});
-  window.addEventListener('resize',geometry);window.addEventListener('pagehide',()=>{invalidateHoverBank();S.loadOperation++;S.loadAbort?.abort();S.busy=false;stop();S.context?.close();});
+  window.addEventListener('resize',()=>{geometry();if(segmentView())drawSegments();});window.addEventListener('pagehide',()=>{invalidateHoverBank();S.loadOperation++;S.loadAbort?.abort();S.busy=false;stop();S.context?.close();});
   window.PixelMusicFeaturesDemo={snapshot:()=>({mode:S.mode,recipe:recipe().id,mixProfile:recipe().profile,rowMethod:recipe().method,playing:S.playing,busy:S.busy,audioLoading:!!S.audioLoading,loopEnabled:!!E.loopToggle.checked,hoverEnabled:E.hoverToggle.checked,hoverLoading:!!S.hoverLoading,hoverRegion:S.hoverIndex,hoverAudible:!!S.hoverAudible,time:current(),sample:S.sample,selected:S.selected,recipes:RECIPES.map(r=>({id:r.id,method:r.method,profile:r.profile,name:r.name})),comparison:S.comparison,enabledRows:S.enabledRows.slice(),solo:S.solo}),payload:()=>S.payload};
   controls();mode(S.mode);sample(paintings.length?paintings[0].id:S.mode==='parallel'?'pitch':'sunset');
 })();

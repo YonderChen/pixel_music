@@ -15,8 +15,10 @@ VERSION = 'region-salience-v1'
 MIN_SLOT = .25  # beats
 MAX_HOLD = 4.  # beats a voice may sustain on the single path
 GAZE_DISTANCE = 1.4  # salience given up per image width travelled
-MOTIF_STEP = 6  # pixels of top-edge rise and fall per extra motif note
-MAX_MOTIF = 8
+MOTIF_STEP = 10  # pixels of edge rise and fall per extra motif note
+MOTIF_NOTE = .5  # beats: with outlines, notes and region slots sit on a half-beat grid
+# Most motif notes per voice, top to bottom: the upper voice moves, the bass stays calm.
+LANE_MOTIF = {2: [4, 2], 3: [4, 3, 2], 4: [4, 3, 3, 2]}
 GRACE = .125  # beats
 ORDERS = {'gaze': '视线游走', 'tiers': '显著度分层', 'scan': '从左到右', 'path': '全图一条路径', 'salience': '纯显著度'}
 ORDER_HINTS = {
@@ -55,7 +57,8 @@ def build(analysis, info, options, engine):
     if count not in (2, 3, 4): raise ValueError('声部数设置无效')
     synth = options.get('synth', 'GeneralUser GS')
     maps, features = analysis['maps'], analysis['features']
-    result = segmentation.segment(maps['rgb'], method, detail)
+    soft = bool(options.get('segmentSoft', True))
+    result = segmentation.segment(maps['rgb'], method, detail, soft=soft)
     labels, parts = result['labels'], result['regions']
     H, W = labels.shape
     rgb = segmentation.downsample(maps['rgb'])
@@ -100,7 +103,7 @@ def build(analysis, info, options, engine):
         sharp = [float(flat_edge[o['boundary'].ravel()].mean()) if o['boundary'].any() else 0. for o in outlines]
         sharp_rank = engine.arranger.normalize(sharp, .02)
         # Ornaments mark the clearly concave shapes only: the most concave 15 % of this image.
-        concave = min(.7, float(np.percentile([o['solidity'] for o in outlines], 15)))
+        concave = min(.7, float(np.percentile([o['solidity'] for o in outlines], 8)))
         for i, (region, o) in enumerate(zip(regions, outlines)):
             region['features'].update(compactness=o['compactness'], angle=o['angle'], elongation=o['elongation'],
                 solidity=o['solidity'], edgeSharpness=float(sharp_rank[i]))
@@ -137,9 +140,10 @@ def build(analysis, info, options, engine):
             current = max(left, key=lambda j: (score_rank[j] - GAZE_DISTANCE * math.dist(here, where(j)), -j))
         return path
 
+    grid = MOTIF_NOTE if contour else MIN_SLOT
     def keep(members):
-        """A voice has at most total / MIN_SLOT notes; the least salient regions give way."""
-        capacity = int(total / MIN_SLOT)
+        """A voice has at most total / grid notes; the least salient regions give way."""
+        capacity = int(total / grid)
         ranked = sorted(members, key=lambda i: (-scores[i], i))
         return set(ranked[:capacity]), ranked[capacity:]
 
@@ -148,48 +152,52 @@ def build(analysis, info, options, engine):
         return [regions[i]['features']['area'] * ((.5 + score_rank[i]) ** 2 if order_name == 'scan' else 1) for i in seq]
 
     def contour_figure(i, start, length, sounding, midi, velocity, base, lift):
-        # The region's top edge becomes a short motif; its shape sets articulation, tone and glide.
-        f = regions[i]['features']; o = outlines[i]
+        # The region's edge becomes a short motif; its shape sets articulation, tone and glide.
+        # Kept calm on purpose: half-beat grid, small steps, fewer notes in lower voices.
+        f = regions[i]['features']; o = outlines[i]; row = regions[i]['row']
         xs = np.array([x for x, _ in o['profile']], float); ys = np.array([y for _, y in o['profile']], float)
-        if len(ys) >= 3: ys = np.convolve(np.pad(ys, 1, mode='edge'), [.25, .5, .25], mode='valid')
+        if len(ys) >= 5: ys = np.convolve(np.pad(ys, 2, mode='edge'), [1 / 9, 2 / 9, 3 / 9, 2 / 9, 1 / 9], mode='valid')
         variation = float(np.sum(np.abs(np.diff(ys)))) if len(ys) > 1 else 0.
-        count_ = int(np.clip(1 + round(variation / MOTIF_STEP), 1, MAX_MOTIF))
-        count_ = max(1, min(count_, int(length / MIN_SLOT)))
+        count_ = int(np.clip(1 + round(variation / MOTIF_STEP), 1, LANE_MOTIF[count][row]))
+        count_ = max(1, min(count_, int(round(length / MOTIF_NOTE))))
         pick = [int(round((k + .5) / count_ * (len(ys) - 1))) for k in range(count_)]
         height = max(4., regions[i]['rect']['height'] * H)
-        # A higher stretch of the edge plays a higher scale step.
-        degrees = np.clip(np.round((ys.mean() - ys[pick]) / height * 6), -5, 5).astype(int)
+        # A higher stretch of the edge plays a higher scale step; neighbouring notes move by at most two steps.
+        raw = np.clip(np.round((ys.mean() - ys[pick]) / height * 4), -3, 3).astype(int).tolist()
+        degrees = []
+        for d in raw: degrees.append(d if not degrees else int(np.clip(d, degrees[-1] - 2, degrees[-1] + 2)))
         home = allowed.index(midi)
         pitches = [allowed[int(np.clip(home + d, 0, len(allowed) - 1))] for d in degrees]
         c, e, angle = f['compactness'], f['elongation'], f['angle']
         horizontal = e > .6 and abs(angle) < 20
-        factor = .98 if horizontal else .45 + .53 * c  # round or flat -> legato, jagged -> detached
-        tone = .6 + .9 * (1 - c)                       # jagged outlines sound brighter
-        attack = 2 ** (2 - 3.5 * f['edgeSharpness'])   # hard edges attack fast, soft edges swell in
-        unit = length / count_
+        factor = .98 if horizontal else .72 + .26 * c  # round or flat -> legato, jagged -> lightly detached
+        tone = .7 + .6 * (1 - c)                       # jagged outlines sound a little brighter
+        attack = 2 ** (1.5 - 3 * f['edgeSharpness'])   # hard edges attack fast, soft edges swell in
+        bounds = [start + round(k * length / count_ / MOTIF_NOTE) * MOTIF_NOTE for k in range(count_)] + [start + length]
         notes = []
         side = '下边缘' if o['edgeSide'] == 'bottom' else '上边缘'
-        how = [f'{side}起伏成 {count_} 个音的动机' if count_ > 1 else f'{side}平直，一个音',
-            '轮廓圆润，连奏' if factor > .8 else '轮廓尖锐，断奏', '边缘清晰，起音干脆' if attack < 1 else '边缘柔和，缓慢起音']
-        if f['solidity'] <= concave and unit >= 2 * GRACE:
+        how = [f'{side}起伏成 {count_} 个音的动机' if count_ > 1 else f'{side}平缓，一个音',
+            '轮廓圆润，连奏' if factor > .9 else '轮廓尖锐，轻断奏', '边缘清晰，起音干脆' if attack < 1 else '边缘柔和，缓慢起音']
+        if f['solidity'] <= concave and bounds[1] - bounds[0] >= 1:
             grace = lift(allowed[min(home + 1, len(allowed) - 1)])
-            notes.append(dict(base, start=start * beat, duration=GRACE * .9 * beat, midi=grace, velocity=velocity * .8, grace=True,
+            notes.append(dict(base, start=start * beat, duration=GRACE * .9 * beat, midi=grace, velocity=velocity * .75, grace=True,
                 toneScale=tone, attackScale=min(attack, 1.), point=regions[i]['contour'][0]))
             how.append('形状内凹，加倚音')
         for k, pitch in enumerate(pitches):
-            begin = start + k * unit + (GRACE if k == 0 and notes else 0)
-            end = start + (k + 1) * unit
-            # Detached notes leave at most a one-beat gap, so large regions still sound.
-            hold = (end - begin) - (1 - factor) * min(end - begin, 2.)
+            begin = bounds[k] + (GRACE if k == 0 and notes else 0)
+            end = bounds[k + 1]
+            # Detached notes leave at most half a beat of air, so large regions still sound.
+            hold = (end - begin) - (1 - factor) * min(end - begin, 1.5)
             # On the single path the last note keeps sounding under the following regions.
             if k == count_ - 1 and order_name == 'path': hold = max(hold, start + sounding - begin)
             x = (xs[pick[k]] + .5) / W; y = (ys[pick[k]] + .5) / H
-            notes.append(dict(base, start=begin * beat, duration=max(.05, hold * .96) * beat, midi=lift(pitch),
-                velocity=float(np.clip(velocity + .06 * f['edgeSharpness'], .3, .9)), toneScale=tone, attackScale=attack, point=[x, y]))
-        if e > .55 and 20 <= abs(angle) <= 70:
+            notes.append(dict(base, start=begin * beat, duration=max(.05, hold * .97) * beat, midi=lift(pitch),
+                velocity=float(np.clip(velocity + .05 * f['edgeSharpness'] - (.04 if k else 0), .3, .9)), toneScale=tone,
+                attackScale=attack, point=[x, y]))
+        if e > .55 and 20 <= abs(angle) <= 70 and bounds[-1] - bounds[-2] >= 1:
             direction = 1 if angle > 0 else -1
             last = allowed.index(pitches[-1])
-            goal = allowed[int(np.clip(last + direction * (1 if e < .75 else 2), 0, len(allowed) - 1))]
+            goal = allowed[int(np.clip(last + direction, 0, len(allowed) - 1))]
             notes[-1]['bend'] = float(goal - pitches[-1])
             how.append('斜向伸展，向' + ('上' if direction > 0 else '下') + '滑音')
         elif horizontal: how.append('横向舒展，长音')
@@ -202,7 +210,7 @@ def build(analysis, info, options, engine):
     if order_name == 'path':
         kept, skipped = keep(range(len(regions)))
         seq = sequence(sorted(kept), 'gaze')
-        lengths = slots(weights(seq), total) if seq else []
+        lengths = slots(weights(seq), total, grid) if seq else []
         plan = list(zip(seq, np.concatenate(([0.], np.cumsum(lengths)[:-1])) if seq else [], lengths))
     else:
         skipped = []
@@ -211,7 +219,7 @@ def build(analysis, info, options, engine):
             skipped += dropped
             seq = sequence(sorted(kept), order_name)
             if not seq: continue
-            lengths = slots(weights(seq), total)
+            lengths = slots(weights(seq), total, grid)
             plan += list(zip(seq, np.concatenate(([0.], np.cumsum(lengths)[:-1])), lengths))
     plan.sort(key=lambda item: (item[1], regions[item[0]]['row']))
     # On the single path, each voice keeps sounding until its own next note: the others form the harmony.
@@ -294,6 +302,8 @@ def build(analysis, info, options, engine):
     events.sort(key=lambda e: (e['start'], e['row'], e['midi']))
     meta = {'version': VERSION, 'segmentation': segmentation.VERSION, 'method': method, 'methodName': segmentation.METHOD_NAMES[method],
         'detail': detail, 'width': W, 'height': H, 'regionCount': len(regions), 'order': order_name, 'orderName': ORDERS[order_name],
-        'orderHint': ORDER_HINTS[order_name], 'contour': contour, 'pedal': pedal,
+        'orderHint': ORDER_HINTS[order_name], 'contour': contour, 'pedal': pedal, 'soft': soft,
+        # Smooth outlines for drawing; hit-testing keeps using the label image.
+        'outlines': segmentation.outlines(labels) if soft else None,
         'labels': base64.b64encode(labels.astype('<u2').tobytes()).decode()}
     return events, regions, len(regions), count, voices, meta

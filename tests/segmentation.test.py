@@ -52,4 +52,16 @@ assert outline[3]['elongation'] > .9 and 40 < outline[3]['angle'] < 50
 sky = np.zeros((120, 192), np.int32); sky[60:] = 1; sky[40:60, 60:120] = 1
 top = seg.shapes(sky)[0]
 assert top['edgeSide'] == 'bottom' and len({y for _, y in top['profile']}) == 2  # the skyline, not the frame
-print('passed: shape features (disc, bar, diagonal, skyline), one region for white, deterministic, consecutive ids, connected regions, gradient strips, checker squares')
+# Softened outlines: fewer boundary pixels, still connected, white stays whole, rings close.
+def boundary(labels):
+    e = np.zeros(labels.shape, bool); e[:, :-1] |= labels[:, :-1] != labels[:, 1:]; e[:-1] |= labels[:-1] != labels[1:]; return int(e.sum())
+for method in seg.METHODS:
+    assert len(seg.segment(white, method, soft=True)['regions']) == 1
+    hard, soft = seg.segment(painting, method), seg.segment(painting, method, soft=True)
+    labels = soft['labels']; n = len(soft['regions'])
+    assert boundary(labels) < boundary(hard['labels']), method
+    assert all(connected(labels, i) for i in range(n)) and labels.max() == n - 1
+    rings = seg.outlines(labels)
+    assert len(rings) == n and all(r and all(len(x['p']) >= 6 and len(x['p']) % 2 == 0 for x in r) for r in rings)
+    print(f'{method:9s} soft      {n:4d} regions, boundary {boundary(hard["labels"])} -> {boundary(labels)} px')
+print('passed: softened outlines (shorter, connected, closed rings), shape features (disc, bar, diagonal, skyline), one region for white, deterministic, consecutive ids, connected regions, gradient strips, checker squares')

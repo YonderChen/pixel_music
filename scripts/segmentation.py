@@ -246,6 +246,88 @@ def describe(labels, rgb, lab):
             'spread': float(math.sqrt(pixels.var(axis=0).sum()))})
     return regions
 
+def soften(labels, passes=3, radius=2):
+    """Majority (mode) filter on the label image: each pixel takes the most common region in
+    its (2r+1)^2 window, keeping its own on ties. Staircases and spurs round off; a uniform
+    image is unchanged. Fragments that split off are reattached by the caller."""
+    H, W = labels.shape
+    size = 2 * radius + 1
+    for _ in range(passes):
+        p = np.pad(labels, radius, mode='edge')
+        stack = np.stack([labels] + [p[dy:dy + H, dx:dx + W] for dy in range(size) for dx in range(size)])
+        counts = (stack[:, None] == stack[None, :]).sum(axis=1)
+        # The pixel's own label is first, so argmax keeps it unless another clearly wins.
+        labels = np.take_along_axis(stack, counts.argmax(axis=0)[None], axis=0)[0]
+    return labels
+
+def outlines(labels, tolerance=.75):
+    """Boundary rings per region, traced along pixel edges, through edge midpoints (which
+    already cuts staircase corners) and simplified (Douglas-Peucker). Coordinates are in
+    half pixels, flattened [x0, y0, x1, y1, ...]; the browser rounds them with Chaikin.
+
+    Each ring is {'p': closed ring for filling, 'open': None when the whole ring is a
+    boundary between regions, else the stroke-able chains with the image frame left out}.
+    """
+    H, W = labels.shape
+    n = int(labels.max()) + 1
+    padded = np.pad(labels, 1, constant_values=-1)
+    core = padded[1:-1, 1:-1]
+    edges = [dict() for _ in range(n)]
+    # Clockwise in image coordinates: top edge rightwards, right edge downwards, and so on.
+    for neighbour, (ax, ay, bx, by) in ((padded[:-2, 1:-1], (0, 0, 1, 0)), (padded[1:-1, 2:], (1, 0, 1, 1)),
+            (padded[2:, 1:-1], (1, 1, 0, 1)), (padded[1:-1, :-2], (0, 1, 0, 0))):
+        ys, xs = np.nonzero(core != neighbour)
+        frame = (neighbour[ys, xs] == -1).tolist()
+        for y, x, r, f in zip(ys.tolist(), xs.tolist(), core[ys, xs].tolist(), frame):
+            edges[r].setdefault((x + ax, y + ay), []).append(((x + bx, y + by), f))
+    def simplify(points):
+        if len(points) < 3: return points
+        keep = [False] * len(points); keep[0] = keep[-1] = True
+        stack = [(0, len(points) - 1)]
+        while stack:
+            a, b = stack.pop()
+            (x0, y0), (x1, y1) = points[a], points[b]
+            dx, dy = x1 - x0, y1 - y0; norm = math.hypot(dx, dy) or 1.
+            best, at = 0., None
+            for k in range(a + 1, b):
+                d = abs(dy * (points[k][0] - x0) - dx * (points[k][1] - y0)) / norm if norm > 1e-9 else math.dist(points[k], points[a])
+                if d > best: best, at = d, k
+            if at is not None and best > tolerance * 2:  # points are in half pixels
+                keep[at] = True; stack += [(a, at), (at, b)]
+        return [p for p, k in zip(points, keep) if k]
+    flat = lambda pts: [v for point in pts for v in point]
+    result = []
+    for table in edges:
+        rings = []
+        while table:
+            start = next(iter(table)); corners, framed = [start], []; here = start
+            while True:
+                ends = table[here]; nxt, f = ends.pop()
+                if not ends: del table[here]
+                framed.append(f)
+                if nxt == start: break
+                corners.append(nxt); here = nxt
+            count = len(corners)
+            mids = [(corners[k][0] + corners[(k + 1) % count][0], corners[k][1] + corners[(k + 1) % count][1]) for k in range(count)]
+            # Split the closed ring at its farthest point from the start so simplification is stable.
+            far = max(range(count), key=lambda k: (mids[k][0] - mids[0][0]) ** 2 + (mids[k][1] - mids[0][1]) ** 2)
+            ring = simplify(mids[:far + 1]) + simplify(mids[far:] + [mids[0]])[1:-1]
+            chains = None
+            if any(framed):
+                # Strokes skip the stretch along the image frame; rotate so a frame edge comes first.
+                first = framed.index(True)
+                order = list(range(first, count)) + list(range(first))
+                chains, run = [], []
+                for k in order:
+                    if framed[k]:
+                        if len(run) > 1: chains.append(flat(simplify(run)))
+                        run = []
+                    else: run.append(mids[k])
+                if len(run) > 1: chains.append(flat(simplify(run)))
+            rings.append({'p': flat(ring), 'open': chains})
+        result.append(rings)
+    return result
+
 def _hull_area(points):
     """Convex hull area (monotone chain + shoelace) of integer corner points."""
     pts = sorted(set(points))
@@ -309,7 +391,7 @@ def shapes(labels):
             'boundary': edge})
     return out
 
-def segment(rgb, method='grow', detail=.5):
+def segment(rgb, method='grow', detail=.5, soft=False):
     """rgb: HxWx3 floats in 0..1 (the analysis image). Returns labels and region records."""
     if method not in METHODS: raise ValueError('未知分割方式')
     small = downsample(rgb)
@@ -329,6 +411,10 @@ def segment(rgb, method='grow', detail=.5):
         similar = threshold(detail) * .5
         labels = merge(labels, lab, lambda a, b, d: d < similar)
     labels = merge(labels, lab, lambda a, b, d: min(a, b) < MIN_AREA)
+    if soft:
+        # Rounded outlines: majority filter, then reattach any fragment it split off.
+        labels = components(soften(labels))
+        labels = merge(labels, lab, lambda a, b, d: min(a, b) < MIN_AREA)
     labels = relabel(labels)
-    return {'version': VERSION, 'method': method, 'detail': float(detail), 'width': labels.shape[1], 'height': labels.shape[0],
+    return {'version': VERSION, 'method': method, 'detail': float(detail), 'soft': bool(soft), 'width': labels.shape[1], 'height': labels.shape[0],
         'labels': labels, 'regions': describe(labels, small, lab)}
