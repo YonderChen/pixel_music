@@ -4,7 +4,7 @@
   const ids = ['workName','mappingLabel','picture','regions','centroids','scan','scanNote','dropHint','timeline','eventCount','pitchTop','pitchBottom','middleTime','endTime','status','referenceMode','parallelMode','parallelControls','rowCount','rowTracks','mixHint','recipe','recipeHint','key','tempo','noteCount','duration','mappingHint','tone','mappingStyle','backing','backingStatus','play','playText','playIcon','currentNote','seek','clock','restart','abReference','abParallel','comparisonHint','file','export','sample','credit','selectedTitle','selectedReason','selectedLocation','selectedFeatures','selectedPitch','selectedTime','toast','imageStage','connection'];
   ids.push('connectionMessage','retry','loadState','loadMessage','cancelWork');
   ids.push('hoverToggle','hoverState');
-  ids.push('segments','segmentMethod','segmentSetting','segmentOrder','orderSetting','contourToggle','contourSetting','softToggle','softSetting');
+  ids.push('segments','segmentMethod','segmentSetting','segmentOrder','orderSetting','contourToggle','contourSetting','contourStyle','contourStyleSetting','softToggle','softSetting');
   ids.push('loopToggle');
   ids.push('musicArt');
   const E = Object.fromEntries(ids.map(id => [id,$(id)]));
@@ -63,8 +63,9 @@
     E.referenceMode.disabled=E.parallelMode.disabled=false;
     E.abParallel.disabled=!S.payload?.variants.parallel||S.busy;
     for(const el of E.rowTracks.querySelectorAll('input,button'))el.disabled=S.busy;
-    E.rowCount.disabled=E.recipe.disabled=E.segmentMethod.disabled=E.segmentOrder.disabled=E.contourToggle.disabled=E.softToggle.disabled=S.busy;
+    E.rowCount.disabled=E.recipe.disabled=E.segmentMethod.disabled=E.segmentOrder.disabled=E.contourToggle.disabled=E.contourStyle.disabled=E.softToggle.disabled=S.busy;
     E.segmentSetting.hidden=E.orderSetting.hidden=E.contourSetting.hidden=E.softSetting.hidden=recipe().method!=='regions';
+    E.contourStyleSetting.hidden=recipe().method!=='regions'||!E.contourToggle.checked;E.segmentOrder.disabled||=E.contourToggle.checked&&E.contourStyle.value==='lines';
     E.hoverToggle.disabled=!S.payload||S.busy;
     E.loopToggle.disabled=!S.payload||S.busy;
     E.musicArt.setAttribute('aria-disabled',!S.payload||S.busy);
@@ -142,7 +143,7 @@
     const active=hover?value.events.filter(e=>e.id===hover.eventId):value.events.filter(e=>e.layer==='main'&&time>=e.start&&time<e.start+e.duration&&(S.mode!=='parallel'||S.enabledRows[e.row]));
     const show=!!hover||S.playing||time>0;
     // On the single path the other voices only sustain; highlight the newest region alone.
-    const lit=value.segmentation?.order==='path'&&active.length?[active.reduce((a,b)=>b.start>a.start?b:a)]:active;
+    const lit=value.segmentation?.order==='path'&&value.segmentation.contourStyle!=='lines'&&active.length?[active.reduce((a,b)=>b.start>a.start?b:a)]:active;
     const activeIds=new Set(hover?[hover.id]:show?lit.flatMap(e=>e.sources.map(ref=>ref.regionId)):[]);
     E.regions.querySelectorAll('button').forEach(button=>button.classList.toggle('active',activeIds.has(button.dataset.region)));
     const segmented=segmentView();if(segmented){drawSegments(activeIds);traceContours(value,hover?value.events.filter(e=>e.id===hover.eventId):show?lit:[]);}
@@ -151,8 +152,8 @@
     if(playhead){const x=Math.min(640,(hover?hover.start:time)/S.payload.info.duration*640);playhead.setAttribute('x1',x);playhead.setAttribute('x2',x);}
     const region=hover||value.regions.find(r=>time>=r.start&&time<r.end)||value.regions.at(-1);
     const sounding=segmented&&value.regions.find(r=>activeIds.has(r.id));
-    const x=segmented?(hover||sounding)?.centroid.x??0:hover?hover.rect.x+hover.rect.width*.5:S.mode==='parallel'?Math.min(1,time/S.payload.info.duration):region?region.rect.x+region.rect.width*.5:1;
-    E.scan.style.left=`${Math.min(99.7,x*100)}%`;E.scan.classList.toggle('end',x>.9);E.scan.classList.toggle('floating',!!segmented);E.scan.hidden=!show;
+    const x=segmented&&!hover&&value.segmentation?.contourStyle==='lines'?Math.min(1,time/S.payload.info.duration):segmented?(hover||sounding)?.centroid.x??0:hover?hover.rect.x+hover.rect.width*.5:S.mode==='parallel'?Math.min(1,time/S.payload.info.duration):region?region.rect.x+region.rect.width*.5:1;
+    E.scan.style.left=`${Math.min(99.7,x*100)}%`;E.scan.classList.toggle('end',x>.9);E.scan.classList.toggle('floating',!!segmented&&value.segmentation?.contourStyle!=='lines');E.scan.hidden=!show;
     const lane=r=>segmented?`${r+1}声部 `:`${r+1}行 `;
     E.scanNote.textContent=hover?`${S.mode==='parallel'?lane(hover.row):''}${note(hover.midi)}`:time>=S.payload.info.duration?'余韵':active.length?active.map(e=>S.mode==='parallel'?`${lane(e.row)}${note(e.midi)}`:note(e.midi)).join(' / '):'留白';
     E.currentNote.textContent=hover?E.scanNote.textContent:show?(S.mode==='parallel'&&active.length?`${new Set(active.map(e=>e.row)).size} ${segmented?'个声部':'行'}发声`:E.scanNote.textContent):'—';
@@ -281,11 +282,11 @@
     E.referenceMode.setAttribute('aria-pressed',S.mode==='reference');
     E.parallelMode.setAttribute('aria-pressed',S.mode==='parallel');E.parallelControls.hidden=S.mode!=='parallel';
     const seg=S.mode==='parallel'&&value.segmentation;
-    E.mappingLabel.textContent=seg?`${seg.regionCount} 个区域 · ${seg.methodName} · ${seg.orderName}`:S.mode==='parallel'?`${value.rows} 行 × ${value.cols} 列 · 横向叠奏`:'参考原谱 · 原项目条带采样';
+    E.mappingLabel.textContent=seg?`${seg.regionCount} 个区域 · ${seg.methodName} · ${seg.contourStyle==='lines'?seg.contourStyleName:seg.orderName}`:S.mode==='parallel'?`${value.rows} 行 × ${value.cols} 列 · 横向叠奏`:'参考原谱 · 原项目条带采样';
     prepareSegments(seg);
     E.key.textContent=`${(S.mode==='parallel'&&(value.arrangement||value.harmony)?.key)||info.key_name} · ${{'Major pentatonic':'大调五声','Minor pentatonic':'小调五声','Major':'大调','Natural minor':'自然小调','Dorian':'多利亚','Lydian':'利底亚'}[info.scale_name]||info.scale_name}`;
     E.tempo.textContent=`${info.tempo.toFixed(1)} BPM`;E.noteCount.textContent=`${value.mainCount} 个${pitchMappedView()?'音高片段':'音符'}`;E.duration.textContent=`${info.duration.toFixed(1)} 秒＋余韵`;
-    E.mappingHint.textContent=seg?`${seg.orderHint}${seg.contour?' 轮廓参与：边缘起伏成旋律动机，圆润/尖锐决定连奏或断奏与音色，边缘软硬决定起音，斜向伸展滑音、内凹加倚音，被包围的区域由外层给出持续低音。':''} 当前 ${seg.methodName}，共 ${seg.regionCount} 个区域；区域越大音越长，伴奏由实际音符推出和声铺底。`:S.mode==='parallel'?`各行独立分析并从左到右同时演奏；${recipe().hint} 整体伴奏只保留一份。`:'直接运行 Photo Sonification 原始分析、编曲和音源；参考原谱未重新改写旋律。';
+    E.mappingHint.textContent=seg?`${seg.orderHint}${seg.contour&&seg.contourStyle==='lines'?'':seg.contour&&seg.contourStyle==='grid'?' 轮廓参与 · 量化取样：边缘按八分音符格逐格读取高度，越长奏得越久，起伏越密音越多，相邻一级的缓坡用滑音连过去（滑音需柔和合成混音）；形状仍决定连奏或断奏、音色与起音。':seg.contour?' 轮廓参与：边缘起伏成旋律动机，圆润/尖锐决定连奏或断奏与音色，边缘软硬决定起音，斜向伸展滑音、内凹加倚音，被包围的区域由外层给出持续低音。':''} 当前 ${seg.methodName}，共 ${seg.regionCount} 个区域；区域越大音越长，伴奏由实际音符推出和声铺底。`:S.mode==='parallel'?`各行独立分析并从左到右同时演奏；${recipe().hint} 整体伴奏只保留一份。`:'直接运行 Photo Sonification 原始分析、编曲和音源；参考原谱未重新改写旋律。';
     E.regions.style.gridTemplateColumns=`repeat(${value.cols},1fr)`;E.regions.style.gridTemplateRows=`repeat(${value.rows},1fr)`;
     E.regions.classList.toggle('parallel',S.mode==='parallel');
     E.regions.innerHTML=seg?'':value.regions.map((r,i)=>`<button type="button" class="region" data-index="${i}" data-region="${r.id}" style="grid-column:${r.col+1};grid-row:${r.row+1};--voice-color:${rowColors[r.row%4]}" aria-label="列 ${r.col+1} 区域 ${r.row+1}，${note(r.midi)}" title="${note(r.midi)}"></button>`).join('');
@@ -326,7 +327,7 @@
     const operation=++S.loadOperation, image=S.image;
     try {
       await showInput(image,operation);if(operation!==S.loadOperation)return;
-      const response=await request(API+'/api/generate',{method:'POST',controller:S.loadAbort,body:JSON.stringify({image:image.base64,options:{synth:E.tone.value,mapping:E.mappingStyle.value,backing:E.backing.checked,rowCount:Number(E.rowCount.value),rowMethod:recipe().method,segmentMethod:E.segmentMethod.value,segmentOrder:E.segmentOrder.value,contourMusic:E.contourToggle.checked,segmentSoft:E.softToggle.checked,pitchTransition:'scale',featureMethod:'features'}})});
+      const response=await request(API+'/api/generate',{method:'POST',controller:S.loadAbort,body:JSON.stringify({image:image.base64,options:{synth:E.tone.value,mapping:E.mappingStyle.value,backing:E.backing.checked,rowCount:Number(E.rowCount.value),rowMethod:recipe().method,segmentMethod:E.segmentMethod.value,segmentOrder:E.segmentOrder.value,contourMusic:E.contourToggle.checked,contourStyle:E.contourStyle.value,segmentSoft:E.softToggle.checked,pitchTransition:'scale',featureMethod:'features'}})});
       const payload=await response.json();if(!response.ok)throw new Error(payload.error||'生成失败');
       if(operation!==S.loadOperation)return;
       S.payload=payload;S.buffers.clear();S.mixMetrics.clear();S.time=0;E.connection.hidden=true;S.solo=null;
@@ -458,7 +459,7 @@
   E.cancelWork.addEventListener('click',()=>{if(S.busy){S.loadOperation++;S.loadAbort?.abort();S.busy=false;E.status.textContent='已取消';E.playText.textContent='已取消 · 可重新生成';E.connectionMessage.textContent='已取消生成，可以更换图片或重新生成。';E.connection.hidden=false;controls();}else if(S.hoverLoading){E.hoverToggle.checked=false;invalidateHoverBank(false);stop();}else stop();});
   E.referenceMode.addEventListener('click',()=>mode('reference'));E.parallelMode.addEventListener('click',()=>mode('parallel'));
   E.abParallel.addEventListener('click',()=>{mode('parallel');play(true);});E.abReference.addEventListener('click',()=>{mode('reference');play(true);});
-  E.rowCount.addEventListener('change',generate);E.segmentMethod.addEventListener('change',generate);E.segmentOrder.addEventListener('change',generate);E.contourToggle.addEventListener('change',generate);E.softToggle.addEventListener('change',generate);
+  E.rowCount.addEventListener('change',generate);E.segmentMethod.addEventListener('change',generate);E.segmentOrder.addEventListener('change',generate);E.contourToggle.addEventListener('change',generate);E.contourStyle.addEventListener('change',generate);E.softToggle.addEventListener('change',generate);
   E.recipe.addEventListener('change',()=>{if(!RECIPES.some(r=>r.id===E.recipe.value))E.recipe.value=RECIPES[0].id;mode('parallel');generate();});
   window.addEventListener('hashchange',()=>{const next=RECIPES.find(r=>'#'+r.id===location.hash);if(next&&next.id!==recipe().id){E.recipe.value=next.id;mode('parallel');generate();}else mode(location.hash==='#reference'?'reference':'parallel');});
   E.rowTracks.addEventListener('change',event=>{if(event.target.matches('[data-row-toggle]'))changeMixer(Number(event.target.dataset.rowToggle),false,event.target.checked);});

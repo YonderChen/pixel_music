@@ -42,4 +42,30 @@ for name, image in images.items():
             if name == 'white':
                 assert len(variant['regions']) == 1 and len(main) == 1 and main[0]['duration'] > info['duration'] * .9
             print(f'{name:18s} {method:8s} {order:8s} contour {contour!s:5s} rows {rows}: {len(variant["regions"]):3d} regions, {len(main):3d} notes, chords {"→".join(variant["harmony"]["progression"])}')
-print('passed: contour on/off, five orders (salience, gaze start, left-to-right checked),  one region owns each note, no overlaps, white is one held note')
+# The two outline styles added for comparison: edge read on a quantize grid, and the main edges read as lines.
+for name, image in images.items():
+    for method, order, style, rows in [(m, o, s, r) for m in ('grow', 'quadtree', 'slic') for o in ('gaze', 'path') for s in ('grid', 'lines') for r in (2, 4)]:
+        payload, context = engine.prepare_scores(image, {'rowCount': rows, 'rowMethod': 'regions', 'segmentMethod': method, 'segmentOrder': order,
+            'contourMusic': True, 'contourStyle': style, 'synth': 'Simple'})
+        info, variant = payload['info'], payload['variants']['parallel']
+        main = [e for e in variant['events'] if e['layer'] == 'main']
+        regions = {r['id']: r for r in variant['regions']}
+        assert variant['segmentation']['contourStyle'] == style and len({e['id'] for e in main}) == len(main) and main
+        for e in main:
+            assert 0 <= e['start'] and e['start'] + e['duration'] <= info['duration'] + 1e-6, (name, method, style, e)
+            region = regions[e['sources'][0]['regionId']]
+            assert any(n['id'] == region['eventId'] for n in main) and region['start'] - 1e-6 <= e['start'] < region['end'] + 1e-6
+            # A glide ends on the next note of its voice, one scale step away.
+            if e.get('bend'): assert abs(e['bend']) <= 3
+        for lane in range(rows):
+            lane_events = sorted((e for e in main if e['row'] == lane), key=lambda e: e['start'])
+            for a, b in zip(lane_events, lane_events[1:]): assert a['start'] + a['duration'] <= b['start'] + 1e-6
+            if style == 'lines':
+                # One line per voice, read left to right: every note of a voice comes from the same region.
+                assert len({e['sources'][0]['regionId'] for e in lane_events}) <= 1
+                xs = [e['point'][0] for e in lane_events]; assert xs == sorted(xs)
+        if style == 'lines':
+            assert len({e['row'] for e in main}) <= rows and not variant['segmentation'].get('pedal')
+            if name == 'white': assert len({e['midi'] for e in main}) == 1 and main[-1]['start'] + main[-1]['duration'] > info['duration'] * .9
+        print(f'{name:18s} {method:8s} {order:8s} style {style:5s} rows {rows}: {len(main):3d} notes, {sum(1 for e in main if e.get("bend")):3d} glides')
+print('passed: contour on/off, five orders (salience, gaze start, left-to-right checked),  one region owns each note, no overlaps, white is one held note; grid and line styles keep voices in order, lines read left to right')

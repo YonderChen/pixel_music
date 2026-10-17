@@ -20,6 +20,12 @@ MOTIF_NOTE = .5  # beats: with outlines, notes and region slots sit on a half-be
 # Most motif notes per voice, top to bottom: the upper voice moves, the bass stays calm.
 LANE_MOTIF = {2: [4, 2], 3: [4, 3, 2], 4: [4, 3, 3, 2]}
 GRACE = .125  # beats
+# How the outline plays: the original short motif, the edge read cell by cell on a quantize grid,
+# or the main edges of the picture read as lines (left to right is time, height is pitch).
+STYLES = {'motif': '起伏动机', 'grid': '量化取样 · 滑音', 'lines': '线条演奏'}
+GRID_STEP = {2: [.5, .5], 3: [.5, .5, 1.], 4: [.5, .5, .5, 1.]}  # beats per edge sample, top to bottom
+LINE_STEP = .5  # beats: the line score reads the picture on an eighth-note grid
+LINE_SPAN = .25  # a line must cross at least this share of the picture width
 ORDERS = {'gaze': '视线游走', 'tiers': '显著度分层', 'scan': '从左到右', 'path': '全图一条路径', 'salience': '纯显著度'}
 ORDER_HINTS = {
     'gaze': '每个声部从最显著的区域出发，每次走到附近最显著的下一个区域，像眼睛看画。',
@@ -27,6 +33,7 @@ ORDER_HINTS = {
     'scan': '每个声部从左到右依次发声；越醒目的区域越响、越长。',
     'path': '全图只有一条视线游走路径，当前区域在自己的声部发声，其他声部延续各自上一个音形成和声。',
     'salience': '每个声部严格按显著度从高到低发声，不考虑位置。'}
+LINES_HINT = '线条演奏：选出画面里最长、最清晰的几条边缘作主线，播放线从左到右扫过，横向位置是时间，边缘的高低是音高（三个八度，吸附到音阶），平缓的坡滑音过渡；不再按区域顺序发声。'
 # Used by the reference-engine mix and the painting page; the soft mix uses voicePreset.
 GS_LANES = {2: [0, 32], 3: [11, 0, 32], 4: [11, 0, 46, 32]}
 SIMPLE_LANES = {2: ['soft_piano', 'soft_bass'], 3: ['celesta', 'soft_piano', 'soft_bass'], 4: ['celesta', 'soft_piano', 'harp', 'soft_bass']}
@@ -96,6 +103,8 @@ def build(analysis, info, options, engine):
             'contributions': dict(zip(engine.FEATURE_NAMES, (vector * engine.WEIGHTS).tolist())),
             'targetMidi': None, 'midi': None, 'eventId': None, 'reason': ''})
     contour = bool(options.get('contourMusic', False))
+    style = options.get('contourStyle', 'motif') if contour else 'motif'
+    if style not in STYLES: raise ValueError('未知轮廓演奏方式')
     outlines = segmentation.shapes(labels) if contour else None
     contained = {}
     if contour:
@@ -157,27 +166,51 @@ def build(analysis, info, options, engine):
         f = regions[i]['features']; o = outlines[i]; row = regions[i]['row']
         xs = np.array([x for x, _ in o['profile']], float); ys = np.array([y for _, y in o['profile']], float)
         if len(ys) >= 5: ys = np.convolve(np.pad(ys, 2, mode='edge'), [1 / 9, 2 / 9, 3 / 9, 2 / 9, 1 / 9], mode='valid')
-        variation = float(np.sum(np.abs(np.diff(ys)))) if len(ys) > 1 else 0.
-        count_ = int(np.clip(1 + round(variation / MOTIF_STEP), 1, LANE_MOTIF[count][row]))
-        count_ = max(1, min(count_, int(round(length / MOTIF_NOTE))))
-        pick = [int(round((k + .5) / count_ * (len(ys) - 1))) for k in range(count_)]
         height = max(4., regions[i]['rect']['height'] * H)
-        # A higher stretch of the edge plays a higher scale step; neighbouring notes move by at most two steps.
-        raw = np.clip(np.round((ys.mean() - ys[pick]) / height * 4), -3, 3).astype(int).tolist()
-        degrees = []
-        for d in raw: degrees.append(d if not degrees else int(np.clip(d, degrees[-1] - 2, degrees[-1] + 2)))
         home = allowed.index(midi)
-        pitches = [allowed[int(np.clip(home + d, 0, len(allowed) - 1))] for d in degrees]
+        side = '下边缘' if o['edgeSide'] == 'bottom' else '上边缘'
+        bends = {}
+        if style == 'grid':
+            # Read the edge cell by cell on a quantize grid: a longer edge plays longer, a busier edge plays more notes.
+            step = GRID_STEP[count][row]
+            cells = max(1, int(round(length / step)))
+            cut = np.linspace(0, len(ys), cells + 1).astype(int)
+            level = np.array([ys[a:max(b, a + 1)].mean() for a, b in zip(cut[:-1], cut[1:])])
+            # Height above the edge's mean, in scale steps; the note only changes after a clear move.
+            raw = (ys.mean() - level) / height * 6
+            runs, current = [], None  # [degree, first cell, cell after the last]
+            for k, r in enumerate(raw):
+                if current is None or abs(r - current) > 1: current = int(np.clip(round(r), -5, 5))
+                if runs and runs[-1][0] == current: runs[-1][2] = k + 1
+                else: runs.append([current, k, k + 1])
+            count_ = len(runs)
+            pitches = [allowed[int(np.clip(home + d, 0, len(allowed) - 1))] for d, _, _ in runs]
+            pick = [int(min(len(ys) - 1, (cut[a] + cut[b] - 1) // 2)) for _, a, b in runs]
+            bounds = [start + a * step for _, a, _ in runs] + [start + length]
+            # A gentle slope (one scale step to the next note) glides into it instead of jumping.
+            for k in range(count_ - 1):
+                if abs(allowed.index(pitches[k + 1]) - allowed.index(pitches[k])) == 1: bends[k] = float(pitches[k + 1] - pitches[k])
+            how = [f'{side}按{"八分" if step < 1 else "四分"}音符格逐格取高度，成 {count_} 个音' if count_ > 1 else f'{side}平缓，一个长音']
+            if bends: how.append(f'平缓处滑音 {len(bends)} 处')
+        else:
+            variation = float(np.sum(np.abs(np.diff(ys)))) if len(ys) > 1 else 0.
+            count_ = int(np.clip(1 + round(variation / MOTIF_STEP), 1, LANE_MOTIF[count][row]))
+            count_ = max(1, min(count_, int(round(length / MOTIF_NOTE))))
+            pick = [int(round((k + .5) / count_ * (len(ys) - 1))) for k in range(count_)]
+            # A higher stretch of the edge plays a higher scale step; neighbouring notes move by at most two steps.
+            raw = np.clip(np.round((ys.mean() - ys[pick]) / height * 4), -3, 3).astype(int).tolist()
+            degrees = []
+            for d in raw: degrees.append(d if not degrees else int(np.clip(d, degrees[-1] - 2, degrees[-1] + 2)))
+            pitches = [allowed[int(np.clip(home + d, 0, len(allowed) - 1))] for d in degrees]
+            bounds = [start + round(k * length / count_ / MOTIF_NOTE) * MOTIF_NOTE for k in range(count_)] + [start + length]
+            how = [f'{side}起伏成 {count_} 个音的动机' if count_ > 1 else f'{side}平缓，一个音']
         c, e, angle = f['compactness'], f['elongation'], f['angle']
         horizontal = e > .6 and abs(angle) < 20
         factor = .98 if horizontal else .72 + .26 * c  # round or flat -> legato, jagged -> lightly detached
         tone = .7 + .6 * (1 - c)                       # jagged outlines sound a little brighter
         attack = 2 ** (1.5 - 3 * f['edgeSharpness'])   # hard edges attack fast, soft edges swell in
-        bounds = [start + round(k * length / count_ / MOTIF_NOTE) * MOTIF_NOTE for k in range(count_)] + [start + length]
         notes = []
-        side = '下边缘' if o['edgeSide'] == 'bottom' else '上边缘'
-        how = [f'{side}起伏成 {count_} 个音的动机' if count_ > 1 else f'{side}平缓，一个音',
-            '轮廓圆润，连奏' if factor > .9 else '轮廓尖锐，轻断奏', '边缘清晰，起音干脆' if attack < 1 else '边缘柔和，缓慢起音']
+        how += ['轮廓圆润，连奏' if factor > .9 else '轮廓尖锐，轻断奏', '边缘清晰，起音干脆' if attack < 1 else '边缘柔和，缓慢起音']
         if f['solidity'] <= concave and bounds[1] - bounds[0] >= 1:
             grace = lift(allowed[min(home + 1, len(allowed) - 1)])
             notes.append(dict(base, start=start * beat, duration=GRACE * .9 * beat, midi=grace, velocity=velocity * .75, grace=True,
@@ -187,14 +220,15 @@ def build(analysis, info, options, engine):
             begin = bounds[k] + (GRACE if k == 0 and notes else 0)
             end = bounds[k + 1]
             # Detached notes leave at most half a beat of air, so large regions still sound.
-            hold = (end - begin) - (1 - factor) * min(end - begin, 1.5)
+            hold = (end - begin) - (1 - factor) * min(end - begin, 1.5) if k not in bends else end - begin
             # On the single path the last note keeps sounding under the following regions.
             if k == count_ - 1 and order_name == 'path': hold = max(hold, start + sounding - begin)
             x = (xs[pick[k]] + .5) / W; y = (ys[pick[k]] + .5) / H
             notes.append(dict(base, start=begin * beat, duration=max(.05, hold * .97) * beat, midi=lift(pitch),
                 velocity=float(np.clip(velocity + .05 * f['edgeSharpness'] - (.04 if k else 0), .3, .9)), toneScale=tone,
                 attackScale=attack, point=[x, y]))
-        if e > .55 and 20 <= abs(angle) <= 70 and bounds[-1] - bounds[-2] >= 1:
+            if k in bends: notes[-1]['bend'] = bends[k]
+        if style != 'grid' and e > .55 and 20 <= abs(angle) <= 70 and bounds[-1] - bounds[-2] >= 1:
             direction = 1 if angle > 0 else -1
             last = allowed.index(pitches[-1])
             goal = allowed[int(np.clip(last + direction, 0, len(allowed) - 1))]
@@ -206,8 +240,83 @@ def build(analysis, info, options, engine):
 
     lanes = [{'offset': engine.OCTAVE_LAYOUT[count][lane], 'previous': None, 'events': [],
         'instrument': f'gm_{GS_LANES[count][lane]:03d}' if synth == 'GeneralUser GS' else SIMPLE_LANES[count][lane]} for lane in range(count)]
+    def play_lines():
+        """Line score: the clearest long edges become lines; x is time, height is pitch, colour picks the voice."""
+        span_scale = engine.upstream_composition.build_scale_notes(root, engine.upstream_composition.SCALES[info.scale_name], root - 7, root + 29)
+        candidates = []
+        for i, o in enumerate(outlines):
+            limit = H - 1 if o['edgeSide'] == 'bottom' else 0
+            # Only a real boundary sings: the stretch of edge lying on the picture frame is skipped.
+            pts = [(x, y) for x, y in o['profile'] if y != limit]
+            if len(pts) < LINE_SPAN * W: continue
+            weight = len(pts) / W * (.4 + .6 * regions[i]['features']['edgeSharpness']) * (.5 + .5 * min(1., regions[i]['features']['edgeContrast'] / 40))
+            candidates.append((weight, i, dict(pts)))
+        candidates.sort(key=lambda c: (-c[0], c[1]))
+        chosen = []
+        for weight, i, line in candidates:
+            # The sky's lower edge and the hill's upper edge are one boundary: keep it once.
+            if any(len(set(line) & set(other)) > .5 * min(len(line), len(other))
+                and np.mean([abs(line[x] - other[x]) for x in set(line) & set(other)]) <= 3 for _, _, other in chosen): continue
+            chosen.append((weight, i, line))
+            if len(chosen) == count: break
+        if not chosen:
+            # Nothing crosses the picture (a plain image): the most salient region holds one flat line.
+            i = order[0]; y = int(regions[i]['centroid']['y'] * (H - 1))
+            chosen = [(0., i, {x: y for x in range(W)})]
+        chosen.sort(key=lambda c: (np.mean(list(c[2].values())), c[1]))  # the highest line takes the top voice
+        cells = int(round(total / LINE_STEP))
+        cut = np.linspace(0, W, cells + 1).round().astype(int)
+        for lane_index, (weight, i, line) in enumerate(chosen):
+            lane, region, f = lanes[lane_index], regions[i], regions[i]['features']
+            columns = np.array(sorted(line)); heights = np.array([line[x] for x in columns], float)
+            if len(heights) >= 5: heights = np.convolve(np.pad(heights, 2, mode='edge'), [1 / 9, 2 / 9, 3 / 9, 2 / 9, 1 / 9], mode='valid')
+            smooth = dict(zip(columns.tolist(), heights.tolist()))
+            runs, current = [], None  # [scale index, first cell, cell after the last, column]
+            for k in range(cells):
+                inside = [smooth[x] for x in range(cut[k], max(cut[k + 1], cut[k] + 1)) if x in smooth]
+                if len(inside) * 2 < max(1, cut[k + 1] - cut[k]): current = None; continue
+                level = (1 - float(np.mean(inside)) / (H - 1)) * (len(span_scale) - 1)
+                # Hold the note until the line clearly moves, so pixel jitter does not chatter.
+                if current is None or abs(level - current) > .6: current = int(round(level))
+                # A bar line re-strikes a long note so a flat horizon stays audible.
+                if runs and runs[-1][0] == current and runs[-1][2] == k and (k * LINE_STEP) % 4: runs[-1][2] = k + 1
+                else: runs.append([current, k, k + 1, (cut[k] + cut[k + 1]) // 2])
+            velocity = float(np.clip(.45 + .35 * score_rank[i], .3, .85))
+            tone = .8 + .4 * f['saturation']
+            attack = float(min(1.5, 2 ** (1.5 - 3 * f['edgeSharpness'])))
+            glides = 0
+            for k, (index, a, b, column) in enumerate(runs):
+                pitch = span_scale[index]
+                while pitch < 36: pitch += 12
+                y = (smooth.get(column, smooth[min(smooth, key=lambda x: abs(x - column))]) + .5) / H
+                note = {'instrument': lane['instrument'], 'pan': -.4 + .8 * lane_index / max(1, count - 1), 'layer': 'main',
+                    'rowId': f'row-{lane_index}', 'row': lane_index, 'voicePreset': engine.SOFT_LAYOUT[count][lane_index],
+                    'coverageEnd': b * LINE_STEP * beat, 'step': k, 'sources': [{'regionId': region['id'], 'rect': region['rect']}],
+                    'start': a * LINE_STEP * beat, 'duration': (b - a) * LINE_STEP * beat * .96, 'midi': pitch,
+                    'velocity': velocity if k == 0 or runs[k - 1][2] != a else velocity - .04, 'toneScale': tone, 'attackScale': attack,
+                    'point': [(column + .5) / W, y], 'id': f'row-{lane_index}-note-{k}'}
+                following = runs[k + 1] if k + 1 < len(runs) else None
+                # A gentle slope glides into the next note instead of jumping.
+                if following and following[1] == b and abs(following[0] - index) == 1:
+                    note['bend'] = float(span_scale[following[0]] - span_scale[index]); note['duration'] = (b - a) * LINE_STEP * beat; glides += 1
+                lane['events'].append(note)
+            if not lane['events']: continue
+            pts = sorted(smooth.items()); pick = np.linspace(0, len(pts) - 1, min(len(pts), 64)).round().astype(int)
+            region['contour'] = [[(pts[k][0] + .5) / W, (pts[k][1] + .5) / H] for k in pick]
+            first = lane['events'][0]
+            region.update(row=lane_index, rowId=f'row-{lane_index}', col=lane_index, start=first['start'],
+                end=lane['events'][-1]['start'] + lane['events'][-1]['duration'], midi=first['midi'], eventId=first['id'],
+                targetMidi=first['midi'], reason=f"第 {lane_index + 1} 条主线（{'下' if outlines[i]['edgeSide'] == 'bottom' else '上'}边缘，"
+                f"横跨画面 {round(100 * len(line) / W)} %）：播放线扫到哪里就读哪里的高度，越高音越高；{len(runs)} 个音，滑音 {glides} 处")
+        picked = {i for _, i, _ in chosen}
+        for i, region in enumerate(regions):
+            if i not in picked: region['reason'] = f"显著度第 {region['salienceRank']} 位；线条演奏只演奏 {len(chosen)} 条主线，这个区域的边缘没有入选"
+
     plan = []  # (region index, start beat, length beat)
-    if order_name == 'path':
+    skipped = []
+    if style == 'lines':
+        contained.clear(); play_lines()
+    elif order_name == 'path':
         kept, skipped = keep(range(len(regions)))
         seq = sequence(sorted(kept), 'gaze')
         lengths = slots(weights(seq), total, grid) if seq else []
@@ -302,7 +411,8 @@ def build(analysis, info, options, engine):
     events.sort(key=lambda e: (e['start'], e['row'], e['midi']))
     meta = {'version': VERSION, 'segmentation': segmentation.VERSION, 'method': method, 'methodName': segmentation.METHOD_NAMES[method],
         'detail': detail, 'width': W, 'height': H, 'regionCount': len(regions), 'order': order_name, 'orderName': ORDERS[order_name],
-        'orderHint': ORDER_HINTS[order_name], 'contour': contour, 'pedal': pedal, 'soft': soft,
+        'orderHint': LINES_HINT if style == 'lines' else ORDER_HINTS[order_name], 'contour': contour,
+        'contourStyle': style, 'contourStyleName': STYLES[style], 'pedal': pedal, 'soft': soft,
         # Smooth outlines for drawing; hit-testing keeps using the label image.
         'outlines': segmentation.outlines(labels) if soft else None,
         'labels': base64.b64encode(labels.astype('<u2').tobytes()).decode()}
