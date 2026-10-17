@@ -13,10 +13,10 @@ class Element{
 }
 const removed=new Set(['featureMode','featureControls','featureMethod','featurePitchTransition','rowMethod','mixProfile','abFeatures','abMixSoft','abMixOriginal','contourDemo','pitchTransition']);
 const nodes=new Map(),get=id=>{assert.ok(!removed.has(id),'removed control accessed: '+id);if(!nodes.has(id))nodes.set(id,new Element());return nodes.get(id);};
-get('tone').value='GeneralUser GS';get('mappingStyle').value='Scientific';get('rowCount').value='4';get('backing').checked=true;
+get('tone').value='Simple';get('mappingStyle').value='Scientific';get('rowCount').value='4';get('backing').checked=true;
 const region={id:'cell',col:0,row:0,start:0,end:1,midi:null,targetMidi:null,eventId:null,reason:'rest',rect:{x:0,y:0,width:1,height:1},features:{hue:0,saturation:0,brightness:0,contrast:0,texture:0,centroid:.5}};
 const variant={events:[],regions:[region],cols:1,rows:4,duration:1,mainCount:0,layerCounts:{},rowMethod:'reference',voices:Array.from({length:4},(_,i)=>({id:'row-'+i,name:'row',instrumentName:'GS'})),mixProfiles:{soft:{voices:['a','b','c','d']},original:{}}};
-const payload={key:'test',image:{src:'data:image/png;base64,AQ==',width:192,height:120},info:{bars:4,duration:1,tempo:88,key_name:'C',scale_name:'Major'},settings:{synth:'GeneralUser GS'},variants:{features:structuredClone(variant),reference:structuredClone(variant),parallel:structuredClone(variant)}};
+const payload={key:'test',image:{src:'data:image/png;base64,AQ==',width:192,height:120},info:{bars:4,duration:1,tempo:88,key_name:'C',scale_name:'Major'},settings:{synth:'Simple'},variants:{features:structuredClone(variant),reference:structuredClone(variant),parallel:structuredClone(variant)}};
 payload.variants.parallel.mixProfiles.original.audioUrl='/api/audio/parallel.wav';
 payload.variants.parallel.mixProfiles.soft.audioUrl='/api/audio/parallel-soft.wav';
 const downloads=[];let finishExport;
@@ -61,7 +61,7 @@ const until=async(fn)=>{for(let i=0;i<1000;i++){if(fn())return;await new Promise
  context.location.hash='#full-pitch';windows.hashchange();assert.equal(state().mode,'parallel');
  const exporting=get('export').handlers.click();await until(()=>finishExport);
  get('referenceMode').handlers.click();finishExport(new Blob(['audio']));await exporting;
- assert.equal(downloads[0],'图鸣-多行叠奏-局部多特征法-柔和合成混音-GeneralUser GS.wav');
+ assert.equal(downloads[0],'图鸣-多行叠奏-局部多特征法-柔和合成混音-Simple.wav');
  windows.pagehide();
  const report={status:'passed',checkedOn:'2026-10-11',checks:['network failure restores a retry action and clears generation state','image preview is available before server response','retry recovers without reload','mode controls respond during delayed generation','cancel aborts pending generation','cancelled work cannot overwrite a later successful retry','six approved method/profile pairs (regions, arranged, refined reference + three retained); changes send the correct score options','removed full-image/mix controls are never accessed; old full-image hash opens parallel mode','WAV filename keeps the selected combination when mode changes during asynchronous export'],generationRequests};
  fs.writeFileSync(path.join(__dirname,'page-startup-client-report.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));

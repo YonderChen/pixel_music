@@ -1,11 +1,8 @@
 (function () {
   'use strict';
   const root = new URL('./browser-runtime/', document.currentScript.src).href;
-  // Over HTTP(S) the SoundFont is fetched as a binary file (smaller than base64 and cacheable);
-  // file:// pages cannot fetch, so they keep the script-wrapped copy.
-  const binaryFont = /^https?:$/.test(new URL(root).protocol);
   const loaded = new Map(), pending = new Map();
-  let worker, initializing, fontLoading, serial = 0, synth = 'GeneralUser GS', fontSent = false;
+  let worker, initializing, serial = 0;
   function load(name, global) {
     if (!loaded.has(name)) loaded.set(name, new Promise((resolve, reject) => {
       const script = document.createElement('script'); script.src = root + name;
@@ -15,16 +12,8 @@
     }));
     return loaded.get(name);
   }
-  function loadFont() {
-    if (!fontLoading) fontLoading = (binaryFont
-      ? fetch(root + 'GeneralUser-GS.sf2').then(r => {if (!r.ok) throw new Error(r.status); return r.arrayBuffer();}).then(buffer => new Uint8Array(buffer))
-        .catch(() => load('soundfont-data.js', 'PixelMusicSoundfontData'))
-      : load('soundfont-data.js', 'PixelMusicSoundfontData')
-    ).catch(error => {fontLoading = null; throw error;});
-    return fontLoading;
-  }
   function reset(reason = new DOMException('计算已取消', 'AbortError')) {
-    worker?.terminate(); worker = null; initializing = null; fontSent = false;
+    worker?.terminate(); worker = null; initializing = null;
     for (const job of pending.values()) job.reject(reason);
     pending.clear();
   }
@@ -53,15 +42,9 @@
     const path = new URL(url, 'https://pixelmusic.invalid').pathname;
     if (path === '/api/health') return new Response(JSON.stringify({engine: 'pixelmusic-browser-v1'}));
     const data = options.body ? JSON.parse(options.body) : null;
-    if (path === '/api/generate') synth = data.options.synth;
-    if (path === '/api/performance') synth = data.synth;
     const signal = options.signal;
     if (signal?.aborted) throw new DOMException('计算已取消', 'AbortError');
     await initialize();
-    let font;
-    // Start the SoundFont download while the score is generated, so it is usually ready by the first play.
-    if (path === '/api/generate' && synth === 'GeneralUser GS') loadFont().catch(() => {});
-    if (path !== '/api/generate' && synth === 'GeneralUser GS' && !fontSent) font = await loadFont();
     if (signal?.aborted) throw new DOMException('计算已取消', 'AbortError');
     return new Promise((resolve, reject) => {
       const id = ++serial;
@@ -71,7 +54,7 @@
       };
       pending.set(id, {resolve: value => {signal?.removeEventListener('abort', abort); resolve(value);}, reject: error => {signal?.removeEventListener('abort', abort); reject(error);}});
       signal?.addEventListener('abort', abort, {once: true});
-      worker.postMessage({id, path, data, font}); if (font) fontSent = true;
+      worker.postMessage({id, path, data});
     });
   }
   window.PixelMusicBrowser = {request, reset};

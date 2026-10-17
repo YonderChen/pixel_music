@@ -5,10 +5,10 @@ class Element{
  getContext(){return new Proxy({},{get:()=>()=>{}});}toDataURL(){return 'data:image/png;base64,AQ==';}
 }
 const nodes=new Map(),get=id=>{if(!nodes.has(id))nodes.set(id,new Element());return nodes.get(id);};
-get('tone').value='GeneralUser GS';get('mappingStyle').value='Scientific';get('rowCount').value='4';
+get('tone').value='Simple';get('mappingStyle').value='Scientific';get('rowCount').value='4';
 const region={id:'r0',col:0,row:0,start:0,end:12,midi:60,targetMidi:60,eventId:'e0',reason:'features',rect:{x:0,y:0,width:1,height:1},features:{hue:.2,saturation:.5,brightness:.5,contrast:.1,texture:.2,centroid:.5}};
 const variant={regions:[region],events:[{id:'e0',layer:'main',midi:60,row:0,start:0,duration:12,sources:[{regionId:'r0'}]}],rows:4,cols:1,duration:14,mainCount:1,layerCounts:{main:1},voices:Array.from({length:4},(_,i)=>({id:'row-'+i,name:'row',instrumentName:'GS'})),mixProfiles:{original:{audioUrl:'/audio/parallel.wav'},soft:{audioUrl:'/audio/soft.wav',voices:['a','b','c','d']}}};
-const payload={key:'score',image:{width:192,height:120,src:'data:image/png;base64,AQ=='},info:{bars:4,duration:12,tempo:88,key_name:'C',scale_name:'Major'},variants:{parallel:variant,reference:{...variant,audioUrl:'/audio/reference.wav'}},settings:{synth:'GeneralUser GS'}};
+const payload={key:'score',image:{width:192,height:120,src:'data:image/png;base64,AQ=='},info:{bars:4,duration:12,tempo:88,key_name:'C',scale_name:'Major'},variants:{parallel:variant,reference:{...variant,audioUrl:'/audio/reference.wav'}},settings:{synth:'Simple'}};
 const sources=[],requests=[],frames=new Map();let audioContext,frameId=0;
 class AudioContext{
  constructor(){audioContext=this;this.state='running';this.currentTime=0;this.destination={};}

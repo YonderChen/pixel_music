@@ -1,0 +1,3 @@
+# Cloudflare response headers. Runtime files are unversioned: a day of caching keeps repeat visits fast and updates visible soon.
+/browser-runtime/*
+  Cache-Control: public, max-age=86400

@@ -40,13 +40,17 @@ python3 scripts/package_browser_runtime.py --archive
 
 生成的 `图鸣-静态网页版.zip` 仅用于本地交付，已加入 Git 忽略规则，不随日常代码提交更新。网页运行不读取这个 ZIP，可直接发布完整 `dist` 目录。
 
-为保留现有音乐效果，图片分析与编曲继续执行同一套规则：Pyodide 0.27.7 在 WebAssembly 中运行原算法和 NumPy／Pillow；GS 使用同一份 GeneralUser GS 音色库与 FluidSynth WebAssembly 2.4.6；Simple 与柔和混音沿用原合成算法。
+为保留现有音乐效果，图片分析与编曲继续执行同一套规则：Pyodide 0.27.7 在 WebAssembly 中运行原算法和 NumPy／Pillow；Simple 与柔和混音沿用原合成算法。
 
-核心离线资源约 64 MiB。GS 音色库有两份：通过 HTTP(S) 访问时下载约 31 MiB 的二进制 `browser-runtime/GeneralUser-GS.sf2`，并在生成乐谱的同时后台预载，通常首次点击播放前已下载完成；双击本地 `index.html` 打开时浏览器不允许读取二进制文件，仍使用约 41 MiB 的 `soundfont-data.js`。选择 Simple 音源时不下载音色库。
+GS 采样音源已移除（音色库 31 MiB，超过 Cloudflare 单文件 25 MiB 的上限），参考原谱和"原有叠加"统一使用 Simple 合成。核心离线资源约 23 MiB，最大的文件是约 21 MiB 的 `compute-data.js`。
 
 服务器建议启用 gzip／Brotli 和静态缓存。以 nginx 为例，默认的 `gzip_types` 只包含 HTML，需要加入 `application/javascript`（`compute-data.js` 可从约 21 MiB 压缩到约 10 MiB）；`.sf2` 压缩收益很小，可以不压缩。给 `browser-runtime/` 设置缓存（例如 `expires 7d;`）后，再次打开基本无需重新下载；文件名不带版本号，更新部署后如需立即生效可缩短缓存时间。网页加载后不需要后端接口、跨域权限、账户或密钥。使用限制性 CSP 时，需要允许 `script-src 'self' blob:`、`worker-src blob:`、WebAssembly 编译和 `img-src 'self' data: blob:`；现有内联样式也需要相应许可。
 
 这里的“纯前端”包含 WebAssembly 运行时；不要求用户电脑安装 Python。该实现以网页为目标，后续小程序仍需适配运行环境。
+
+## Cloudflare 自动发布
+
+使用 Cloudflare 自带的 Git 集成（Workers Builds）：在 Cloudflare 后台 Workers & Pages → Create → Import a repository，连接 GitHub 并选择本仓库，项目名填 `pixel-music`（须与根目录 `wrangler.jsonc` 的 `name` 一致），构建命令留空，部署命令保持 `npx wrangler deploy`。之后每次推送 master 自动把 `dist` 原样发布到 `pixel-music.<子域>.workers.dev`，无需 API Token。Cloudflare 单个文件上限 25 MiB；`dist/_headers` 为 `browser-runtime/` 设置一天缓存，Cloudflare 会自动压缩 JavaScript。
 
 ## 本轮验证
 

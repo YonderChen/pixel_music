@@ -5,11 +5,11 @@ class Element{
  getContext(){return new Proxy({},{get:()=>()=>{}});}toDataURL(){return 'data:image/png;base64,AQ==';}
 }
 const nodes=new Map(),get=id=>{if(!nodes.has(id))nodes.set(id,new Element());return nodes.get(id);};
-get('tone').value='GeneralUser GS';get('mappingStyle').value='Scientific';get('rowCount').value='4';
+get('tone').value='Simple';get('mappingStyle').value='Scientific';get('rowCount').value='4';
 const regions=Array.from({length:4},(_,i)=>({id:'r'+i,index:i,col:i,row:0,start:i,end:i+1,midi:i===2?null:[60,64,0,67][i],targetMidi:i===2?null:60,eventId:i===2?null:'e'+i,reason:'features',rect:{x:i/4,y:0,width:.25,height:.25},features:{hue:.2,saturation:.5,brightness:.5,contrast:.1,texture:.2,centroid:.5}}));
 const events=regions.filter(r=>r.eventId).map(r=>({id:r.eventId,start:r.start,duration:1,midi:r.midi,row:0,rowId:'row-0',layer:'main',sources:[{regionId:r.id,rect:r.rect}]}));
 const variant={regions,events,rows:4,cols:4,duration:4.8,mainCount:3,layerCounts:{main:3},rowMethod:'transition',voices:Array.from({length:4},(_,i)=>({id:'row-'+i,name:'row',instrumentName:'GS'})),mixProfiles:{original:{},soft:{voices:['a','b','c','d']}}};
-const payload={key:'score',image:{width:192,height:120,src:'data:image/png;base64,AQ=='},info:{bars:4,duration:4,tempo:88,key_name:'C',scale_name:'Major'},variants:{parallel:variant,reference:structuredClone(variant)},settings:{synth:'GeneralUser GS'}};
+const payload={key:'score',image:{width:192,height:120,src:'data:image/png;base64,AQ=='},info:{bars:4,duration:4,tempo:88,key_name:'C',scale_name:'Major'},variants:{parallel:variant,reference:structuredClone(variant)},settings:{synth:'Simple'}};
 payload.variants.reference.audioUrl='/api/audio/reference.wav';
 const plays=[],stops=[],requests=[],held=[];let holdBank=true,generations=0,createdContext;
 class AudioContext{
