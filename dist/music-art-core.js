@@ -11,6 +11,25 @@
     blue:{name:'靛蓝与雾紫',paper:'#f0eee7',ink:'#233d59',colors:['#365b7e','#7c849e','#b59c98','#c6b899']},
     moss:{name:'苔绿与麦金',paper:'#f2efe1',ink:'#3c5147',colors:['#637b5b','#ac914f','#b76a4b','#9aaca0']}
   };
+  // Timbre families mirror the image side's sweep mode, where region colour chose the voice
+  // (warm→暖键, yellow→圆木琴, green→柔拨弦, blue→轻铃, low→柔低音); here the voice chooses the colour.
+  const FAMILIES={keys:'暖键',marimba:'圆木琴',pluck:'柔拨弦',bell:'轻铃',pad:'铺底弦乐',bass:'柔低音'};
+  const familyColors={
+    clay:{keys:'#ba5841',marimba:'#d39a3c',pluck:'#5f8a5a',bell:'#3f6f94',pad:'#8a6f9e',bass:'#2f4743'},
+    blue:{keys:'#b4644f',marimba:'#c9a44f',pluck:'#5d8a78',bell:'#365b7e',pad:'#7c749e',bass:'#233d59'},
+    moss:{keys:'#b76a4b',marimba:'#ac914f',pluck:'#637b5b',bell:'#4f7896',pad:'#8b7a98',bass:'#34473e'}
+  };
+  function family(e){
+    const name=String(e.instrument).toLowerCase(),program=name.startsWith('midi-')?Number(name.slice(5)):null;
+    if(/bass|低音/.test(name)||(program>=32&&program<40))return 'bass';
+    if(/bell|轻铃/.test(name)||(program>=8&&program<16&&program!==12&&program!==13))return 'bell';
+    if(/marimba|圆木琴/.test(name)||program===12||program===13)return 'marimba';
+    if(/guitar|pluck|柔拨弦/.test(name)||(program>=24&&program<32)||(program>=104&&program<112))return 'pluck';
+    if(/strings|pad|string|铺底/.test(name)||(program>=40&&program<56)||(program>=88&&program<96))return 'pad';
+    return e.midi<48?'bass':'keys';
+  }
+  // Same envelope classes as the page's score synthesizer, so playback marks fade with the sound.
+  const envelope=instrument=>/strings|pad|midi-(4[0-9]|5[0-5])/.test(instrument)?'strings':/bell|marimba|轻铃|圆木琴|midi-(8|9|10|11|12|13|14|15)/.test(instrument)?'bell':'keys';
   function timbre(instrument){const name=String(instrument).toLowerCase(),program=name.startsWith('midi-')?Number(name.slice(5)):null;if(/bell|轻铃/.test(name)||(program>=8&&program<16))return .9;if(/marimba|圆木琴/.test(name))return .75;if(/guitar|pluck|柔拨弦/.test(name)||(program>=24&&program<40))return .6;if(/strings|pad/.test(name)||(program>=40&&program<56))return .15;if(/percussion/.test(name))return 1;return .35;}
   function normalize(input){
     if(!input||!Array.isArray(input.events))throw new Error('请选择包含音符的乐谱。');
@@ -72,6 +91,52 @@
     const radius=168+voiceIndex*38+pitch*100+timbre(n.instrument)*18;
     return compose({x:600+Math.cos(angle)*radius*1.24,y:450+Math.sin(angle)*radius*.95,angle});
   }
+  const STYLES={ribbons:'曲线色层',geometry:'几何色块',scroll:'扫描长卷'};
+  // Scan-scroll: the image side's sweep read backwards. Time runs left to right, pitch bottom to top,
+  // each voice's melody becomes a boundary line with its colour field below, and every note is drawn
+  // where the playback scan line will cross it.
+  const SCROLL={x0:104,x1:1100,top:118,bottom:792};
+  function shade(hex,amount,palette){
+    if(!amount)return hex;const target=amount<0?palette.ink:palette.paper,f=Math.abs(amount),c=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)),a=c(hex),b=c(target);
+    return '#'+a.map((v,i)=>Math.round(v+(b[i]-v)*f).toString(16).padStart(2,'0')).join('');
+  }
+  function scroll(model,paletteId){
+    const {score,stats,palette}=model,colors=familyColors[paletteId],D=score.duration;
+    const lo0=stats.range[0]-2,hi0=stats.range[1]+2,pad=Math.max(0,24-(hi0-lo0))/2,lo=lo0-pad,hi=hi0+pad;
+    const x=t=>round(SCROLL.x0+t/D*(SCROLL.x1-SCROLL.x0)),y=m=>round(SCROLL.bottom-(m-lo)/(hi-lo)*(SCROLL.bottom-SCROLL.top));
+    model.scroll={...SCROLL,duration:D,lo,hi};
+    let grid='',fields='',lines='',notes='';
+    for(let m=Math.ceil(lo/12)*12;m<=hi;m+=12)grid+=`<path d="M${SCROLL.x0} ${y(m)}H${SCROLL.x1}" stroke="${palette.ink}" stroke-opacity=".09" stroke-width=".8" stroke-dasharray="1 5"/><text x="${SCROLL.x0-10}" y="${round(y(m)+4.5)}" text-anchor="end" font-family="ui-monospace,Menlo,monospace" font-size="13" fill="${palette.ink}" fill-opacity=".5">C${m/12-1}</text>`;
+    const used=new Set();
+    const voices=stats.voices.map(v=>{const counts={};v.events.forEach(e=>counts[family(e)]=(counts[family(e)]??0)+e.duration*e.velocity);const mean=v.events.reduce((s,e)=>s+e.midi,0)/v.events.length,top=Object.keys(counts).sort((a,b)=>counts[b]-counts[a])[0];return {...v,family:top==='keys'&&mean<55?'bass':top,mean};}).sort((a,b)=>b.mean-a.mean);
+    const gapLimit=Math.max(.6,D/40),slice=Math.max(.12,D/240);
+    const seen={};
+    voices.forEach((voice,vi)=>{
+      // Voices sharing a timbre keep its hue but step in shade, so parts stay apart.
+      const rank=seen[voice.family]=(seen[voice.family]??-1)+1,color=shade(colors[voice.family],[0,-.32,.3,-.55,.5][rank%5],palette),quiet=voice.main?1:.55;
+      // The boundary is the voice's upper envelope: the highest note sounding in each short slice, smoothed
+      // into a ridge so fast figures read as one line, the way a region edge reads in a photo. Rests break it.
+      const ridge=[];for(const e of voice.events){const a=Math.floor(e.start/slice),b=Math.max(a,Math.ceil((e.start+e.duration)/slice)-1);for(let i=a;i<=b;i++)ridge[i]=Math.max(ridge[i]??-1,e.midi);}
+      const runs=[];let run=null;for(let i=0;i<ridge.length;i++){if(ridge[i]===undefined){if(run&&(i-run.end)*slice>gapLimit)run=null;continue;}if(!run){run={points:[],end:i};runs.push(run);}run.points.push([i,ridge[i]]);run.end=i;}
+      for(const {points} of runs){
+        const pts=points.map(([i],k)=>{const a=points[Math.max(0,k-1)][1],b=points[k][1],c=points[Math.min(points.length-1,k+1)][1];return {x:x((i+.5)*slice),y:y((a+2*b+c)/4)};});
+        if(pts.length===1)pts.push({x:pts[0].x+2,y:pts[0].y});
+        const d=smooth(pts),xa=pts[0].x,xb=pts.at(-1).x;
+        fields+=`<path d="${d} L${xb} ${SCROLL.bottom+30} L${xa} ${SCROLL.bottom+30} Z" fill="${color}" fill-opacity="${round(.14*quiet)}"/>`;
+        lines+=`<path d="${d}" fill="none" stroke="${color}" stroke-width="${round(1.4+1*quiet)}" stroke-opacity="${round(.8*quiet)}" stroke-linejoin="round" stroke-linecap="round"/>`;
+      }
+      for(const e of voice.events){
+        const fam=family(e),c=fam===voice.family?color:colors[fam];used.add(fam);
+        const xs=x(e.start),w=Math.max(3,x(e.start+e.duration)-xs),h=round(3+e.velocity*6),yy=y(e.midi);
+        notes+=`<rect x="${xs}" y="${round(yy-h/2)}" width="${round(w)}" height="${h}" rx="${round(h/2)}" fill="${c}" fill-opacity="${round((.42+.4*e.velocity)*quiet)}"/>`;
+        if(w>8)notes+=`<circle cx="${xs}" cy="${yy}" r="${round(1.2+e.velocity*1.4)}" fill="${palette.ink}" fill-opacity="${round(.32*quiet)}"/>`;
+        model.notes.push({x:xs,y:yy,x1:round(xs+w),start:e.start,end:e.start+e.duration,midi:e.midi,velocity:e.velocity,envelope:envelope(e.instrument),main:e.layer==='main',color:c});
+        model.marks.push({x:xs,y:yy,start:e.start,end:e.start+e.duration,voice:voice.id,color:c});
+      }
+    });
+    model.families=Object.keys(FAMILIES).filter(f=>used.has(f)).map(f=>({id:f,name:FAMILIES[f],color:colors[f]}));
+    return grid+fields+lines+notes;
+  }
   function smooth(points){
     if(!points.length)return '';if(points.length===1)return `M${round(points[0].x)},${round(points[0].y)}`;
     let p=`M${round(points[0].x)},${round(points[0].y)}`;
@@ -81,14 +146,15 @@
     }return p;
   }
   function scene(input,options={}){
-    const score=normalize(input),stats=describe(score),style=options.style==='geometry'?'geometry':'ribbons';
+    const score=normalize(input),stats=describe(score),style=STYLES[options.style]?options.style:'ribbons';
     const auto=stats.pitch>72?'blue':stats.dominant%3===0?'moss':'clay';
     const palette=palettes[options.palette]??palettes[auto],detail=clamp(num(options.detail,.6),.25,1),layout=((Math.floor(num(options.layout))%4)+4)%4;
-    const model={score,stats,style,palette,detail,layout,fingerprint:fingerprint(score),width:W,height:H,marks:[]};
+    const model={score,stats,style,palette,detail,layout,fingerprint:fingerprint(score),width:W,height:H,marks:[],notes:[],families:[]};
     const voices=stats.voices.slice(0,8),counts=style==='ribbons'?Math.round(56+detail*72):Math.round(14+detail*26);
     let body=`<rect width="1200" height="900" fill="${palette.paper}"/><defs><pattern id="paper" width="9" height="9" patternUnits="userSpaceOnUse"><path d="M1 2h.7M6 6h.6" stroke="${palette.ink}" stroke-opacity=".055" stroke-width=".6"/></pattern><clipPath id="artBounds"><rect x="76" y="70" width="1048" height="760" rx="2"/></clipPath></defs><rect width="1200" height="900" fill="url(#paper)"/><g clip-path="url(#artBounds)">`;
     const phraseSpan=score.duration/8;
-    for(let vi=voices.length-1;vi>=0;vi--){
+    if(style==='scroll')body+=scroll(model,options.palette&&palettes[options.palette]?options.palette:auto);
+    else for(let vi=voices.length-1;vi>=0;vi--){
       const voice=voices[vi],color=palette.colors[vi%4],color2=palette.colors[(vi+1)%4];
       const notes=groupNotes(voice,score.duration,counts),quiet=voice.main?1:.48;
       if(style==='ribbons'){
@@ -126,9 +192,10 @@
         });
       }
     }
+    if(style!=='scroll')voices.forEach((voice,vi)=>{const color=palette.colors[vi%4];for(const e of voice.events)model.notes.push({...point(model,e,vi),start:e.start,end:e.start+e.duration,midi:e.midi,velocity:e.velocity,envelope:envelope(e.instrument),main:e.layer==='main',color,voice:vi});});
     if(!score.events.length)body+=`<circle cx="600" cy="450" r="100" fill="none" stroke="${palette.ink}" stroke-opacity=".16" stroke-width=".8"/>`;
     body+='</g>';
-    model.svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="${escape(score.title)}的${style==='ribbons'?'曲线色层':'几何色块'}画作"><title>${escape(score.title)}</title><desc>音乐决定形态、疏密和层次。${score.events.length}个音符，${stats.voices.length}个声部。</desc>${body}</svg>`;
+    model.svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="${escape(score.title)}的${STYLES[style]}画作"><title>${escape(score.title)}</title><desc>音乐决定形态、疏密和层次。${score.events.length}个音符，${stats.voices.length}个声部。</desc>${body}</svg>`;
     return model;
   }
   function samples(){
@@ -147,5 +214,5 @@
     }
     return [make('slow','缓慢的回声',72,slow),make('fast','轻快的步伐',132,fast),make('woven','交织的声部',100,woven)];
   }
-  return {VERSION,STORAGE_KEY,normalize,fingerprint,fromPerformance,describe,scene,point,samples,palettes};
+  return {VERSION,STORAGE_KEY,STYLES,normalize,fingerprint,fromPerformance,describe,scene,point,samples,palettes,family};
 });

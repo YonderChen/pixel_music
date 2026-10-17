@@ -14,11 +14,12 @@ class AudioContext{
  createGain(){return {connect(){},disconnect(){},gain:param()};}
 }
 class OfflineAudioContext{
- constructor(ch,frames,rate){this.duration=frames/rate;this.destination={};this.notes=[];renders.push(this);}
+ constructor(ch,frames,rate){this.duration=frames/rate;this.destination={};this.notes=[];this.suspended=[];this.suspendTimes=[];renders.push(this);}
  createDynamicsCompressor(){return {connect(){},threshold:{},knee:{},ratio:{},attack:{},release:{}};}createPeriodicWave(){return {};}
  createOscillator(){const n={connect(){},frequency:{},setPeriodicWave(){},start(t){this.startAt=t;},stop(t){this.stopAt=t;}};this.notes.push(n);return n;}
  createGain(){return {connect(){},gain:param()};}createStereoPanner(){return {connect(){},pan:{}};}
- startRendering(){const result={duration:this.duration};return holdSynth?new Promise(resolve=>pendingSynth.push(()=>resolve(result))):Promise.resolve(result);}
+ suspend(t){this.suspendTimes.push(t);return {then:fn=>this.suspended.push(fn)};}resume(){}
+ startRendering(){this.suspended.splice(0).forEach(fn=>fn());const result={duration:this.duration};return holdSynth?new Promise(resolve=>pendingSynth.push(()=>resolve(result))):Promise.resolve(result);}
 }
 class Image{set src(v){if(holdImage)pendingImages.push(()=>this.onload());else queueMicrotask(()=>this.onload());}}
 const audioRef={kind:'browser-score',variant:'parallel',profile:'soft',synth:'Simple',info:{duration:19,tempo:88},events:Core.samples()[2].events,rows:['row-0'],voices:[{id:'row-0'}]};
@@ -43,10 +44,13 @@ const choose=id=>{get('score').value=id;get('score').handlers.change();};
  get('seek').handlers.pointerdown();get('seek').value='3';get('seek').handlers.input();get('seek').handlers.change();await until(()=>state().playing);assert.equal(sources.at(-1).args[1],3);
  click('play');choose('slow');holdSynth=true;const preparing=click('play');await until(()=>pendingSynth.length===1);choose('fast');pendingSynth.shift()();await preparing;assert.equal(state().playing,false,'late synthesis cannot play an old score');assert.equal(state().score,'fast');
  holdSynth=false;await click('play');assert.equal(state().playing,true);assert.equal(renders.at(-1).notes.length,96);click('play');
+ click('scroll');assert.equal(get('artEdition').textContent,'扫描长卷');assert.equal(get('legend').hidden,false);await click('play');createdContext.currentTime+=1;await new Promise(r=>setTimeout(r,5));
+ assert.match(get('listeningOverlay').innerHTML,/<rect[^>]*fill-opacity=".62"/,'unplayed part of the scroll is veiled while playing');assert.match(get('listeningOverlay').innerHTML,/<path d="M[\d.]+ 92V818"/,'scan line is drawn');
+ click('play');assert.doesNotMatch(get('listeningOverlay').innerHTML,/<rect/,'pausing reveals the whole painting');click('geometry');assert.equal(get('legend').hidden,true);
  for(const score of Classics.samples()){
    choose(score.id);assert.equal(state().notes,score.events.length);assert.equal(get('classicalSource').hidden,false);assert.equal(get('midiSource').href,score.source.sourceUrl);assert.equal(get('midiOriginal').download,score.source.file);
    assert.equal(get('sourceHint').textContent.includes('节选'),!!score.source.excerptSeconds);
-   await click('play');assert.equal(state().playing,true);assert.equal(renders.at(-1).notes.length,score.events.length);click('play');
+   await click('play');assert.equal(state().playing,true);assert.equal(renders.at(-1).notes.length,score.events.length);assert.ok(renders.at(-1).suspendTimes.length>10&&renders.at(-1).suspendTimes.every(t=>t<score.duration),'notes join the render window by window');click('play');
  }
  choose('classical-pachelbel-canon-in-d');click('saveScore');const classicalSaved=await(await globalThis.fetch(downloadUrls.at(-1))).json();assert.equal(classicalSaved.source.license,'CC BY 4.0');
  get('json').files=[{size:100,text:async()=>JSON.stringify({...classicalSaved,source:{...classicalSaved.source,sourceUrl:'javascript:alert(1)'}})}];await get('json').handlers.change();
@@ -61,6 +65,6 @@ const choose=id=>{get('score').value=id;get('score').handlers.change();};
  windows.storage({key:Core.STORAGE_KEY,newValue:JSON.stringify({...imported,audioRef:{...audioRef,profile:'original'}})});
  const waiting=click('play');await until(()=>pendingAudio.length===1);click('play');pendingAudio.shift()();await waiting;assert.equal(state().playing,false);assert.equal(state().loading,false);
  holdAudio=false;await click('play');const exiting=sources.at(-1),staleEnd=exiting.onended;windows.pagehide();staleEnd();assert.equal(state().playing,false);assert.equal(createdContext.state,'closed');
- const report={status:'passed',checkedOn:'2026-10-14',checks:['page opens with a complete image and no audio preparation','original sound plays and resumes from cached audio','style changes preserve music, timing and source','loop wrap and disabling loop retain current position','seek resumes at the selected time','late synthesis and file reads cannot overwrite a later selection','samples synthesize their actual score notes','six classical MIDI candidates are grouped, drawn and synthesized with source links and excerpt labels','classical JSON exports retain attribution and imports restore only trusted catalog URLs','PNG filename stays attached to the clicked score and style','JSON import works and original preparation can be cancelled','page exit stops sound and ignores stale end callbacks']};
+ const report={status:'passed',checkedOn:'2026-10-17',checks:['page opens with a complete image and no audio preparation','original sound plays and resumes from cached audio','style changes preserve music, timing and source','loop wrap and disabling loop retain current position','seek resumes at the selected time','late synthesis and file reads cannot overwrite a later selection','samples synthesize their actual score notes','six classical MIDI candidates are grouped, drawn and synthesized with source links and excerpt labels','classical JSON exports retain attribution and imports restore only trusted catalog URLs','PNG filename stays attached to the clicked score and style','JSON import works and original preparation can be cancelled','page exit stops sound and ignores stale end callbacks','scan scroll shows a scan line and veils the unplayed part while playing','long scores build synth notes window by window']};
  fs.writeFileSync(path.join(__dirname,'music-art-client-report.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));
 })().catch(e=>{windows.pagehide?.();console.error(e);process.exitCode=1;});

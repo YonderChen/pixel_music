@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "checkedOn": "2026-10-14",
+  "checkedOn": "2026-10-17",
   "checks": [
     "page opens with a complete image and no audio preparation",
     "original sound plays and resumes from cached audio",
@@ -13,6 +13,8 @@
     "classical JSON exports retain attribution and imports restore only trusted catalog URLs",
     "PNG filename stays attached to the clicked score and style",
     "JSON import works and original preparation can be cancelled",
-    "page exit stops sound and ignores stale end callbacks"
+    "page exit stops sound and ignores stale end callbacks",
+    "scan scroll shows a scan line and veils the unplayed part while playing",
+    "long scores build synth notes window by window"
   ]
 }

@@ -27,6 +27,16 @@ assert.equal(Core.scene({events:[],duration:2}).marks.length,0,'silence does not
 assert.throws(()=>Core.normalize({events:[{midi:60,start:181,duration:1}]}),/3 分钟/);
 const crowded={duration:12,tempo:120,events:Array.from({length:5000},(_,i)=>({start:i%100/10,duration:.1,midi:48+i%36,velocity:.5,voice:'v'+i%16,instrument:'piano'}))};
 const start=performance.now(),large=Core.scene(crowded,{style:'geometry'});assert.ok(large.marks.length<=320);assert.equal(large.stats.voices.length,16);
+const largeScroll=Core.scene(crowded,{style:'scroll'});assert.equal(largeScroll.notes.length,5000,'scan scroll draws every note');
+for(const sample of samples){
+  const a=Core.scene(sample,{style:'scroll'}),b=Core.scene(sample,{style:'scroll'});assert.equal(a.svg,b.svg);assert.equal(a.notes.length,sample.events.length,'every note has a playback position');
+  const sorted=a.notes.slice().sort((p,q)=>p.start-q.start);for(let i=1;i<sorted.length;i++)assert.ok(sorted[i].x>=sorted[i-1].x,'time runs left to right');
+  const hi=a.notes.reduce((p,q)=>q.midi>p.midi?q:p),lo=a.notes.reduce((p,q)=>q.midi<p.midi?q:p);assert.ok(hi.y<lo.y,'higher notes sit higher');
+  assert.ok(a.families.length>0);assert.ok(Core.scene(sample,{style:'ribbons'}).notes.length>0);
+}
+const timbres=Core.scene({tempo:90,events:[{start:0,duration:1,midi:72,instrument:'bell',voice:'a'},{start:0,duration:1,midi:72,instrument:'marimba',voice:'b'},{start:0,duration:1,midi:40,instrument:'piano',voice:'c'}]},{style:'scroll',palette:'clay'});
+assert.deepEqual(timbres.families.map(f=>f.id),['marimba','bell','bass'],'timbre chooses the colour, low keys use the bass colour');
+assert.equal(Core.scene({tempo:90,events:[]},{style:'scroll'}).notes.length,0);
 const vlq=n=>{const values=[n&127];while(n>>=7)values.unshift((n&127)|128);return values;};
 const track=bytes=>Buffer.concat([Buffer.from('MTrk'),Buffer.from([0,0,bytes.length>>8,bytes.length&255]),Buffer.from(bytes)]);
 const tempo=[0,255,81,3,7,161,32,...vlq(480),255,81,3,15,66,64,0,255,47,0];
@@ -36,5 +46,5 @@ const midi=Midi.parse(fixture,'MIDI 验收');assert.equal(midi.events.length,3);
 assert.equal(note60.duration,.5,'sustain extends note to pedal release');assert.equal(note64.start,.5);assert.equal(note64.duration,1,'tempo change affects following duration');assert.equal(note64.instrument,'midi-10');assert.equal(midi.duration,2.3);
 assert.throws(()=>Midi.parse(fixture.subarray(0,20)),/不完整/);assert.throws(()=>Midi.parse(new Uint8Array(16)),/标准 MIDI/);
 const out=path.join(__dirname,'fixtures');fs.mkdirSync(out,{recursive:true});fs.writeFileSync(path.join(out,'music-art-validation.mid'),fixture);fs.writeFileSync(path.join(out,'music-art-validation.json'),JSON.stringify(samples[2],null,2)+'\n');
-const report={status:'passed',checkedOn:'2026-10-11',checks:['deterministic for the same score and visual settings','pitch, rhythm, velocity, tempo and instrument change both visual styles','different tunes produce different compositions','bridge preserves active rows and backing and discards every image field','picture-only mutations cannot change transferred music or its artwork','silent and dense scores remain bounded','MIDI tempo changes, sustain, running status, programs and truncated-file handling'],largeScoreRenderMilliseconds:Math.round(performance.now()-start),records};
+const report={status:'passed',checkedOn:'2026-10-17',checks:['deterministic for the same score and visual settings','pitch, rhythm, velocity, tempo and instrument change both visual styles','different tunes produce different compositions','bridge preserves active rows and backing and discards every image field','picture-only mutations cannot change transferred music or its artwork','silent and dense scores remain bounded','MIDI tempo changes, sustain, running status, programs and truncated-file handling','scan scroll places every note by time and pitch, colours it by timbre and stays deterministic'],largeScoreRenderMilliseconds:Math.round(performance.now()-start),records};
 fs.writeFileSync(path.join(__dirname,'music-art-core-report.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));
