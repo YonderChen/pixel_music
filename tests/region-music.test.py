@@ -61,11 +61,14 @@ for name, image in images.items():
             lane_events = sorted((e for e in main if e['row'] == lane), key=lambda e: e['start'])
             for a, b in zip(lane_events, lane_events[1:]): assert a['start'] + a['duration'] <= b['start'] + 1e-6
             if style == 'lines':
-                # One line per voice, read left to right: every note of a voice comes from the same region.
-                assert len({e['sources'][0]['regionId'] for e in lane_events}) <= 1
+                # Each voice reads its line (a main edge, continued by nearby edges) left to right.
                 xs = [e['point'][0] for e in lane_events]; assert xs == sorted(xs)
+                assert all(abs(e['bend']) <= 2 for e in lane_events if e.get('bend'))
         if style == 'lines':
             assert len({e['row'] for e in main}) <= rows and not variant['segmentation'].get('pedal')
+            # Shorter edges carry on where a main line stops: the picture is never silent for more than two beats.
+            beat = 60 / info['tempo']; ends = sorted((e['start'], e['start'] + e['duration']) for e in main); reach = ends[0][1]
+            for begin, end in ends[1:]: assert begin - reach <= 2 * beat + 1e-6, (name, method, begin, reach); reach = max(reach, end)
             if name == 'white': assert len({e['midi'] for e in main}) == 1 and main[-1]['start'] + main[-1]['duration'] > info['duration'] * .9
         print(f'{name:18s} {method:8s} {order:8s} style {style:5s} rows {rows}: {len(main):3d} notes, {sum(1 for e in main if e.get("bend")):3d} glides')
 print('passed: contour on/off, five orders (salience, gaze start, left-to-right checked),  one region owns each note, no overlaps, white is one held note; grid and line styles keep voices in order, lines read left to right')
