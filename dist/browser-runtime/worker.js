@@ -36,9 +36,9 @@ window.PixelMusicWorkerMain = function () {
     handle = py.globals.get('handle');
     assets = null; // Packages are installed in the Worker filesystem.
   }
-  async function prepareFluid(base64) {
+  async function prepareFluid(data) {
     if (!fluidReady) fluidReady = (async () => {
-      font = decode(base64);
+      font = typeof data === 'string' ? decode(data) : data;
       realImport(script('libfluidsynth.js'), script('js-synthesizer.js'));
       await JSSynth.waitForReady();
     })();

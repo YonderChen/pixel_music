@@ -21,3 +21,19 @@ vm.runInNewContext(fs.readFileSync('dist/browser-engine.js','utf8'),{window,docu
  const cancelMusic=new AbortController();const music=engine.request('/api/performance',{body:JSON.stringify({synth:'Simple',hold:true}),signal:cancelMusic.signal});await new Promise(setImmediate);cancelMusic.abort();await assert.rejects(music,{name:'AbortError'});assert.equal(workers[1].terminated,true,'cancelled art music stops the computational Worker');
  assert.equal(fetches,0);engine.reset();console.log('passed: file URL scripts, Blob Worker, lazy SoundFont, cancellation and no network fetch');
 })().catch(error=>{console.error(error);process.exitCode=1;});
+(async()=>{
+ // Served over HTTP(S): the SoundFont is fetched as a binary file and preloaded during generation.
+ const win={},fetched=[],posted=[],added=[];
+ const doc={currentScript:{src:'https://example.test/app/browser-engine.js'},createElement(){return {remove(){}};},head:{appendChild(script){added.push(script.src);const name=new URL(script.src).pathname.split('/').pop();queueMicrotask(()=>{const [key,value]=assets[name];win[key]=value;script.onload();});}}};
+ class HttpWorker{postMessage(message){posted.push(message);if(message.init)return;queueMicrotask(()=>this.onmessage({data:{id:message.id,data:{ok:true}}}));}terminate(){}}
+ win.Worker=HttpWorker;win.WebAssembly=WebAssembly;
+ const fetchFont=async url=>{fetched.push(String(url));return new Response(new Uint8Array([1,2,3]));};
+ vm.runInNewContext(fs.readFileSync('dist/browser-engine.js','utf8'),{window:win,document:doc,Worker:HttpWorker,WebAssembly,URL,Blob,Response,DOMException,fetch:fetchFont});
+ const engine=win.PixelMusicBrowser;
+ await engine.request('/api/generate',{body:JSON.stringify({options:{synth:'GeneralUser GS'}})});
+ assert.deepEqual(fetched,['https://example.test/app/browser-runtime/GeneralUser-GS.sf2'],'SoundFont preload starts with generation');
+ await engine.request('/api/performance',{body:JSON.stringify({synth:'GeneralUser GS'})});
+ assert.equal(fetched.length,1,'preloaded SoundFont is reused');assert.ok(!added.some(url=>url.endsWith('soundfont-data.js')));
+ assert.deepEqual([...posted.at(-1).font],[1,2,3],'binary SoundFont reaches the Worker');
+ console.log('passed: HTTP binary SoundFont preload');
+})().catch(error=>{console.error(error);process.exitCode=1;});
