@@ -50,7 +50,7 @@ GS 采样音源已移除（音色库 31 MiB，超过 Cloudflare 单文件 25 MiB
 
 ## Cloudflare 自动发布
 
-推送到 master 后，`.github/workflows/deploy-cloudflare.yml` 用 `wrangler deploy` 把 `dist` 原样发布到 Cloudflare Workers 静态资源（配置见根目录 `wrangler.jsonc`，地址 `pixel-music.<子域>.workers.dev`），也可在 GitHub Actions 页手动运行。需要仓库 Secrets `CLOUDFLARE_API_TOKEN`（“Edit Cloudflare Workers”模板）与 `CLOUDFLARE_ACCOUNT_ID`。Cloudflare 单个文件上限 25 MiB；`dist/_headers` 为 `browser-runtime/` 设置一天缓存，Cloudflare 会自动压缩 JavaScript。
+使用 Cloudflare 自带的 Git 集成（Workers Builds）：在 Cloudflare 后台 Workers & Pages → Create → Import a repository，连接 GitHub 并选择本仓库，项目名填 `pixel-music`（须与根目录 `wrangler.jsonc` 的 `name` 一致），构建命令留空，部署命令保持 `npx wrangler deploy`。之后每次推送 master 自动把 `dist` 原样发布到 `pixel-music.<子域>.workers.dev`，无需 API Token。Cloudflare 单个文件上限 25 MiB；`dist/_headers` 为 `browser-runtime/` 设置一天缓存，Cloudflare 会自动压缩 JavaScript。
 
 ## 本轮验证
 
