@@ -1,8 +1,8 @@
 {
-  // Static site on Cloudflare Workers; the folder is produced by scripts/prepare_cloudflare_deploy.py.
+  // dist/ is published as-is to Cloudflare Workers static assets (each file must stay under 25 MiB).
   "name": "pixel-music",
   "compatibility_date": "2026-10-01",
   "assets": {
-    "directory": "./build/cloudflare"
+    "directory": "./dist"
   }
 }

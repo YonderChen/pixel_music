@@ -9,7 +9,7 @@
   let toastTimer;
   function toast(message){clearTimeout(toastTimer);E.toast.textContent=message;E.toast.hidden=false;toastTimer=setTimeout(()=>E.toast.hidden=true,5000);}
   function audioRef(ref){
-    if(ref?.kind==='browser-score'&&['parallel','reference'].includes(ref.variant)&&['soft','original'].includes(ref.profile)&&['Simple','GeneralUser GS'].includes(ref.synth)&&ref.info?.duration>0&&ref.info.duration<=180&&Array.isArray(ref.events)&&ref.events.length<=5000&&Array.isArray(ref.voices)&&ref.voices.length<=4&&Array.isArray(ref.rows)&&ref.rows.every(r=>/^row-[0-3]$/.test(r))){
+    if(ref?.kind==='browser-score'&&['parallel','reference'].includes(ref.variant)&&['soft','original'].includes(ref.profile)&&ref.synth==='Simple'&&ref.info?.duration>0&&ref.info.duration<=180&&Array.isArray(ref.events)&&ref.events.length<=5000&&Array.isArray(ref.voices)&&ref.voices.length<=4&&Array.isArray(ref.rows)&&ref.rows.every(r=>/^row-[0-3]$/.test(r))){
       Core.normalize({duration:ref.info.duration,events:ref.events,tempo:ref.info.tempo});
       return ref;
     }

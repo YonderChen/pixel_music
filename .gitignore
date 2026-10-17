@@ -10,4 +10,3 @@ __pycache__/
 
 # Local preview server config for Claude Code.
 /.claude/launch.json
-/build/

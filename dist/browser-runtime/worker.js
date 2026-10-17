@@ -1,7 +1,7 @@
 /* The function is serialized into a Blob Worker, including when opened via file://. */
 window.PixelMusicWorkerMain = function () {
   'use strict';
-  let py, handle, scripts, assets, ready, fluidReady, font, currentSynth;
+  let py, handle, scripts, assets, ready;
   const scriptUrls = new Map();
   const realImport = self.importScripts.bind(self);
   function decode(base64) {
@@ -36,32 +36,6 @@ window.PixelMusicWorkerMain = function () {
     handle = py.globals.get('handle');
     assets = null; // Packages are installed in the Worker filesystem.
   }
-  async function prepareFluid(data) {
-    if (!fluidReady) fluidReady = (async () => {
-      font = typeof data === 'string' ? decode(data) : data;
-      realImport(script('libfluidsynth.js'), script('js-synthesizer.js'));
-      await JSSynth.waitForReady();
-    })();
-    return fluidReady;
-  }
-  self.renderGeneralUser = (bytes, duration, sr) => {
-    const synth = new JSSynth.Synthesizer();
-    try {
-      synth.init(sr, {initialGain: .45});
-      // These methods do their native work synchronously, returning resolved promises.
-      synth.loadSFont(font.buffer).catch(error => console.error(error));
-      if (!Module._fluid_synth_sfcount(synth.getRawSynthesizer())) throw new Error('GS 音色库未能加载。');
-      synth.addSMFDataToPlayer(bytes.buffer).catch(error => console.error(error));
-      synth.playPlayer().catch(error => console.error(error));
-      const frames = Math.round((duration + .8) * sr), output = new Float32Array(frames * 2);
-      for (let start = 0; start < frames; start += 1024) {
-        const size = Math.min(1024, frames - start), left = new Float32Array(size), right = new Float32Array(size);
-        synth.render([left, right]);
-        for (let i = 0; i < size; i++) {output[(start+i)*2] = left[i]; output[(start+i)*2+1] = right[i];}
-      }
-      return new Uint8Array(output.buffer);
-    } finally {synth.close();}
-  };
   let queue = Promise.resolve();
   self.onmessage = event => {
     const message = event.data;
@@ -69,10 +43,6 @@ window.PixelMusicWorkerMain = function () {
     queue = queue.then(async () => {
       try {
         await ready;
-        if (message.path === '/api/generate') currentSynth = message.data.options.synth;
-        if (message.path === '/api/performance') currentSynth = message.data.synth;
-        const audio = !['/api/health', '/api/generate'].includes(message.path);
-        if (audio && currentSynth === 'GeneralUser GS') await prepareFluid(message.font);
         const result = JSON.parse(handle(JSON.stringify({path: message.path, data: message.data})));
         if (result.file) {
           const bytes = py.FS.readFile(result.file); py.FS.unlink(result.file);

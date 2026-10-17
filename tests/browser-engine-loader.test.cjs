@@ -1,6 +1,6 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const scripts=[],workers=[];let fetches=0;
-const window={},assets={'sources-data.js':['PixelMusicRuntimeSources',{scripts:{},python:{}}],'compute-data.js':['PixelMusicComputeAssets',{}],'worker.js':['PixelMusicWorkerMain',function(){}],'soundfont-data.js':['PixelMusicSoundfontData','AQ==']};
+const window={},assets={'sources-data.js':['PixelMusicRuntimeSources',{scripts:{},python:{}}],'compute-data.js':['PixelMusicComputeAssets',{}],'worker.js':['PixelMusicWorkerMain',function(){}]};
 const document={currentScript:{src:'file:///demo/browser-engine.js'},createElement(){return {remove(){}};},head:{appendChild(script){scripts.push(script.src);const name=new URL(script.src).pathname.split('/').pop();queueMicrotask(()=>{const [key,value]=assets[name];window[key]=value;script.onload();});}}};
 class Worker{
  constructor(url){assert.ok(url.startsWith('blob:'));workers.push(this);this.messages=[];}
@@ -14,42 +14,10 @@ vm.runInNewContext(fs.readFileSync('dist/browser-engine.js','utf8'),{window,docu
  await engine.request('/api/health');assert.equal(workers.length,0,'no heavy runtime for a health probe');
  await engine.request('/api/generate',{body:JSON.stringify({options:{synth:'Simple'}})});
  assert.equal(workers.length,1);assert.ok(scripts.every(url=>url.startsWith('file:///demo/browser-runtime/')));assert.equal(fetches,0);
- await engine.request('/api/performance',{body:JSON.stringify({synth:'GeneralUser GS'})});assert.ok(scripts.some(url=>url.endsWith('soundfont-data.js')));
+ await engine.request('/api/performance',{body:JSON.stringify({synth:'Simple'})});assert.ok(!workers[0].messages.some(message=>'font' in message),'no SoundFont is sent');
  const controller=new AbortController();const pending=engine.request('/api/generate',{body:JSON.stringify({options:{synth:'Simple'},hold:true}),signal:controller.signal});
  await new Promise(setImmediate);controller.abort();await assert.rejects(pending,{name:'AbortError'});assert.equal(workers[0].terminated,true);
  await engine.request('/api/generate',{body:JSON.stringify({options:{synth:'Simple'}})});assert.equal(workers.length,2,'cancelled generation can restart');
  const cancelMusic=new AbortController();const music=engine.request('/api/performance',{body:JSON.stringify({synth:'Simple',hold:true}),signal:cancelMusic.signal});await new Promise(setImmediate);cancelMusic.abort();await assert.rejects(music,{name:'AbortError'});assert.equal(workers[1].terminated,true,'cancelled art music stops the computational Worker');
- assert.equal(fetches,0);engine.reset();console.log('passed: file URL scripts, Blob Worker, lazy SoundFont, cancellation and no network fetch');
-})().catch(error=>{console.error(error);process.exitCode=1;});
-(async()=>{
- // Served over HTTP(S): the SoundFont is fetched as a binary file and preloaded during generation.
- const win={},fetched=[],posted=[],added=[];
- const doc={currentScript:{src:'https://example.test/app/browser-engine.js'},createElement(){return {remove(){}};},head:{appendChild(script){added.push(script.src);const name=new URL(script.src).pathname.split('/').pop();queueMicrotask(()=>{const [key,value]=assets[name];win[key]=value;script.onload();});}}};
- class HttpWorker{postMessage(message){posted.push(message);if(message.init)return;queueMicrotask(()=>this.onmessage({data:{id:message.id,data:{ok:true}}}));}terminate(){}}
- win.Worker=HttpWorker;win.WebAssembly=WebAssembly;
- const fetchFont=async url=>{fetched.push(String(url));return new Response(new Uint8Array([1,2,3]));};
- vm.runInNewContext(fs.readFileSync('dist/browser-engine.js','utf8'),{window:win,document:doc,Worker:HttpWorker,WebAssembly,URL,Blob,Response,DOMException,fetch:fetchFont});
- const engine=win.PixelMusicBrowser;
- await engine.request('/api/generate',{body:JSON.stringify({options:{synth:'GeneralUser GS'}})});
- assert.deepEqual(fetched,['https://example.test/app/browser-runtime/GeneralUser-GS.sf2'],'SoundFont preload starts with generation');
- await engine.request('/api/performance',{body:JSON.stringify({synth:'GeneralUser GS'})});
- assert.equal(fetched.length,1,'preloaded SoundFont is reused');assert.ok(!added.some(url=>url.endsWith('soundfont-data.js')));
- assert.deepEqual([...posted.at(-1).font],[1,2,3],'binary SoundFont reaches the Worker');
- console.log('passed: HTTP binary SoundFont preload');
-})().catch(error=>{console.error(error);process.exitCode=1;});
-(async()=>{
- // Cloudflare deploy: the whole .sf2 is absent (25 MiB per-file cap), so the split parts are fetched and joined.
- const win={},fetched=[],posted=[],added=[];
- const doc={currentScript:{src:'https://example.test/app/browser-engine.js'},createElement(){return {remove(){}};},head:{appendChild(script){added.push(script.src);const name=new URL(script.src).pathname.split('/').pop();queueMicrotask(()=>{const [key,value]=assets[name];win[key]=value;script.onload();});}}};
- class HttpWorker{postMessage(message){posted.push(message);if(message.init)return;queueMicrotask(()=>this.onmessage({data:{id:message.id,data:{ok:true}}}));}terminate(){}}
- win.Worker=HttpWorker;win.WebAssembly=WebAssembly;
- const files={'GeneralUser-GS.sf2.parts.json':JSON.stringify(['GeneralUser-GS.sf2.part0','GeneralUser-GS.sf2.part1']),'GeneralUser-GS.sf2.part0':new Uint8Array([1,2]),'GeneralUser-GS.sf2.part1':new Uint8Array([3])};
- const fetchFont=async url=>{fetched.push(String(url));const name=new URL(url).pathname.split('/').pop();return name in files?new Response(files[name]):new Response('missing',{status:404});};
- vm.runInNewContext(fs.readFileSync('dist/browser-engine.js','utf8'),{window:win,document:doc,Worker:HttpWorker,WebAssembly,URL,Blob,Response,DOMException,fetch:fetchFont});
- const engine=win.PixelMusicBrowser;
- await engine.request('/api/generate',{body:JSON.stringify({options:{synth:'GeneralUser GS'}})});
- await engine.request('/api/performance',{body:JSON.stringify({synth:'GeneralUser GS'})});
- assert.ok(!added.some(url=>url.endsWith('soundfont-data.js')));
- assert.deepEqual([...posted.at(-1).font],[1,2,3],'joined SoundFont parts reach the Worker');
- console.log('passed: split SoundFont parts fallback');
+ assert.equal(fetches,0);engine.reset();console.log('passed: file URL scripts, Blob Worker, no SoundFont, cancellation and no network fetch');
 })().catch(error=>{console.error(error);process.exitCode=1;});

@@ -19,8 +19,6 @@ jobs:
           node-version: 22
       - name: Check browser loader
         run: node tests/browser-engine-loader.test.cjs
-      - name: Prepare static files
-        run: python3 scripts/prepare_cloudflare_deploy.py
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
         with:

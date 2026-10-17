@@ -16,7 +16,7 @@
 
 ## 静态网页版 0.7
 
-现在无需启动本机计算服务。上传完整 `dist` 文件夹即可发布；本地可双击 `dist/index.html` 或 `dist/feature-music.html`。三种保留组合、参考原谱、GS／Simple 音源、移动试听、循环和乐曲成画均使用浏览器计算。可选 `.command` 现在只打开文件。
+现在无需启动本机计算服务。上传完整 `dist` 文件夹即可发布；本地可双击 `dist/index.html` 或 `dist/feature-music.html`。三种保留组合、参考原谱、Simple 音源、移动试听、循环和乐曲成画均使用浏览器计算。可选 `.command` 现在只打开文件。
 
 [静态部署与验收说明](./STATIC_WEB_DEMO.md)。需要 ZIP 交付包时，在项目根目录按需生成：
 
