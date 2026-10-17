@@ -27,6 +27,8 @@ python3 scripts/package_browser_runtime.py --archive
 
 输出为本地 `图鸣-静态网页版.zip`，已加入 Git 忽略规则；日常提交只更新页面、资源和生成脚本。解压后上传全部文件即可发布。资源均随包提供，首次加载较大；服务器建议开启 gzip／Brotli。双击路径已做代码验证，实际浏览器双击验收仍请人工确认。
 
+同一份 `dist` 也发布为 Claude Artifact 站点。`python3 scripts/build_claude_artifact.py` 生成 `build/claude-artifact/`：拆分超过 16 MB 单文件上限的计算资源，去掉主页面的文档外壳，再把整个文件夹发布到原 Artifact 链接。Artifact 页面内无法下载文件（保存 WAV、原 MIDI、PNG／SVG 导出）。
+
 下面记录此前实验版本。旧版原生服务与 Python 脚本保留作算法对照，不再是当前网页的运行前提。原像素连绵工作台移至 `dist/pixel-music-legacy.html`。
 
 ## 新方向：乐曲成画 Demo 0.1
