@@ -66,7 +66,7 @@
     for(const el of E.rowTracks.querySelectorAll('input,button'))el.disabled=S.busy;
     E.rowCount.disabled=E.recipe.disabled=E.segmentMethod.disabled=E.segmentOrder.disabled=E.contourToggle.disabled=E.contourStyle.disabled=E.softToggle.disabled=S.busy;
     E.segmentSetting.hidden=E.orderSetting.hidden=E.contourSetting.hidden=E.softSetting.hidden=recipe().method!=='regions';
-    E.contourStyleSetting.hidden=recipe().method!=='regions'||!E.contourToggle.checked;E.segmentOrder.disabled||=E.contourToggle.checked&&E.contourStyle.value==='lines';
+    E.contourStyleSetting.hidden=recipe().method!=='regions'||!E.contourToggle.checked;E.segmentOrder.disabled||=E.contourToggle.checked&&['lines','sweep'].includes(E.contourStyle.value);
     E.hoverToggle.disabled=!S.payload||S.busy;
     E.loopToggle.disabled=!S.payload||S.busy;
     E.musicArt.setAttribute('aria-disabled',!S.payload||S.busy);
@@ -144,17 +144,18 @@
     const active=hover?value.events.filter(e=>e.id===hover.eventId):value.events.filter(e=>e.layer==='main'&&time>=e.start&&time<e.start+e.duration&&(S.mode!=='parallel'||S.enabledRows[e.row]));
     const show=!!hover||S.playing||time>0;
     // On the single path the other voices only sustain; highlight the newest region alone.
-    const lit=value.segmentation?.order==='path'&&value.segmentation.contourStyle!=='lines'&&active.length?[active.reduce((a,b)=>b.start>a.start?b:a)]:active;
+    const sweep=value.segmentation?.contour&&value.segmentation.contourStyle==='sweep';
+    const lit=value.segmentation?.order==='path'&&!['lines','sweep'].includes(value.segmentation.contourStyle)&&active.length?[active.reduce((a,b)=>b.start>a.start?b:a)]:active;
     const activeIds=new Set(hover?[hover.id]:show?lit.flatMap(e=>e.sources.map(ref=>ref.regionId)):[]);
     E.regions.querySelectorAll('button').forEach(button=>button.classList.toggle('active',activeIds.has(button.dataset.region)));
-    const segmented=segmentView();if(segmented)drawSegments(activeIds);drawContours(value,segmented,hover?value.events.filter(e=>e.id===hover.eventId):show?lit:[],hover?value.events.find(e=>e.id===hover.eventId)?.start??0:time);
+    const segmented=segmentView();if(segmented)drawSegments(sweep&&!hover?new Set():activeIds);drawContours(value,segmented,hover?value.events.filter(e=>e.id===hover.eventId):show?lit:[],hover?value.events.find(e=>e.id===hover.eventId)?.start??0:time);
     E.timeline.querySelectorAll('.note').forEach(rect=>{rect.classList.toggle('active',show&&active.some(e=>e.id===rect.dataset.event));rect.classList.toggle('muted',S.mode==='parallel'&&!S.enabledRows[Number(rect.dataset.row)]);});
     const playhead=E.timeline.querySelector('.playhead');
     if(playhead){const x=Math.min(640,(hover?hover.start:time)/S.payload.info.duration*640);playhead.setAttribute('x1',x);playhead.setAttribute('x2',x);}
     const region=hover||value.regions.find(r=>time>=r.start&&time<r.end)||value.regions.at(-1);
     const sounding=segmented&&value.regions.find(r=>activeIds.has(r.id));
-    const x=segmented&&!hover&&value.segmentation?.contourStyle==='lines'?Math.min(1,time/S.payload.info.duration):segmented?(hover||sounding)?.centroid.x??0:hover?hover.rect.x+hover.rect.width*.5:S.mode==='parallel'?Math.min(1,time/S.payload.info.duration):region?region.rect.x+region.rect.width*.5:1;
-    E.scan.style.left=`${Math.min(99.7,x*100)}%`;E.scan.classList.toggle('end',x>.9);E.scan.classList.toggle('floating',!!segmented&&value.segmentation?.contourStyle!=='lines');E.scan.hidden=!show;
+    const x=segmented&&!hover&&sweep?Math.min(1,time/(value.segmentation.sweepSeconds||S.payload.info.duration)):segmented&&!hover&&value.segmentation?.contourStyle==='lines'?Math.min(1,time/S.payload.info.duration):segmented?(hover||sounding)?.centroid.x??0:hover?hover.rect.x+hover.rect.width*.5:S.mode==='parallel'?Math.min(1,time/S.payload.info.duration):region?region.rect.x+region.rect.width*.5:1;
+    E.scan.style.left=`${Math.min(99.7,x*100)}%`;E.scan.classList.toggle('end',x>.9);E.scan.classList.toggle('floating',!!segmented&&!['lines','sweep'].includes(value.segmentation?.contourStyle));E.scan.hidden=!show;
     const lane=r=>segmented?`${r+1}声部 `:`${r+1}行 `;
     E.scanNote.textContent=hover?`${S.mode==='parallel'?lane(hover.row):''}${note(hover.midi)}`:time>=S.payload.info.duration?'余韵':active.length?active.map(e=>S.mode==='parallel'?`${lane(e.row)}${note(e.midi)}`:note(e.midi)).join(' / '):'留白';
     E.currentNote.textContent=hover?E.scanNote.textContent:show?(S.mode==='parallel'&&active.length?`${new Set(active.map(e=>e.row)).size} ${segmented?'个声部':'行'}发声`:E.scanNote.textContent):'—';
@@ -231,15 +232,15 @@
     const c=E.segments.getContext('2d'),dim=activeIds.size>0,tint=(hex,a)=>`rgba(${[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)).join()},${a})`;
     c.clearRect(0,0,w,h);c.lineJoin=c.lineCap='round';
     // With outlines taking part the sounding regions recede to a light wash: the traced edge on the contour layer leads.
-    const contour=!!g.source.contour&&dim;
+    const contour=!!g.source.contour&&dim,quiet=g.source.contour&&g.source.contourStyle==='sweep';
     if(dim){c.fillStyle=`rgba(0,0,0,${contour?.5:.32})`;c.fillRect(0,0,w,h);}
     const lit=[];regions.forEach((r,i)=>{if(activeIds.has(r.id))lit.push(i);});
     for(const i of lit){c.save();c.globalCompositeOperation='destination-out';c.fill(g.paths[i].fill);c.restore();c.fillStyle=tint(rowColors[regions[i].row%4],contour?.14:.42);c.fill(g.paths[i].fill);}
-    if(!activeIds.size&&regions[S.selected]){c.fillStyle='rgba(215,255,72,.18)';c.fill(g.paths[S.selected].fill);}
+    if(!quiet&&!activeIds.size&&regions[S.selected]){c.fillStyle='rgba(215,255,72,.18)';c.fill(g.paths[S.selected].fill);}
     c.strokeStyle=`rgba(255,255,255,${dim?contour?.18:.32:.58})`;c.lineWidth=1.1*dpr;
-    regions.forEach((r,i)=>{if(!activeIds.has(r.id)&&i!==S.selected)c.stroke(g.paths[i].stroke);});
+    regions.forEach((r,i)=>{if(!activeIds.has(r.id)&&(quiet||i!==S.selected))c.stroke(g.paths[i].stroke);});
     c.lineWidth=(contour?1.2:2.4)*dpr;
-    if(!contour&&regions[S.selected]&&!activeIds.has(regions[S.selected].id)){c.strokeStyle='#d7ff48';c.stroke(g.paths[S.selected].stroke);}
+    if(!contour&&!quiet&&regions[S.selected]&&!activeIds.has(regions[S.selected].id)){c.strokeStyle='#d7ff48';c.stroke(g.paths[S.selected].stroke);}
     for(const i of lit){c.strokeStyle=contour?tint(rowColors[regions[i].row%4],.55):rowColors[regions[i].row%4];c.stroke(g.paths[i].stroke);}
   }
   function drawSegments(activeIds=S.segment?.activeIds||new Set()){
@@ -255,7 +256,7 @@
       const p=y*w+x,l=labels[p],o=p*4;
       const edge=(x<w-1&&labels[p+1]!==l)||(y<h-1&&labels[p+w]!==l);
       if(active[l]){const c=colors[regions[l].row%4];d[o]=c[0];d[o+1]=c[1];d[o+2]=c[2];d[o+3]=contour?(edge?140:40):(edge?245:150);}
-      else if(l===S.selected&&!(contour&&dim)){d[o]=215;d[o+1]=255;d[o+2]=72;d[o+3]=edge?235:60;}
+      else if(l===S.selected&&!(contour&&dim)&&g.source.contourStyle!=='sweep'){d[o]=215;d[o+1]=255;d[o+2]=72;d[o+3]=edge?235:60;}
       else if(edge){d[o]=255;d[o+1]=255;d[o+2]=255;d[o+3]=dim?(contour?40:70):110;}
       else if(dim){d[o+3]=contour?128:80;}
     }
@@ -271,6 +272,44 @@
     for(const list of map.values())list.sort((a,b)=>a.start-b.start);
     contourNotes.set(value,map);return map;
   }
+  // Scan line: every note is a stretch of region boundary the vertical line crossed. The whole score shows faintly,
+  // what has been crossed stays drawn in the region's colour, and the crossings under the line glow with their note names.
+  function drawSweep(value,c,w,h,time,hover){
+    const u=window.devicePixelRatio||1,span=value.segmentation.sweepSeconds||S.payload.info.duration,now=hover?hover.start:time,xNow=Math.min(1,Math.max(0,now/span));
+    // Region colours are often dark; keep the hue, lift lightness and saturation so the trace reads on the picture.
+    const light=(hex,a,lift=.66)=>{const [r,g,b]=[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)/255),max=Math.max(r,g,b),min=Math.min(r,g,b),d=max-min;
+      let hue=0;if(d)hue=max===r?((g-b)/d+6)%6:max===g?(b-r)/d+2:(r-g)/d+4;
+      return `hsla(${Math.round(hue*60)},${Math.round(100*Math.max(.55,d/(1-Math.abs(max+min-1)||1)))}%,${Math.round(100*Math.max(lift,(max+min)/2))}%,${a})`;};
+    const main=value.events.filter(e=>e.layer==='main'&&e.path);
+    const trace=(points,upTo)=>{c.beginPath();let y=points[0][1];c.moveTo(points[0][0]*w,y*h);
+      for(let i=1;i<points.length;i++){const [px,py]=points[i];if(upTo!==undefined&&px>upTo){const [qx,qy]=points[i-1];y=qy+(py-qy)*Math.min(1,(upTo-qx)/Math.max(1e-6,px-qx));c.lineTo(upTo*w,y*h);return y;}c.lineTo(px*w,py*h);y=py;}
+      if(upTo!==undefined&&upTo>points.at(-1)[0])c.lineTo(upTo*w,y*h);return y;};
+    // The score ahead, faint.
+    c.setLineDash([3*u,4*u]);c.lineWidth=1.4*u;
+    for(const e of main){if(!hover&&e.start<=now)continue;c.strokeStyle=light(e.color,.4);trace(e.path);c.stroke();}
+    c.setLineDash([]);
+    const heads=[];
+    for(const e of main){
+      if(hover?e!==hover:e.start>now)continue;
+      const sounding=hover?true:now<e.start+e.duration;
+      if(!sounding){trace(e.path);c.strokeStyle='rgba(10,14,8,.45)';c.lineWidth=4.4*u;c.stroke();c.strokeStyle=light(e.color,.9,.62);c.lineWidth=2.4*u;c.stroke();continue;}
+      const x=hover?e.path.at(-1)[0]:Math.max(e.path[0][0],xNow);
+      c.save();c.shadowColor=light(e.color,1);c.shadowBlur=14*u;c.strokeStyle=light(e.color,1);c.lineWidth=4.5*u;const y=trace(e.path,hover?undefined:x);c.stroke();c.restore();
+      c.strokeStyle='rgba(255,255,255,.85)';c.lineWidth=1.3*u;trace(e.path,hover?undefined:x);c.stroke();
+      heads.push({e,x:hover?e.point[0]:x,y:hover?e.point[1]:y});
+    }
+    // Onsets: a small mark where each note began.
+    for(const e of main){if(hover||e.start>now)continue;c.fillStyle=light(e.color,.9);c.beginPath();c.arc(e.path[0][0]*w,e.path[0][1]*h,2.2*u,0,Math.PI*2);c.fill();}
+    c.font=`600 ${11*u}px ui-monospace,monospace`;c.textBaseline='middle';
+    for(const {e,x,y} of heads){
+      const px=x*w,py=y*h,age=Math.min(1,(now-e.start)/.6);
+      if(!hover&&age<1){c.strokeStyle=light(e.color,1-age);c.lineWidth=2*u;c.beginPath();c.arc(px,py,6*u+18*u*age,0,Math.PI*2);c.stroke();}
+      c.save();c.shadowColor='#fff';c.shadowBlur=10*u;c.fillStyle=light(e.color,1);c.beginPath();c.arc(px,py,6*u,0,Math.PI*2);c.fill();c.restore();
+      c.strokeStyle='#fff';c.lineWidth=2*u;c.stroke();
+      const text=note(e.midi),tw=c.measureText(text).width+10*u,th=17*u,lx=px+tw+14*u>w?px-tw-10*u:px+10*u;
+      c.fillStyle=light(e.color,.95,.8);c.fillRect(lx,py-th/2,tw,th);c.fillStyle='#151b12';c.fillText(text,lx+5*u,py+.5*u);
+    }
+  }
   function drawContours(value,segmented,sounding,time){
     const layer=E.contourLayer;if(!layer)return;
     const on=!!segmented&&!!value.segmentation?.contour;layer.hidden=!on;if(!on)return;
@@ -284,6 +323,7 @@
     const preview=!ids.length&&!S.playing&&value.regions[S.selected]?.contour;
     if(preview)ids.push(value.regions[S.selected].id);
     c.lineJoin=c.lineCap='round';const lines=value.segmentation.contourStyle==='lines';
+    if(value.segmentation.contourStyle==='sweep')return drawSweep(value,c,w,h,time,sounding.length===1&&E.hoverToggle.checked&&S.hoverIndex!=null?sounding[0]:null);
     const tint=(hex,a)=>`rgba(${[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)).join()},${a})`;
     for(const id of ids){
       const r=byId.get(id);if(!r?.contour||r.contour.length<2)continue;
@@ -360,11 +400,11 @@
     E.referenceMode.setAttribute('aria-pressed',S.mode==='reference');
     E.parallelMode.setAttribute('aria-pressed',S.mode==='parallel');E.parallelControls.hidden=S.mode!=='parallel';
     const seg=S.mode==='parallel'&&value.segmentation;
-    E.mappingLabel.textContent=seg?`${seg.regionCount} 个区域 · ${seg.methodName} · ${seg.contourStyle==='lines'?seg.contourStyleName:seg.orderName}`:S.mode==='parallel'?`${value.rows} 行 × ${value.cols} 列 · 横向叠奏`:'参考原谱 · 原项目条带采样';
+    E.mappingLabel.textContent=seg?`${seg.regionCount} 个区域 · ${seg.methodName} · ${['lines','sweep'].includes(seg.contourStyle)?seg.contourStyleName:seg.orderName}`:S.mode==='parallel'?`${value.rows} 行 × ${value.cols} 列 · 横向叠奏`:'参考原谱 · 原项目条带采样';
     prepareSegments(seg);
     E.key.textContent=`${(S.mode==='parallel'&&(value.arrangement||value.harmony)?.key)||info.key_name} · ${{'Major pentatonic':'大调五声','Minor pentatonic':'小调五声','Major':'大调','Natural minor':'自然小调','Dorian':'多利亚','Lydian':'利底亚'}[info.scale_name]||info.scale_name}`;
     E.tempo.textContent=`${info.tempo.toFixed(1)} BPM`;E.noteCount.textContent=`${value.mainCount} 个${pitchMappedView()?'音高片段':'音符'}`;E.duration.textContent=`${info.duration.toFixed(1)} 秒＋余韵`;
-    E.mappingHint.textContent=seg?`${seg.orderHint}${seg.contour&&seg.contourStyle==='lines'?'':seg.contour&&seg.contourStyle==='grid'?' 轮廓参与 · 量化取样：边缘按八分音符格逐格读取高度，越长奏得越久，起伏越密音越多，相邻一级的缓坡用滑音连过去（滑音需柔和合成混音）；形状仍决定连奏或断奏、音色与起音。':seg.contour?' 轮廓参与：边缘起伏成旋律动机（图上虚线是被读取的边缘，点线是区域本音，竖线是每个音被边缘抬高或压低多少，亮线随演奏描过边缘），圆润/尖锐决定连奏或断奏与音色，边缘软硬决定起音，斜向伸展滑音、内凹加倚音，被包围的区域由外层给出持续低音。':''} 当前 ${seg.methodName}，共 ${seg.regionCount} 个区域；区域越大音越长，伴奏由实际音符推出和声铺底。`:S.mode==='parallel'?`各行独立分析并从左到右同时演奏；${recipe().hint} 整体伴奏只保留一份。`:'直接运行 Photo Sonification 原始分析、编曲和音源；参考原谱未重新改写旋律。';
+    E.mappingHint.textContent=seg?`${seg.orderHint}${seg.contour&&['lines','sweep'].includes(seg.contourStyle)?'':seg.contour&&seg.contourStyle==='grid'?' 轮廓参与 · 量化取样：边缘按八分音符格逐格读取高度，越长奏得越久，起伏越密音越多，相邻一级的缓坡用滑音连过去（滑音需柔和合成混音）；形状仍决定连奏或断奏、音色与起音。':seg.contour?' 轮廓参与：边缘起伏成旋律动机（图上虚线是被读取的边缘，点线是区域本音，竖线是每个音被边缘抬高或压低多少，亮线随演奏描过边缘），圆润/尖锐决定连奏或断奏与音色，边缘软硬决定起音，斜向伸展滑音、内凹加倚音，被包围的区域由外层给出持续低音。':''} 当前 ${seg.methodName}，共 ${seg.regionCount} 个区域；区域越大音越长，伴奏由实际音符推出和声铺底。`:S.mode==='parallel'?`各行独立分析并从左到右同时演奏；${recipe().hint} 整体伴奏只保留一份。`:'直接运行 Photo Sonification 原始分析、编曲和音源；参考原谱未重新改写旋律。';
     E.regions.style.gridTemplateColumns=`repeat(${value.cols},1fr)`;E.regions.style.gridTemplateRows=`repeat(${value.rows},1fr)`;
     E.regions.classList.toggle('parallel',S.mode==='parallel');
     E.regions.innerHTML=seg?'':value.regions.map((r,i)=>`<button type="button" class="region" data-index="${i}" data-region="${r.id}" style="grid-column:${r.col+1};grid-row:${r.row+1};--voice-color:${rowColors[r.row%4]}" aria-label="列 ${r.col+1} 区域 ${r.row+1}，${note(r.midi)}" title="${note(r.midi)}"></button>`).join('');
