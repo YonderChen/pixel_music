@@ -305,11 +305,13 @@
     c.font=`600 ${11*u}px ui-monospace,monospace`;c.textBaseline='middle';
     for(const {e,x,y} of heads){
       const px=x*w,py=y*h,age=Math.min(1,(now-e.start)/.6);
+      // The point dims as the struck note dies away, so a held, fading note no longer looks as loud as a new one.
+      const level=hover?1:Math.max(.3,Math.exp(-(now-e.start)/1.1));
       if(!hover&&age<1){c.strokeStyle=light(e.color,1-age);c.lineWidth=2*u;c.beginPath();c.arc(px,py,6*u+18*u*age,0,Math.PI*2);c.stroke();}
-      c.save();c.shadowColor='#fff';c.shadowBlur=10*u;c.fillStyle=light(e.color,1);c.beginPath();c.arc(px,py,6*u,0,Math.PI*2);c.fill();c.restore();
-      c.strokeStyle='#fff';c.lineWidth=2*u;c.stroke();
+      c.save();c.shadowColor='#fff';c.shadowBlur=10*u*level;c.fillStyle=light(e.color,level);c.beginPath();c.arc(px,py,(4+2*level)*u,0,Math.PI*2);c.fill();c.restore();
+      c.strokeStyle=`rgba(255,255,255,${level})`;c.lineWidth=2*u;c.stroke();
       const text=note(e.midi),tw=c.measureText(text).width+10*u,th=17*u,lx=px+tw+14*u>w?px-tw-10*u:px+10*u;
-      c.fillStyle=light(e.color,.95,.8);c.fillRect(lx,py-th/2,tw,th);c.fillStyle='#151b12';c.fillText(text,lx+5*u,py+.5*u);
+      c.fillStyle=light(e.color,.35+.6*level,.8);c.fillRect(lx,py-th/2,tw,th);c.fillStyle='#151b12';c.fillText(text,lx+5*u,py+.5*u);
     }
   }
   function drawContours(value,segmented,sounding,time){

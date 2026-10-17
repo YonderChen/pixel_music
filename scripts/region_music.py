@@ -30,8 +30,7 @@ LINE_PIECE = .06  # shorter edges than this never sing
 LINE_NEAR = .3  # a continuing edge stays within this share of the picture height of its voice
 LINE_BRIDGE = 4  # grid cells: a shorter break in a line holds the previous note
 SWEEP_STEP = .5  # beats: the scan line reads one column per eighth note
-SWEEP_CONTRAST = 14.  # Lab distance: fainter boundaries than this between two regions stay silent
-SWEEP_GAP = .07  # crossings closer than this share of the picture height count as one
+SWEEP_MATCH = .035  # share of the picture height: a crossing this close to last column's one continues it
 SWEEP_HOLD = .6  # scale steps a crossing may drift before it plays a new note
 SWEEP_BRIDGE = 2  # grid cells: a boundary the line loses for a moment keeps its note
 ORDERS = {'gaze': '视线游走', 'tiers': '显著度分层', 'scan': '从左到右', 'path': '全图一条路径', 'salience': '纯显著度'}
@@ -41,7 +40,7 @@ ORDER_HINTS = {
     'scan': '每个声部从左到右依次发声；越醒目的区域越响、越长。',
     'path': '全图只有一条视线游走路径，当前区域在自己的声部发声，其他声部延续各自上一个音形成和声。',
     'salience': '每个声部严格按显著度从高到低发声，不考虑位置。'}
-SWEEP_HINT = '扫描线：一条竖线从左到右扫过整幅画，不分声部也不分行；竖线每碰到一条区域分界线就发一个音，碰到几条就同时响几个音。分界线越高音越高（三个八度，吸附到音阶），分界线起伏，旋律就跟着起伏；分界两侧颜色差越大越响，分界下方区域的颜色决定音色（暖色暖键、黄色木琴、绿色和紫色拨弦、蓝色轻铃，低音区用柔低音）。"分行"在这种方式下不起作用。'
+SWEEP_HINT = '扫描线：一条竖线从左到右扫过整幅画，不分声部也不分行；竖线碰到的每一条区域分界线都发音，碰到几条就同时响几个音（只有落在同一个音阶音上的两个交点合成一个）。分界线越高音越高（三个八度，吸附到音阶）；沿同一条分界线走、高度变化不大时延长原音，扫过区域侧边换到新的分界、高度明显变化或到新的一小节时重新起音。分界两侧颜色差越大越响，分界下方区域的颜色决定音色（暖色暖键、黄色木琴、绿色和紫色拨弦、蓝色轻铃，低音区用柔低音）。"分行"在这种方式下不起作用。'
 LINES_HINT = '线条演奏：选出画面里最长、最清晰的几条边缘作主线，主线断开处由附近高度的较短边缘接续，播放线从左到右扫过，横向位置是时间，边缘的高低是音高（三个八度，吸附到音阶），平缓的坡在音尾短暂滑音；不再按区域顺序发声。'
 # Used by the reference-engine mix and the painting page; the soft mix uses voicePreset.
 GS_LANES = {2: [0, 32], 3: [11, 0, 32], 4: [11, 0, 46, 32]}
@@ -377,18 +376,19 @@ def build(analysis, info, options, engine):
         cells = int(round(total / SWEEP_STEP))
         cut = np.linspace(0, W, cells + 1).round().astype(int)
         lab = [np.array(part['meanLab']) for part in parts]
-        gap = max(2, int(round(SWEEP_GAP * H)))
+        gap = max(2, int(round(SWEEP_MATCH * H)))
+        level_of = lambda y: (1 - y / (H - 1)) * (len(span_scale) - 1)
         def crossings(x):
+            # Every boundary the line crosses sounds; the colour difference across it only sets how loud.
             column = labels[:, x]; found = []
             for y in np.nonzero(column[:-1] != column[1:])[0]:
-                a, b = int(column[y]), int(column[y + 1]); strength = float(np.linalg.norm(lab[a] - lab[b]))
-                if strength >= SWEEP_CONTRAST: found.append((int(y), a, b, strength))
-            # Near crossings merge into the clearest one; every other crossing sounds.
-            kept = []
-            for c in sorted(found, key=lambda c: -c[3]):
-                if all(abs(c[0] - k[0]) >= gap for k in kept): kept.append(c)
-            return kept
-        level_of = lambda y: (1 - y / (H - 1)) * (len(span_scale) - 1)
+                a, b = int(column[y]), int(column[y + 1]); found.append((int(y), a, b, float(np.linalg.norm(lab[a] - lab[b]))))
+            # Two crossings that land on the same scale step would be one pitch anyway: the clearer one plays it.
+            kept = {}
+            for c in found:
+                step = int(round(level_of(c[0])))
+                if step not in kept or c[3] > kept[step][3]: kept[step] = c
+            return sorted(kept.values())
         # Each boundary the line follows is a thread; a thread holds its note while the crossing stays near its pitch.
         threads, finished, made = [], [], 0
         for k in range(cells):
@@ -400,11 +400,13 @@ def build(analysis, info, options, engine):
                 level = level_of(y)
                 if t is not None:
                     taken.add(id(t)); t['y'] = y
-                    restrike = (k * SWEEP_STEP) % 4 == 0 and t['first'] < k
+                    # Holding on along one boundary keeps the note; a new boundary (the line passed a region's side),
+                    # a clear change of height or a new bar strikes again.
+                    restrike = (k * SWEEP_STEP) % 4 == 0 and t['first'] < k or (t['upper'], t['region']) != (a, b)
                     if abs(level - t['level']) <= SWEEP_HOLD and not restrike:
                         t['end'] = k + 1; t['path'].append(point(y)); continue
                     finished.append(dict(t)); same = abs(level - t['level']) <= SWEEP_HOLD
-                    start_point = t['path'][-1] if t['end'] == k and abs(t['path'][-1][1] - (y + .5) / H) <= SWEEP_GAP else [cut[k] / W, (y + .5) / H]
+                    start_point = t['path'][-1] if t['end'] == k and abs(t['path'][-1][1] - (y + .5) / H) <= 2 * SWEEP_MATCH else [cut[k] / W, (y + .5) / H]
                     t.update(level=t['level'] if same else int(round(level)), first=k, end=k + 1, region=b, upper=a, strength=strength,
                         path=[start_point, point(y)])
                 else:
@@ -424,10 +426,11 @@ def build(analysis, info, options, engine):
         by_thread = {}
         for t in sorted(finished, key=lambda t: (t['thread'], t['first'])): by_thread.setdefault(t['thread'], []).append(t)
         for runs in by_thread.values():
-            # A crossing heard for a single eighth joins the note before it on the same boundary, so it does not chatter.
+            # A single-eighth wobble in height along the same boundary joins the note before it, so it does not chatter.
             merged = []
             for run in runs:
-                if merged and run['end'] - run['first'] < 2 and merged[-1]['end'] == run['first']:
+                if merged and run['end'] - run['first'] < 2 and merged[-1]['end'] == run['first'] \
+                        and (run['upper'], run['region']) == (merged[-1]['upper'], merged[-1]['region']):
                     merged[-1]['end'] = run['end']; merged[-1]['path'] += [[px, merged[-1]['path'][-1][1]] for px, _ in run['path'][1:]]
                 else: merged.append(run)
             for k, run in enumerate(merged):
@@ -441,7 +444,7 @@ def build(analysis, info, options, engine):
                     'rowId': 'row-0', 'row': 0, 'voicePreset': preset, 'timbre': family, 'coverageEnd': end * SWEEP_STEP * beat,
                     'step': len(notes), 'sources': [{'regionId': regions[i]['id'], 'rect': regions[i]['rect']}],
                     'start': run['first'] * SWEEP_STEP * beat, 'duration': (end - run['first']) * SWEEP_STEP * beat * .96, 'midi': pitch,
-                    'velocity': float(np.clip(.38 + .45 * min(1., run['strength'] / 60), .3, .85)),
+                    'velocity': float(np.clip(.32 + .5 * min(1., run['strength'] / 50), .3, .85)),
                     'toneScale': float(.7 + .6 * f['saturation'] * min(1., .4 + f['brightness'])),
                     'attackScale': float(min(1.5, 2 ** (1.5 - 3 * f.get('edgeSharpness', .5)))),
                     'point': run['path'][1], 'path': [[round(px, 4), round(py, 4)] for px, py in run['path']],
