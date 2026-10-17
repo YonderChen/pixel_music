@@ -42,7 +42,8 @@ for name, image in images.items():
             if name == 'white':
                 assert len(variant['regions']) == 1 and len(main) == 1 and main[0]['duration'] > info['duration'] * .9
             print(f'{name:18s} {method:8s} {order:8s} contour {contour!s:5s} rows {rows}: {len(variant["regions"]):3d} regions, {len(main):3d} notes, chords {"→".join(variant["harmony"]["progression"])}')
-# The two outline styles added for comparison: edge read on a quantize grid, and the main edges read as lines.
+sweep_reference = {}
+# The outline styles added for comparison: edge read on a quantize grid, and the main edges read as lines.
 for name, image in images.items():
     for method, order, style, rows in [(m, o, s, r) for m in ('grow', 'quadtree', 'slic') for o in ('gaze', 'path') for s in ('grid', 'lines', 'sweep') for r in (2, 4)]:
         payload, context = engine.prepare_scores(image, {'rowCount': rows, 'rowMethod': 'regions', 'segmentMethod': method, 'segmentOrder': order,
@@ -57,10 +58,10 @@ for name, image in images.items():
             assert any(n['id'] == region['eventId'] for n in main) and region['start'] - 1e-6 <= e['start'] < region['end'] + 1e-6
             # A glide ends on the next note of its voice, one scale step away.
             if e.get('bend'): assert abs(e['bend']) <= 3
-        for lane in range(rows):
+        for lane in range(rows if style != 'sweep' else 0):
             lane_events = sorted((e for e in main if e['row'] == lane), key=lambda e: e['start'])
             for a, b in zip(lane_events, lane_events[1:]): assert a['start'] + a['duration'] <= b['start'] + 1e-6
-            if style in ('lines', 'sweep'):
+            if style == 'lines':
                 # Each voice reads its line (a main edge, continued by nearby edges) left to right.
                 xs = [e['point'][0] for e in lane_events]; assert xs == sorted(xs)
                 assert all(abs(e['bend']) <= 2 for e in lane_events if e.get('bend'))
@@ -70,7 +71,13 @@ for name, image in images.items():
             for e in main:
                 xs = [p[0] for p in e['path']]; assert xs == sorted(xs) and e['color'].startswith('#')
                 assert abs(xs[0] - e['start'] / span) <= .01, (name, method, e['start'], xs[0])
-            assert not variant['segmentation'].get('pedal') and len({e['row'] for e in main}) <= rows
+            # No rows: one track, chords wherever several boundaries cross the line; the row count does not change the music.
+            assert not variant['segmentation'].get('pedal') and variant['rows'] == 1 and len(variant['voices']) == 1
+            assert all(e['row'] == 0 and e['rowId'] == 'row-0' and 0 <= e['voicePreset'] <= 4 for e in main)
+            assert all(abs(e['bend']) <= 2 for e in main if e.get('bend'))
+            notes = sorted((e['start'], e['midi'], e['instrument']) for e in main)
+            if rows == 2: sweep_reference[(name, method, order)] = notes
+            else: assert notes == sweep_reference[(name, method, order)], (name, method, 'row count must not change the scan line')
             if name == 'white': assert len(main) == 1
         if style == 'lines':
             assert len({e['row'] for e in main}) <= rows and not variant['segmentation'].get('pedal')
@@ -79,4 +86,4 @@ for name, image in images.items():
             for begin, end in ends[1:]: assert begin - reach <= 2 * beat + 1e-6, (name, method, begin, reach); reach = max(reach, end)
             if name == 'white': assert len({e['midi'] for e in main}) == 1 and main[-1]['start'] + main[-1]['duration'] > info['duration'] * .9
         print(f'{name:18s} {method:8s} {order:8s} style {style:5s} rows {rows}: {len(main):3d} notes, {sum(1 for e in main if e.get("bend")):3d} glides')
-print('passed: contour on/off, five orders (salience, gaze start, left-to-right checked),  one region owns each note, no overlaps, white is one held note; grid, line and scan-line styles keep voices in order, lines and the scan line read left to right')
+print('passed: contour on/off, five orders (salience, gaze start, left-to-right checked),  one region owns each note, no overlaps, white is one held note; grid and line styles keep voices in order, lines read left to right, the scan line plays every crossing on one track')

@@ -687,7 +687,7 @@ def render_score(records, info, synth):
 
 def soft_voice_names(events, voices):
     # A voice's own preset wins, so a silent voice still shows its intended timbre.
-    return [soft_row_mixer.VOICES[v['voicePreset'] if 'voicePreset' in v else soft_row_mixer.preset_index([e for e in events if e.get('rowId')==v['id']],i)]['name']
+    return [v['softName'] if 'softName' in v else soft_row_mixer.VOICES[v['voicePreset'] if 'voicePreset' in v else soft_row_mixer.preset_index([e for e in events if e.get('rowId')==v['id']],i)]['name']
         for i,v in enumerate(voices)]
 
 def render_soft_rows(context, background_wav=None):
