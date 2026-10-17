@@ -27,6 +27,8 @@
 
 ## 资源与部署
 
+图片演奏页与乐曲成画页共用 `ui.css`（配色、字体、按钮、开关等组件），各自的版式分别在 `studio.css` 与 `music-art.css`；`sonification.css` 只服务旧的条带声化 Demo。品牌图标与分享资源为 `favicon.svg`、`icon-192.png`、`icon-512.png`、`icon-maskable-512.png`、`apple-touch-icon.png`、`og-image.png` 和 `site.webmanifest`。
+
 当前 `dist` 同时包含手写 HTML／CSS／JavaScript 页面、第三方运行资源和生成文件，仍作为开发与部署目录提交。`index.html` 是 `feature-music.html` 的副本；`music-art-classics.js` 由古典 MIDI 文件与清单生成；浏览器运行时的 `compute-data.js`、`soundfont-data.js`、`sources-data.js` 和 `manifest.json` 由打包脚本生成。
 
 日常修改页面可直接预览。修改古典 MIDI 清单或文件后，运行 `node scripts/package_classical_midi.cjs`；修改浏览器运行时所用 Python 算法或第三方资源后，运行 `python3 scripts/package_browser_runtime.py`。后者默认只重建运行资源，不生成 ZIP。

@@ -2,41 +2,57 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="把音乐的旋律、节奏与声部组织成一幅抽象画。图鸣本地音乐绘画实验。">
   <title>图鸣 · 乐曲成画</title>
-  <link rel="stylesheet" href="./music-art.css">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%2716%27 fill=%27%235b7767%27/%3E%3Cpath d=%27M7 22Q14 4 25 16M7 25Q16 11 24 22%27 stroke=%27%23f2ecdc%27 fill=%27none%27/%3E%3C/svg%3E">
+  <meta name="description" content="把音乐的旋律、节奏与声部组织成一幅抽象画。支持 MIDI、乐谱 JSON 和图鸣生成的乐曲，全部在浏览器里完成。">
+  <meta name="theme-color" content="#f4f1ea">
+  <meta property="og:type" content="website"><meta property="og:site_name" content="图鸣 Pixel Music"><meta property="og:title" content="图鸣 · 乐曲成画">
+  <meta property="og:description" content="让旋律成为线条，让节奏留下形状：把一首乐曲画成一幅抽象画。">
+  <meta property="og:image" content="./og-image.png"><meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml"><link rel="icon" href="./icon-192.png" type="image/png" sizes="192x192"><link rel="apple-touch-icon" href="./apple-touch-icon.png"><link rel="manifest" href="./site.webmanifest">
+  <link rel="stylesheet" href="./ui.css?v=1"><link rel="stylesheet" href="./music-art.css?v=2">
 </head>
 <body>
+  <svg class="sr-only" aria-hidden="true" focusable="false"><defs>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V4m0 0L7.5 8.5M12 4l4.5 4.5M5 15v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 15v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/></symbol>
+    <symbol id="i-restart" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4.5h4.5"/></symbol>
+    <symbol id="i-brush" viewBox="0 0 24 24"><path d="M14.5 4.5l5 5L11 18H6v-5l8.5-8.5zM12.5 6.5l5 5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M8 16L16 8m0 0H9m7 0v7"/></symbol>
+    <symbol id="i-cursor" viewBox="0 0 24 24"><path d="M5 4l13 6.5-5.5 1.5L10.5 18 5 4z"/></symbol>
+  </defs></svg>
   <main class="shell">
-    <header class="topbar"><a class="brand" href="./feature-music.html#parallel">图鸣 <small>PIXEL MUSIC</small></a><nav><a href="./feature-music.html#parallel">← 图片演奏</a><span>乐曲成画 · 实验 0.1</span></nav></header>
-    <section class="intro"><div><p class="eyebrow">MUSIC → FORM → ART</p><h1>听一首曲，<em>留一幅画。</em></h1></div><p>让旋律成为线条，让节奏留下形状。<br>把一首乐曲的秩序，放进同一张画面。</p></section>
+    <header class="topbar">
+      <a class="brand" href="./feature-music.html#parallel" aria-label="图鸣 Pixel Music 首页"><svg class="brand-logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#17181a"/><g fill="#d7ff48"><rect x="5.75" y="22" width="4" height="4" rx="1"/><rect x="11.25" y="22" width="4" height="4" rx="1"/><rect x="11.25" y="16.5" width="4" height="4" rx="1"/><rect x="11.25" y="11" width="4" height="4" rx="1"/><rect x="22.25" y="22" width="4" height="4" rx="1"/><rect x="22.25" y="16.5" width="4" height="4" rx="1"/></g><g fill="#f36343"><rect x="5.75" y="16.5" width="4" height="4" rx="1"/><rect x="11.25" y="5.5" width="4" height="4" rx="1"/><rect x="16.75" y="22" width="4" height="4" rx="1"/><rect x="22.25" y="11" width="4" height="4" rx="1"/></g></svg>图鸣 <small>PIXEL MUSIC</small></a>
+      <nav class="site-nav" aria-label="主要功能"><a href="./feature-music.html#parallel">图片演奏</a><a href="./music-art.html" aria-current="page">乐曲成画</a></nav>
+      <span class="privacy"><i></i><span>乐曲与画作仅在本机处理</span></span>
+    </header>
+    <section class="intro"><div><p class="eyebrow">Music → Form → Art</p><h1>听一首曲，<em>留一幅画。</em></h1></div><p class="intro-copy">让旋律成为线条，让节奏留下形状。<br>把一首乐曲的秩序，放进同一张画面。</p></section>
     <section class="workspace" aria-label="音乐绘画工作台">
       <div class="gallery">
         <div class="work-heading"><span id="artTitle">缓慢的回声</span><span id="artEdition">曲线色层 / 01</span></div>
         <div class="frame"><div id="artwork"></div><svg id="listeningOverlay" viewBox="0 0 1200 900" aria-hidden="true"></svg></div>
         <div class="work-caption"><span id="paletteName">陶土与青绿</span><span id="musicSignature">—</span></div>
-        <div class="player"><button id="play" class="primary" type="button"><span id="playIcon">▶</span><span id="playText">聆听这首乐曲</span></button><button id="restart" class="quiet" type="button" aria-label="从头播放">↺</button><label><input id="loop" type="checkbox">循环</label><output id="clock">00:00 / 00:20</output></div>
+        <div class="player"><button id="play" class="primary" type="button"><span id="playIcon" class="play-icon" aria-hidden="true">▶</span><span id="playText">聆听这首乐曲</span></button><button id="restart" class="quiet" type="button" aria-label="从头播放" title="从头播放"><svg class="icon" aria-hidden="true"><use href="#i-restart"/></svg></button><label class="switch-label"><input id="loop" type="checkbox">循环</label><output id="clock">00:00 / 00:20</output></div>
         <label class="sr-only" for="seek">播放进度</label><input id="seek" class="seek" type="range" min="0" max="20" step="0.01" value="0">
         <p id="playStatus" class="play-status" role="status">画作已完成，点击播放可对照音乐。</p>
       </div>
       <aside class="controls">
-        <p class="eyebrow">YOUR MUSIC, YOUR COMPOSITION</p><h2>让音乐决定形态</h2>
+        <p class="eyebrow">Your music, your composition</p><h2>让音乐决定形态</h2>
         <label class="field-label" for="score">选择乐曲</label><select id="score"></select><p id="sourceHint" class="hint">三首样曲用不同的旋律与节奏作对照。</p>
         <p id="classicalSource" class="hint compact" hidden><a id="midiSource" target="_blank" rel="noopener noreferrer">乐谱来源</a> · <a id="midiOriginal">下载原始 MIDI（完整曲）</a><br><span id="midiCredit"></span><a id="midiLicense" target="_blank" rel="noopener noreferrer"></a></p>
-        <div class="import-row"><label class="import" for="midi">↑ 导入 MIDI</label><input id="midi" type="file" accept=".mid,.midi,audio/midi,audio/x-midi" class="sr-only"><label class="import" for="json">↑ 导入乐谱 JSON</label><input id="json" type="file" accept=".json,application/json" class="sr-only"></div>
+        <div class="import-row"><label class="import btn" for="midi"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>导入 MIDI</label><input id="midi" type="file" accept=".mid,.midi,audio/midi,audio/x-midi" class="sr-only"><label class="import btn" for="json"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>导入乐谱 JSON</label><input id="json" type="file" accept=".json,application/json" class="sr-only"></div>
         <p class="hint compact">也可从「图片演奏」把当前乐曲送入。此版支持乐谱与 MIDI，最长 3 分钟。</p>
-        <fieldset><legend>画面风格</legend><div class="style-tabs"><button id="ribbons" type="button" aria-pressed="true"><span class="style-icon">≋</span>曲线色层<small>线条交织，流动与留白</small></button><button id="geometry" type="button" aria-pressed="false"><span class="style-icon">◒</span>几何色块<small>形态重复，疏密与呼应</small></button></div></fieldset>
+        <fieldset><legend>画面风格</legend><div class="style-tabs"><button id="ribbons" type="button" aria-pressed="true"><svg class="style-icon" viewBox="0 0 40 24" aria-hidden="true"><path d="M2 16C10 2 18 2 24 10s12 8 14-2M2 21C10 8 18 8 24 15s12 6 14-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>曲线色层<small>线条交织，流动与留白</small></button><button id="geometry" type="button" aria-pressed="false"><svg class="style-icon" viewBox="0 0 40 24" aria-hidden="true"><circle cx="10" cy="12" r="8" fill="currentColor" opacity=".85"/><rect x="18" y="4" width="10" height="16" rx="1.5" fill="currentColor" opacity=".55"/><path d="M31 20l5-16 3 16z" fill="currentColor" opacity=".35"/></svg>几何色块<small>形态重复，疏密与呼应</small></button></div></fieldset>
         <div class="fields"><div><label class="field-label" for="palette">配色</label><select id="palette"><option value="auto">由乐曲选择</option><option value="clay">陶土与青绿</option><option value="blue">靛蓝与雾紫</option><option value="moss">苔绿与麦金</option></select></div><div><label class="field-label" for="detail">细节</label><select id="detail"><option value=".3">简约</option><option value=".6" selected>均衡</option><option value="1">丰富</option></select></div></div>
-        <button id="arrange" type="button" class="arrange">↻ 换个构图 <span>同一首曲，另一种安排</span></button>
+        <button id="arrange" type="button" class="arrange"><svg class="icon" aria-hidden="true"><use href="#i-restart"/></svg>换个构图 <span>同一首曲，另一种安排</span></button>
         <div class="audio-choice" id="audioChoice" hidden><label class="field-label" for="audioMode">试听音源</label><select id="audioMode"><option value="original">送入时的原乐曲音源</option><option value="synth">乐谱合成试听</option></select></div>
         <dl class="metrics"><div><dt>音符</dt><dd id="noteCount">—</dd></div><div><dt>声部</dt><dd id="voiceCount">—</dd></div><div><dt>速度</dt><dd id="tempo">—</dd></div><div><dt>音高范围</dt><dd id="pitchRange">—</dd></div></dl>
-        <div class="exports"><button id="png" class="primary" type="button">↓ 保存 PNG</button><a id="svg" href="#" download>SVG</a><button id="saveScore" type="button">乐谱</button></div><p class="hint compact">保存完整静态画作，不包含播放标记。</p>
-        <div id="exportResult" class="export-result" hidden><a id="pngFile" href="#" download>PNG 已生成 · 点击再次保存 ↗</a><img id="exportPreview" alt="完整静态画作导出预览"><p>2400 × 1800 · 也可右键图片保存</p></div>
+        <div class="exports"><button id="png" class="primary" type="button"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>保存 PNG</button><a id="svg" class="btn" href="#" download>SVG</a><button id="saveScore" class="btn" type="button">乐谱</button></div><p class="hint compact">保存完整静态画作，不包含播放标记。</p>
+        <div id="exportResult" class="export-result" hidden><a id="pngFile" href="#" download><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>PNG 已生成 · 点击再次保存</a><img id="exportPreview" alt="完整静态画作导出预览"><p>2400 × 1800 · 也可右键图片保存</p></div>
       </aside>
     </section>
     <section class="explanation"><div><p class="eyebrow">WHAT YOU HEAR, WHAT YOU SEE</p><h3>画里，保留音乐的关系。</h3><p>高低音改变形态的伸展，节奏组织疏密，力度控制笔触与面积。声部交织成层次，停顿让画面留白。</p></div><div><h3>先看画，再听曲。</h3><p>单独看是否有构图和主次？不同乐曲是否有明显区别？播放时的光点标出对应位置，便于你判断画面与音乐的联系。</p><p class="small">视觉对应是一套创作规则。画作由音乐数据生成，不读取来源图片的颜色、纹理或布局。</p></div></section>
-    <footer><span>图片与声音在本机处理 · 抽象绘画实验</span><a href="./feature-music.html#parallel">回到图片演奏 ↗</a></footer>
+    <footer><span class="footer-brand"><img src="./favicon.svg" alt="" width="18" height="18">图鸣 · 乐曲与画作仅在本机处理</span><a href="./feature-music.html#parallel">回到图片演奏 ↗</a></footer>
   </main>
   <div id="toast" class="toast" role="status" hidden></div>
   <script src="./music-art-core.js"></script><script src="./music-art-midi.js"></script><script src="./music-art-classics.js"></script><script src="./browser-engine.js"></script><script src="./music-art-app.js"></script>
