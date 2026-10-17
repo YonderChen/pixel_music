@@ -1,9 +1,11 @@
 (function(){
   'use strict';
   const Core=window.MusicArtCore,$=id=>document.getElementById(id);
-  const E=Object.fromEntries(['score','sourceHint','ribbons','geometry','palette','detail','arrange','artwork','artTitle','artEdition','paletteName','musicSignature','noteCount','voiceCount','tempo','pitchRange','play','playIcon','playText','restart','loop','clock','seek','playStatus','listeningOverlay','png','svg','saveScore','midi','json','toast','audioChoice','audioMode'].map(id=>[id,$(id)]));
-  for(const id of ['exportResult','pngFile','exportPreview','classicalSource','midiSource','midiOriginal','midiCredit','midiLicense'])E[id]=$(id);
+  const E=Object.fromEntries(['score','sourceHint','ribbons','geometry','scroll','palette','detail','arrange','artwork','artTitle','artEdition','paletteName','musicSignature','noteCount','voiceCount','tempo','pitchRange','play','playIcon','playText','restart','loop','clock','seek','playStatus','listeningOverlay','png','svg','saveScore','midi','json','toast','audioChoice','audioMode'].map(id=>[id,$(id)]));
+  for(const id of ['legend','exportResult','pngFile','exportPreview','classicalSource','midiSource','midiOriginal','midiCredit','midiLicense'])E[id]=$(id);
   const S={library:new Map(),score:null,model:null,style:'ribbons',layout:0,context:null,playing:false,loading:false,time:0,operation:0,importOperation:0,buffers:new Map(),exporting:false};
+  const SYNTH_WINDOW=2,RELEASE=.3,MAX_LIT=48,MAX_LABELS=6,TRAIL=2.5;
+  const round=v=>Math.round(v*10)/10;
   const fmt=t=>`${String(Math.floor(t/60)).padStart(2,'0')}:${String(Math.floor(t%60)).padStart(2,'0')}`;
   const pitch=m=>['C','C♯','D','E♭','E','F','F♯','G','A♭','A','B♭','B'][m%12]+(Math.floor(m/12)-1);
   let toastTimer;
@@ -60,10 +62,11 @@
   function draw(){
     if(!S.score)return;
     S.model=Core.scene(S.score,{style:S.style,palette:E.palette.value,detail:Number(E.detail.value),layout:S.layout});
-    E.artwork.innerHTML=S.model.svg;E.artTitle.textContent=S.score.title;E.artEdition.textContent=(S.style==='ribbons'?'曲线色层':'几何色块')+' / 0'+(S.layout+1);
+    E.artwork.innerHTML=S.model.svg;E.artTitle.textContent=S.score.title;E.artEdition.textContent=Core.STYLES[S.style]+(S.style==='scroll'?'':' / 0'+(S.layout+1));
     if(S.svgUrl)URL.revokeObjectURL(S.svgUrl);S.svgUrl=URL.createObjectURL(new Blob([S.model.svg],{type:'image/svg+xml'}));E.svg.href=S.svgUrl;E.svg.download=filename(S.score.title,S.style,'svg');
     E.exportResult.hidden=true;
-    E.ribbons.setAttribute('aria-pressed',S.style==='ribbons');E.geometry.setAttribute('aria-pressed',S.style==='geometry');
+    for(const id of Object.keys(Core.STYLES))E[id]?.setAttribute('aria-pressed',S.style===id);E.arrange.disabled=S.style==='scroll';
+    if(E.legend){E.legend.hidden=!S.model.families.length;E.legend.innerHTML=S.model.families.map(f=>`<span><i style="background:${f.color}"></i>${f.name}</span>`).join('')+(S.model.families.length?'<span class="legend-note">颜色 = 音色 · 越高音越高 · 横向是时间</span>':'');}
     E.paletteName.textContent=S.model.palette.name;E.musicSignature.textContent='音乐指纹 '+S.model.fingerprint;
     E.noteCount.textContent=S.score.events.length;E.voiceCount.textContent=S.model.stats.voices.length+(S.model.stats.voices.length>8?' · 绘出主要 8 部':'');
     E.tempo.textContent=Math.round(S.score.tempo)+' BPM';E.pitchRange.textContent=S.score.events.length?S.model.stats.range.map(pitch).join('–'):'休止';paint();
@@ -73,9 +76,45 @@
     const t=current(),duration=S.audio?.duration??S.score.duration;
     E.seek.max=duration;E.seek.value=t;E.clock.textContent=fmt(t)+' / '+fmt(duration);
     E.playIcon.textContent=S.playing?'Ⅱ':S.loading?'×':'▶';E.playText.textContent=S.loading?'准备声音 · 点击取消':S.playing?'暂停聆听':t>0&&t<duration-.02?'继续聆听':'聆听这首乐曲';
-    E.playStatus.textContent=S.loading?'首次准备声音，画作和设置仍可操作。':S.playing?(E.loop.checked?'循环聆听 · ':'正在聆听 · ')+'光点对应当前发声位置':t>=duration-.02?'乐曲结束，画作完整保留。':t>0?'已暂停，画作完整保留。':'画作已完成，点击播放可对照音乐。';
-    const active=S.playing?S.model.marks.filter(m=>t>=m.start&&t<m.end).slice(0,24):[];
-    E.listeningOverlay.innerHTML=active.map(m=>`<circle cx="${m.x}" cy="${m.y}" r="10" fill="${m.color}" fill-opacity=".18" stroke="${m.color}" stroke-width="1.5"/><circle cx="${m.x}" cy="${m.y}" r="3" fill="${m.color}"/>`).join('');
+    E.playStatus.textContent=S.loading?'首次准备声音，画作和设置仍可操作。':S.playing?(E.loop.checked?'循环聆听 · ':'正在聆听 · ')+(S.style==='scroll'?'扫描线碰到的音正在发声，亮度随声音衰减':'亮起的位置正在发声，亮度随声音衰减'):t>=duration-.02?'乐曲结束，画作完整保留。':t>0?'已暂停，画作完整保留。':'画作已完成，点击播放可对照音乐。';
+    E.listeningOverlay.innerHTML=overlay(t);
+  }
+  // Playback marks follow the synthesizer's envelope: a note lights up on its onset, dims as the sound
+  // decays and is gone once its release ends, so what is lit is what is heard.
+  function level(n,t){
+    const age=t-n.start;if(age<0)return 0;const length=n.end-n.start,strings=n.envelope==='strings',attack=strings?.06:.012;
+    if(age<attack)return age/attack;
+    const sustain=strings?.72:n.envelope==='bell'?.12:.3,decay=sustain+(1-sustain)*Math.exp(-(Math.min(age,length)-attack)/(strings?.5:.23));
+    return age<=length?decay:Math.max(0,(strings?.65:.24)*(1-(age-length)/RELEASE));
+  }
+  function overlay(t){
+    const model=S.model,frame=model.scroll;let svg='';
+    if(frame&&(S.playing||t>0&&t<frame.duration-.02)){
+      const x=round(frame.x0+Math.min(1,t/frame.duration)*(frame.x1-frame.x0));
+      if(S.playing)svg+=`<rect x="${x}" y="0" width="${1200-x}" height="900" fill="${model.palette.paper}" fill-opacity=".62"/>`;
+      svg+=`<path d="M${x} ${frame.top-26}V${frame.bottom+26}" stroke="${model.palette.ink}" stroke-opacity=".6" stroke-width="1.6"/><circle cx="${x}" cy="${frame.top-26}" r="3.5" fill="${model.palette.ink}"/>`;
+    }
+    if(!S.playing)return svg;
+    if(!frame){
+      // A short fading trail joins each voice's latest notes, so the eye follows the music along the form.
+      const recent=new Map();for(const n of model.notes)if(n.start<=t&&n.start>t-TRAIL){if(!recent.has(n.voice))recent.set(n.voice,[]);recent.get(n.voice).push(n);}
+      for(const list of recent.values())for(let i=1;i<list.length;i++){const a=list[i-1],b=list[i],fade=1-(t-b.start)/TRAIL;if(a.start===b.start)continue;svg+=`<path d="M${round(a.x)} ${round(a.y)}L${round(b.x)} ${round(b.y)}" stroke="${b.color}" stroke-width="${round(1.5+3*fade)}" stroke-linecap="round" stroke-opacity="${round(.75*fade)}"/>`;}
+    }
+    const lit=[];for(const n of model.notes){if(n.start>t)continue;const l=level(n,t);if(l>.02)lit.push([n,l*(.45+.55*n.velocity)]);}
+    lit.sort((a,b)=>b[1]-a[1]);const shown=lit.slice(0,MAX_LIT);
+    for(const [n,l] of shown){
+      const x=frame?round(Math.min(n.x1,frame.x0+t/frame.duration*(frame.x1-frame.x0))):round(n.x),y=round(n.y),r=round(frame?4+9*l:6+14*l);
+      if(frame)svg+=`<path d="M${n.x} ${n.y}H${x}" stroke="${n.color}" stroke-width="${round(4+5*l)}" stroke-linecap="round" stroke-opacity="${round(.35+.6*l)}"/>`;
+      svg+=`<circle cx="${x}" cy="${y}" r="${round(r*1.9)}" fill="${n.color}" fill-opacity="${round(.24*l)}"/><circle cx="${x}" cy="${y}" r="${round(r*.55)}" fill="${n.color}" fill-opacity="${round(Math.min(1,.3+l))}" stroke="#fff" stroke-opacity="${round(.85*l)}" stroke-width="1.5"/>`;
+    }
+    // Name the loudest few notes, keeping labels apart so they stay readable.
+    const placed=[];
+    for(const [n,l] of shown){
+      if(placed.length>=MAX_LABELS||l<.18)break;const x=frame?Math.min(n.x1,frame.x0+t/frame.duration*(frame.x1-frame.x0)):n.x;
+      if(placed.some(p=>Math.abs(p.y-n.y)<18&&Math.abs(p.x-x)<60))continue;placed.push({x,y:n.y});
+      svg+=`<text x="${round(x+(frame?14:18))}" y="${round(n.y+5)}" font-family="ui-monospace,Menlo,monospace" font-size="15" font-weight="600" fill="${model.palette.ink}" fill-opacity="${round(Math.min(1,.25+l))}" paint-order="stroke" stroke="${model.palette.paper}" stroke-width="4" stroke-opacity=".85">${pitch(n.midi)}</text>`;
+    }
+    return svg;
   }
   function animate(){if(!S.playing)return;paint();S.frame=requestAnimationFrame(animate);}
   async function context(){if(!S.context||S.context.state==='closed')S.context=new (window.AudioContext||window.webkitAudioContext)();if(S.context.state==='suspended')await S.context.resume();return S.context;}
@@ -84,9 +123,14 @@
     const offline=new Offline(2,Math.ceil(score.duration*44100),44100),compressor=offline.createDynamicsCompressor();
     compressor.threshold.value=-18;compressor.knee.value=22;compressor.ratio.value=5;compressor.attack.value=.008;compressor.release.value=.15;compressor.connect(offline.destination);
     const voices=Core.describe(score).voices.length,real=new Float32Array([0,0,0,0,0]),imag=new Float32Array([0,1,.24,.075,.025]),wave=offline.createPeriodicWave(real,imag);
-    for(let i=0;i<score.events.length;i++){
-      if(i%100===0){await new Promise(requestAnimationFrame);if(operation!==S.operation)throw new Error('声音准备已取消。');}
-      const e=score.events[i],osc=offline.createOscillator(),gain=offline.createGain(),pan=offline.createStereoPanner();
+    // Notes join the graph shortly before they sound: idle, not-yet-started nodes still cost render time,
+    // so building every note up front made long scores take tens of seconds to prepare.
+    const windows=[];score.events.forEach((e,i)=>{const w=Math.max(0,Math.floor(e.start/SYNTH_WINDOW)-1);(windows[w]??=[]).push(i);});
+    const add=list=>{for(const i of list)note(score.events[i]);};
+    add(windows[0]??[]);
+    for(let w=1;w<windows.length;w++)if(windows[w])offline.suspend(w*SYNTH_WINDOW).then(()=>{if(operation===S.operation)add(windows[w]);offline.resume();});
+    function note(e){
+      const osc=offline.createOscillator(),gain=offline.createGain(),pan=offline.createStereoPanner();
       const strings=/strings|pad|midi-(4[0-9]|5[0-5])/.test(e.instrument),bell=/bell|marimba|轻铃|圆木琴|midi-(8|9|10|11|12|13|14|15)/.test(e.instrument);
       if(bell)osc.type='sine';else osc.setPeriodicWave(wave);
       osc.frequency.value=440*2**((e.midi-69)/12);pan.pan.value=e.pan;
@@ -95,8 +139,11 @@
       gain.gain.setTargetAtTime(peak*(strings?.72:bell?.12:.3),Math.min(start+attack,end),strings?.5:.23);
       gain.gain.setValueAtTime(peak*(strings?.65:.24),Math.max(start+attack,Math.min(start+e.duration,end-.025)));
       gain.gain.linearRampToValueAtTime(0,end);osc.connect(gain);gain.connect(pan);pan.connect(compressor);osc.start(start);osc.stop(end);
+      osc.onended=()=>{osc.disconnect();gain.disconnect();pan.disconnect();};
     }
-    return offline.startRendering();
+    const audio=await offline.startRendering();
+    if(operation!==S.operation)throw new Error('声音准备已取消。');
+    return audio;
   }
   async function buffer(operation){
     const original=E.audioMode.value==='original'&&S.score.audioRef,key=Core.fingerprint(S.score)+':'+(original?JSON.stringify(S.score.audioRef):'synth');
@@ -123,7 +170,7 @@
       source.start(S.started,S.offset);animate();
     }catch(error){if(operation!==S.operation)return;S.loading=false;toast(error.name==='AbortError'?'声音准备超时，可以重试或切换音源。':error.message);paint();}
   }
-  function filename(title,style,extension){return '图鸣-'+Array.from(title.replace(/[\\/:*?"<>|]/g,'-')).slice(0,48).join('')+'-'+(style==='ribbons'?'曲线色层':'几何色块')+'.'+extension;}
+  function filename(title,style,extension){return '图鸣-'+Array.from(title.replace(/[\\/:*?"<>|]/g,'-')).slice(0,48).join('')+'-'+Core.STYLES[style]+'.'+extension;}
   function download(blob,extension,title=S.score.title,style=S.style){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename(title,style,extension);document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);}
   E.png.addEventListener('click',async()=>{
     if(S.exporting)return;S.exporting=true;E.png.disabled=true;const svg=S.model.svg,title=S.score.title,style=S.style;
@@ -147,7 +194,7 @@
   E.midi.addEventListener('change',()=>upload(E.midi.files[0],'midi'));E.json.addEventListener('change',()=>upload(E.json.files[0],'json'));
   E.score.addEventListener('change',()=>select(E.score.value));
   function style(value){S.style=value;draw();if(innerWidth<=740)document.querySelector('.gallery').scrollIntoView({behavior:'smooth',block:'start'});}
-  E.ribbons.addEventListener('click',()=>style('ribbons'));E.geometry.addEventListener('click',()=>style('geometry'));
+  for(const id of Object.keys(Core.STYLES))E[id]?.addEventListener('click',()=>style(id));
   E.palette.addEventListener('change',draw);E.detail.addEventListener('change',draw);E.arrange.addEventListener('click',()=>{S.layout=(S.layout+1)%4;draw();});
   E.audioMode.addEventListener('change',()=>{const playing=S.playing;stop();S.audio=null;if(playing)play();});
   E.play.addEventListener('click',()=>S.playing||S.loading?stop():play());E.restart.addEventListener('click',()=>{stop(true);play();});

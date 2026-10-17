@@ -12,6 +12,10 @@
 .frame #artwork{aspect-ratio:4/3}
 .frame #artwork svg{display:block;width:100%;height:100%}
 #listeningOverlay{position:absolute;inset:20px;width:calc(100% - 40px);height:calc(100% - 40px);pointer-events:none}
+.legend{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:14px 0 0;font-size:12px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:50%}
+.legend .legend-note{margin-left:auto;font:11px var(--mono);color:var(--muted)}
 .work-caption{margin:14px 0 24px;font:12px var(--mono);color:var(--muted)}
 
 /* Player */
@@ -39,8 +43,8 @@ select{display:block;width:100%;max-width:100%}
 .import{font-size:12px;padding:0 10px}
 fieldset{margin:0 0 18px;padding:0;border:0}
 legend{margin-bottom:8px;padding:0;font-size:12px;color:var(--muted)}
-.style-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.style-tabs button{padding:14px 12px;border:1px solid var(--line-strong);border-radius:var(--radius-md);background:var(--surface);text-align:left;font-size:14px;font-weight:600;transition:border-color .15s var(--ease),background .15s var(--ease),box-shadow .15s var(--ease)}
+.style-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.style-tabs button{min-width:0;padding:14px 12px;border:1px solid var(--line-strong);border-radius:var(--radius-md);background:var(--surface);text-align:left;font-size:14px;font-weight:600;transition:border-color .15s var(--ease),background .15s var(--ease),box-shadow .15s var(--ease)}
 .style-tabs button:hover:not(:disabled){border-color:var(--ink-2)}
 .style-tabs button[aria-pressed=true]{border-color:var(--ink);background:var(--bg);box-shadow:inset 0 0 0 1px var(--ink)}
 .style-tabs small{display:block;margin-top:4px;font-size:11px;font-weight:400;color:var(--muted)}

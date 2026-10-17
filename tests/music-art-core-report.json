@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "checkedOn": "2026-10-12",
+  "checkedOn": "2026-10-17",
   "checks": [
     "deterministic for the same score and visual settings",
     "pitch, rhythm, velocity, tempo and instrument change both visual styles",
@@ -8,9 +8,10 @@
     "bridge preserves active rows and backing and discards every image field",
     "picture-only mutations cannot change transferred music or its artwork",
     "silent and dense scores remain bounded",
-    "MIDI tempo changes, sustain, running status, programs and truncated-file handling"
+    "MIDI tempo changes, sustain, running status, programs and truncated-file handling",
+    "scan scroll places every note by time and pitch, colours it by timbre and stays deterministic"
   ],
-  "largeScoreRenderMilliseconds": 9,
+  "largeScoreRenderMilliseconds": 68,
   "records": [
     {
       "sample": "slow",
