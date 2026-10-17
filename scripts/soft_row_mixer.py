@@ -17,6 +17,7 @@ VOICES = [
     # Only selected through an event's voicePreset (low rows of the refined reference layout).
     {'name': '柔低音', 'partials': [1, .32, .09, .03], 'attack': .02, 'decay': .9, 'sustain': .3, 'release': .2, 'cutoff': 1100, 'gain': 1.05},
 ]
+GLIDE = .18  # seconds: a note's glide happens in its tail, not across the whole note
 ROW_VOICES = 4  # Rows without a voicePreset keep the original four-voice cycle.
 
 def preset_index(events, row):
@@ -45,8 +46,11 @@ def render_voice(events, frames, row, count):
         envelope *= np.exp(-np.maximum(0, t - gate) / preset['release'])
         frequency = 440 * 2 ** ((event['midi'] - 69) / 12)
         if bend:
-            # Glide over the held part of the note, integrating phase so the pitch moves smoothly.
-            curve = frequency * 2 ** (bend * held / gate / 12)
+            # Hold the pitch, then glide only over the note's tail (at most GLIDE seconds), easing in and out;
+            # integrating phase keeps the pitch move smooth.
+            span = min(GLIDE, .4 * gate)
+            ramp = np.clip((held - (gate - span)) / span, 0, 1)
+            curve = frequency * 2 ** (bend * ramp * ramp * (3 - 2 * ramp) / 12)
             phase = 2 * math.pi * np.concatenate(([0.], np.cumsum(curve[:-1]))) / SR
         signal = np.zeros(size)
         energy = 0
