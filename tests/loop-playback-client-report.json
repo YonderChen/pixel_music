@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "checkedOn": "2026-10-12",
+  "checkedOn": "2026-10-11",
   "checks": [
     "default single playback; switch can be enabled or disabled during playback",
     "three consecutive repeats start from zero and reuse decoded audio without requests",
