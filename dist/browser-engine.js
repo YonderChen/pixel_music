@@ -15,9 +15,17 @@
     }));
     return loaded.get(name);
   }
+  const fetchBytes = name => fetch(root + name).then(r => {if (!r.ok) throw new Error(r.status); return r.arrayBuffer();}).then(buffer => new Uint8Array(buffer));
+  // Hosts with a per-file size cap (Cloudflare: 25 MiB) serve the SoundFont as parts listed in a small index.
+  const fetchFontParts = () => fetch(root + 'GeneralUser-GS.sf2.parts.json').then(r => {if (!r.ok) throw new Error(r.status); return r.json();})
+    .then(parts => Promise.all(parts.map(fetchBytes))).then(chunks => {
+      const bytes = new Uint8Array(chunks.reduce((sum, chunk) => sum + chunk.length, 0));
+      chunks.reduce((offset, chunk) => {bytes.set(chunk, offset); return offset + chunk.length;}, 0);
+      return bytes;
+    });
   function loadFont() {
     if (!fontLoading) fontLoading = (binaryFont
-      ? fetch(root + 'GeneralUser-GS.sf2').then(r => {if (!r.ok) throw new Error(r.status); return r.arrayBuffer();}).then(buffer => new Uint8Array(buffer))
+      ? fetchBytes('GeneralUser-GS.sf2').catch(fetchFontParts)
         .catch(() => load('soundfont-data.js', 'PixelMusicSoundfontData'))
       : load('soundfont-data.js', 'PixelMusicSoundfontData')
     ).catch(error => {fontLoading = null; throw error;});

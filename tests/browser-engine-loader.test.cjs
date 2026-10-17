@@ -37,3 +37,19 @@ vm.runInNewContext(fs.readFileSync('dist/browser-engine.js','utf8'),{window,docu
  assert.deepEqual([...posted.at(-1).font],[1,2,3],'binary SoundFont reaches the Worker');
  console.log('passed: HTTP binary SoundFont preload');
 })().catch(error=>{console.error(error);process.exitCode=1;});
+(async()=>{
+ // Cloudflare deploy: the whole .sf2 is absent (25 MiB per-file cap), so the split parts are fetched and joined.
+ const win={},fetched=[],posted=[],added=[];
+ const doc={currentScript:{src:'https://example.test/app/browser-engine.js'},createElement(){return {remove(){}};},head:{appendChild(script){added.push(script.src);const name=new URL(script.src).pathname.split('/').pop();queueMicrotask(()=>{const [key,value]=assets[name];win[key]=value;script.onload();});}}};
+ class HttpWorker{postMessage(message){posted.push(message);if(message.init)return;queueMicrotask(()=>this.onmessage({data:{id:message.id,data:{ok:true}}}));}terminate(){}}
+ win.Worker=HttpWorker;win.WebAssembly=WebAssembly;
+ const files={'GeneralUser-GS.sf2.parts.json':JSON.stringify(['GeneralUser-GS.sf2.part0','GeneralUser-GS.sf2.part1']),'GeneralUser-GS.sf2.part0':new Uint8Array([1,2]),'GeneralUser-GS.sf2.part1':new Uint8Array([3])};
+ const fetchFont=async url=>{fetched.push(String(url));const name=new URL(url).pathname.split('/').pop();return name in files?new Response(files[name]):new Response('missing',{status:404});};
+ vm.runInNewContext(fs.readFileSync('dist/browser-engine.js','utf8'),{window:win,document:doc,Worker:HttpWorker,WebAssembly,URL,Blob,Response,DOMException,fetch:fetchFont});
+ const engine=win.PixelMusicBrowser;
+ await engine.request('/api/generate',{body:JSON.stringify({options:{synth:'GeneralUser GS'}})});
+ await engine.request('/api/performance',{body:JSON.stringify({synth:'GeneralUser GS'})});
+ assert.ok(!added.some(url=>url.endsWith('soundfont-data.js')));
+ assert.deepEqual([...posted.at(-1).font],[1,2,3],'joined SoundFont parts reach the Worker');
+ console.log('passed: split SoundFont parts fallback');
+})().catch(error=>{console.error(error);process.exitCode=1;});
