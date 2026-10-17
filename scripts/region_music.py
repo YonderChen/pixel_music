@@ -112,6 +112,7 @@ def build(analysis, info, options, engine):
             region['contour'] = [[(pts[k][0] + .5) / W, (pts[k][1] + .5) / H] for k in pick]
             # A region whose only neighbour is one other region, away from the border, sits inside it.
             if len(neighbours[i]) == 1 and not o['border']: contained[i] = next(iter(neighbours[i]))
+    for i, outer in contained.items(): regions[i]['containedBy'] = regions[outer]['id']
     # Pitch uses the image's own feature range, like the arranged ensemble.
     positions = engine.arranger.normalize(sums)
     score_rank = engine.arranger.normalize(scores, .05)

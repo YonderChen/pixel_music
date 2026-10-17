@@ -7,6 +7,7 @@
   ids.push('segments','segmentMethod','segmentSetting','segmentOrder','orderSetting','contourToggle','contourSetting','softToggle','softSetting');
   ids.push('loopToggle');
   ids.push('musicArt');
+  ids.push('contourLayer');
   const E = Object.fromEntries(ids.map(id => [id,$(id)]));
   const API = '';
   const RECIPES=Object.freeze([
@@ -145,7 +146,7 @@
     const lit=value.segmentation?.order==='path'&&active.length?[active.reduce((a,b)=>b.start>a.start?b:a)]:active;
     const activeIds=new Set(hover?[hover.id]:show?lit.flatMap(e=>e.sources.map(ref=>ref.regionId)):[]);
     E.regions.querySelectorAll('button').forEach(button=>button.classList.toggle('active',activeIds.has(button.dataset.region)));
-    const segmented=segmentView();if(segmented){drawSegments(activeIds);traceContours(value,hover?value.events.filter(e=>e.id===hover.eventId):show?lit:[]);}
+    const segmented=segmentView();if(segmented)drawSegments(activeIds);drawContours(value,segmented,hover?value.events.filter(e=>e.id===hover.eventId):show?lit:[],hover?value.events.find(e=>e.id===hover.eventId)?.start??0:time);
     E.timeline.querySelectorAll('.note').forEach(rect=>{rect.classList.toggle('active',show&&active.some(e=>e.id===rect.dataset.event));rect.classList.toggle('muted',S.mode==='parallel'&&!S.enabledRows[Number(rect.dataset.row)]);});
     const playhead=E.timeline.querySelector('.playhead');
     if(playhead){const x=Math.min(640,(hover?hover.start:time)/S.payload.info.duration*640);playhead.setAttribute('x1',x);playhead.setAttribute('x2',x);}
@@ -175,7 +176,7 @@
     if(!S.payload)return;S.selected=index;
     const region=view().regions[index]; if(!region)return;
     E.regions.querySelectorAll('button').forEach(b=>b.classList.toggle('selected',Number(b.dataset.index)===index));
-    const segmented=segmentView();if(segmented)drawSegments();
+    const segmented=segmentView();if(segmented){drawSegments();if(!S.playing)drawContours(view(),segmented,[],current());}
     E.selectedTitle.textContent=segmented?`第 ${region.row+1} 声部 · 显著度第 ${region.salienceRank} 位 · ${note(region.midi)}`:`列 ${region.col+1} · 区域 ${region.row+1} · ${note(region.midi)}`;
     E.selectedReason.textContent=region.reason;
     E.selectedLocation.textContent=segmented?`重心 横向 ${(region.centroid.x*100).toFixed(1)}% · 纵向 ${(region.centroid.y*100).toFixed(1)}% · 面积 ${(region.features.area*100).toFixed(1)}%`:`图片横向 ${(region.rect.x*100).toFixed(1)}% · 纵向 ${(region.rect.y*100).toFixed(1)}%`;
@@ -228,15 +229,17 @@
     if(E.segments.width!==w||E.segments.height!==h||!g.paths){E.segments.width=w;E.segments.height=h;g.paths=outlinePaths(g,w,h);}
     const c=E.segments.getContext('2d'),dim=activeIds.size>0,tint=(hex,a)=>`rgba(${[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)).join()},${a})`;
     c.clearRect(0,0,w,h);c.lineJoin=c.lineCap='round';
-    if(dim){c.fillStyle='rgba(0,0,0,.32)';c.fillRect(0,0,w,h);}
+    // With outlines taking part the sounding regions recede to a light wash: the traced edge on the contour layer leads.
+    const contour=!!g.source.contour&&dim;
+    if(dim){c.fillStyle=`rgba(0,0,0,${contour?.5:.32})`;c.fillRect(0,0,w,h);}
     const lit=[];regions.forEach((r,i)=>{if(activeIds.has(r.id))lit.push(i);});
-    for(const i of lit){c.save();c.globalCompositeOperation='destination-out';c.fill(g.paths[i].fill);c.restore();c.fillStyle=tint(rowColors[regions[i].row%4],.42);c.fill(g.paths[i].fill);}
+    for(const i of lit){c.save();c.globalCompositeOperation='destination-out';c.fill(g.paths[i].fill);c.restore();c.fillStyle=tint(rowColors[regions[i].row%4],contour?.14:.42);c.fill(g.paths[i].fill);}
     if(!activeIds.size&&regions[S.selected]){c.fillStyle='rgba(215,255,72,.18)';c.fill(g.paths[S.selected].fill);}
-    c.strokeStyle=`rgba(255,255,255,${dim?.32:.58})`;c.lineWidth=1.1*dpr;
+    c.strokeStyle=`rgba(255,255,255,${dim?contour?.18:.32:.58})`;c.lineWidth=1.1*dpr;
     regions.forEach((r,i)=>{if(!activeIds.has(r.id)&&i!==S.selected)c.stroke(g.paths[i].stroke);});
-    c.lineWidth=2.4*dpr;
-    if(regions[S.selected]&&!activeIds.has(regions[S.selected].id)){c.strokeStyle='#d7ff48';c.stroke(g.paths[S.selected].stroke);}
-    for(const i of lit){c.strokeStyle=rowColors[regions[i].row%4];c.stroke(g.paths[i].stroke);}
+    c.lineWidth=(contour?1.2:2.4)*dpr;
+    if(!contour&&regions[S.selected]&&!activeIds.has(regions[S.selected].id)){c.strokeStyle='#d7ff48';c.stroke(g.paths[S.selected].stroke);}
+    for(const i of lit){c.strokeStyle=contour?tint(rowColors[regions[i].row%4],.55):rowColors[regions[i].row%4];c.stroke(g.paths[i].stroke);}
   }
   function drawSegments(activeIds=S.segment?.activeIds||new Set()){
     const g=segmentView();if(!g)return;g.activeIds=activeIds;
@@ -245,30 +248,104 @@
     if(g.drawn===key)return;g.drawn=key;
     const {width:w,height:h,labels}=g,image=new ImageData(w,h),d=image.data;
     // While regions sound, the silent ones dim so the sounding shapes stand out.
-    const dim=activeIds.size>0,active=new Uint8Array(regions.length),colors=rowColors.map(c=>[1,3,5].map(i=>parseInt(c.slice(i,i+2),16)));
+    const dim=activeIds.size>0,contour=!!g.source.contour,active=new Uint8Array(regions.length),colors=rowColors.map(c=>[1,3,5].map(i=>parseInt(c.slice(i,i+2),16)));
     regions.forEach((r,i)=>{if(activeIds.has(r.id))active[i]=1;});
     for(let y=0;y<h;y++)for(let x=0;x<w;x++){
       const p=y*w+x,l=labels[p],o=p*4;
       const edge=(x<w-1&&labels[p+1]!==l)||(y<h-1&&labels[p+w]!==l);
-      if(active[l]){const c=colors[regions[l].row%4];d[o]=c[0];d[o+1]=c[1];d[o+2]=c[2];d[o+3]=edge?245:150;}
-      else if(l===S.selected){d[o]=215;d[o+1]=255;d[o+2]=72;d[o+3]=edge?235:60;}
-      else if(edge){d[o]=255;d[o+1]=255;d[o+2]=255;d[o+3]=dim?70:110;}
-      else if(dim){d[o+3]=80;}
+      if(active[l]){const c=colors[regions[l].row%4];d[o]=c[0];d[o+1]=c[1];d[o+2]=c[2];d[o+3]=contour?(edge?140:40):(edge?245:150);}
+      else if(l===S.selected&&!(contour&&dim)){d[o]=215;d[o+1]=255;d[o+2]=72;d[o+3]=edge?235:60;}
+      else if(edge){d[o]=255;d[o+1]=255;d[o+2]=255;d[o+3]=dim?(contour?40:70):110;}
+      else if(dim){d[o+3]=contour?128:80;}
     }
     E.segments.getContext('2d').putImageData(image,0,0);
   }
-  // With outlines taking part, show the traced edge of each sounding region and a dot on the current note.
-  function traceContours(value,sounding){
-    if(!value.segmentation?.contour){E.centroids.innerHTML='';return;}
-    const w=S.payload.image.width,h=S.payload.image.height,key=sounding.map(e=>e.id).join();
-    if(E.centroids.dataset.key===key)return;E.centroids.dataset.key=key;
-    const byId=new Map(value.regions.map(r=>[r.id,r]));let svg='';
-    for(const e of sounding){
-      const r=byId.get(e.sources[0]?.regionId),color=rowColors[(e.row??0)%4];if(!r?.contour)continue;
-      svg+=`<polyline points="${(r.contour.length>2?chaikin(r.contour,false,2):r.contour).map(([x,y])=>`${(x*w).toFixed(1)},${(y*h).toFixed(1)}`).join(' ')}" style="stroke:${color};stroke-width:${(w/192).toFixed(2)};opacity:.95"/>`;
-      if(e.point)svg+=`<circle cx="${(e.point[0]*w).toFixed(1)}" cy="${(e.point[1]*h).toFixed(1)}" r="${(w/64).toFixed(1)}" style="fill:${color};stroke:#151b12;stroke-width:${(w/384).toFixed(2)}"/>`;
+  // With outlines taking part, the edge each sounding region reads is drawn as its score: a dashed edge with a
+  // dotted line at the region's own note, a stem per motif note showing how far the edge lifts it, and a pen
+  // that traces the edge in time with the notes, leaving the played stretch lit.
+  const contourNotes=new WeakMap();
+  function notesByRegion(value){
+    let map=contourNotes.get(value);if(map)return map;map=new Map();
+    for(const e of value.events){const id=e.layer==='main'&&e.point&&e.sources?.[0]?.regionId;if(!id)continue;if(!map.has(id))map.set(id,[]);map.get(id).push(e);}
+    for(const list of map.values())list.sort((a,b)=>a.start-b.start);
+    contourNotes.set(value,map);return map;
+  }
+  function drawContours(value,segmented,sounding,time){
+    const layer=E.contourLayer;if(!layer)return;
+    const on=!!segmented&&!!value.segmentation?.contour;layer.hidden=!on;if(!on)return;
+    const box=layer.getBoundingClientRect(),dpr=window.devicePixelRatio||1;
+    const w=Math.max(1,Math.round(box.width*dpr)),h=Math.max(1,Math.round(box.height*dpr));
+    if(layer.width!==w||layer.height!==h){layer.width=w;layer.height=h;}
+    const c=layer.getContext('2d');c.clearRect(0,0,w,h);
+    const byId=new Map(value.regions.map(r=>[r.id,r])),notesOf=notesByRegion(value),u=dpr;
+    // Before playing, the selected region previews its motif so the mapping is visible at rest.
+    const ids=[...new Set(sounding.map(e=>e.sources?.[0]?.regionId))];
+    const preview=!ids.length&&!S.playing&&value.regions[S.selected]?.contour;
+    if(preview)ids.push(value.regions[S.selected].id);
+    c.lineJoin=c.lineCap='round';
+    const tint=(hex,a)=>`rgba(${[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)).join()},${a})`;
+    for(const id of ids){
+      const r=byId.get(id);if(!r?.contour||r.contour.length<2)continue;
+      const color=rowColors[r.row%4],all=notesOf.get(id)||[],main=all.filter(e=>!e.grace);
+      const pts=(r.contour.length>2?chaikin(r.contour,false,2):r.contour).map(([x,y])=>[x*w,y*h]);
+      // Containment: the outer region holding the pedal tone breathes with a dashed ring.
+      if(!preview&&r.containedBy&&E.backing.checked&&S.segment?.paths){
+        const outer=value.regions.findIndex(q=>q.id===r.containedBy);
+        if(outer>=0){c.save();c.setLineDash([3*u,5*u]);c.lineDashOffset=-time*18*u;c.strokeStyle=`rgba(255,226,140,${.45+.25*Math.sin(time*4)})`;c.lineWidth=2*u;c.stroke(S.segment.paths[outer].stroke);c.restore();}
+      }
+      // Pen position: it reaches each note's point as the note starts, then walks on toward the next one.
+      const anchor=e=>{let best=0,d=Infinity;pts.forEach((p,i)=>{const q=(p[0]-e.point[0]*w)**2+(p[1]-e.point[1]*h)**2;if(q<d){d=q;best=i;}});return best/(pts.length-1);};
+      const marks=[];for(const e of main)marks.push(Math.max(marks.at(-1)??0,anchor(e)));
+      let s=0,current=null;
+      for(let k=0;k<main.length;k++){
+        if(time<main[k].start)break;
+        const next=main[k+1]?.start??main[k].start+main[k].duration;
+        const frac=Math.min(1,Math.max(0,(time-main[k].start)/Math.max(.05,next-main[k].start)));
+        s=marks[k]+((marks[k+1]??1)-marks[k])*frac;current=time<main[k].start+main[k].duration?main[k]:null;
+      }
+      if(preview)s=0;
+      const at=t=>{const f=t*(pts.length-1),i=Math.min(pts.length-2,Math.floor(f)),q=f-i;return [pts[i][0]+(pts[i+1][0]-pts[i][0])*q,pts[i][1]+(pts[i+1][1]-pts[i][1])*q,i];};
+      const base=pts.reduce((sum,p)=>sum+p[1],0)/pts.length,x0=Math.min(...pts.map(p=>p[0])),x1=Math.max(...pts.map(p=>p[0]));
+      // Home line: the region's own note; the edge lifts or lowers the motif around it.
+      c.setLineDash([2*u,4*u]);c.strokeStyle='rgba(255,255,255,.45)';c.lineWidth=1*u;
+      c.beginPath();c.moveTo(x0,base);c.lineTo(x1,base);c.stroke();
+      // The whole edge, dashed: what will be read.
+      c.setLineDash([7*u,5*u]);c.strokeStyle=tint(color,.6);c.lineWidth=2*u;
+      c.beginPath();pts.forEach((p,i)=>i?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1]));c.stroke();c.setLineDash([]);
+      // Stems from the home line to each note's point.
+      for(const e of main){
+        const px=e.point[0]*w,py=e.point[1]*h,done=!preview&&time>=e.start;
+        c.strokeStyle=done?tint(color,.85):'rgba(255,255,255,.35)';c.lineWidth=(done?2:1.2)*u;
+        c.beginPath();c.moveTo(px,base);c.lineTo(px,py);c.stroke();
+      }
+      // The played stretch, lit with a glow and a bright core.
+      const [hx,hy,hi]=at(s);
+      if(s>0){
+        const path=new Path2D();path.moveTo(pts[0][0],pts[0][1]);for(let i=1;i<=hi;i++)path.lineTo(pts[i][0],pts[i][1]);path.lineTo(hx,hy);
+        c.save();c.shadowColor=color;c.shadowBlur=14*u;c.strokeStyle=color;c.lineWidth=5*u;c.stroke(path);c.restore();
+        c.strokeStyle='rgba(255,255,255,.9)';c.lineWidth=1.6*u;c.stroke(path);
+      }
+      // Note points: played filled, upcoming hollow, the sounding one large with a ripple.
+      for(const e of all){
+        const px=e.point[0]*w,py=e.point[1]*h,played=!preview&&time>=e.start,now=e===current;
+        const radius=(e.grace?2.5:now?7:4.5)*u;
+        if(now){const age=Math.min(1,(time-e.start)/.7);c.strokeStyle=tint(color,1-age);c.lineWidth=2*u;c.beginPath();c.arc(px,py,radius+20*u*age,0,Math.PI*2);c.stroke();}
+        c.beginPath();c.arc(px,py,radius,0,Math.PI*2);
+        if(played){c.save();if(now){c.shadowColor=color;c.shadowBlur=16*u;}c.fillStyle=color;c.fill();c.restore();c.strokeStyle=now?'#fff':'#151b12';c.lineWidth=(now?2:1.2)*u;c.stroke();}
+        else{c.fillStyle='rgba(21,27,18,.55)';c.fill();c.strokeStyle='rgba(255,255,255,.85)';c.lineWidth=1.4*u;c.stroke();}
+        // A glide continues past the note as a short arrow up or down.
+        if(e.bend&&(played||preview)){const dir=e.bend>0?-1:1;c.strokeStyle=played?color:'rgba(255,255,255,.7)';c.lineWidth=2*u;c.beginPath();c.moveTo(px+radius,py);c.quadraticCurveTo(px+radius+10*u,py,px+radius+16*u,py+dir*12*u);c.stroke();c.beginPath();c.moveTo(px+radius+16*u,py+dir*12*u);c.lineTo(px+radius+16*u,py+dir*5*u);c.moveTo(px+radius+16*u,py+dir*12*u);c.lineTo(px+radius+9*u,py+dir*10*u);c.stroke();}
+      }
+      if(!preview&&s>0&&s<1){c.save();c.shadowColor='#fff';c.shadowBlur=12*u;c.fillStyle='#fff';c.beginPath();c.arc(hx,hy,3.5*u,0,Math.PI*2);c.fill();c.restore();}
+      // Name the sounding note beside its point.
+      const label=current||(preview?main[0]:null);
+      if(label){
+        const px=label.point[0]*w,py=label.point[1]*h,text=note(label.midi)+(preview?` 起 · ${main.length} 个音`:'');
+        c.font=`600 ${11*u}px ui-monospace,monospace`;const tw=c.measureText(text).width+10*u,th=17*u;
+        const lx=Math.min(w-tw-2*u,Math.max(2*u,px-tw/2)),ly=py-th-12*u<2*u?py+12*u:py-th-12*u;
+        c.fillStyle=color;c.fillRect(lx,ly,tw,th);c.fillStyle='#fff';c.textBaseline='middle';c.fillText(text,lx+5*u,ly+th/2+.5*u);
+      }
     }
-    E.centroids.innerHTML=svg;
   }
   function segmentAt(event){
     const g=segmentView();if(!g)return null;
@@ -285,7 +362,7 @@
     prepareSegments(seg);
     E.key.textContent=`${(S.mode==='parallel'&&(value.arrangement||value.harmony)?.key)||info.key_name} · ${{'Major pentatonic':'大调五声','Minor pentatonic':'小调五声','Major':'大调','Natural minor':'自然小调','Dorian':'多利亚','Lydian':'利底亚'}[info.scale_name]||info.scale_name}`;
     E.tempo.textContent=`${info.tempo.toFixed(1)} BPM`;E.noteCount.textContent=`${value.mainCount} 个${pitchMappedView()?'音高片段':'音符'}`;E.duration.textContent=`${info.duration.toFixed(1)} 秒＋余韵`;
-    E.mappingHint.textContent=seg?`${seg.orderHint}${seg.contour?' 轮廓参与：边缘起伏成旋律动机，圆润/尖锐决定连奏或断奏与音色，边缘软硬决定起音，斜向伸展滑音、内凹加倚音，被包围的区域由外层给出持续低音。':''} 当前 ${seg.methodName}，共 ${seg.regionCount} 个区域；区域越大音越长，伴奏由实际音符推出和声铺底。`:S.mode==='parallel'?`各行独立分析并从左到右同时演奏；${recipe().hint} 整体伴奏只保留一份。`:'直接运行 Photo Sonification 原始分析、编曲和音源；参考原谱未重新改写旋律。';
+    E.mappingHint.textContent=seg?`${seg.orderHint}${seg.contour?' 轮廓参与：边缘起伏成旋律动机（图上虚线是被读取的边缘，点线是区域本音，竖线是每个音被边缘抬高或压低多少，亮线随演奏描过边缘），圆润/尖锐决定连奏或断奏与音色，边缘软硬决定起音，斜向伸展滑音、内凹加倚音，被包围的区域由外层给出持续低音。':''} 当前 ${seg.methodName}，共 ${seg.regionCount} 个区域；区域越大音越长，伴奏由实际音符推出和声铺底。`:S.mode==='parallel'?`各行独立分析并从左到右同时演奏；${recipe().hint} 整体伴奏只保留一份。`:'直接运行 Photo Sonification 原始分析、编曲和音源；参考原谱未重新改写旋律。';
     E.regions.style.gridTemplateColumns=`repeat(${value.cols},1fr)`;E.regions.style.gridTemplateRows=`repeat(${value.rows},1fr)`;
     E.regions.classList.toggle('parallel',S.mode==='parallel');
     E.regions.innerHTML=seg?'':value.regions.map((r,i)=>`<button type="button" class="region" data-index="${i}" data-region="${r.id}" style="grid-column:${r.col+1};grid-row:${r.row+1};--voice-color:${rowColors[r.row%4]}" aria-label="列 ${r.col+1} 区域 ${r.row+1}，${note(r.midi)}" title="${note(r.midi)}"></button>`).join('');
