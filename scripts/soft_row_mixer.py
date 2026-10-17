@@ -26,12 +26,14 @@ def preset_index(events, row):
 def render_voice(events, frames, row, count):
     if events and events[0].get('pitchTransition') in ('scale','glide'):
         return render_connected_voice(events,frames,row,count)
-    preset = VOICES[preset_index(events, row)]
+    stem_preset = VOICES[preset_index(events, row)]
     samples = np.zeros((frames, 2), dtype=np.float64)
     activity = np.zeros(frames, dtype=np.float32)
     pan = 0 if count == 1 else -.48 + .96 * row / (count - 1)
     stereo = np.array([math.cos((pan + 1) * math.pi / 4), math.sin((pan + 1) * math.pi / 4)])
     for event in events:
+        # A note may carry its own timbre (the scan line picks it from colour); otherwise the row's voice plays it.
+        preset = VOICES[event['voicePreset']] if 'voicePreset' in event else stem_preset
         start = max(0, round(event['start'] * SR))
         gate = max(1 / SR, event['duration'])
         size = min(frames - start, math.ceil((gate + preset['release'] * 5) * SR))

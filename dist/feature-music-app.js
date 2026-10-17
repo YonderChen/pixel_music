@@ -67,6 +67,8 @@
     E.rowCount.disabled=E.recipe.disabled=E.segmentMethod.disabled=E.segmentOrder.disabled=E.contourToggle.disabled=E.contourStyle.disabled=E.softToggle.disabled=S.busy;
     E.segmentSetting.hidden=E.orderSetting.hidden=E.contourSetting.hidden=E.softSetting.hidden=recipe().method!=='regions';
     E.contourStyleSetting.hidden=recipe().method!=='regions'||!E.contourToggle.checked;E.segmentOrder.disabled||=E.contourToggle.checked&&['lines','sweep'].includes(E.contourStyle.value);
+    // The scan line has no rows: every crossing sounds, so the row count does not apply.
+    E.rowCount.parentElement.hidden=recipe().method==='regions'&&E.contourToggle.checked&&E.contourStyle.value==='sweep';
     E.hoverToggle.disabled=!S.payload||S.busy;
     E.loopToggle.disabled=!S.payload||S.busy;
     E.musicArt.setAttribute('aria-disabled',!S.payload||S.busy);
@@ -156,9 +158,9 @@
     const sounding=segmented&&value.regions.find(r=>activeIds.has(r.id));
     const x=segmented&&!hover&&sweep?Math.min(1,time/(value.segmentation.sweepSeconds||S.payload.info.duration)):segmented&&!hover&&value.segmentation?.contourStyle==='lines'?Math.min(1,time/S.payload.info.duration):segmented?(hover||sounding)?.centroid.x??0:hover?hover.rect.x+hover.rect.width*.5:S.mode==='parallel'?Math.min(1,time/S.payload.info.duration):region?region.rect.x+region.rect.width*.5:1;
     E.scan.style.left=`${Math.min(99.7,x*100)}%`;E.scan.classList.toggle('end',x>.9);E.scan.classList.toggle('floating',!!segmented&&!['lines','sweep'].includes(value.segmentation?.contourStyle));E.scan.hidden=!show;
-    const lane=r=>segmented?`${r+1}声部 `:`${r+1}行 `;
+    const lane=r=>sweep?'':segmented?`${r+1}声部 `:`${r+1}行 `;
     E.scanNote.textContent=hover?`${S.mode==='parallel'?lane(hover.row):''}${note(hover.midi)}`:time>=S.payload.info.duration?'余韵':active.length?active.map(e=>S.mode==='parallel'?`${lane(e.row)}${note(e.midi)}`:note(e.midi)).join(' / '):'留白';
-    E.currentNote.textContent=hover?E.scanNote.textContent:show?(S.mode==='parallel'&&active.length?`${new Set(active.map(e=>e.row)).size} ${segmented?'个声部':'行'}发声`:E.scanNote.textContent):'—';
+    E.currentNote.textContent=hover?E.scanNote.textContent:show?(S.mode==='parallel'&&active.length?sweep?`${active.length} 个交点发声`:`${new Set(active.map(e=>e.row)).size} ${segmented?'个声部':'行'}发声`:E.scanNote.textContent):'—';
     E.seek.max=end;E.seek.value=time;E.clock.textContent=`${fmt(time)} / ${fmt(end)}`;
     E.playIcon.textContent=S.playing?'Ⅱ':'▶';E.playText.textContent=S.audioLoading?'准备声音 · 点击取消':S.playing?'暂停演奏':time>=end-.02?'再次演奏':time>0?'继续演奏':'开始演奏';
     E.status.textContent=S.busy?'生成中':S.hoverLoading?'准备移动试听':hover?'移动试听':S.audioLoading?'准备声音':S.playing?(time>=S.payload.info.duration?'渐渐收尾':E.loopToggle.checked&&!S.clip?'循环演奏':'正在演奏'):time>=end-.02?(S.clip?'对照结束':'演奏结束'):time>0?'已暂停':'可以演奏';
@@ -411,13 +413,14 @@
     E.centroids.innerHTML='';if(E.centroids.dataset)E.centroids.dataset.key='';
     E.centroids.setAttribute('viewBox',`0 0 ${S.payload.image.width} ${S.payload.image.height}`);
     const lo=Math.min(48,...main.map(e=>e.midi)),hi=Math.max(84,...main.map(e=>e.midi));
-    const chartHeight=S.mode==='parallel'?value.rows*60:130;
+    const sweepView=S.mode==='parallel'&&seg&&seg.contour&&seg.contourStyle==='sweep';
+    const chartHeight=S.mode==='parallel'&&!sweepView?value.rows*60:130;
     E.timeline.setAttribute('viewBox',`0 0 640 ${chartHeight}`);E.timeline.style.height=`${chartHeight}px`;E.timeline.parentElement.style.height=`${chartHeight+2}px`;
-    E.pitchTop.textContent=S.mode==='parallel'?'第1行':note(hi);E.pitchBottom.textContent=S.mode==='parallel'?`第${value.rows}行`:note(lo);
+    E.pitchTop.textContent=S.mode==='parallel'&&!sweepView?'第1行':note(hi);E.pitchBottom.textContent=S.mode==='parallel'&&!sweepView?`第${value.rows}行`:note(lo);
     let chart='';
     for(let bar=0;bar<=info.bars;bar++){const x=bar/info.bars*640;chart+=`<line class="grid" x1="${x}" x2="${x}" y1="0" y2="${chartHeight}"/>`;}
-    if(S.mode==='parallel')for(let row=0;row<value.rows;row++)chart+=`<line class="grid" x1="0" x2="640" y1="${row*60}" y2="${row*60}"/><text x="4" y="${row*60+11}" font-size="9" fill="${rowColors[row]}">第${row+1}行</text>`;
-    chart+=main.map(e=>`<rect class="note ${S.mode==='parallel'?'row-note':''}" data-event="${e.id}" data-row="${e.row??''}" style="--voice-color:${rowColors[(e.row??0)%4]}" x="${e.start/info.duration*640}" y="${S.mode==='parallel'?e.row*60+14+(hi-e.midi)/(hi-lo)*37:6+(hi-e.midi)/(hi-lo)*112}" width="${Math.max(1,Math.min(e.duration,info.duration-e.start)/info.duration*640)}" height="5" rx="1"><title>${S.mode==='parallel'?`第${e.row+1}行 · `:''}${note(e.midi)} · ${e.start.toFixed(2)} 秒</title></rect>`).join('');
+    if(S.mode==='parallel')for(let row=0;row<value.rows;row++)chart+=`<line class="grid" x1="0" x2="640" y1="${row*60}" y2="${row*60}"/><text x="4" y="${row*60+11}" font-size="9" fill="${rowColors[row]}">${sweepView?'扫描线 · 每个交点一个音':`第${row+1}行`}</text>`;
+    chart+=main.map(e=>`<rect class="note ${S.mode==='parallel'?'row-note':''}" data-event="${e.id}" data-row="${e.row??''}" style="--voice-color:${rowColors[(e.row??0)%4]}" x="${e.start/info.duration*640}" y="${S.mode==='parallel'&&!sweepView?e.row*60+14+(hi-e.midi)/(hi-lo)*37:6+(hi-e.midi)/(hi-lo)*112}" width="${Math.max(1,Math.min(e.duration,info.duration-e.start)/info.duration*640)}" height="5" rx="1"><title>${S.mode==='parallel'?`第${e.row+1}行 · `:''}${note(e.midi)} · ${e.start.toFixed(2)} 秒</title></rect>`).join('');
     E.timeline.innerHTML=chart+`<line class="playhead" x1="0" x2="0" y1="0" y2="${chartHeight}"/>`;
     E.eventCount.textContent=`${main.length} 个${pitchMappedView()?'音高目标 · 参考音源量化演奏':'主旋律音符 · '+value.events.length+' 个全曲事件'}`;
     E.middleTime.textContent=`${(info.duration/2).toFixed(1)} 秒`;E.endTime.textContent=`${info.duration.toFixed(1)} 秒`;
