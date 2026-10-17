@@ -42,7 +42,9 @@ python3 scripts/package_browser_runtime.py --archive
 
 为保留现有音乐效果，图片分析与编曲继续执行同一套规则：Pyodide 0.27.7 在 WebAssembly 中运行原算法和 NumPy／Pillow；GS 使用同一份 GeneralUser GS 音色库与 FluidSynth WebAssembly 2.4.6；Simple 与柔和混音沿用原合成算法。
 
-核心离线资源约 64 MiB，包含约 41 MiB 的 GS 音色脚本；音色按首次试听需要加载。服务器建议启用 gzip／Brotli 和静态缓存。网页加载后不需要后端接口、跨域权限、账户或密钥。使用限制性 CSP 时，需要允许 `script-src 'self' blob:`、`worker-src blob:`、WebAssembly 编译和 `img-src 'self' data: blob:`；现有内联样式也需要相应许可。
+核心离线资源约 64 MiB。GS 音色库有两份：通过 HTTP(S) 访问时下载约 31 MiB 的二进制 `browser-runtime/GeneralUser-GS.sf2`，并在生成乐谱的同时后台预载，通常首次点击播放前已下载完成；双击本地 `index.html` 打开时浏览器不允许读取二进制文件，仍使用约 41 MiB 的 `soundfont-data.js`。选择 Simple 音源时不下载音色库。
+
+服务器建议启用 gzip／Brotli 和静态缓存。以 nginx 为例，默认的 `gzip_types` 只包含 HTML，需要加入 `application/javascript`（`compute-data.js` 可从约 21 MiB 压缩到约 10 MiB）；`.sf2` 压缩收益很小，可以不压缩。给 `browser-runtime/` 设置缓存（例如 `expires 7d;`）后，再次打开基本无需重新下载；文件名不带版本号，更新部署后如需立即生效可缩短缓存时间。网页加载后不需要后端接口、跨域权限、账户或密钥。使用限制性 CSP 时，需要允许 `script-src 'self' blob:`、`worker-src blob:`、WebAssembly 编译和 `img-src 'self' data: blob:`；现有内联样式也需要相应许可。
 
 这里的“纯前端”包含 WebAssembly 运行时；不要求用户电脑安装 Python。该实现以网页为目标，后续小程序仍需适配运行环境。
 
