@@ -6,7 +6,7 @@ import reference_server as server
 import numpy as np
 
 photo=(engine.ROOT/'dist/sonification-assets/mars-sunset.png').read_bytes()
-options={'bars':4,'synth':'GeneralUser GS'}
+options={'bars':4,'synth':'Simple'}
 began=time.perf_counter()
 with patch.object(engine.upstream_audio,'render_backend',side_effect=AssertionError('page opening rendered audio')):
     prepared,context=engine.prepare_scores(photo,options)
@@ -20,7 +20,7 @@ def spy(*args,**kwargs):
     calls.append(len(args[0]));return actual(*args,**kwargs)
 with patch.object(engine.upstream_audio,'render_backend',side_effect=spy):
     began=time.perf_counter();soft,soft_metrics=server.ensure_audio(entry,'parallel-soft');soft_seconds=time.perf_counter()-began
-assert len(calls)==1,'soft playback should render only the shared GS backing'
+assert len(calls)==1,'soft playback should render only the shared backing'
 assert set(entry['waves'])=={'parallel-soft'}
 assert server.ensure_audio(entry,'parallel-soft')[0] is soft
 assert all(k not in entry['waves'] for k in ['reference','features','parallel'])
@@ -55,7 +55,7 @@ for hz in [85,240,3000,5200]:
     expected=np.fft.irfft(np.fft.rfft(random,nfft,axis=0)*np.fft.rfft(kernel,nfft)[:,None],nfft,axis=0)[:len(random)]
     assert np.max(np.abs(expected-engine.soft_row_mixer.lowpass(random,hz)))<1e-12
 report={'status':'passed','checkedOn':'2026-10-11','scorePreparationSeconds':seconds,'firstSoftAudioSeconds':soft_seconds,
-    'audioRendersOnOpen':0,'GSCallsForSoftPlayback':len(calls),
+    'audioRendersOnOpen':0,'backingCallsForSoftPlayback':len(calls),
     'checks':['on-open score and image only','soft playback does not render unused variants',
         'cache remains available during heavy rendering','lazy WAVs equal eager WAVs byte for byte',
         'image scores unchanged','all-muted silence','bounded FFT equals original filter numerically']}

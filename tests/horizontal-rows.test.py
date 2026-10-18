@@ -62,7 +62,7 @@ for variant in ['reference','features']:
     assert waves[variant]==base_wavs[variant]
 p=payload['variants']['parallel']
 assert p['rows']==4 and len(p['stems'])==5
-assert all('through FluidSynth' in stem['backend'] for stem in p['stems'].values())
+assert all('Simple procedural synthesizer' in stem['backend'] for stem in p['stems'].values())
 assert m.mix_row_stems(mixer)[0]==waves['parallel']
 for bits in itertools.product([False,True],repeat=4):
     ids=[f'row-{i}' for i,enabled in enumerate(bits) if enabled]
@@ -71,7 +71,7 @@ for bits in itertools.product([False,True],repeat=4):
         assert metrics['invalid']==0 and metrics['clipped']==0 and metrics['peak']<=.86001
         if not ids and not background:assert metrics['peak']==0
 checks.append('all 32 mute/background combinations: no clipping; full mix exactly reproducible; all-muted silence')
-checks.append('real GS stems use independent renderers; reference and snake outputs unchanged byte for byte')
+checks.append('real Simple stems use independent renderers; reference and snake outputs unchanged byte for byte')
 report={'status':'passed','checkedOn':'2026-10-11','checks':checks,'parallel':{'rows':p['rows'],'columns':p['cols'],'voices':[{k:v[k] for k in ['id','instrumentName','noteCount']} for v in p['voices']],'metrics':p['metrics']}}
 (m.ROOT/'tests/horizontal-rows-report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps(report,ensure_ascii=False))

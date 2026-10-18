@@ -6,7 +6,7 @@ def request(path,data=None):
     with urllib.request.urlopen(urllib.request.Request(BASE+path,data=encoded,headers={'Content-Type':'application/json'}),timeout=40) as response:
         return response.read(),dict(response.headers)
 image=base64.b64encode((ROOT/'dist/sonification-assets/mars-sunset.png').read_bytes()).decode()
-body={'image':image,'options':{'synth':'GeneralUser GS','bars':4}}
+body={'image':image,'options':{'synth':'Simple','bars':4}}
 started=time.perf_counter();data,_=request('/api/generate',body);score_seconds=time.perf_counter()-started
 p=json.loads(data);key=p['key'];v=p['variants']['parallel']
 assert score_seconds<4

@@ -43,7 +43,6 @@ ORDER_HINTS = {
 SWEEP_HINT = '扫描线：一条竖线从左到右扫过整幅画，不分声部也不分行；竖线碰到的每一条区域分界线都发音，碰到几条就同时响几个音（只有落在同一个音阶音上的两个交点合成一个）。分界线越高音越高（三个八度，吸附到音阶）；沿同一条分界线走、高度变化不大时延长原音，扫过区域侧边换到新的分界、高度明显变化或到新的一小节时重新起音。分界两侧颜色差越大越响，分界下方区域的颜色决定音色（暖色暖键、黄色木琴、绿色和紫色拨弦、蓝色轻铃，低音区用柔低音）。"分行"在这种方式下不起作用。'
 LINES_HINT = '线条演奏：选出画面里最长、最清晰的几条边缘作主线，主线断开处由附近高度的较短边缘接续，播放线从左到右扫过，横向位置是时间，边缘的高低是音高（三个八度，吸附到音阶），平缓的坡在音尾短暂滑音；不再按区域顺序发声。'
 # Used by the reference-engine mix and the painting page; the soft mix uses voicePreset.
-GS_LANES = {2: [0, 32], 3: [11, 0, 32], 4: [11, 0, 46, 32]}
 SIMPLE_LANES = {2: ['soft_piano', 'soft_bass'], 3: ['celesta', 'soft_piano', 'soft_bass'], 4: ['celesta', 'soft_piano', 'harp', 'soft_bass']}
 
 def shrink(map2d):
@@ -70,7 +69,7 @@ def build(analysis, info, options, engine):
     method = options.get('segmentMethod', 'grow')
     detail = float(options.get('segmentDetail', .5))
     if count not in (2, 3, 4): raise ValueError('声部数设置无效')
-    synth = options.get('synth', 'GeneralUser GS')
+    synth = options.get('synth', 'Simple')
     maps, features = analysis['maps'], analysis['features']
     soft = bool(options.get('segmentSoft', True))
     result = segmentation.segment(maps['rgb'], method, detail, soft=soft)
@@ -268,7 +267,7 @@ def build(analysis, info, options, engine):
         return notes, '；'.join(how)
 
     lanes = [{'offset': engine.OCTAVE_LAYOUT[count][lane], 'previous': None, 'events': [],
-        'instrument': f'gm_{GS_LANES[count][lane]:03d}' if synth == 'GeneralUser GS' else SIMPLE_LANES[count][lane]} for lane in range(count)]
+        'instrument': SIMPLE_LANES[count][lane]} for lane in range(count)]
     def play_lines():
         """Line score: the clearest long edges become lines; x is time, height is pitch, colour picks the voice."""
         span_scale = engine.upstream_composition.build_scale_notes(root, engine.upstream_composition.SCALES[info.scale_name], root - 7, root + 29)
@@ -439,8 +438,7 @@ def build(analysis, info, options, engine):
                 i = run['region']; f = regions[i]['features']; pitch = span_scale[int(np.clip(run['level'], 0, len(span_scale) - 1))]
                 while pitch < 36: pitch += 12
                 family, preset, simple, program = timbre(f, pitch)
-                instrument = f'gm_{program:03d}' if synth == 'GeneralUser GS' else simple
-                note = {'instrument': instrument, 'pan': float(np.clip(regions[i]['centroid']['x'] * .8 - .4, -.4, .4)), 'layer': 'main',
+                note = {'instrument': simple, 'pan': float(np.clip(regions[i]['centroid']['x'] * .8 - .4, -.4, .4)), 'layer': 'main',
                     'rowId': 'row-0', 'row': 0, 'voicePreset': preset, 'timbre': family, 'coverageEnd': end * SWEEP_STEP * beat,
                     'step': len(notes), 'sources': [{'regionId': regions[i]['id'], 'rect': regions[i]['rect']}],
                     'start': run['first'] * SWEEP_STEP * beat, 'duration': (end - run['first']) * SWEEP_STEP * beat * .96, 'midi': pitch,
@@ -556,7 +554,7 @@ def build(analysis, info, options, engine):
             if same: same[-1]['duration'] = max(same[-1]['duration'], end - same[-1]['start'])
             else:
                 pedal.append({'start': begin, 'duration': end - begin, 'midi': pitch, 'velocity': .34,
-                    'instrument': 'gm_089' if synth == 'GeneralUser GS' else 'warm_pad', 'pan': 0, 'layer': 'bass'})
+                    'instrument': 'warm_pad', 'pan': 0, 'layer': 'bass'})
         pedal.sort(key=lambda e: e['start'])
     events, voices = [], []
     if style == 'sweep':

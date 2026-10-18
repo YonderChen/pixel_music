@@ -12,7 +12,7 @@ const report={status:'running',errors:[],checks:[],renders:[],subjectivelyApprov
   const ready=async()=>page.waitForFunction(()=>window.PixelMusicFeaturesDemo?.payload()&&!window.PixelMusicFeaturesDemo.snapshot().busy&&!document.querySelector('#play').disabled,{},{timeout:90000});
   await ready();
   let data=await page.evaluate(()=>window.PixelMusicFeaturesDemo.payload());
-  assert.equal(data.settings.synth,'GeneralUser GS');assert.match(data.variants.features.backend,/through FluidSynth/);
+  assert.equal(data.settings.synth,'Simple');assert.match(data.variants.features.backend,/Simple procedural synthesizer/);
   assert.equal(await page.locator('.region').count(),data.variants.features.regions.length);
   await page.screenshot({path:path.join(output,'desktop.png'),fullPage:true});
   await page.click('#play');await page.waitForFunction(()=>window.PixelMusicFeaturesDemo.snapshot().playing);await page.waitForTimeout(180);await page.click('#play');
@@ -24,7 +24,7 @@ const report={status:'running',errors:[],checks:[],renders:[],subjectivelyApprov
   assert.deepEqual(sync.actual,sync.expected);await page.click('#play');
   await page.locator('.region[data-index="10"]').click();await page.waitForTimeout(500);
   assert.match(await page.locator('#selectedFeatures').textContent(),/色相.*饱和.*亮度.*对比.*纹理/);
-  report.checks.push('real GS playback / pause-resume / seeking / source highlights / cell preview');
+  report.checks.push('real playback / pause-resume / seeking / source highlights / cell preview');
   await page.click('#abFeatures');await page.waitForFunction(()=>window.PixelMusicFeaturesDemo.snapshot().playing);
   assert.equal(await page.locator('#seek').getAttribute('max'),'12');
   const match=await page.evaluate(()=>window.PixelMusicFeaturesDemo.snapshot().comparison);assert.ok(match.matched&&match.gain<=1);
@@ -49,7 +49,7 @@ const report={status:'running',errors:[],checks:[],renders:[],subjectivelyApprov
   await page.uncheck('#backing');await ready();assert.deepEqual(Object.keys((await page.evaluate(()=>window.PixelMusicFeaturesDemo.payload())).variants.features.layerCounts),['main']);
   await page.selectOption('#tone','Simple');await ready();assert.equal((await page.evaluate(()=>window.PixelMusicFeaturesDemo.payload())).settings.synth,'Simple');
   await page.selectOption('#mappingStyle','Balanced');await ready();assert.equal((await page.evaluate(()=>window.PixelMusicFeaturesDemo.payload())).settings.mapping,'Balanced');
-  await page.check('#backing');await ready();await page.selectOption('#tone','GeneralUser GS');await ready();
+  await page.check('#backing');await ready();
   report.checks.push('horizontal colour / texture / pure colour / black / all settings use actual reference core');
   for(const type of ['image/png','image/jpeg','image/webp']){
    const encoded=await page.evaluate(type=>{const c=document.createElement('canvas');c.width=256;c.height=192;const ctx=c.getContext('2d');ctx.fillStyle='#ef8646';ctx.fillRect(0,0,128,192);ctx.fillStyle='#245e8a';ctx.fillRect(128,0,128,192);return c.toDataURL(type).split(',')[1];},type);

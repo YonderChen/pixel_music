@@ -1,7 +1,6 @@
 """Browser-only RPC adapter; runs in Pyodide inside a dedicated Web Worker.
 
 Pinned analysis/composition and the existing mixers are imported unchanged.
-Only the native FluidSynth process is replaced by the WASM FluidSynth renderer.
 """
 import base64
 import dataclasses
@@ -13,21 +12,8 @@ import sys
 sys.path.insert(0, '/app/scripts')
 import reference_music as engine
 import hover_preview
-import numpy as np
 
 ENTRIES = {}
-
-def wasm_fluidsynth(events, duration, tempo, sr, params=None):
-    from js import renderGeneralUser
-    from pyodide.ffi import to_js
-    midi = engine.upstream_audio.midi_bytes_from_events(events, tempo)
-    result = renderGeneralUser(to_js(midi), duration, sr)
-    samples = np.frombuffer(result.to_py(), dtype='<f4').reshape(-1, 2).astype(np.float64)
-    # Match the native fast-file renderer's signed 16-bit output stage.
-    samples = np.clip(np.rint(samples * 32768), -32768, 32767) / 32768
-    return engine.upstream_audio.normalize_master_audio(samples), 'Audio rendered with GeneralUser GS through FluidSynth WebAssembly (master gain 0.45).'
-
-engine.upstream_audio.render_with_fluidsynth = wasm_fluidsynth
 
 def ensure_audio(cached, variant):
     if variant in cached['waves']:

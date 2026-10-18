@@ -90,8 +90,8 @@ serialized,regions=m.serialize_reference(raw,original_analysis,raw_info)
 fields=['start','duration','midi','velocity','instrument','pan','layer']
 assert [dataclasses.asdict(e) for e in raw]==[{field:r[field] for field in fields} for r in serialized]
 payload,waves=m.build(photo)
-assert payload['settings']['synth']=='GeneralUser GS'
-assert payload['variants']['reference']['backend'].startswith('Audio rendered with GeneralUser GS through FluidSynth')
+assert payload['settings']['synth']=='Simple'
+assert payload['variants']['reference']['backend'].startswith('Audio rendered with the Simple procedural synthesizer')
 assert {field:payload['info'][field] for field in dataclasses.asdict(raw_info)}==dataclasses.asdict(raw_info)
 for mode,value in payload['variants'].items():
     assert value['metrics']['invalid']==0 and value['metrics']['clipped']==0
@@ -100,7 +100,7 @@ for mode,value in payload['variants'].items():
 reference_nonmain=[{field:r[field] for field in fields} for r in payload['variants']['reference']['events'] if r['layer']!='main']
 feature_nonmain=[{field:r[field] for field in fields} for r in payload['variants']['features']['events'] if r['layer']!='main']
 assert reference_nonmain==feature_nonmain, 'same original accompaniment, texture and saliency solo'
-checks.append('unchanged upstream source / exact original event fields / real GS render / same non-main events')
+checks.append('unchanged upstream source / exact original event fields / real Simple render / same non-main events')
 report={'status':'passed','checkedOn':'2026-10-10','upstream':m.UPSTREAM_SHA,'checks':checks,'photo':payload['info'],'audio':{k:v['metrics'] for k,v in payload['variants'].items()}}
 (m.ROOT/'tests/reference-features-report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps(report,ensure_ascii=False))

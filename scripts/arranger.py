@@ -36,16 +36,11 @@ NOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
 
 # Curated combinations instead of per-row automatic GM picks.
 ENSEMBLES = [
-    {'id': 'wooden-steps', 'name': '木琴轻步', 'gs': {'melody': 12, 'counter': 24, 'arpeggio': 108, 'bass': 32, 'pad': 89},
-        'simple': {'melody': 'marimba', 'counter': 'harp', 'arpeggio': 'kalimba', 'bass': 'soft_bass', 'pad': 'warm_pad'}},
-    {'id': 'night-strings', 'name': '夜色弦乐', 'gs': {'melody': 0, 'counter': 42, 'arpeggio': 46, 'bass': 32, 'pad': 49},
-        'simple': {'melody': 'soft_piano', 'counter': 'cello', 'arpeggio': 'harp', 'bass': 'soft_bass', 'pad': 'warm_pad'}},
-    {'id': 'warm-chamber', 'name': '暖木室内乐', 'gs': {'melody': 73, 'counter': 71, 'arpeggio': 24, 'bass': 42, 'pad': 49},
-        'simple': {'melody': 'flute_like_lead', 'counter': 'clarinet_like_reed', 'arpeggio': 'harp', 'bass': 'cello', 'pad': 'warm_pad'}},
-    {'id': 'cool-mist', 'name': '冷雾电钢', 'gs': {'melody': 4, 'counter': 11, 'arpeggio': 46, 'bass': 35, 'pad': 88},
-        'simple': {'melody': 'soft_piano', 'counter': 'celesta', 'arpeggio': 'harp', 'bass': 'soft_bass', 'pad': 'glass_pad'}},
-    {'id': 'morning-piano', 'name': '晨光钢琴', 'gs': {'melody': 0, 'counter': 48, 'arpeggio': 46, 'bass': 32, 'pad': 89},
-        'simple': {'melody': 'soft_piano', 'counter': 'bowed_string', 'arpeggio': 'harp', 'bass': 'soft_bass', 'pad': 'warm_pad'}},
+    {'id': 'wooden-steps', 'name': '木琴轻步', 'simple': {'melody': 'marimba', 'counter': 'harp', 'arpeggio': 'kalimba', 'bass': 'soft_bass', 'pad': 'warm_pad'}},
+    {'id': 'night-strings', 'name': '夜色弦乐', 'simple': {'melody': 'soft_piano', 'counter': 'cello', 'arpeggio': 'harp', 'bass': 'soft_bass', 'pad': 'warm_pad'}},
+    {'id': 'warm-chamber', 'name': '暖木室内乐', 'simple': {'melody': 'flute_like_lead', 'counter': 'clarinet_like_reed', 'arpeggio': 'harp', 'bass': 'cello', 'pad': 'warm_pad'}},
+    {'id': 'cool-mist', 'name': '冷雾电钢', 'simple': {'melody': 'soft_piano', 'counter': 'celesta', 'arpeggio': 'harp', 'bass': 'soft_bass', 'pad': 'glass_pad'}},
+    {'id': 'morning-piano', 'name': '晨光钢琴', 'simple': {'melody': 'soft_piano', 'counter': 'bowed_string', 'arpeggio': 'harp', 'bass': 'soft_bass', 'pad': 'warm_pad'}},
 ]
 
 def choose_ensemble(features):
@@ -57,7 +52,7 @@ def choose_ensemble(features):
     return ENSEMBLES[4], '明暗与冷暖均衡'
 
 def instrument(ensemble, role, synth):
-    return f"gm_{ensemble['gs'][role]:03d}" if synth == 'GeneralUser GS' else ensemble['simple'][role]
+    return ensemble['simple'][role]
 
 def chord_pcs(root_pc, parent, degree):
     return [(root_pc + parent[(degree + 2 * k) % 7]) % 12 for k in range(3)]
@@ -325,7 +320,7 @@ def harmonize(events, info, root_midi, bars, synth):
         degree = keep if score(keep) >= score(best) - .25 * total else best
         degrees.append(degree); previous = degree
     chords = [triads[d] for d in degrees]
-    inst = 'gm_089' if synth == 'GeneralUser GS' else 'warm_pad'
+    inst = 'warm_pad'
     names = [chord_name(root_pc, parent, d) for d in degrees]
     return pad_events(chords, beat, inst), {'key': NOTE_NAMES[root_pc], 'progression': compress(names),
         'harmonyChanges': sum(1 for i in range(1, len(names)) if names[i] != names[i - 1])}
