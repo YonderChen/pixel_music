@@ -5,19 +5,21 @@
 ## 打开方式
 
 - 本地调试：保留解压后的完整文件夹，双击其中的 `index.html` 或 `feature-music.html`。源码工作区的入口在 `dist` 中；项目根目录可选的 `.command` 快捷入口现在只负责打开网页。
-- 发布：将静态部署包解压后的文件全部上传到服务器网站目录，访问 `index.html`。也可以直接发布整个 `dist` 文件夹。
+- 发布：正式站是 <https://pixel-music.pages.dev>，由 Cloudflare 从 `release` 分支发布，见下文“Cloudflare 发布”。自建服务器时，将静态部署包解压后的文件全部上传到网站目录，访问 `index.html`；也可以直接发布整个 `dist` 文件夹。
 - 乐曲成画：点击图片演奏页的“把当前乐曲画出来”；或直接打开 `music-art.html` 试样曲、MIDI 与乐谱 JSON。
 
 所有资源随文件夹提供，不依赖 CDN。图片不上传，计算和声音生成在浏览器的后台线程中完成。浏览器要求用户点击播放后才能出声。
 
 ## 保留的演奏组合
 
+下表是 0.7 当时的组合。之后又新增了编曲版与参考条带优化版（[0.8.1](./ARRANGED_DEMO.md)）和区域分割（[0.9](./REGION_DEMO.md)，现为默认组合），都同样在浏览器中运行。
+
 | 转换方法 | 演奏与混音 |
 | --- | --- |
 | 多行叠奏 · 多特征音高转换 · 新 | 原有叠加 |
 | 多行叠奏 · 行内参考条带 | 柔和合成混音 |
 | 多行叠奏 · 局部多特征法 | 柔和合成混音 |
-| 参考原谱 | Photo Sonification 核心规则与参考音源 |
+| 参考原谱 | Photo Sonification 核心规则，Simple 合成 |
 
 保留 2／3／4 行、静音与独听、完整编曲、点击／移动试听、循环、暂停／进度拖动、12 秒对照以及 WAV 导出。
 
@@ -29,7 +31,7 @@
 
 图片演奏页与乐曲成画页共用 `ui.css`（配色、字体、按钮、开关等组件），各自的版式分别在 `studio.css` 与 `music-art.css`；`sonification.css` 只服务旧的条带声化 Demo。品牌图标与分享资源为 `favicon.svg`、`icon-192.png`、`icon-512.png`、`icon-maskable-512.png`、`apple-touch-icon.png`、`og-image.png` 和 `site.webmanifest`。
 
-当前 `dist` 同时包含手写 HTML／CSS／JavaScript 页面、第三方运行资源和生成文件，仍作为开发与部署目录提交。`index.html` 是 `feature-music.html` 的副本；`music-art-classics.js` 由古典 MIDI 文件与清单生成；浏览器运行时的 `compute-data.js`、`soundfont-data.js`、`sources-data.js` 和 `manifest.json` 由打包脚本生成。
+当前 `dist` 同时包含手写 HTML／CSS／JavaScript 页面、第三方运行资源和生成文件，仍作为开发与部署目录提交。`index.html` 是 `feature-music.html` 的副本；`music-art-classics.js` 由古典 MIDI 文件与清单生成；浏览器运行时的 `compute-data.js`、`sources-data.js` 和 `manifest.json` 由打包脚本生成。
 
 日常修改页面可直接预览。修改古典 MIDI 清单或文件后，运行 `node scripts/package_classical_midi.cjs`；修改浏览器运行时所用 Python 算法或第三方资源后，运行 `python3 scripts/package_browser_runtime.py`。后者默认只重建运行资源，不生成 ZIP。
 
@@ -46,7 +48,7 @@ python3 scripts/package_browser_runtime.py --archive
 
 GS 采样音源已移除（音色库 31 MiB，超过 Cloudflare 单文件 25 MiB 的上限），参考原谱和"原有叠加"统一使用 Simple 合成。核心离线资源约 23 MiB，最大的文件是约 21 MiB 的 `compute-data.js`。
 
-服务器建议启用 gzip／Brotli 和静态缓存。以 nginx 为例，默认的 `gzip_types` 只包含 HTML，需要加入 `application/javascript`（`compute-data.js` 可从约 21 MiB 压缩到约 10 MiB）；`.sf2` 压缩收益很小，可以不压缩。给 `browser-runtime/` 设置缓存（例如 `expires 7d;`）后，再次打开基本无需重新下载；文件名不带版本号，更新部署后如需立即生效可缩短缓存时间。网页加载后不需要后端接口、跨域权限、账户或密钥。使用限制性 CSP 时，需要允许 `script-src 'self' blob:`、`worker-src blob:`、WebAssembly 编译和 `img-src 'self' data: blob:`；现有内联样式也需要相应许可。
+服务器建议启用 gzip／Brotli 和静态缓存。以 nginx 为例，默认的 `gzip_types` 只包含 HTML，需要加入 `application/javascript`（`compute-data.js` 可从约 21 MiB 压缩到约 10 MiB）。给 `browser-runtime/` 设置缓存（例如 `expires 7d;`）后，再次打开基本无需重新下载；文件名不带版本号，更新部署后如需立即生效可缩短缓存时间。网页加载后不需要后端接口、跨域权限、账户或密钥。使用限制性 CSP 时，需要允许 `script-src 'self' blob:`、`worker-src blob:`、WebAssembly 编译和 `img-src 'self' data: blob:`；现有内联样式也需要相应许可。
 
 这里的“纯前端”包含 WebAssembly 运行时；不要求用户电脑安装 Python。该实现以网页为目标，后续小程序仍需适配运行环境。
 
@@ -64,6 +66,8 @@ git push origin origin/master:release
 Cloudflare 后台对应设置（Pages 项目 → Settings → Builds & deployments → Branch control）：生产分支为 `release`，预览分支设为 None。Cloudflare 单个文件上限 25 MiB，超过时那次部署失败，正式站保持上一版本；`dist/_headers` 为 `browser-runtime/` 设置一天缓存，Cloudflare 会自动压缩 JavaScript。
 
 ## 本轮验证
+
+以下是 0.7 发布时的验证记录。当时网页还带 GS 采样音源（浏览器版 FluidSynth），GS 现已移除，相关两条只作历史保留。
 
 - 纯静态 HTTP 服务：三种组合与参考原谱生成／播放、循环、移动试听缓存及乐曲成画链路。
 - 9 组真实计算对照：三种方法 × 2／3／4 行，音高、起音、时值、力度与配器一致；局部 FFT 元数据最大差异约 0.00033，来自运行平台浮点计算。
