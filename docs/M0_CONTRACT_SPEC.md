@@ -2,7 +2,7 @@
 
 冻结日期：2026-10-08（北京时间）。任务 B01、B02；规格版本 `visual-score-v1`。
 
-本文约束后续研发，不表示轮廓分析、作曲、视图或路由已实现。可执行示例在 [契约骨架](./tests/m0-contract.cjs) 和 [反例测试](./tests/m0-contract.test.cjs)。它们只验证手工构造的样例，不把几何标注当成算法输出。
+本文约束后续研发，不表示轮廓分析、作曲、视图或路由已实现。可执行示例在 [契约骨架](../tests/m0-contract.cjs) 和 [反例测试](../tests/m0-contract.test.cjs)。它们只验证手工构造的样例，不把几何标注当成算法输出。
 
 ## 1. 兼容边界
 
@@ -17,7 +17,7 @@
 
 默认设置：像素、轻奏 `sparse`、暖键 `warm`。两模式可选 `sparse / continuous`、`warm / glass / mist`。轮廓首轮固定：192×120、64 拍、0.25 拍网格、MIDI 48–72、一个声部、恒速 76–104 BPM；无新低音／铺底。三种调式沿用现有五声／大调／小调音阶集合。音色是渲染设置，不改变作曲身份。
 
-[冻结清单](./tests/baseline/v061-manifest.json) 记录五核心模块、三组夹具、假音频环境、旧契约，共十对原始／冻结 SHA。只改 UMD 名字和本地依赖指向；反向恢复后须逐字匹配原始 SHA。历史 v04/v05/v06 不覆盖。冻结捕获输出 [168 条快照](./tests/baseline/v061-score-snapshot.json)，包括完整乐谱 JSON SHA、事件／区域／时间轴 SHA、四种指纹与三音色排程 SHA；测试绝不自动重写期望。
+[冻结清单](../tests/baseline/v061-manifest.json) 记录五核心模块、三组夹具、假音频环境、旧契约，共十对原始／冻结 SHA。只改 UMD 名字和本地依赖指向；反向恢复后须逐字匹配原始 SHA。历史 v04/v05/v06 不覆盖。冻结捕获输出 [168 条快照](../tests/baseline/v061-score-snapshot.json)，包括完整乐谱 JSON SHA、事件／区域／时间轴 SHA、四种指纹与三音色排程 SHA；测试绝不自动重写期望。
 
 快照 SHA 是文件审计；产品 `imageHash`、`scoreHash` 等仍沿用产品摘要，不能称为密码学哈希。VM 经典脚本检查不是实际浏览器运行；假音频排程不是波形渲染。
 
@@ -49,7 +49,7 @@
 
 ## 4. 身份、排序和取舍
 
-M0 固定序列化参考 [identity.cjs](./tests/m0/identity.cjs)，仅用于测试，不加载到产品。身份版本 `contour-identity-v1`：UTF-8、对象 ASCII 字段名按字典序、数组保留规定顺序、有限数字四舍五入九位小数（`Math.round`，负半值向正无穷）、负零转零。不接受 undefined、NaN、Infinity、日期／函数等非 JSON 值。计算时保留原精度，舍入只用于身份，不能改变排程时间。
+M0 固定序列化参考 [identity.cjs](../tests/m0/identity.cjs)，仅用于测试，不加载到产品。身份版本 `contour-identity-v1`：UTF-8、对象 ASCII 字段名按字典序、数组保留规定顺序、有限数字四舍五入九位小数（`Math.round`，负半值向正无穷）、负零转零。不接受 undefined、NaN、Infinity、日期／函数等非 JSON 值。计算时保留原精度，舍入只用于身份，不能改变排程时间。
 
 新摘要采用 FNV-1a 64 位、16 位小写十六进制，输入为 `身份版本 + 换行 + 域 + 换行 + 规范 JSON`；域分开，不能混用。它是确定性摘要，不承诺无碰撞；文件及验收证据仍用 SHA-256。旧像素指纹完全不迁移。
 

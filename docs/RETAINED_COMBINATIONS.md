@@ -8,7 +8,7 @@
 
 12 秒对照与单音试听保持单次播放。循环复用已解码的当前声音，不重复请求或生成音频；更换图片、组合或演奏版本时保留开关选择。WAV 导出保存一遍整曲。
 
-验证：[循环、暂停、进度与短试听](./tests/loop-playback-client-report.json)、[本机浏览器循环验收](./tests/loop-playback-browser-report.json)。
+验证：[循环、暂停、进度与短试听](../tests/loop-playback-client-report.json)、[本机浏览器循环验收](../tests/loop-playback-browser-report.json)。
 
 ## 新增：移动试听 · 0.6.1
 
@@ -22,7 +22,7 @@
 
 移动试玩沿用当前乐谱的音高与乐器，使用约 0.31 秒的短音起奏及自然尾音，音量随原音符力度调整。缓存准备完成后，鼠标移动不再逐格请求本机服务。这里改变的是交互奏法，三种组合的图片映射、原整曲与导出规则保持原样。
 
-验证：[快速移动、取消与输入兼容](./tests/hover-preview-client-report.json)、[真实音高和音色缓存](./tests/hover-preview-report.json)、[实际缓存接口](./tests/hover-preview-api-report.json)、[本机浏览器验收](./tests/hover-preview-browser-report.json)。建议先开移动试听跨行移动，再关闭开关比较点击效果。
+验证：[快速移动、取消与输入兼容](../tests/hover-preview-client-report.json)、[真实音高和音色缓存](../tests/hover-preview-report.json)、[实际缓存接口](../tests/hover-preview-api-report.json)、[本机浏览器验收](../tests/hover-preview-browser-report.json)。建议先开移动试听跨行移动，再关闭开关比较点击效果。
 
 | 演奏方式 | 图片到音符的映射 | 混音 |
 | --- | --- | --- |
@@ -61,4 +61,4 @@
 
 同一图片依次试听三种组合，检查扫描、高亮、静音与独听，再用参考原谱对照。保存 WAV 时确认文件名对应当前组合，浏览器实际保存位置继续由人工确认。
 
-验证：[组合选择、失败重试与导出命名](./tests/page-startup-client-report.json)、[三种组合实际音频与参考原谱](./tests/retained-combinations-api-report.json)、[本机浏览器验收](./tests/retained-combinations-browser-report.json)。自动检查证明配对和功能正确，听感沿用人工选择。
+验证：[组合选择、失败重试与导出命名](../tests/page-startup-client-report.json)、[三种组合实际音频与参考原谱](../tests/retained-combinations-api-report.json)、[本机浏览器验收](../tests/retained-combinations-browser-report.json)。自动检查证明配对和功能正确，听感沿用人工选择。

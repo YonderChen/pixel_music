@@ -57,11 +57,11 @@
 
 ## 5. 交付
 
-- 正常使用：[dist/index.html](./dist/index.html)，默认“轻奏留白”，可选“连续声景”。
-- 新对照页：[tests/articulation-listen.html](./tests/articulation-listen.html)，同图、同音高与同速度比较两种奏法；短片段淡出并匹配 RMS。
+- 正常使用：[dist/index.html](../dist/index.html)，默认“轻奏留白”，可选“连续声景”。
+- 新对照页：[tests/articulation-listen.html](../tests/articulation-listen.html)，同图、同音高与同速度比较两种奏法；短片段淡出并匹配 RMS。
 - 当前专项测试：`articulation.test.cjs`、`articulation-audio.test.cjs`、`articulation-browser.test.cjs`。
-- 真实浏览器快照：[tests/articulation-browser-snapshot.json](./tests/articulation-browser-snapshot.json)。
-- 验证摘要：[tests/articulation-regression-summary.json](./tests/articulation-regression-summary.json)。
+- 真实浏览器快照：[tests/articulation-browser-snapshot.json](../tests/articulation-browser-snapshot.json)。
+- 验证摘要：[tests/articulation-regression-summary.json](../tests/articulation-regression-summary.json)。
 - 0.6 冻结模块为 `tests/baseline/*-v06.js`，旧契约为 `tests/score-contract-v06.cjs`；原忠实性对照页与测试改用这些模块，原报告／验收记录不覆盖。
 - 本机音频报告与可复现 WAV 示例存于 Git 忽略的 `tests/artifacts/`，可在新对照页重新生成。
 

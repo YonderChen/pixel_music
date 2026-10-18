@@ -4,7 +4,7 @@
 
 ## 打开与验收
 
-直接双击打开 [dist/sonification.html](./dist/sonification.html)，推荐用 Chrome。保留整个 `dist` 文件夹，页面的脚本、样本与旧版合成器使用本地相对路径；无需安装依赖或联网。
+直接双击打开 [dist/sonification.html](../dist/sonification.html)，推荐用 Chrome。保留整个 `dist` 文件夹，页面的脚本、样本与旧版合成器使用本地相对路径；无需安装依赖或联网。
 
 1. 点击“开始演奏”，观察图片上的音符来源、扫描线与下方时间轴。
 2. 点击图片的任意条带，短试听它在整曲中的实际音高；下方显示亮度、对比度、重心及音高处理原因。
@@ -36,7 +36,7 @@ python3 -m http.server 4175 --bind 127.0.0.1
 - 对照采用现有 0.6.4 连绵演奏；前 12 秒按实际渲染 RMS 降低较响版本的音量。静音无法匹配时明确提示；暂停／继续仍保持 12 秒的边界。
 - 手机布局、区域试听、音符时间轴点击试听、图片拖放与 WAV 保存。
 
-内置照片的直接文件模式使用同一 PNG 的内嵌副本，避免本地文件跨来源读取导致画布无法分析；HTTP 模式加载独立 PNG。两种模式使用相同图片内容与生成规则。素材署名见 [样本说明](./dist/sonification-assets/README.md)。
+内置照片的直接文件模式使用同一 PNG 的内嵌副本，避免本地文件跨来源读取导致画布无法分析；HTTP 模式加载独立 PNG。两种模式使用相同图片内容与生成规则。素材署名见 [样本说明](../dist/sonification-assets/README.md)。
 
 ## 验证入口与证据
 
@@ -52,7 +52,7 @@ node tests/strip-sonification-browser.cjs
 - 实际声音：8 个样本 × 3 种音色，共 24 组 `OfflineAudioContext` 渲染，检查数值、峰值、削波与尾音；全黑保持静音。
 - 直接文件检查：`file://` 打开、两张内置照片、上传图片、实际播放与 WAV 下载。
 
-检查结果见 [浏览器验证记录](./tests/strip-sonification-browser-report.json)。这些检查证明功能与数据一致性，不代表主观听感已验收。
+检查结果见 [浏览器验证记录](../tests/strip-sonification-browser-report.json)。这些检查证明功能与数据一致性，不代表主观听感已验收。
 
 ## 本版边界
 

@@ -307,4 +307,4 @@ C = clamp(0.50 × 平滑空间变化
 
 从纯色到渐变，再到重复纹理和复杂图，音乐应随真实结构逐步变丰富。能听出图片的变化程度与组织方式，并且能追溯声音来源，比让所有输入都出现同样的音乐剧情更重要。
 
-相关历史资料：[README](./README.md)、[0.5 节奏优化方案](./RHYTHM_OPTIMIZATION_PLAN.md)、[0.5 实现报告](./RHYTHM_IMPLEMENTATION_REPORT.md)。本计划改变了“每区域必须独立起音”等旧约束；实施时应以本文的新契约为准，并显式更新版本。
+相关历史资料：[README](../README.md)、[0.5 节奏优化方案](./RHYTHM_OPTIMIZATION_PLAN.md)、[0.5 实现报告](./RHYTHM_IMPLEMENTATION_REPORT.md)。本计划改变了“每区域必须独立起音”等旧约束；实施时应以本文的新契约为准，并显式更新版本。

@@ -38,10 +38,10 @@
 
 ## 验证
 
-[转折与实际声音检查](./tests/pitch-contour-report.json) 覆盖真实图像的上行、下行、峰谷、突变、等亮色带与纹理变化；完整像素覆盖、来源可追踪、纯色不按坐标补音与全黑休止；真实波形基频、相位及包络连续、休止后重新起句、完整 WAV 与全静音。
+[转折与实际声音检查](../tests/pitch-contour-report.json) 覆盖真实图像的上行、下行、峰谷、突变、等亮色带与纹理变化；完整像素覆盖、来源可追踪、纯色不按坐标补音与全黑休止；真实波形基频、相位及包络连续、休止后重新起句、完整 WAV 与全静音。
 
-旧参考条带／局部特征映射、参考原谱、选择旧版时的蛇形事件、原有柔和音色波形，以及固定版本的 Photo Sonification 源码保持一致。当前全图音高转换会重新生成自己的旋律。[启动回归](./tests/page-startup-report.json) 继续验证先生成乐谱、按需准备音频及失败恢复，避免重新引入打开页面的等待负担。
+旧参考条带／局部特征映射、参考原谱、选择旧版时的蛇形事件、原有柔和音色波形，以及固定版本的 Photo Sonification 源码保持一致。当前全图音高转换会重新生成自己的旋律。[启动回归](../tests/page-startup-report.json) 继续验证先生成乐谱、按需准备音频及失败恢复，避免重新引入打开页面的等待负担。
 
-[实际 HTTP 验证](./tests/pitch-contour-api-report.json) 检查两种奏法的完整 WAV、逐行混音、全静音与区域短试听；[内置浏览器验收](./tests/pitch-contour-browser-report.json) 记录真实播放、暂停、独听、选项说明与 WAV 文件保存。
+[实际 HTTP 验证](../tests/pitch-contour-api-report.json) 检查两种奏法的完整 WAV、逐行混音、全静音与区域短试听；[内置浏览器验收](../tests/pitch-contour-browser-report.json) 记录真实播放、暂停、独听、选项说明与 WAV 文件保存。
 
 运行：使用带 NumPy／Pillow 的 Python 执行 `tests/pitch-contour.test.py`。自动检查只验证映射与发声行为，听感是否符合预期仍由人工验收。

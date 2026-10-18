@@ -23,5 +23,5 @@ if args.archive:
  archive=root/'图鸣-静态网页版.zip'
  with ZipFile(archive,'w',compression=ZIP_DEFLATED,compresslevel=6) as z:
   for p in paths:z.write(p,str(p.relative_to(root/'dist')))
-  z.write(root/'STATIC_WEB_DEMO.md','使用说明.md')
+  z.write(root/'docs'/'STATIC_WEB_DEMO.md','使用说明.md')
  print('Static archive:',archive,archive.stat().st_size)
