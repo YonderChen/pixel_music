@@ -50,9 +50,18 @@ GS 采样音源已移除（音色库 31 MiB，超过 Cloudflare 单文件 25 MiB
 
 这里的“纯前端”包含 WebAssembly 运行时；不要求用户电脑安装 Python。该实现以网页为目标，后续小程序仍需适配运行环境。
 
-## Cloudflare 自动发布
+## Cloudflare 发布
 
-使用 Cloudflare 自带的 Git 集成（Workers Builds）：在 Cloudflare 后台 Workers & Pages → Create → Import a repository，连接 GitHub 并选择本仓库，项目名填 `pixel-music`（须与根目录 `wrangler.jsonc` 的 `name` 一致），构建命令留空，部署命令保持 `npx wrangler deploy`。之后每次推送 master 自动把 `dist` 原样发布到 `pixel-music.<子域>.workers.dev`，无需 API Token。Cloudflare 单个文件上限 25 MiB；`dist/_headers` 为 `browser-runtime/` 设置一天缓存，Cloudflare 会自动压缩 JavaScript。
+网站由 Cloudflare Pages 的 Git 集成发布：构建命令留空，输出目录 `dist`，根目录 `/`。只有推送到 `release` 分支才会更新正式站；日常提交推送 master 不会发布。
+
+发布当前 master：
+
+```sh
+git fetch origin master
+git push origin origin/master:release
+```
+
+Cloudflare 后台对应设置（Pages 项目 → Settings → Builds & deployments → Branch control）：生产分支为 `release`，预览分支设为 None。Cloudflare 单个文件上限 25 MiB，超过时那次部署失败，正式站保持上一版本；`dist/_headers` 为 `browser-runtime/` 设置一天缓存，Cloudflare 会自动压缩 JavaScript。
 
 ## 本轮验证
 
