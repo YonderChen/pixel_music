@@ -1,5 +1,7 @@
 # 图鸣 · 全图特征旋律 Demo 0.2
 
+> 历史记录：本文是全图特征旋律 Demo 0.2的说明，保留作对照。当前功能与用法以 [README](../README.md) 和 [文档索引](./README.md) 为准；文中的本机服务地址 `127.0.0.1:4176`、启动脚本里的音源服务、GS 采样音源与 FluidSynth 现已不再使用，网页直接在浏览器里运行。
+
 日期：2026-10-10。初版功能验证通过，待人工试听。
 
 2026-10-11：工作台已新增 [多行横向叠奏 Demo 0.3](./HORIZONTAL_ROWS_DEMO.md)，启动入口保持一致。以下保留 0.2 的实现与验证记录。
@@ -48,12 +50,12 @@ python3 scripts/reference_server.py --port 4176
 node tests/feature-reference-browser.cjs
 ```
 
-本机启动脚本自动选择 Codex 捆绑 Python。FluidSynth 为项目内运行库，没有安装或升级系统软件；当前准备脚本适用于本机 macOS arm64，依赖已存在的 Homebrew libsndfile。迁移到其它机器需配置当地 Python 与 FluidSynth，不能仅复制 HTML。
+当时本机启动脚本自动选择 Codex 捆绑 Python。FluidSynth 为项目内运行库，没有安装或升级系统软件；当前准备脚本适用于本机 macOS arm64，依赖已存在的 Homebrew libsndfile。迁移到其它机器需配置当地 Python 与 FluidSynth，不能仅复制 HTML。
 
 ## 源码与许可
 
 参考项目：[Photo Sonification](https://github.com/trungtin-dinh/photo_sonification)，固定提交 `667d97c1e68de56fe2f5ef2d26784ee8a7308f3f`。五个核心模块保持原样，来源摘要见 [UPSTREAM.json](../vendor/photo_sonification/UPSTREAM.json)，保留 [MIT 许可证](../vendor/photo_sonification/LICENSE.txt)。
 
-GeneralUser GS 2.0.3 BETA 为 S. Christian Collins 的音色库，使用参考仓库的原始文件，附带从库中提取的 [许可与署名](../vendor/photo_sonification/soundfonts/LICENSE-GeneralUser-GS.txt)。FluidSynth 及运行库的来源、校验值和许可证记录在本机 `.reference-runtime/manifest.json`；运行库不纳入 Git。
+GeneralUser GS 2.0.3 BETA 为 S. Christian Collins 的音色库，使用参考仓库的原始文件，当时附带从库中提取的许可与署名（音色库与许可文件已随 GS 音源一起删除）。FluidSynth 及运行库的来源、校验值和许可证记录在本机 `.reference-runtime/manifest.json`；运行库不纳入 Git。
 
 上一版 [条带 Demo](../dist/sonification.html) 与 [交付说明](./STRIP_DEMO_DELIVERY.md) 保留为历史对照。当前执行方向以本说明及优化文档中的最新调整为准。
