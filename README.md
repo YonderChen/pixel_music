@@ -4,7 +4,7 @@
 
 ## 最新：区域分割 Demo 0.9
 
-"演奏组合"新增并默认选中"区域分割 / 柔和合成混音"：图片按内容分成形状各异的区域，可在"方格种子 · 区域生长""四叉树 · 分裂合并""SLIC 超像素"之间切换；区域按纵向位置分到各声部，演奏顺序可选视线游走（默认）、显著度分层、从左到右、全图一条路径或纯显著度，区域越大音越长。打开"轮廓参与"后，区域边缘起伏成旋律动机，形状决定奏法、音色、起音与滑音，被包围的区域由外层给出持续低音。"柔化轮廓"把锯齿边界磨圆并画成平滑曲线。纯白图只有一个区域、一个长音。[说明与验证](./REGION_DEMO.md)
+"演奏组合"新增并默认选中"区域分割 / 柔和合成混音"：图片按内容分成形状各异的区域，可在"方格种子 · 区域生长""四叉树 · 分裂合并""SLIC 超像素"之间切换；区域按纵向位置分到各声部，演奏顺序可选视线游走（默认）、显著度分层、从左到右、全图一条路径或纯显著度，区域越大音越长。打开"轮廓参与"后，区域边缘起伏成旋律动机，形状决定奏法、音色、起音与滑音，被包围的区域由外层给出持续低音。"柔化轮廓"把锯齿边界磨圆并画成平滑曲线。纯白图只有一个区域、一个长音。[说明与验证](./docs/REGION_DEMO.md)
 
 ## 编曲版与参考条带优化版 Demo 0.8.1
 
@@ -12,13 +12,13 @@
 - "编曲版 · 声部分工与和声"：各行分担主旋律、副旋律、分解和弦与低音；和弦、节奏与旋律只随图片变化而变化，纯色图几乎静止。
 - "行内参考条带 · 优化 / 柔和合成混音"：沿用参考条带的每个音，按图片上下分八度、按音区配柔和音色，伴奏改为由实际音符推出的和声铺底。
 
-两者都修正了 GS 渲染的 MIDI 时间编码；原三种组合保留用于 A/B 试听。样本新增 7 幅公有领域世界名画，默认打开《星月夜》。[说明与验证](./ARRANGED_DEMO.md)
+两者都修正了 GS 渲染的 MIDI 时间编码；原三种组合保留用于 A/B 试听。样本新增 7 幅公有领域世界名画，默认打开《星月夜》。[说明与验证](./docs/ARRANGED_DEMO.md)
 
 ## 静态网页版 0.7
 
 现在无需启动本机计算服务。上传完整 `dist` 文件夹即可发布；本地可双击 `dist/index.html` 或 `dist/feature-music.html`。三种保留组合、参考原谱、Simple 音源、移动试听、循环和乐曲成画均使用浏览器计算。可选 `.command` 现在只打开文件。
 
-[静态部署与验收说明](./STATIC_WEB_DEMO.md)。需要 ZIP 交付包时，在项目根目录按需生成：
+[静态部署与验收说明](./docs/STATIC_WEB_DEMO.md)。需要 ZIP 交付包时，在项目根目录按需生成：
 
 ```sh
 node scripts/package_classical_midi.cjs
@@ -33,43 +33,43 @@ python3 scripts/package_browser_runtime.py --archive
 
 ## 新方向：乐曲成画 Demo 0.1
 
-新增 [乐曲成画工作台](http://127.0.0.1:4176/music-art.html)：将乐谱生成“曲线色层”或“几何色块”抽象画，支持六首古典 MIDI 候选、三首原创样曲对照、现有乐曲送入、MIDI／乐谱 JSON 导入、边听边看、循环及 PNG／SVG 导出。绘画只读取音乐数据。[使用与验收](./MUSIC_ART_DEMO.md)。
+新增 [乐曲成画工作台](http://127.0.0.1:4176/music-art.html)：将乐谱生成“曲线色层”或“几何色块”抽象画，支持六首古典 MIDI 候选、三首原创样曲对照、现有乐曲送入、MIDI／乐谱 JSON 导入、边听边看、循环及 PNG／SVG 导出。绘画只读取音乐数据。[使用与验收](./docs/MUSIC_ART_DEMO.md)。
 
 ## 历史：三种保留组合 Demo 0.6
 
-0.6.2 新增进度条下方的“循环播放”开关，整曲播完后自动从头继续，播放中可随时开启或关闭；12 秒对照与单音试听仍播放一次。循环复用音频缓存，暂停和移动试听会停止整曲。[使用与验收](./RETAINED_COMBINATIONS.md)。
+0.6.2 新增进度条下方的“循环播放”开关，整曲播完后自动从头继续，播放中可随时开启或关闭；12 秒对照与单音试听仍播放一次。循环复用音频缓存，暂停和移动试听会停止整曲。[使用与验收](./docs/RETAINED_COMBINATIONS.md)。
 
-0.6.1 新增图片上方的“移动试听”开关：开启并准备音色后，鼠标进入哪个区域就弹奏哪个音符；停在同一区域不重复，移出图片停止。三种组合与参考原谱均支持，点击试听保留。[使用与验收](./RETAINED_COMBINATIONS.md)。
+0.6.1 新增图片上方的“移动试听”开关：开启并准备音色后，鼠标进入哪个区域就弹奏哪个音符；停在同一区域不重复，移出图片停止。三种组合与参考原谱均支持，点击试听保留。[使用与验收](./docs/RETAINED_COMBINATIONS.md)。
 
-按人工选择固定三种多行叠奏组合：多特征音高转换 · 新＋原有叠加、行内参考条带＋柔和合成混音、局部多特征法＋柔和合成混音。参考原谱继续保留，页面使用一个组合选择框，保留分行、静音／独听、伴奏、原谱对照与 WAV 导出。[打开 Demo](http://127.0.0.1:4176/feature-music.html#parallel)，[保留清单与验收](./RETAINED_COMBINATIONS.md)。全图蛇形及其它组合退出当前界面，历史实现保留用于复现。
+按人工选择固定三种多行叠奏组合：多特征音高转换 · 新＋原有叠加、行内参考条带＋柔和合成混音、局部多特征法＋柔和合成混音。参考原谱继续保留，页面使用一个组合选择框，保留分行、静音／独听、伴奏、原谱对照与 WAV 导出。[打开 Demo](http://127.0.0.1:4176/feature-music.html#parallel)，[保留清单与验收](./docs/RETAINED_COMBINATIONS.md)。全图蛇形及其它组合退出当前界面，历史实现保留用于复现。
 
 ## 柔和混音 Demo 0.4.1
 
-多行叠奏新增默认“柔和合成混音”，参考 play_music_theory 的合成音色、包络、声部平衡与轻回声思路。保留相同图片乐谱及原有叠加，提供等响度试听、逐行独听和当前混音 WAV 导出。[直接体验](http://127.0.0.1:4176/feature-music.html#parallel)，[调整与验收说明](./SOFT_MIX_DEMO.md)。
+多行叠奏新增默认“柔和合成混音”，参考 play_music_theory 的合成音色、包络、声部平衡与轻回声思路。保留相同图片乐谱及原有叠加，提供等响度试听、逐行独听和当前混音 WAV 导出。[直接体验](http://127.0.0.1:4176/feature-music.html#parallel)，[调整与验收说明](./docs/SOFT_MIX_DEMO.md)。
 
 0.4.1 修复打开页面等待过重与失败后主要按钮持续禁用的问题：图片与乐谱先显示，音频按需生成，支持取消与重新生成；声音输出保持一致。
 
 ## 多行横向叠奏 Demo 0.3
 
-本机工作台新增“多行叠奏”入口：将图片分成 2／3／4 行，各行从左到右同时演奏，共享音阶与速度，支持逐行静音、独听、分行时间轴及当前组合 WAV 导出。[直接体验](http://127.0.0.1:4176/feature-music.html#parallel)，[方向与验收说明](./HORIZONTAL_ROWS_DEMO.md)。本机启动脚本沿用下面的入口。
+本机工作台新增“多行叠奏”入口：将图片分成 2／3／4 行，各行从左到右同时演奏，共享音阶与速度，支持逐行静音、独听、分行时间轴及当前组合 WAV 导出。[直接体验](http://127.0.0.1:4176/feature-music.html#parallel)，[方向与验收说明](./docs/HORIZONTAL_ROWS_DEMO.md)。本机启动脚本沿用下面的入口。
 
 ## 全图特征旋律 Demo 0.2
 
-双击 [启动全图特征Demo.command](./启动全图特征Demo.command)，打开本机新版。直接使用 Photo Sonification 的分析、编曲与 GS 采样音源，提供参考原谱对照；新版主旋律由二维区域的色相、饱和度、明暗、对比度与纹理共同生成。图片在本机处理，详见 [交付与验收说明](./FEATURE_DEMO_DELIVERY.md)。该模式需要本机音源服务；下面的浏览器版保留。
+双击 [启动全图特征Demo.command](./启动全图特征Demo.command)，打开本机新版。直接使用 Photo Sonification 的分析、编曲与 GS 采样音源，提供参考原谱对照；新版主旋律由二维区域的色相、饱和度、明暗、对比度与纹理共同生成。图片在本机处理，详见 [交付与验收说明](./docs/FEATURE_DEMO_DELIVERY.md)。该模式需要本机音源服务；下面的浏览器版保留。
 
 ## 条带声化 Demo 0.1
 
-新增独立实验入口：[dist/sonification.html](./dist/sonification.html)，直接双击即可打开。32 条带从左到右演奏，亮部重心决定音高，配合整体伴奏、来源高亮、暂停／进度拖动、区域试听和同图 12 秒响度匹配对照。初版待人工试听验收；运行与检查见 [交付说明](./STRIP_DEMO_DELIVERY.md)。现有工作台保留如下。
+新增独立实验入口：[dist/sonification.html](./dist/sonification.html)，直接双击即可打开。32 条带从左到右演奏，亮部重心决定音高，配合整体伴奏、来源高亮、暂停／进度拖动、区域试听和同图 12 秒响度匹配对照。初版待人工试听验收；运行与检查见 [交付说明](./docs/STRIP_DEMO_DELIVERY.md)。现有工作台保留如下。
 
 ## 历史：简化连绵演奏实验
 
 此前 **0.6.4-exp / 连绵演奏**：仍按像素颜色计算主音，不检测轮廓；主旋律持续发声、音高平滑滑接，较大升降最多一个中转，不叠加v2回绕。打开 `dist/pixel-music-legacy.html` 后，用“12秒 · 原始／律动／连绵”作同响度对照。原始0.6.1和颗粒律动v2仍可切回。
 
-[本轮交付记录](./LEGATO_DELIVERY.md) 与 [验证摘要](./tests/legato-flow-summary.json) 已完成；用户可以试听后决定新的尝试方向，本轮不再自动调整。
+[本轮交付记录](./docs/LEGATO_DELIVERY.md) 与 [验证摘要](./tests/legato-flow-summary.json) 已完成；用户可以试听后决定新的尝试方向，本轮不再自动调整。
 
-[原轮廓改造计划](./VISUAL_SCORE_REDEVELOPMENT_PLAN.md) 已按用户最新方向暂缓，保留原M0记录，不作为当前执行入口。当前快速实验不等于原33项方案完成。
+[原轮廓改造计划](./docs/VISUAL_SCORE_REDEVELOPMENT_PLAN.md) 已按用户最新方向暂缓，保留原M0记录，不作为当前执行入口。当前快速实验不等于原33项方案完成。
 
-[M0历史交付报告](./M0_IMPLEMENTATION_REPORT.md) 汇总当时的冻结基线与23套验证。当前UI接入实验已有变化，M0封板SHA检查不再适用于当前UI，不更新旧摘要来假装未改。实验检查运行 `node tests/pixel-expression.test.cjs`，旧核心仍保留作精确对照。
+[M0历史交付报告](./docs/M0_IMPLEMENTATION_REPORT.md) 汇总当时的冻结基线与23套验证。当前UI接入实验已有变化，M0封板SHA检查不再适用于当前UI，不更新旧摘要来假装未改。实验检查运行 `node tests/pixel-expression.test.cjs`，旧核心仍保留作精确对照。
 
 ## 本地运行
 
@@ -170,4 +170,4 @@ node tests/browser-snapshot.test.cjs
 
 当前 288 组真实音频检查全部通过，54 组轻奏波形确认自然衰减与静音间隔。用户于 2026-10-07 针对 0.6.1 的本地功能确认清单回复“都正常”，完成两种奏法播放、区域试听与 WAV 保存的直接 HTML 验收。此项是用户手动确认，不是文件协议自动化测试，也不是主观听感评分。0.6 的 324 组渲染、18 次格式检查与手动确认继续保留为历史，不替代新版证据。
 
-当前实现与验证见 [ARTICULATION_IMPLEMENTATION_REPORT.md](./ARTICULATION_IMPLEMENTATION_REPORT.md)、[tests/articulation-regression-summary.json](./tests/articulation-regression-summary.json)。原 [IMAGE_FIDELITY_ADJUSTMENT_PLAN.md](./IMAGE_FIDELITY_ADJUSTMENT_PLAN.md)、[FIDELITY_IMPLEMENTATION_REPORT.md](./FIDELITY_IMPLEMENTATION_REPORT.md)、[tests/fidelity-regression-summary.json](./tests/fidelity-regression-summary.json) 保留为 0.6 历史；0.5 与 0.4 的报告也不覆盖。
+当前实现与验证见 [ARTICULATION_IMPLEMENTATION_REPORT.md](./docs/ARTICULATION_IMPLEMENTATION_REPORT.md)、[tests/articulation-regression-summary.json](./tests/articulation-regression-summary.json)。原 [IMAGE_FIDELITY_ADJUSTMENT_PLAN.md](./docs/IMAGE_FIDELITY_ADJUSTMENT_PLAN.md)、[FIDELITY_IMPLEMENTATION_REPORT.md](./docs/FIDELITY_IMPLEMENTATION_REPORT.md)、[tests/fidelity-regression-summary.json](./tests/fidelity-regression-summary.json) 保留为 0.6 历史；0.5 与 0.4 的报告也不覆盖。

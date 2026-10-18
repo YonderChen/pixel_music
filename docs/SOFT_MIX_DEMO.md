@@ -14,11 +14,11 @@
 
 测试样本（火星日落、4 小节、真实 GS 伴奏）中，乐谱 HTTP 请求约 0.17 秒，首次柔和声音约 1.03 秒。复杂图片、较长乐曲与首次 GS 启动的耗时会不同。按需生成与原先完整生成的 WAV 逐字节一致；实际内置浏览器已验证模式切换、播放时钟与暂停。
 
-验证记录：[核心与声音一致性](./tests/page-startup-report.json)、[失败重试与取消](./tests/page-startup-client-report.json)、[实际 HTTP 响应](./tests/page-startup-api-report.json)。
+验证记录：[核心与声音一致性](../tests/page-startup-report.json)、[失败重试与取消](../tests/page-startup-client-report.json)、[实际 HTTP 响应](../tests/page-startup-api-report.json)。
 
 ## 体验与验收
 
-启动 [本机 Demo](./启动全图特征Demo.command)，打开 [多行叠奏](http://127.0.0.1:4176/feature-music.html#parallel)。默认选择 **“柔和合成混音”**。
+启动 [本机 Demo](../启动全图特征Demo.command)，打开 [多行叠奏](http://127.0.0.1:4176/feature-music.html#parallel)。默认选择 **“柔和合成混音”**。
 
 1. 先用“四行不同起伏”样本播放，逐行独听，再恢复合奏，判断四条旋律是否更容易分辨。
 2. 上传自己的图片，点击 **“12 秒 · 柔和混音”** 和 **“12 秒 · 原有叠加”**。使用相同乐谱与行组合，并按前 12 秒实际 RMS 匹配响度。
@@ -48,7 +48,7 @@
 
 ## 验证记录
 
-- [音频检查](./tests/soft-row-mix-report.json)：四种音色的实际基频、释放、回声低频削减、32 种声部／伴奏组合、全静音、波形幅度、参考源码及原谱／蛇形 WAV 不变。
-- [浏览器检查](./tests/soft-row-mix-browser-report.json)：切换进度、等响度对照、区域试听、静音与独听、当前风格 WAV 导出、2 行及局部特征法、手机布局。
+- [音频检查](../tests/soft-row-mix-report.json)：四种音色的实际基频、释放、回声低频削减、32 种声部／伴奏组合、全静音、波形幅度、参考源码及原谱／蛇形 WAV 不变。
+- [浏览器检查](../tests/soft-row-mix-browser-report.json)：切换进度、等响度对照、区域试听、静音与独听、当前风格 WAV 导出、2 行及局部特征法、手机布局。
 
 自动检查不代替听感验收。复测命令：使用包含 NumPy／Pillow 的 Python 运行 `tests/soft-row-mix.test.py`；启动验证服务后运行 `node tests/soft-row-mix-browser.cjs`，默认验证端口 4177，可用 `DEMO_URL` 指向 4176。

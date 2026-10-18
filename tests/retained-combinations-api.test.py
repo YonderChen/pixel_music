@@ -17,7 +17,7 @@ def pcm(wav):
 
 cases=[];reference_scores=[]
 for recipe,method,profile in [('feature-original','transition','original'),('reference-soft','reference','soft'),('local-soft','features','soft')]:
-    p=json.loads(post('/api/generate',{'image':image,'options':{'bars':4,'synth':'GeneralUser GS',
+    p=json.loads(post('/api/generate',{'image':image,'options':{'bars':4,'synth':'Simple',
         'rowCount':4,'rowMethod':method,'pitchTransition':'scale','featureMethod':'features','backing':True}})[0])
     v=p['variants']['parallel'];assert v['rowMethod']==method
     reference_scores.append(p['variants']['reference']['events'])

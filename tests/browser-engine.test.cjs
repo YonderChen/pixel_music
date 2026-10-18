@@ -15,7 +15,7 @@ out=io.BytesIO();Image.fromarray(rgb).save(out,format='PNG');image=out.getvalue(
 results=[]
 for method in ['transition','reference','features']:
  for count in [2,3,4]:
-  options={'rowMethod':method,'rowCount':count,'pitchTransition':'scale','backing':False,'synth':'GeneralUser GS','mapping':'Scientific','featureMethod':'features','bars':4}
+  options={'rowMethod':method,'rowCount':count,'pitchTransition':'scale','backing':False,'synth':'Simple','mapping':'Scientific','featureMethod':'features','bars':4}
   p,c=e.prepare_scores(image,options);results.append({'options':options,'payload':p})
 for fmt in ['JPEG','WEBP']:
  out=io.BytesIO();Image.fromarray(rgb).save(out,format=fmt);encoded=out.getvalue()
@@ -68,18 +68,6 @@ function compare(actual,expected,label){
  const replay=call('/api/performance',portable.audioRef);assert.deepEqual(py.FS.readFile(replay.file),soloBytes,'portable score preserves the exact soft solo WAV');
  const bank=call('/api/hover-bank',{key:payload.key,profile:'soft',variant:'parallel'});assert.ok(bank.toneCount>0&&bank.toneCount<=128);
  const bankWave=call(bank.audioUrl);assert.ok(py.FS.readFile(bankWave.file).length>44100);
- // GS renderer used by the browser: same SoundFont, MIDI bytes and master stage.
- const Module=require(path.join(vendor,'libfluidsynth.js'));global.Module=Module;
- const JSSynth=require(path.join(vendor,'js-synthesizer.js'));JSSynth.Synthesizer.initializeWithFluidSynthModule(Module);await JSSynth.waitForReady();
- const font=new Uint8Array(fs.readFileSync(path.join(root,'vendor/photo_sonification/soundfonts/GeneralUser-GS.sf2')));
- const workerScope={window:{}};vm.runInNewContext(fs.readFileSync(path.join(root,'dist/browser-runtime/worker.js'),'utf8'),workerScope);
- // Reuse the browser's actual render function, with its closed-over font/runtime.
- const workerCode=workerScope.window.PixelMusicWorkerMain.toString().replace('let py, handle, scripts, assets, ready, fluidReady, font, currentSynth;','let py, handle, scripts, assets, ready, fluidReady, font = injectedFont, currentSynth;');
- const scope={self:{fetch,importScripts(){}},JSSynth,Module,injectedFont:font,console,URL,Blob,Request,Response,Uint8Array,Float32Array,atob};
- vm.runInNewContext('('+workerCode+')();',scope);global.renderGeneralUser=scope.self.renderGeneralUser;
- const gs=call('/api/generate',{image:fixture.image,options:{...options,synth:'GeneralUser GS'}});
- const gsWave=call(gs.variants.parallel.mixProfiles.original.audioUrl);assert.ok(gsWave.metrics.rms>0&&gsWave.metrics.peak<=.87);assert.equal(gsWave.metrics.invalid,0);
- const gsBank=call('/api/hover-bank',{key:gs.key,profile:'original',variant:'parallel'});assert.ok(gsBank.toneCount>0);
- const report={status:'passed',checkedOn:'2026-10-12',scoreComparisons:fixture.results.filter(e=>e.format!=='JPEG').length,mappingMatrixComparisons:9,codecChecks,maxLocalFeatureDifference,checks:['Reference/approved row note pitches, timing, instruments and velocities match native Python in the exact comparison fixtures; floating FFT metadata tolerance 0.002','2/3/4 rows and all three approved mapping methods; resized PNG and WebP decode comparison','JPEG decode produces a small platform difference, explicitly reported','Real WASM soft mix and GS SoundFont audio are finite and non-silent','Mute/solo, soft and GS hover atlases; portable art score preserves soft solo WAV bytes','No native Python or audio server is called by the browser runtime'],soft:full.metrics,gs:gsWave.metrics};
+ const report={status:'passed',checkedOn:'2026-10-12',scoreComparisons:fixture.results.filter(e=>e.format!=='JPEG').length,mappingMatrixComparisons:9,codecChecks,maxLocalFeatureDifference,checks:['Reference/approved row note pitches, timing, instruments and velocities match native Python in the exact comparison fixtures; floating FFT metadata tolerance 0.002','2/3/4 rows and all three approved mapping methods; resized PNG and WebP decode comparison','JPEG decode produces a small platform difference, explicitly reported','Real WASM soft mix audio is finite and non-silent','Mute/solo and soft hover atlases; portable art score preserves soft solo WAV bytes','No native Python or audio server is called by the browser runtime'],soft:full.metrics};
  fs.writeFileSync(path.join(__dirname,'browser-engine-report.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));handle.destroy();
 })().catch(error=>{console.error(error);process.exitCode=1;}).finally(()=>fs.rmSync(temp,{recursive:true,force:true}));

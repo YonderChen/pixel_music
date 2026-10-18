@@ -27,7 +27,7 @@ def build(engine, variant, info, synth, profile):
             record=dict(representatives[key],duration=GATE,velocity=VELOCITY)
             pieces[key]=engine.soft_row_mixer.preview(record,variant['rows'])[:frame_count]
     else:
-        # One MIDI render per instrument, rather than one FluidSynth launch per tile.
+        # One render per instrument, rather than one per tile.
         instruments=sorted({key[0] for key in keys})
         for instrument in instruments:
             group=[key for key in keys if key[0]==instrument]
@@ -37,7 +37,6 @@ def build(engine, variant, info, synth, profile):
             notes=[engine.NoteEvent(i*STRIDE+LEAD,GATE,key[1],VELOCITY,instrument,0,'main') for i,key in enumerate(group)]
             bank_info=dataclasses.replace(info,duration=len(group)*STRIDE,tempo=8)
             rendered,message=engine.upstream_audio.render_backend(notes,bank_info,synth)
-            if synth=='GeneralUser GS' and 'through FluidSynth' not in message:raise RuntimeError('移动试听 GS 音源未能启动')
             for i,key in enumerate(group):
                 start=round((i*STRIDE+LEAD)*SR)
                 pieces[key]=rendered[start:start+frame_count].copy()

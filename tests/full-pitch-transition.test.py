@@ -63,7 +63,7 @@ assert v['events']!=old['variants']['features']['events']
 assert prepared['variants']['reference']['events']==old['variants']['reference']['events']
 assert prepared['variants']['parallel']['events']==old['variants']['parallel']['events']
 entry={'payload':prepared,'context':context,'waves':{},'audioMetrics':{},'mixer':None,'background':None}
-with patch.object(m.upstream_audio,'render_backend',side_effect=AssertionError('unselected GS row/reference audio rendered')):
+with patch.object(m.upstream_audio,'render_backend',side_effect=AssertionError('unselected row/reference audio rendered')):
     began=time.perf_counter();glide,metrics=server.ensure_audio(entry,'features');audio_seconds=time.perf_counter()-began
 assert set(entry['waves'])=={'features'}
 assert metrics['invalid']==metrics['clipped']==0 and .02<metrics['rms']<.2
@@ -75,8 +75,8 @@ checks.append('new default option changes the actual feature score, scale/glide 
 
 eager,waves,_=m.build_with_parallel(image,options)
 assert waves['features']==glide and eager['variants']['features']['events']==v['events']
-# A GS accompaniment is shared between full-image and row playback, once only.
-back_options=dict(options,backing=True,synth='GeneralUser GS')
+# The accompaniment is shared between full-image and row playback, once only.
+back_options=dict(options,backing=True)
 back_payload,back_context=m.prepare_scores(image,back_options)
 back_entry={'payload':back_payload,'context':back_context,'waves':{},'audioMetrics':{},'mixer':None,'background':None}
 actual=m.upstream_audio.render_backend;calls=[]
@@ -90,7 +90,7 @@ assert set(back_entry['waves'])=={'features','parallel-soft'}
 silent,_=m.prepare_scores(encoded(np.zeros_like(pixels)),options)
 silence=m.render_feature_transition(silent['variants']['features']['events'],context['info'],'Simple')[0]
 assert np.max(np.abs(m._pcm(silence)))==0
-checks.append('lazy/eager feature WAV equality, real GS backing shared once with parallel playback, complete black-image silence')
+checks.append('lazy/eager feature WAV equality, real backing shared once with parallel playback, complete black-image silence')
 report={'status':'passed','checkedOn':'2026-10-11','subjectivelyApproved':False,'checks':checks,
     'scorePreparationSeconds':score_seconds,'firstFeatureAudioSeconds':audio_seconds,'regions':len(regions),'voices':1,'metrics':metrics}
 (m.ROOT/'tests/full-pitch-transition-report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')

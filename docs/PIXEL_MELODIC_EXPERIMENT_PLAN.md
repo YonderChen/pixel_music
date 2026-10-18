@@ -44,7 +44,7 @@ v2改为：**颜色基谱 → 真实相邻主音的小句 → 少量音阶连接
 
 实际声音／节奏／加工出处指纹按实际事件重新计算。图像指纹不变；奏法新增留白进入 `performanceRests` 并单独保留 `expressionRests`。WAV文件名区分表达版本。旧“全部演奏音高必须等于单源音高”的断言仅适用于原始路径；新专项按双锚点及有界连接验收，不修改M0旧契约来掩盖变化。
 
-v1代码已冻结在 `tests/baseline/pixel-expression-v1.js`，其 [摘要](./tests/pixel-expression-summary.json) 与已有WAV保留为历史。它们不是当前v2验证证据。
+v1代码已冻结在 `tests/baseline/pixel-expression-v1.js`，其 [摘要](../tests/pixel-expression-summary.json) 与已有WAV保留为历史。它们不是当前v2验证证据。
 
 ## 4. 试听入口与当前跟踪
 
@@ -56,7 +56,7 @@ v1代码已冻结在 `tests/baseline/pixel-expression-v1.js`，其 [摘要](./te
 | --- | --- | --- | --- |
 | P01 | 固定像素方向、自然衔接与图片差异要求 | 完成 | 用户确认；本r4文档 |
 | P02 | 局部短句、两种走势处理、12秒对照及版本刷新 | 完成 | pixel-expression.js、app.js、index.html |
-| P03 | 新规则、原始兼容、前段差异、实际音频与交互验证 | 完成 | [v2独立摘要](./tests/pixel-phrase-v2-summary.json)：168例、504组三音色排程、1,512组接续、三音色真实渲染与12秒响度匹配；下载确认边界明示 |
+| P03 | 新规则、原始兼容、前段差异、实际音频与交互验证 | 完成 | [v2独立摘要](../tests/pixel-phrase-v2-summary.json)：168例、504组三音色排程、1,512组接续、三音色真实渲染与12秒响度匹配；下载确认边界明示 |
 | P04 | 用户再次试听后决定密度／自然性调整 | 等待反馈 | 不要求评分，不自动继续改造 |
 
 P04不阻塞本次小实验交付；只交付本轮受验证功能，不宣称原33项／37项轮廓方案完成。

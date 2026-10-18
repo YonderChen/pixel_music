@@ -4,7 +4,7 @@
 
 ## 测量规则
 
-统一 P95：nearest-rank，对有限值升序排列，取第 `ceil(N×0.95)` 项，不插值。无样本不写0或通过。原始数据及失败项必须保留；不能只平均所有图片隐藏困难样本。[可执行定义](./tests/m0/acceptance.cjs) 及 [反例](./tests/m0-acceptance.test.cjs) 检验测量工具，不是新算法成绩。
+统一 P95：nearest-rank，对有限值升序排列，取第 `ceil(N×0.95)` 项，不插值。无样本不写0或通过。原始数据及失败项必须保留；不能只平均所有图片隐藏困难样本。[可执行定义](../tests/m0/acceptance.cjs) 及 [反例](../tests/m0-acceptance.test.cjs) 检验测量工具，不是新算法成绩。
 
 | 编号 | 固定方法与门槛 | 后续证据 |
 | --- | --- | --- |
@@ -37,9 +37,9 @@ peak 为所有样本绝对值最大值；RMS 为全声道平方均值平方根�
 
 ## 性能协议与现有基准
 
-[基准程序](./tests/m0/benchmark.cjs) 是只读测量：固定120 RGBA输入×两奏法，逐用例预热5次，再测30次，共7,200次有效调用；timer仅包围 `analyzePixels + compose`，不含文件读取、解码、SHA、UI和音频。单进程、单并发；保留每次毫秒及每图每奏法P95，也报告全矩阵P95和最差用例P95。运行时不能同时做音频渲染／其他测试；硬件、OS、Node及源码SHA一并记录。
+[基准程序](../tests/m0/benchmark.cjs) 是只读测量：固定120 RGBA输入×两奏法，逐用例预热5次，再测30次，共7,200次有效调用；timer仅包围 `analyzePixels + compose`，不含文件读取、解码、SHA、UI和音频。单进程、单并发；保留每次毫秒及每图每奏法P95，也报告全矩阵P95和最差用例P95。运行时不能同时做音频渲染／其他测试；硬件、OS、Node及源码SHA一并记录。
 
-实测数据见 [pixel-baseline-performance.json](./tests/m0/pixel-baseline-performance.json)。这只是当前像素算法的Node CPU基线；不是新轮廓算法性能，也不是浏览器速度。后续轮廓分析＋作曲同样预热5、每例测30，目标每用例P95≤150ms；实际浏览器至少复测代表图，不从Node结果推断浏览器合格。
+实测数据见 [pixel-baseline-performance.json](../tests/m0/pixel-baseline-performance.json)。这只是当前像素算法的Node CPU基线；不是新轮廓算法性能，也不是浏览器速度。后续轮廓分析＋作曲同样预热5、每例测30，目标每用例P95≤150ms；实际浏览器至少复测代表图，不从Node结果推断浏览器合格。
 
 本次环境：Apple M4、arm64、10逻辑核、24GiB内存、Darwin25.6.0、Node23.10.0。整体P95=30.913ms，中位数=23.139ms；最差单项 `legacy-43 / continuous` P95=182.451ms，单次最大=369.243ms。保留异常值，不能宣称全部图片低于150ms；尚未单独定位这些耗时尖峰原因。此项是旧算法现状记录，不把未来轮廓门槛反向套到M0而修改旧生成器。
 

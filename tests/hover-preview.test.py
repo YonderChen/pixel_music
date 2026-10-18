@@ -26,7 +26,7 @@ for variant,method,profile in [('parallel','transition','original'),('parallel',
     assert all(0<=binding['tone']<meta['toneCount'] and 0<=binding['gain']<=1.5 for binding in meta['events'].values())
     if profile=='original':
         assert len(calls)==len({e['instrument'] for e in events}) and all(len(group)==1 for group in calls)
-    else:assert calls==[],'soft bank must not render unused GS audio'
+    else:assert calls==[],'soft bank must not render unused reference audio'
     with wave.open(io.BytesIO(bank['wav']),'rb') as reader:
         assert reader.getnchannels()==2 and reader.getframerate()==44100
         audio=np.frombuffer(reader.readframes(reader.getnframes()),dtype='<i2').reshape(-1,2)/32767
@@ -44,9 +44,9 @@ for variant,method,profile in [('parallel','transition','original'),('parallel',
     assert json.dumps(payload,sort_keys=True)==before and dataclasses.asdict(context['info'])==old_info
     assert entry['waves']=={} and entry['background'] is None
     cases.append({'variant':variant,'method':method,'profile':profile,'toneCount':meta['toneCount'],
-        'GSRenderCalls':len(calls),'preparationSeconds':seconds,'wavBytes':len(bank['wav']),'sha256':hashlib.sha256(bank['wav']).hexdigest()})
+        'referenceRenderCalls':len(calls),'preparationSeconds':seconds,'wavBytes':len(bank['wav']),'sha256':hashlib.sha256(bank['wav']).hexdigest()})
 report={'status':'passed','checkedOn':'2026-10-11','checks':['four retained performances use their actual pitch and instrument vocabulary',
-    'one GS render per instrument, no unused full-song or backing renders','cached bank reused without synthesis',
+    'one render per instrument, no unused full-song or backing renders','cached bank reused without synthesis',
     'bounded stereo audio, smooth boundaries, measured fundamental','scores and composition settings unchanged'],'cases':cases}
 (m.ROOT/'tests/hover-preview-report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps(report,ensure_ascii=False))

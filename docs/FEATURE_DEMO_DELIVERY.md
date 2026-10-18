@@ -8,7 +8,7 @@
 
 ## 启动
 
-双击项目根目录的 [启动全图特征Demo.command](./启动全图特征Demo.command)。它会启动本机音源并自动打开 `http://127.0.0.1:4176/feature-music.html`。关闭启动脚本的终端窗口即可停止服务。
+双击项目根目录的 [启动全图特征Demo.command](../启动全图特征Demo.command)。它会启动本机音源并自动打开 `http://127.0.0.1:4176/feature-music.html`。关闭启动脚本的终端窗口即可停止服务。
 
 本机的 NumPy、Pillow、FluidSynth 与音色库已准备。生成过程中不上传图片到外部服务。原项目音源需要 Python，因此本版使用本机服务；只打开页面而未启动音源时会显示启动提示。
 
@@ -35,8 +35,8 @@
 
 ## 验证证据
 
-- [核心验证](./tests/reference-features-report.json)：横向亮度、等亮色相、饱和度、对比度／纹理、纵向内容、20 个独立空间颜色样本、稳定／暗区、整图像素覆盖、确定性及来源对应。
-- [浏览器验证](./tests/feature-reference-browser-report.json)：实际 GS 播放、同步、暂停／拖动、两版对照、设置切换、PNG／JPEG／WEBP 整图上传、手机布局、区域试听与 WAV 下载。
+- [核心验证](../tests/reference-features-report.json)：横向亮度、等亮色相、饱和度、对比度／纹理、纵向内容、20 个独立空间颜色样本、稳定／暗区、整图像素覆盖、确定性及来源对应。
+- [浏览器验证](../tests/feature-reference-browser-report.json)：实际 GS 播放、同步、暂停／拖动、两版对照、设置切换、PNG／JPEG／WEBP 整图上传、手机布局、区域试听与 WAV 下载。
 - 原谱音符的开始、时长、音高、力度、乐器、声像和声部逐项与直接运行原函数的输出一致；两个模式的非主旋律事件完全一致。
 - 下载的 WAV 字节与原音源生成文件的 SHA-256 一致；实际声音检查无异常数值或削波。测试通过不等于主观听感已验收。
 
@@ -52,8 +52,8 @@ node tests/feature-reference-browser.cjs
 
 ## 源码与许可
 
-参考项目：[Photo Sonification](https://github.com/trungtin-dinh/photo_sonification)，固定提交 `667d97c1e68de56fe2f5ef2d26784ee8a7308f3f`。五个核心模块保持原样，来源摘要见 [UPSTREAM.json](./vendor/photo_sonification/UPSTREAM.json)，保留 [MIT 许可证](./vendor/photo_sonification/LICENSE.txt)。
+参考项目：[Photo Sonification](https://github.com/trungtin-dinh/photo_sonification)，固定提交 `667d97c1e68de56fe2f5ef2d26784ee8a7308f3f`。五个核心模块保持原样，来源摘要见 [UPSTREAM.json](../vendor/photo_sonification/UPSTREAM.json)，保留 [MIT 许可证](../vendor/photo_sonification/LICENSE.txt)。
 
-GeneralUser GS 2.0.3 BETA 为 S. Christian Collins 的音色库，使用参考仓库的原始文件，附带从库中提取的 [许可与署名](./vendor/photo_sonification/soundfonts/LICENSE-GeneralUser-GS.txt)。FluidSynth 及运行库的来源、校验值和许可证记录在本机 `.reference-runtime/manifest.json`；运行库不纳入 Git。
+GeneralUser GS 2.0.3 BETA 为 S. Christian Collins 的音色库，使用参考仓库的原始文件，附带从库中提取的 [许可与署名](../vendor/photo_sonification/soundfonts/LICENSE-GeneralUser-GS.txt)。FluidSynth 及运行库的来源、校验值和许可证记录在本机 `.reference-runtime/manifest.json`；运行库不纳入 Git。
 
-上一版 [条带 Demo](./dist/sonification.html) 与 [交付说明](./STRIP_DEMO_DELIVERY.md) 保留为历史对照。当前执行方向以本说明及优化文档中的最新调整为准。
+上一版 [条带 Demo](../dist/sonification.html) 与 [交付说明](./STRIP_DEMO_DELIVERY.md) 保留为历史对照。当前执行方向以本说明及优化文档中的最新调整为准。

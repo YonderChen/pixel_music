@@ -35,9 +35,9 @@
 
 ## 验证
 
-核心检查：[horizontal-rows-report.json](./tests/horizontal-rows-report.json)。覆盖 2／3／4 行、两种行内映射、整图像素覆盖、同拍起奏、横向顺序、音阶与跳进、出处、行独立性及 32 种静音／背景组合。已检查实际 GS 音源与逐行混音；参考原谱和蛇形版输出与新增前逐字节一致。
+核心检查：[horizontal-rows-report.json](../tests/horizontal-rows-report.json)。覆盖 2／3／4 行、两种行内映射、整图像素覆盖、同拍起奏、横向顺序、音阶与跳进、出处、行独立性及 32 种静音／背景组合。已检查实际 GS 音源与逐行混音；参考原谱和蛇形版输出与新增前逐字节一致。
 
-浏览器检查：[horizontal-rows-browser-report.json](./tests/horizontal-rows-browser-report.json)。覆盖同时播放、来源高亮、暂停／拖动、逐行静音、独听与恢复、实际混音 WAV 导出、12 秒对照和手机布局。
+浏览器检查：[horizontal-rows-browser-report.json](../tests/horizontal-rows-browser-report.json)。覆盖同时播放、来源高亮、暂停／拖动、逐行静音、独听与恢复、实际混音 WAV 导出、12 秒对照和手机布局。
 
 复测命令：
 

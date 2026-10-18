@@ -6,7 +6,6 @@ import hashlib
 import io
 import json
 import math
-import os
 import pathlib
 import sys
 import wave
@@ -15,7 +14,6 @@ from collections import Counter
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 VENDOR = ROOT / 'vendor' / 'photo_sonification'
 sys.path.insert(0, str(VENDOR))
-os.environ['PATH'] = str(ROOT / '.reference-runtime' / 'bin') + os.pathsep + os.environ.get('PATH', '')
 import numpy as np
 from PIL import Image
 import audio as upstream_audio
@@ -121,8 +119,8 @@ def original_composition(analysis, options=None):
     features = analysis['features']
     bars = int(options.get('bars') or upstream_composition.compute_bar_settings(features)[2])
     bars = max(4, min(16, bars))
-    synth = options.get('synth', 'GeneralUser GS')
-    if synth not in ['GeneralUser GS', 'Simple']: raise ValueError('未知音源')
+    synth = options.get('synth', 'Simple')
+    if synth != 'Simple': raise ValueError('未知音源')
     mapping = options.get('mapping', 'Scientific')
     if mapping not in ['Scientific', 'Balanced', 'Musical']: raise ValueError('未知映射模式')
     events, info = upstream_composition.generate_composition(
@@ -308,7 +306,7 @@ def horizontal_row_melodies(analysis, info, options=None):
         stats_rgb = np.repeat(row_rgb, 2, axis=0) if row_rgb.shape[0] == 1 else row_rgb
         row_analysis = upstream_analysis.analyze_image(Image.fromarray(np.round(stats_rgb * 255).astype(np.uint8)), random_factor=0)
         f = row_analysis['features']
-        synth = options.get('synth', 'GeneralUser GS')
+        synth = options.get('synth', 'Simple')
         instrument = upstream_composition.choose_instruments(f, 'Automatic', synth)[0]
         voice_id = f'row-{row}'
         voices.append({'id': voice_id, 'row': row, 'name': f'第 {row + 1} 行', 'instrument': instrument,
@@ -407,7 +405,7 @@ def arranged_rows(analysis, info, options=None):
     bars = max(1, int(info.duration / (4 * beat) + 1e-6))
     cols = min(bars * 4, w)
     bars = cols // 4; cols = bars * 4
-    synth = options.get('synth', 'GeneralUser GS')
+    synth = options.get('synth', 'Simple')
     rows, regions = [], []
     for row in range(count):
         y0, y1 = round(row * h / count), round((row + 1) * h / count)
@@ -525,7 +523,6 @@ def _render_parallel(events, reference, info, synth, voices, backing, include_so
         records=[e for e in events if e.get('rowId')==key] if key!='background' else [e for e in reference if e['layer']!='main']
         raw=[NoteEvent(**{field:r[field] for field in ['start','duration','midi','velocity','instrument','pan','layer']}) for r in records]
         samples,message=upstream_audio.render_backend(raw,info,synth)
-        if synth=='GeneralUser GS' and 'through FluidSynth' not in message: raise RuntimeError('多行 GS 音源未能启动')
         stems[key]=upstream_audio.audio_to_wav_bytes(upstream_audio.normalize_master_audio(samples),44100)
         metadata[key]={'metrics':audio_metrics(samples,44100),'wavSha256':hashlib.sha256(stems[key]).hexdigest(),'backend':message}
     if is_arranged(voices):
@@ -562,7 +559,7 @@ def build(image_bytes, options=None, include_parallel=False):
     feature_main, feature_regions, cols, rows = full_feature_melody(analysis, info, options)
     feature = [row for row in reference if row['layer'] != 'main'] + feature_main
     feature.sort(key=lambda row: (row['start'], row['layer'], row['midi']))
-    synth = options.get('synth', 'GeneralUser GS')
+    synth = options.get('synth', 'Simple')
     variants, waves = {}, {}
     for variant, records, regions, width, height in [('reference', reference, reference_regions, info.bars * 8, 1), ('features', feature, feature_regions, cols, rows)]:
         audible = [row for row in records if options.get('backing', True) or row['layer'] == 'main']
@@ -572,8 +569,6 @@ def build(image_bytes, options=None, include_parallel=False):
         else:
             events = [NoteEvent(**{name: row[name] for name in ['start','duration','midi','velocity','instrument','pan','layer']}) for row in audible]
             samples, message = upstream_audio.render_backend(events, info, synth)
-            if synth == 'GeneralUser GS' and 'through FluidSynth' not in message:
-                raise RuntimeError('GeneralUser GS 音源未能启动；请先运行准备脚本，或明确选择原版 Simple 音源。')
             # Match upstream UI's final master normalization as well.
             samples = upstream_audio.normalize_master_audio(samples)
             wav = upstream_audio.audio_to_wav_bytes(samples, 44100)
@@ -642,7 +637,7 @@ def prepare_scores(image_bytes, options=None):
     harmony=None
     if options.get('rowMethod') in ('reference-plus','regions'):
         beat=60/info.tempo
-        backing_events,harmony=arranger.harmonize(row_events,info,root_note(analysis['features']),max(1,int(info.duration/(4*beat)+1e-6)),options.get('synth','GeneralUser GS'))
+        backing_events,harmony=arranger.harmonize(row_events,info,root_note(analysis['features']),max(1,int(info.duration/(4*beat)+1e-6)),options.get('synth','Simple'))
         if segmented and segmented.get('pedal'):backing_events=sorted(backing_events+segmented['pedal'],key=lambda e:(e['start'],e['midi']))
     if segmented:segmented.pop('pedal',None)
     parallel=row_events+(backing_events if options.get('backing',True) else [])
@@ -669,11 +664,11 @@ def prepare_scores(image_bytes, options=None):
     rgb=np.clip(np.round(analysis['maps']['rgb']*255),0,255).astype(np.uint8)
     preview=io.BytesIO();Image.fromarray(rgb).save(preview,format='PNG')
     payload={'version':VERSION,'upstream':UPSTREAM_SHA,'info':dataclasses.asdict(info),'features':analysis['features'],
-        'settings':{'synth':options.get('synth','GeneralUser GS'),'mapping':options.get('mapping','Scientific'),
+        'settings':{'synth':options.get('synth','Simple'),'mapping':options.get('mapping','Scientific'),
             'backing':options.get('backing',True),'randomFactor':0},
         'image':{'width':rgb.shape[1],'height':rgb.shape[0],'src':'data:image/png;base64,'+base64.b64encode(preview.getvalue()).decode()},
         'variants':variants}
-    context={'info':info,'synth':options.get('synth','GeneralUser GS'),'rowEvents':row_events,'reference':reference,
+    context={'info':info,'synth':options.get('synth','Simple'),'rowEvents':row_events,'reference':reference,
         'voices':voices,'backing':options.get('backing',True)}
     if arranged or harmony:context.update(backingEvents=backing_events,fixedMidi=True)
     return payload,context
@@ -681,7 +676,6 @@ def prepare_scores(image_bytes, options=None):
 def render_score(records, info, synth):
     events=[NoteEvent(**{name:r[name] for name in ['start','duration','midi','velocity','instrument','pan','layer']}) for r in records]
     samples,message=upstream_audio.render_backend(events,info,synth)
-    if synth=='GeneralUser GS' and 'through FluidSynth' not in message: raise RuntimeError('参考 GS 音源未能启动')
     samples=upstream_audio.normalize_master_audio(samples)
     return upstream_audio.audio_to_wav_bytes(samples,44100),audio_metrics(samples,44100),message
 

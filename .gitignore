@@ -2,7 +2,6 @@
 .idea
 .vscode
 .venv
-.reference-runtime/
 __pycache__/
 
 # Generated delivery archive; rebuild locally when needed.

@@ -15,7 +15,7 @@
 
 工作台也支持导入 MIDI 或本工作台导出的乐谱 JSON。文件不超过 2MB，最长 3 分钟，最多 5000 个音符。MIDI 支持 0／1 型、常规 PPQ 计时、速度变化、音符力度、声部／乐器和延音踏板。MIDI 音源为本机乐谱合成试听，不承诺复现原文件的采样乐器；弯音等其它控制器尚未映射。此版不直接分析 MP3／WAV。
 
-2026-10-14 新增六首古典 MIDI 候选。《致爱丽丝》《C 大调前奏曲》《小狗圆舞曲》使用完整 MIDI；其余三首使用开头 2 分 30 秒节选，标题与来源说明均有标记。候选随网页内嵌，本地双击与静态服务器均无需联网读取乐曲；“下载原始 MIDI”保留完整曲文件，超过 3 分钟的原版需自行节选后再导入。来源、编谱者及许可见 [古典 MIDI 清单](./dist/classical-midi/README.md)。
+2026-10-14 新增六首古典 MIDI 候选。《致爱丽丝》《C 大调前奏曲》《小狗圆舞曲》使用完整 MIDI；其余三首使用开头 2 分 30 秒节选，标题与来源说明均有标记。候选随网页内嵌，本地双击与静态服务器均无需联网读取乐曲；“下载原始 MIDI”保留完整曲文件，超过 3 分钟的原版需自行节选后再导入。来源、编谱者及许可见 [古典 MIDI 清单](../dist/classical-midi/README.md)。
 
 ## 音乐如何成为画面
 
@@ -50,9 +50,9 @@
 - 对照演奏：光点位置、声部数量和实际音乐是否吻合；切换画风、暂停和拖动是否正常。
 - 比较风格：先用默认“均衡”细节，再试简约与丰富，判断是否需要更强或更克制的画面。
 
-已通过 [音乐映射与 MIDI 检查](./tests/music-art-core-report.json)、[播放与异步状态检查](./tests/music-art-client-report.json)。浏览器验收记录见 [本机检查](./tests/music-art-browser-report.json)。PNG 实际输出已核对为 2400 × 1800；可观赏性与艺术风格留给人工选择。
+已通过 [音乐映射与 MIDI 检查](../tests/music-art-core-report.json)、[播放与异步状态检查](../tests/music-art-client-report.json)。浏览器验收记录见 [本机检查](../tests/music-art-browser-report.json)。PNG 实际输出已核对为 2400 × 1800；可观赏性与艺术风格留给人工选择。
 
-示例：[当前乐曲的曲线画作](./artifacts/music-art/current-ribbons.png)、[交织声部的几何画作](./artifacts/music-art/woven-geometry.png)、[几何画作 SVG](./artifacts/music-art/woven-geometry.svg)。
+示例：[当前乐曲的曲线画作](../artifacts/music-art/current-ribbons.png)、[交织声部的几何画作](../artifacts/music-art/woven-geometry.png)、[几何画作 SVG](../artifacts/music-art/woven-geometry.svg)。
 
 ## 参考与后续
 

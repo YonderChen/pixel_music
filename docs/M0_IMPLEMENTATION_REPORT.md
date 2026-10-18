@@ -6,14 +6,14 @@
 
 | 任务 | 已完成 | 证据 |
 | --- | --- | --- |
-| B01 | 五个核心模块及所需夹具／旧契约独立冻结，十对来源SHA；84图×两奏法精确快照 | [来源清单](./tests/baseline/v061-manifest.json)、[168快照](./tests/baseline/v061-score-snapshot.json)、[冻结回归](./tests/m0-baseline.test.cjs) |
-| B02 | 两模式、版本、显式回退、多对多出处、状态及身份规则；可执行正反例骨架 | [契约规格](./M0_CONTRACT_SPEC.md)、[契约骨架](./tests/m0-contract.cjs)、[身份参考](./tests/m0/identity.cjs) |
-| B03 | 24几何＋12真实照片，规范化后标注、公共素材来源／许可、固定校准与保留集、像素／标注SHA | [样本说明](./tests/m0/README.md)、[120输入清单](./tests/m0/dataset-manifest.json)、[照片来源](./tests/m0/photo-sources.json) |
-| B04 | A01–A10测量定义，几何误检／缺口／方向、音频安全、性能／浏览器边界及真实旧算法CPU基准 | [验收规格](./M0_ACCEPTANCE_SPEC.md)、[测量反例](./tests/m0-acceptance.test.cjs)、[原始性能数据](./tests/m0/pixel-baseline-performance.json) |
+| B01 | 五个核心模块及所需夹具／旧契约独立冻结，十对来源SHA；84图×两奏法精确快照 | [来源清单](../tests/baseline/v061-manifest.json)、[168快照](../tests/baseline/v061-score-snapshot.json)、[冻结回归](../tests/m0-baseline.test.cjs) |
+| B02 | 两模式、版本、显式回退、多对多出处、状态及身份规则；可执行正反例骨架 | [契约规格](./M0_CONTRACT_SPEC.md)、[契约骨架](../tests/m0-contract.cjs)、[身份参考](../tests/m0/identity.cjs) |
+| B03 | 24几何＋12真实照片，规范化后标注、公共素材来源／许可、固定校准与保留集、像素／标注SHA | [样本说明](../tests/m0/README.md)、[120输入清单](../tests/m0/dataset-manifest.json)、[照片来源](../tests/m0/photo-sources.json) |
+| B04 | A01–A10测量定义，几何误检／缺口／方向、音频安全、性能／浏览器边界及真实旧算法CPU基准 | [验收规格](./M0_ACCEPTANCE_SPEC.md)、[测量反例](../tests/m0-acceptance.test.cjs)、[原始性能数据](../tests/m0/pixel-baseline-performance.json) |
 
 ## 已执行验证
 
-[完整运行摘要](./tests/m0-regression-summary.json) 保留每套命令、退出码、输出、环境、125个源码／夹具／历史证据文件SHA以及人工G0交付物复核。不是只写“测试全部通过”。
+[完整运行摘要](../tests/m0-regression-summary.json) 保留每套命令、退出码、输出、环境、125个源码／夹具／历史证据文件SHA以及人工G0交付物复核。不是只写“测试全部通过”。
 
 - **23 / 23 套通过**：5套M0新增测试＋历史18套。新增为 m0-baseline、m0-contract、m0-dataset、m0-acceptance、m0-identity；完整历史清单见摘要及运行器。
 - 冻结比对：168个完整乐谱、504组三音色全曲排程、2,016组中途接续排程、168个VM经典脚本分支结果一致。原始与冻结文件反向只改声明的命名后SHA匹配。

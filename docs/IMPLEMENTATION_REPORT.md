@@ -54,7 +54,7 @@ node tests/local-bundle.test.cjs
 
 ### 实际浏览器离线音频
 
-Chromium 154 的 `OfflineAudioContext` 完成 12 图 × 3 档 × 3 音色，共 108 次真实渲染。最终重新执行时间：2026-10-05 01:01:05 UTC（Asia/Shanghai 09:01:05）。摘要保存于 [tests/regression-summary.json](./tests/regression-summary.json)，完整逐例报告可在试听页重新运行并下载。
+Chromium 154 的 `OfflineAudioContext` 完成 12 图 × 3 档 × 3 音色，共 108 次真实渲染。最终重新执行时间：2026-10-05 01:01:05 UTC（Asia/Shanghai 09:01:05）。摘要保存于 [tests/regression-summary.json](../tests/regression-summary.json)，完整逐例报告可在试听页重新运行并下载。
 
 | 指标 | 结果 |
 | --- | --- |
@@ -83,7 +83,7 @@ Chromium 154 的 `OfflineAudioContext` 完成 12 图 × 3 档 × 3 音色，共 
 
 ## 5. 真实试听交接
 
-打开 [tests/listen.html](./tests/listen.html)，先用“夕阳＋暖键＋前 16 秒”生成 A／B／C；先试听、评分，再揭晓。然后选完整曲目听主题回应、中段高潮与收尾。每轮会重新排列版本，不要凭上一轮的字母推断版本。
+打开 [tests/listen.html](../tests/listen.html)，先用“夕阳＋暖键＋前 16 秒”生成 A／B／C；先试听、评分，再揭晓。然后选完整曲目听主题回应、中段高潮与收尾。每轮会重新排列版本，不要凭上一轮的字母推断版本。
 
 反馈最有用的格式：图片／音色、片段或完整曲、最喜欢的版本、听感问题及大约发生时间。例如“夕阳，暖键，完整 B，25 秒附近跳得突兀”——这是格式示例，不是已收集的评价。若愿意量化，可用五项评分并导出 JSON；评分只存在本页内存，刷新／关闭前请导出。
 

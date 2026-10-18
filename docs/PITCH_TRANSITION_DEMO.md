@@ -39,6 +39,6 @@
 3. 上传同一张图片，在全图单旋律和多行叠奏之间比较；先关闭伴奏，再恢复完整编曲。
 4. 暂停、继续、区域短试听并保存 WAV；纯白保持同音，全黑且无伴奏时静音。
 
-验证：[映射与实际声音](./tests/full-pitch-transition-report.json)、[全图及多行实际 HTTP 试听](./tests/full-pitch-transition-api-report.json)、[内置浏览器验收](./tests/feature-pitch-browser-report.json)。核心检查明确禁止调用轮廓重心函数，确认坐标不进入音高目标，覆盖颜色、纹理、单旋律整图来源、两种奏法、按需加载与一次性共享 GS 伴奏。听感由人工验收。
+验证：[映射与实际声音](../tests/full-pitch-transition-report.json)、[全图及多行实际 HTTP 试听](../tests/full-pitch-transition-api-report.json)、[内置浏览器验收](../tests/feature-pitch-browser-report.json)。核心检查明确禁止调用轮廓重心函数，确认坐标不进入音高目标，覆盖颜色、纹理、单旋律整图来源、两种奏法、按需加载与一次性共享 GS 伴奏。听感由人工验收。
 
 实际 WAV 生成及响应内容已通过接口检查，页面保存按钮与文件名切换也已检查；本轮未确认内置浏览器的最终文件落盘，保存位置列入人工验收。
