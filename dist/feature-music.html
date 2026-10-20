@@ -9,7 +9,7 @@
   <meta property="og:description" content="把图片的颜色、明暗与纹理变成多声部音乐，再把乐曲画成一幅抽象画。全部在浏览器里完成。">
   <meta property="og:image" content="./og-image.png"><meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="./favicon.svg" type="image/svg+xml"><link rel="icon" href="./icon-192.png" type="image/png" sizes="192x192"><link rel="apple-touch-icon" href="./apple-touch-icon.png"><link rel="manifest" href="./site.webmanifest">
-  <link rel="stylesheet" href="./ui.css?v=1"><link rel="stylesheet" href="./studio.css?v=2">
+  <link rel="stylesheet" href="./ui.css?v=1"><link rel="stylesheet" href="./studio.css?v=3">
 </head>
 <body>
   <svg class="sr-only" aria-hidden="true" focusable="false"><defs>
@@ -64,8 +64,8 @@
           <div class="progress"><label for="seek" class="sr-only">播放进度</label><input id="seek" type="range" min="0" max="24" value="0" step="0.01"><div><output id="clock">00:00 / 00:00</output><label class="switch-label loop-label" title="整曲播完后从头继续；12 秒对照与单音试听单次播放"><input id="loopToggle" type="checkbox" disabled>循环</label><button id="restart" class="text-btn" type="button"><svg class="icon" aria-hidden="true"><use href="#i-restart"/></svg>重新播放</button></div></div>
         </div>
         <dl class="metrics"><div><dt>颜色中心 / 调式</dt><dd id="key">—</dd></div><div><dt>速度</dt><dd id="tempo">—</dd></div><div><dt>旋律音符</dt><dd id="noteCount">—</dd></div><div><dt>音乐时长</dt><dd id="duration">—</dd></div></dl>
-        <div id="moodSection" class="panel-section mood-section" aria-labelledby="moodTitle">
-          <div class="mood-head"><h3 id="moodTitle" class="section-label">图片情绪</h3><label class="switch-label" title="关闭后，调式、速度与乐器回到参考原项目的规则"><input id="emotionToggle" type="checkbox" checked>情绪驱动音乐</label></div>
+        <div class="panel-section mood-section" aria-labelledby="moodTitle">
+          <h3 id="moodTitle" class="section-label">图片情绪</h3>
           <div class="mood-card"><strong id="moodName" class="mood-name">—</strong><div class="mood-meters">
             <div class="mood-meter"><span>愉悦度</span><i aria-hidden="true"><b id="valenceBar"></b></i><output id="valenceValue">—</output></div>
             <div class="mood-meter"><span>能量</span><i aria-hidden="true"><b id="arousalBar"></b></i><output id="arousalValue">—</output></div>
@@ -86,7 +86,7 @@
         </div>
         <div class="panel-section">
           <h3 class="section-label">音色与编曲</h3>
-          <div class="settings"><label class="field">参考音源 <select id="tone"><option value="Simple">参考 Simple 合成</option></select></label><label class="field" title="情绪驱动开启时，速度由图片情绪决定">速度规则 <select id="mappingStyle"><option value="Scientific">参考 Scientific</option><option value="Balanced">参考 Balanced</option><option value="Musical">参考 Musical</option></select></label></div>
+          <div class="settings"><label class="field">参考音源 <select id="tone"><option value="Simple">参考 Simple 合成</option></select></label></div>
           <div class="backing-row"><label class="switch-label"><input id="backing" type="checkbox" checked>完整编曲</label><span id="backingStatus" class="backing-status">完整编曲 · 参考项目自动配器</span></div>
         </div>
         <div class="panel-section comparison">
