@@ -1,8 +1,9 @@
 # JavaScript engine parity tests
 
 Each test runs the browser engine (`dist/engine/*.js`) next to the former Pyodide engine
-(Python 3.12.7, NumPy 2.0.2, Pillow 10.2 with libjpeg 9c), which `harness.cjs` takes from
-Git history and caches in `build/pyodide-oracle/`. Inputs are the page's built-in samples
+(Python 3.12.7, NumPy 2.0.2, Pillow 10.2 with libjpeg 9c). `harness.cjs` takes the Pyodide runtime
+and the original Python rules from Git history (commit `976de6f`) and caches the runtime in
+`build/pyodide-oracle/`, so the tests need `git` and the full history, but no Python install. Inputs are the page's built-in samples
 plus synthetic edge cases (`samples.cjs`).
 
 | Test | Compares | Result when this engine landed |

@@ -10,5 +10,5 @@ __pycache__/
 # Local preview server config for Claude Code.
 /.claude/launch.json
 
-# Claude Artifact build (scripts/build_claude_artifact.py).
+# Claude Artifact build (scripts/build_claude_artifact.cjs) and the engine tests' Pyodide cache.
 /build/

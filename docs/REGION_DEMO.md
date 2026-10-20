@@ -6,9 +6,9 @@
 
 图片演奏页的"演奏组合"第一项"区域分割 / 柔和合成混音"（默认），或 `feature-music.html#regions-soft`。"分割方式"切换三种分割，"演奏顺序"切换五种顺序，"分行"选择 2／3／4 个声部。
 
-## 三种分割方式（`scripts/segmentation.py`）
+## 三种分割方式（`dist/engine/segmentation.js`）
 
-都在 192×120 的分析图上、以 Lab 色差计算，只依赖 NumPy，结果确定可复现。
+都在 192×120 的分析图上、以 Lab 色差计算，结果确定可复现。
 
 | 方式 | 做法 | 特点 |
 | --- | --- | --- |
@@ -18,7 +18,7 @@
 
 三者共同的后处理：小于 24 px 的碎块并入色差最小的邻区；颜色几乎一样的 SLIC 邻块合并。纯白图在三种方式下都只有 1 个区域。
 
-## 区域如何成为音乐（`scripts/region_music.py`）
+## 区域如何成为音乐（`dist/engine/region-music.js`）
 
 - **声部**：区域的纵向重心决定声部，上面的区域在高音声部（沿用参考条带优化版的八度布局与柔和音色：轻铃、暖键、柔拨弦、柔低音）。
 - **显著度**＝0.55 × 区域内显著图均值＋0.3 × 与相邻区域的色差＋0.15 × √面积占比。
@@ -87,8 +87,12 @@
 
 ## 验证
 
+以下是 0.9 发布时的验证记录。当时分割与区域演奏还是 Python（浏览器里经 Pyodide 运行），下列 Python 测试与对照图脚本已随 0.10 改为纯 JavaScript 而删除，可在 Git 历史（提交 `976de6f`）中查到。
+
 - `tests/segmentation.test.py`：形状特征（圆、横条、斜条、天际线）；三种方式纯白 1 个区域、结果可复现、编号连续、区域连通；渐变按竖条、棋盘 40 格。
 - `tests/region-music.test.py`：3 张图 × 3 种分割 × 5 种顺序 × 轮廓开关 × 2／4 声部，另加三种新轮廓演奏方式 × 2 种顺序（线条演奏和扫描线检查每个声部从左到右）；每个声部按显著度顺序发声、音符不重叠、每个音只属于一个区域；纯白图是一个贯穿全曲的长音。
 - 浏览器（Pyodide＋WASM）：三种分割切换、整曲、独听、移动试听、点击试听、送入乐曲成画（与原页 RMS 一致）。
 - 原有组合回归（`horizontal-rows`、`soft-row-mix` 及 Node 客户端测试）不变。
-- 效果对照图：`python3 scripts/segment_preview.py [细度]` → `artifacts/segmentation/`。
+- 效果对照图 `artifacts/segmentation/` 由当时的 `scripts/segment_preview.py` 生成。
+
+现在的 JavaScript 实现由 `tests/engine/` 的对照测试保证与原 Python 逐项一致：`node tests/engine/segmentation-parity.test.cjs` 比较分割标签、区域与轮廓，`node tests/engine/scores-parity.test.cjs` 比较包括区域分割在内的完整乐谱。
