@@ -15,7 +15,7 @@
 
 ## 历史记录
 
-以下文档记录的是当时的方案和验收，保留作对照，不代表现在的界面或运行方式。其中提到的本机服务（`127.0.0.1:4176`）、GS 采样音源与 FluidSynth 都已移除。
+以下文档记录的是当时的方案和验收，保留作对照，不代表现在的界面或运行方式。其中提到的本机服务（`127.0.0.1:4176`）、GS 采样音源与 FluidSynth 都已移除。0.10 改为纯 JavaScript 后，文中引用的 Python 脚本（`scripts/*.py`、`vendor/photo_sonification/`）、Python 测试（`tests/*.test.py`）、依赖本机服务的浏览器测试和 `启动全图特征Demo.command` 也已删除，可在 Git 历史（提交 `976de6f`）中查到；这些测试当时生成的 `*-report.json` 仍保留在 `tests/` 作为验收记录。
 
 - 图片演奏页的早期阶段：[FEATURE_DEMO_DELIVERY.md](./FEATURE_DEMO_DELIVERY.md)（0.2）、[HORIZONTAL_ROWS_DEMO.md](./HORIZONTAL_ROWS_DEMO.md)（0.3）、[SOFT_MIX_DEMO.md](./SOFT_MIX_DEMO.md)（0.4）、[PITCH_CONTOUR_DEMO.md](./PITCH_CONTOUR_DEMO.md)（0.5）、[PITCH_TRANSITION_DEMO.md](./PITCH_TRANSITION_DEMO.md)（0.5.2）、[PHOTO_SONIFICATION_DEMO_PLAN.md](./PHOTO_SONIFICATION_DEMO_PLAN.md)（方向计划）
 - 条带声化实验（`dist/sonification.html`）：[STRIP_DEMO_DELIVERY.md](./STRIP_DEMO_DELIVERY.md)

@@ -11,7 +11,7 @@
 
 ## 最新：纯 JavaScript 计算引擎 0.10
 
-网页不再携带约 40 MB 的 Pyodide（浏览器里的 Python）运行时，图片分析、乐谱、编曲、区域分割、合成、混音与移动试听全部改为纯 JavaScript（`dist/engine/`），整站从约 43 MB 降到约 1.7 MB。对照测试显示乐谱与原引擎逐音一致，音频样本误差不超过 2/32767；JPG 与 PNG 按原引擎的方式解码，像素完全相同。[说明与验证](./docs/STATIC_WEB_DEMO.md)
+网页不再携带约 40 MB 的 Pyodide（浏览器里的 Python）运行时，图片分析、乐谱、编曲、区域分割、合成、混音与移动试听全部改为纯 JavaScript（`dist/engine/`），整站从约 43 MB 降到约 1.7 MB。旧的 Python 脚本、本机服务与 Python 测试一并删除，打包与 Artifact 构建脚本也改为 Node，开发只需 Node.js。对照测试显示乐谱与原引擎逐音一致，音频样本误差不超过 2/32767；JPG 与 PNG 按原引擎的方式解码，像素完全相同。[说明与验证](./docs/STATIC_WEB_DEMO.md)
 
 ## 区域分割 Demo 0.9
 
@@ -31,20 +31,20 @@
 
 ## 静态网页版 0.7
 
-现在无需启动本机计算服务，整个 `dist` 文件夹就是网站；本地可双击 `dist/index.html` 或 `dist/feature-music.html`。三种保留组合、参考原谱、Simple 音源、移动试听、循环和乐曲成画均使用浏览器计算。可选 `.command` 现在只打开文件。
+现在无需启动本机计算服务，整个 `dist` 文件夹就是网站；本地可双击 `dist/index.html` 或 `dist/feature-music.html`。三种保留组合、参考原谱、Simple 音源、移动试听、循环和乐曲成画均使用浏览器计算。（当时保留的 `.command` 快捷入口只打开文件，0.10 已删除。）
 
 [静态部署与验收说明](./docs/STATIC_WEB_DEMO.md)。需要 ZIP 交付包时，在项目根目录按需生成：
 
 ```sh
 node scripts/package_classical_midi.cjs
-python3 scripts/package_static_site.py --archive
+node scripts/package_static_site.cjs --archive
 ```
 
 输出为本地 `图鸣-静态网页版.zip`，已加入 Git 忽略规则；日常提交只更新页面、资源和生成脚本。解压后上传全部文件即可发布。资源均随包提供，首次加载较大；服务器建议开启 gzip／Brotli。双击路径已做代码验证，实际浏览器双击验收仍请人工确认。
 
-同一份 `dist` 也发布为 Claude Artifact 站点。`python3 scripts/build_claude_artifact.py` 生成 `build/claude-artifact/`：去掉主页面的文档外壳，再把整个文件夹发布到原 Artifact 链接。Artifact 页面内无法下载文件（保存 WAV、原 MIDI、PNG／SVG 导出）。
+同一份 `dist` 也发布为 Claude Artifact 站点。`node scripts/build_claude_artifact.cjs` 生成 `build/claude-artifact/`：去掉主页面的文档外壳，再把整个文件夹发布到原 Artifact 链接。Artifact 页面内无法下载文件（保存 WAV、原 MIDI、PNG／SVG 导出）。
 
-下面记录此前实验版本。旧版原生服务与 Python 脚本保留作算法对照，不再是当前网页的运行前提。原像素连绵工作台移至 `dist/pixel-music-legacy.html`。
+下面记录此前实验版本。旧版本机服务与 Python 脚本已在 0.10 删除，可在 Git 历史（提交 `976de6f`）中查到；`tests/engine/` 的对照测试会从历史中取出原 Python 算法逐项比较。原像素连绵工作台移至 `dist/pixel-music-legacy.html`。
 
 ## 新方向：乐曲成画 Demo 0.1
 
@@ -70,7 +70,7 @@ python3 scripts/package_static_site.py --archive
 
 ## 全图特征旋律 Demo 0.2
 
-当时双击 `启动全图特征Demo.command` 会启动本机音源服务，使用 Photo Sonification 的分析、编曲与 GS 采样音源，提供参考原谱对照；新版主旋律由二维区域的色相、饱和度、明暗、对比度与纹理共同生成，详见 [交付与验收说明](./docs/FEATURE_DEMO_DELIVERY.md)。现在 GS 音源与 FluidSynth 准备脚本都已删除，`.command` 只打开静态网页；旧本机服务 `scripts/reference_server.py` 仍可运行，但只有 Simple 音源。
+当时双击 `启动全图特征Demo.command` 会启动本机音源服务，使用 Photo Sonification 的分析、编曲与 GS 采样音源，提供参考原谱对照；新版主旋律由二维区域的色相、饱和度、明暗、对比度与纹理共同生成，详见 [交付与验收说明](./docs/FEATURE_DEMO_DELIVERY.md)。现在 GS 音源、FluidSynth 准备脚本、`.command` 与旧本机服务 `scripts/reference_server.py` 都已删除。
 
 ## 条带声化 Demo 0.1
 

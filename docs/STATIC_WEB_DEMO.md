@@ -4,7 +4,7 @@
 
 ## 打开方式
 
-- 本地调试：保留解压后的完整文件夹，双击其中的 `index.html` 或 `feature-music.html`。源码工作区的入口在 `dist` 中；项目根目录可选的 `.command` 快捷入口现在只负责打开网页。
+- 本地调试：保留解压后的完整文件夹，双击其中的 `index.html` 或 `feature-music.html`。源码工作区的入口在 `dist` 中。
 - 发布：正式站是 <https://pixel-music.pages.dev>，由 Cloudflare 从 `release` 分支发布，见下文“Cloudflare 发布”。自建服务器时，将静态部署包解压后的文件全部上传到网站目录，访问 `index.html`；也可以直接发布整个 `dist` 文件夹。
 - 乐曲成画：点击图片演奏页的“把当前乐曲画出来”；或直接打开 `music-art.html` 试样曲、MIDI 与乐谱 JSON。
 
@@ -33,13 +33,13 @@
 
 当前 `dist` 同时包含手写 HTML／CSS／JavaScript 页面、浏览器计算引擎（`engine/`，纯 JavaScript）和生成文件，仍作为开发与部署目录提交。`index.html` 是 `feature-music.html` 的副本；`music-art-classics.js` 由古典 MIDI 文件与清单生成。
 
-日常修改页面可直接预览。修改古典 MIDI 清单或文件后，运行 `node scripts/package_classical_midi.cjs`；修改 `feature-music.html` 后运行 `python3 scripts/package_static_site.py` 同步 `index.html`，该脚本默认不生成 ZIP。
+日常修改页面可直接预览。修改古典 MIDI 清单或文件后，运行 `node scripts/package_classical_midi.cjs`；修改 `feature-music.html` 后运行 `node scripts/package_static_site.cjs` 同步 `index.html`，该脚本默认不生成 ZIP。
 
 需要交付 ZIP 时，在项目根目录运行：
 
 ```sh
 node scripts/package_classical_midi.cjs
-python3 scripts/package_static_site.py --archive
+node scripts/package_static_site.cjs --archive
 ```
 
 生成的 `图鸣-静态网页版.zip` 仅用于本地交付，已加入 Git 忽略规则，不随日常代码提交更新。网页运行不读取这个 ZIP，可直接发布完整 `dist` 目录。

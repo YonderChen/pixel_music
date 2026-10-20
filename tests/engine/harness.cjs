@@ -1,8 +1,8 @@
 /* Shared test harness for the JS engine.
  * loadEngine(): the browser engine modules, as the Worker runs them.
  * loadOracle(): the former Pyodide runtime (Python 3.12, NumPy 2.0.2, Pillow 10.2) with
- * the original Python rules, i.e. what the site computed before the JS engine. The
- * Pyodide files are taken from git history (the commit before they were removed). */
+ * the original Python rules, i.e. what the site computed before the JS engine. Both the
+ * Pyodide files and the Python rules are taken from git history (the commit before they were removed). */
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm'), cp = require('node:child_process');
 const root = path.resolve(__dirname, '../..');
 const ORACLE_COMMIT = '976de6f';
@@ -41,15 +41,15 @@ async function loadOracle() {
   const cache = oracleRuntime();
   const {loadPyodide} = require(path.join(cache, 'pyodide.js'));
   const py = await loadPyodide({indexURL: cache + '/', packages: ['numpy', 'pillow'], stdout() {}, stderr() {}});
-  const sources = [...fs.readdirSync(path.join(root, 'vendor/photo_sonification')).filter(n => n.endsWith('.py')).map(n => 'vendor/photo_sonification/' + n),
+  // The Python rules were removed from the working tree once the JS engine landed; they,
+  // like the Pyodide files, are read from git history.
+  const git = (...args) => cp.execFileSync('git', args, {cwd: root, encoding: 'utf8', maxBuffer: 1e8});
+  const sources = [...git('ls-tree', '--name-only', ORACLE_COMMIT, 'vendor/photo_sonification/').split('\n').filter(n => n.endsWith('.py')),
     ...['reference_music', 'arranger', 'segmentation', 'region_music', 'soft_row_mixer', 'hover_preview', 'browser_engine'].map(n => `scripts/${n}.py`)];
   for (const name of sources) {
     const target = '/app/' + name;
     py.FS.mkdirTree(path.posix.dirname(target));
-    // browser_engine.py (the former Worker adapter) only exists in history.
-    const source = fs.existsSync(path.join(root, name)) ? fs.readFileSync(path.join(root, name), 'utf8')
-      : cp.execFileSync('git', ['show', ORACLE_COMMIT + ':' + name], {cwd: root, encoding: 'utf8'});
-    py.FS.writeFile(target, source);
+    py.FS.writeFile(target, git('show', ORACLE_COMMIT + ':' + name));
   }
   py.runPython("import sys; sys.path.insert(0, '/app/scripts'); sys.path.insert(0, '/app/vendor/photo_sonification')");
   return py;
