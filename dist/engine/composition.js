@@ -95,8 +95,9 @@
   const sortEvents = events => np.sortBy(events, e => [e.start, e.layer, e.midi]);
 
   /* generate_composition(analysis, bars, complexity, variation, scale, 'Simple', mode, ..., mapping, bpm,
-   * 0, -2, 0, -8, -3, -1): the fixed layer gains are the only ones this site uses. */
-  function generateComposition(result, bars, complexity, variation, requestedScale, instrumentMode, mappingStyle, manualBpm) {
+   * 0, -2, 0, -8, -3, -1): the fixed layer gains are the only ones this site uses. `instruments`
+   * (main, texture, bass, pad, chord), when given, replaces the automatic choice (image mood). */
+  function generateComposition(result, bars, complexity, variation, requestedScale, instrumentMode, mappingStyle, manualBpm, instruments = null) {
     const f = result.features, {luminance: light, width: w, height: h} = result.maps;
     const b = f.mean_brightness, c = f.contrast, sh = f.shadow_proportion, edge = f.edge_density, sat = f.mean_saturation,
       warm = f.warmth, lo = f.low_frequency_energy, hi = f.high_frequency_energy, centroid = f.fourier_centroid,
@@ -112,7 +113,7 @@
     const beat = 60 / tempo;
     bars = Math.trunc(np.clamp(Math.trunc(bars), 1, 64));
     const duration = Math.min(120, bars * 4 * beat);
-    const [mainI, texI, bassI, padI, chordI] = chooseInstruments(f, instrumentMode), soloI = 'none';
+    const [mainI, texI, bassI, padI, chordI] = instruments || chooseInstruments(f, instrumentMode), soloI = 'none';
     const progression = chooseProgression(scaleName, f);
     const melodyNotes = buildScaleNotes(root, intervals, root + 10, root + 31), bassNotes = buildScaleNotes(root, intervals, root - 18, root + 7);
     const events = [];

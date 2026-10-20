@@ -16,6 +16,8 @@ NumPy 2.0.2, Pillow 10.2) so that scores come out the same. Ported or reimplemen
 
 The project's own rules (`scripts/reference_music.py`, `arranger.py`, `segmentation.py`,
 `region_music.py`, `soft_row_mixer.py`, `hover_preview.py`) are ported module by module.
+`mood.js` (the image mood, see `docs/IMAGE_MOOD.md`) is this project's own addition and has no Python counterpart;
+it runs only when the page passes `emotion: true`, so with it off the scores still match the former engine.
 The Python files, and the upstream Photo Sonification copy in `vendor/photo_sonification/`, were removed
 from the repository after the port; the tests in `tests/engine/` read them from git history (commit `976de6f`).
 

@@ -63,6 +63,8 @@
     const {payload, context, rgb} = PM.scores.prepareScores(image.pixels, image.width, image.height, options);
     payload.key = key;
     payload.browserEngine = true;
+    // The image mood is shown even when it does not drive the music (options.emotion off).
+    payload.mood = payload.info.emotion || PM.mood.describe(PM.mood.estimate(payload.features));
     for (const [name, variant] of Object.entries(payload.variants)) variant.audioUrl = `/api/audio/${key}/${name}.wav`;
     for (const [profile, meta] of Object.entries(payload.variants.parallel.mixProfiles))
       meta.audioUrl = `/api/audio/${key}/parallel${profile === 'soft' ? '-soft' : ''}.wav`;

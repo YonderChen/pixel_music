@@ -2,7 +2,7 @@
   'use strict';
   // The engine is plain JavaScript (dist/engine/*.js). Its modules are loaded as classic
   // scripts and serialized into a Blob Worker, which also works when opened via file://.
-  const ENGINE_FILES = ['core.js', 'libm.js', 'fft.js', 'image.js', 'jpeg.js', 'png.js', 'analysis.js', 'composition.js', 'segmentation.js', 'arranger.js',
+  const ENGINE_FILES = ['core.js', 'libm.js', 'fft.js', 'image.js', 'jpeg.js', 'png.js', 'analysis.js', 'composition.js', 'mood.js', 'segmentation.js', 'arranger.js',
     'synth.js', 'soft-mixer.js', 'region-music.js', 'scores.js', 'render.js', 'hover.js', 'handler.js'];
   const root = new URL('./engine/', document.currentScript.src).href;
   const pending = new Map();

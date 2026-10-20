@@ -67,7 +67,10 @@
     const melodyPcs = new Set(PM.composition.SCALES[info.scale_name].map(i => (rootPc + i) % 12));
     const family = FAMILY[info.scale_name] || 'major';
     const choice = (features.mean_saturation > .35 ? 1 : 0) * 2 + (features.contrast > .2 ? 1 : 0);
-    const loop = PROGRESSIONS[family][choice], [ensemble, ensembleReason] = chooseEnsemble(features);
+    const loop = PROGRESSIONS[family][choice];
+    // With the image mood on, the mood names the ensemble instead of brightness and warmth.
+    const mood = info.emotion, [ensemble, ensembleReason] = mood
+      ? [ENSEMBLES.find(e => e.id === mood.ensemble), `图片情绪${mood.name}`] : chooseEnsemble(features);
     const vectors = rows.map(row => row.map(contributionValues));
     const deltas = vectors.map(v => [Infinity, ...v.slice(1).map((x, i) => absDiffSum(x, v[i]))]);
     const band = [];

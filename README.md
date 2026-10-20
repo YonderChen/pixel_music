@@ -9,7 +9,11 @@
 - 发布：Cloudflare Pages 只从 `release` 分支发布，推送 master 不会更新正式站。发布当前 master 用 `git fetch origin master && git push origin origin/master:release`，详见 [静态部署说明](./docs/STATIC_WEB_DEMO.md#cloudflare-发布)。
 - 文档：各阶段的说明与报告都在 [docs/](./docs/)，[文档索引](./docs/README.md) 标出了哪些仍描述当前功能、哪些是历史记录。下文按版本从新到旧排列；越往下越是历史记录，其中提到的本机服务、GS 采样音源和 `127.0.0.1` 地址都已不再使用。
 
-## 最新：纯 JavaScript 计算引擎 0.10
+## 最新：图片情绪 0.11
+
+图片演奏页新增“图片情绪”卡片：按明暗、色彩、冷暖、对比与细节算出愉悦度与能量两个分数，归为欢快、明朗、恬静、动感、平和、沉静、紧张、惆怅、忧郁九种情绪之一，并说明是哪些特征推动了结果。默认打开的“情绪驱动音乐”开关让情绪决定调式、速度、乐器、编曲组合、节奏密度与力度起伏；关闭后回到参考原项目的规则，乐谱与之前逐音一致。这是基于颜色统计的规则估计，不识别画面内容。[规则与样图结果](./docs/IMAGE_MOOD.md)
+
+## 纯 JavaScript 计算引擎 0.10
 
 网页不再携带约 40 MB 的 Pyodide（浏览器里的 Python）运行时，图片分析、乐谱、编曲、区域分割、合成、混音与移动试听全部改为纯 JavaScript（`dist/engine/`），整站从约 43 MB 降到约 1.7 MB。旧的 Python 脚本、本机服务与 Python 测试一并删除，打包与 Artifact 构建脚本也改为 Node，开发只需 Node.js。对照测试显示乐谱与原引擎逐音一致，音频样本误差不超过 2/32767；JPG 与 PNG 按原引擎的方式解码，像素完全相同。[说明与验证](./docs/STATIC_WEB_DEMO.md)
 
