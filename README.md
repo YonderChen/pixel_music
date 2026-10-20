@@ -9,7 +9,11 @@
 - 发布：Cloudflare Pages 只从 `release` 分支发布，推送 master 不会更新正式站。发布当前 master 用 `git fetch origin master && git push origin origin/master:release`，详见 [静态部署说明](./docs/STATIC_WEB_DEMO.md#cloudflare-发布)。
 - 文档：各阶段的说明与报告都在 [docs/](./docs/)，[文档索引](./docs/README.md) 标出了哪些仍描述当前功能、哪些是历史记录。下文按版本从新到旧排列；越往下越是历史记录，其中提到的本机服务、GS 采样音源和 `127.0.0.1` 地址都已不再使用。
 
-## 最新：区域分割 Demo 0.9
+## 最新：纯 JavaScript 计算引擎 0.10
+
+网页不再携带约 40 MB 的 Pyodide（浏览器里的 Python）运行时，图片分析、乐谱、编曲、区域分割、合成、混音与移动试听全部改为纯 JavaScript（`dist/engine/`），整站从约 43 MB 降到约 1.7 MB。对照测试显示乐谱与原引擎逐音一致，音频样本误差不超过 2/32767；JPG 与 PNG 按原引擎的方式解码，像素完全相同。[说明与验证](./docs/STATIC_WEB_DEMO.md)
+
+## 区域分割 Demo 0.9
 
 "演奏组合"新增并默认选中"区域分割 / 柔和合成混音"：图片按内容分成形状各异的区域，可在"方格种子 · 区域生长""四叉树 · 分裂合并""SLIC 超像素"之间切换；区域按纵向位置分到各声部，演奏顺序可选视线游走（默认）、显著度分层、从左到右、全图一条路径或纯显著度，区域越大音越长。打开"轮廓参与"后，区域边缘起伏成旋律动机，形状决定奏法、音色、起音与滑音，被包围的区域由外层给出持续低音。"柔化轮廓"把锯齿边界磨圆并画成平滑曲线。纯白图只有一个区域、一个长音。[说明与验证](./docs/REGION_DEMO.md)
 
@@ -33,12 +37,12 @@
 
 ```sh
 node scripts/package_classical_midi.cjs
-python3 scripts/package_browser_runtime.py --archive
+python3 scripts/package_static_site.py --archive
 ```
 
 输出为本地 `图鸣-静态网页版.zip`，已加入 Git 忽略规则；日常提交只更新页面、资源和生成脚本。解压后上传全部文件即可发布。资源均随包提供，首次加载较大；服务器建议开启 gzip／Brotli。双击路径已做代码验证，实际浏览器双击验收仍请人工确认。
 
-同一份 `dist` 也发布为 Claude Artifact 站点。`python3 scripts/build_claude_artifact.py` 生成 `build/claude-artifact/`：拆分超过 16 MB 单文件上限的计算资源，去掉主页面的文档外壳，再把整个文件夹发布到原 Artifact 链接。Artifact 页面内无法下载文件（保存 WAV、原 MIDI、PNG／SVG 导出）。
+同一份 `dist` 也发布为 Claude Artifact 站点。`python3 scripts/build_claude_artifact.py` 生成 `build/claude-artifact/`：去掉主页面的文档外壳，再把整个文件夹发布到原 Artifact 链接。Artifact 页面内无法下载文件（保存 WAV、原 MIDI、PNG／SVG 导出）。
 
 下面记录此前实验版本。旧版原生服务与 Python 脚本保留作算法对照，不再是当前网页的运行前提。原像素连绵工作台移至 `dist/pixel-music-legacy.html`。
 
