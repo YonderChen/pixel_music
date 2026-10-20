@@ -8,6 +8,7 @@
   ids.push('loopToggle');
   ids.push('musicArt');
   ids.push('contourLayer');
+  ids.push('moodSection','emotionToggle','moodName','valenceBar','valenceValue','arousalBar','arousalValue','moodHint');
   const E = Object.fromEntries(ids.map(id => [id,$(id)]));
   const API = '';
   const RECIPES=Object.freeze([
@@ -21,6 +22,8 @@
   E.recipe.innerHTML=RECIPES.map(r=>`<option value="${r.id}">${r.name}</option>`).join('');
   E.recipe.value=RECIPES.find(r=>'#'+r.id===location.hash)?.id||RECIPES[0].id;
   const recipe=()=>RECIPES.find(r=>r.id===E.recipe.value)||RECIPES[0];
+  const SCALE_NAMES={'Major pentatonic':'大调五声','Minor pentatonic':'小调五声','Major':'大调','Natural minor':'自然小调','Dorian':'多利亚','Lydian':'利底亚'};
+  const INSTRUMENT_NAMES={soft_piano:'柔和钢琴',harp:'竖琴',celesta:'钢片琴',music_box:'八音盒',bright_bell:'亮铃',kalimba:'卡林巴',marimba:'木琴',synth_pluck:'合成拨弦',bowed_string:'弓弦',cello:'大提琴',soft_bass:'柔低音',warm_pad:'暖铺底',glass_pad:'玻璃铺底'};
   const S = { mode:location.hash==='#reference'?'reference':'parallel', payload:null, image:null, playing:false, busy:false, time:0, clip:null, operation:0, loadOperation:0, buffers:new Map(), mixMetrics:new Map(), enabledRows:[], solo:null, selected:0 };
   const rowColors=['#f36343','#3b8b80','#7878b6','#ac8647'];
   const notes = ['C','C♯','D','E♭','E','F','F♯','G','A♭','A','B♭','B'];
@@ -69,6 +72,7 @@
     E.contourStyleSetting.hidden=recipe().method!=='regions'||!E.contourToggle.checked;E.segmentOrder.disabled||=E.contourToggle.checked&&['lines','sweep'].includes(E.contourStyle.value);
     // The scan line has no rows: every crossing sounds, so the row count does not apply.
     E.rowCount.parentElement.hidden=recipe().method==='regions'&&E.contourToggle.checked&&E.contourStyle.value==='sweep';
+    E.mappingStyle.disabled=E.emotionToggle.checked;E.emotionToggle.disabled=S.busy;
     E.hoverToggle.disabled=!S.payload||S.busy;
     E.loopToggle.disabled=!S.payload||S.busy;
     E.musicArt.setAttribute('aria-disabled',!S.payload||S.busy);
@@ -406,9 +410,10 @@
     const seg=S.mode==='parallel'&&value.segmentation;
     E.mappingLabel.textContent=seg?`${seg.regionCount} 个区域 · ${seg.methodName} · ${['lines','sweep'].includes(seg.contourStyle)?seg.contourStyleName:seg.orderName}`:S.mode==='parallel'?`${value.rows} 行 × ${value.cols} 列 · 横向叠奏`:'参考原谱 · 原项目条带采样';
     prepareSegments(seg);
-    E.key.textContent=`${(S.mode==='parallel'&&(value.arrangement||value.harmony)?.key)||info.key_name} · ${{'Major pentatonic':'大调五声','Minor pentatonic':'小调五声','Major':'大调','Natural minor':'自然小调','Dorian':'多利亚','Lydian':'利底亚'}[info.scale_name]||info.scale_name}`;
+    E.key.textContent=`${(S.mode==='parallel'&&(value.arrangement||value.harmony)?.key)||info.key_name} · ${SCALE_NAMES[info.scale_name]||info.scale_name}`;
+    renderMood();
     E.tempo.textContent=`${info.tempo.toFixed(1)} BPM`;E.noteCount.textContent=`${value.mainCount} 个${pitchMappedView()?'音高片段':'音符'}`;E.duration.textContent=`${info.duration.toFixed(1)} 秒＋余韵`;
-    E.mappingHint.textContent=seg?`${seg.orderHint}${seg.contour&&['lines','sweep'].includes(seg.contourStyle)?'':seg.contour&&seg.contourStyle==='grid'?' 轮廓参与 · 量化取样：边缘按八分音符格逐格读取高度，越长奏得越久，起伏越密音越多，相邻一级的缓坡用滑音连过去（滑音需柔和合成混音）；形状仍决定连奏或断奏、音色与起音。':seg.contour?' 轮廓参与：边缘起伏成旋律动机（图上虚线是被读取的边缘，点线是区域本音，竖线是每个音被边缘抬高或压低多少，亮线随演奏描过边缘），圆润/尖锐决定连奏或断奏与音色，边缘软硬决定起音，斜向伸展滑音、内凹加倚音，被包围的区域由外层给出持续低音。':''} 当前 ${seg.methodName}，共 ${seg.regionCount} 个区域；区域越大音越长，伴奏由实际音符推出和声铺底。`:S.mode==='parallel'?`各行独立分析并从左到右同时演奏；${recipe().hint} 整体伴奏只保留一份。`:'直接运行 Photo Sonification 原始分析、编曲和音源；参考原谱未重新改写旋律。';
+    E.mappingHint.textContent=seg?`${seg.orderHint}${seg.contour&&['lines','sweep'].includes(seg.contourStyle)?'':seg.contour&&seg.contourStyle==='grid'?' 轮廓参与 · 量化取样：边缘按八分音符格逐格读取高度，越长奏得越久，起伏越密音越多，相邻一级的缓坡用滑音连过去（滑音需柔和合成混音）；形状仍决定连奏或断奏、音色与起音。':seg.contour?' 轮廓参与：边缘起伏成旋律动机（图上虚线是被读取的边缘，点线是区域本音，竖线是每个音被边缘抬高或压低多少，亮线随演奏描过边缘），圆润/尖锐决定连奏或断奏与音色，边缘软硬决定起音，斜向伸展滑音、内凹加倚音，被包围的区域由外层给出持续低音。':''} 当前 ${seg.methodName}，共 ${seg.regionCount} 个区域；区域越大音越长，伴奏由实际音符推出和声铺底。`:S.mode==='parallel'?`各行独立分析并从左到右同时演奏；${recipe().hint} 整体伴奏只保留一份。`:`直接运行 Photo Sonification 原始分析、编曲和音源；参考原谱未重新改写旋律。${S.payload.settings.emotion?'情绪驱动开启时，调式、速度与乐器按图片情绪选择；关闭后完全按原项目规则。':''}`;
     E.regions.style.gridTemplateColumns=`repeat(${value.cols},1fr)`;E.regions.style.gridTemplateRows=`repeat(${value.rows},1fr)`;
     E.regions.classList.toggle('parallel',S.mode==='parallel');
     E.regions.innerHTML=seg?'':value.regions.map((r,i)=>`<button type="button" class="region" data-index="${i}" data-region="${r.id}" style="grid-column:${r.col+1};grid-row:${r.row+1};--voice-color:${rowColors[r.row%4]}" aria-label="列 ${r.col+1} 区域 ${r.row+1}，${note(r.midi)}" title="${note(r.midi)}"></button>`).join('');
@@ -427,6 +432,23 @@
     E.eventCount.textContent=`${main.length} 个${pitchMappedView()?'音高目标 · 参考音源量化演奏':'主旋律音符 · '+value.events.length+' 个全曲事件'}`;
     E.middleTime.textContent=`${(info.duration/2).toFixed(1)} 秒`;E.endTime.textContent=`${info.duration.toFixed(1)} 秒`;
     renderTracks();geometry();select(seg?Math.max(0,value.regions.findIndex(r=>r.salienceRank===1)):0);paint();
+  }
+  // The image mood: valence and arousal meters, what drove them, and what they changed in the music.
+  function renderMood(){
+    const m=S.payload?.mood,on=Boolean(S.payload?.settings.emotion),info=S.payload?.info;
+    E.moodSection.classList.toggle('off',!on);
+    if(!m){E.moodName.textContent='—';E.valenceValue.textContent=E.arousalValue.textContent='—';E.valenceBar.style.width=E.arousalBar.style.width='0';return;}
+    E.moodName.textContent=m.name;
+    E.valenceBar.style.width=`${Math.round(m.valence*100)}%`;E.arousalBar.style.width=`${Math.round(m.arousal*100)}%`;
+    E.valenceValue.textContent=Math.round(m.valence*100);E.arousalValue.textContent=Math.round(m.arousal*100);
+    const why=(reasons,level,label)=>`${reasons.length?reasons.join('、')+'，':''}${label}${level}`;
+    const cause=`${why(m.valenceReasons,m.valenceLevel,'愉悦度')}；${why(m.arousalReasons,m.arousalLevel,'能量')}。`;
+    // Soft-mix voices follow region colours, so only the Simple-synth routes name the mood's instruments.
+    const [main,texture]=info.emotion?.instruments||[],parallel=S.payload.variants.parallel;
+    const voices=S.mode==='parallel'&&parallel.arrangement?`，编曲组合「${parallel.arrangement.ensemble}」`
+      :S.mode==='reference'||recipe().profile==='original'?`，主奏${INSTRUMENT_NAMES[main]||main}、点缀${INSTRUMENT_NAMES[texture]||texture}`:'';
+    E.moodHint.textContent=on?`${cause}据此选用${SCALE_NAMES[info.scale_name]||info.scale_name}、${Math.round(info.tempo)} BPM${voices}；能量越高速度越快、强弱对比越大、起音越利落，愉悦度越低音色越暗。`
+      :`${cause}情绪驱动已关闭，调式、速度与乐器按参考原项目规则选择。`;
   }
   function renderTracks(){
     const p=S.payload?.variants.parallel;if(!p)return;
@@ -450,7 +472,7 @@
     const operation=++S.loadOperation, image=S.image;
     try {
       await showInput(image,operation);if(operation!==S.loadOperation)return;
-      const response=await request(API+'/api/generate',{method:'POST',controller:S.loadAbort,body:JSON.stringify({image:image.base64,options:{synth:E.tone.value,mapping:E.mappingStyle.value,backing:E.backing.checked,rowCount:Number(E.rowCount.value),rowMethod:recipe().method,segmentMethod:E.segmentMethod.value,segmentOrder:E.segmentOrder.value,contourMusic:E.contourToggle.checked,contourStyle:E.contourStyle.value,segmentSoft:E.softToggle.checked,pitchTransition:'scale',featureMethod:'features'}})});
+      const response=await request(API+'/api/generate',{method:'POST',controller:S.loadAbort,body:JSON.stringify({image:image.base64,options:{synth:E.tone.value,mapping:E.mappingStyle.value,backing:E.backing.checked,rowCount:Number(E.rowCount.value),rowMethod:recipe().method,segmentMethod:E.segmentMethod.value,segmentOrder:E.segmentOrder.value,emotion:E.emotionToggle.checked,contourMusic:E.contourToggle.checked,contourStyle:E.contourStyle.value,segmentSoft:E.softToggle.checked,pitchTransition:'scale',featureMethod:'features'}})});
       const payload=await response.json();if(!response.ok)throw new Error(payload.error||'生成失败');
       if(operation!==S.loadOperation)return;
       S.payload=payload;S.buffers.clear();S.mixMetrics.clear();S.time=0;E.connection.hidden=true;S.solo=null;
@@ -599,7 +621,7 @@
   E.imageStage.addEventListener('pointercancel',leaveHover);
   E.regions.addEventListener('click',event=>{const button=event.target.closest('button');if(button){if(E.hoverToggle.checked&&event.pointerType!=='touch'&&S.stagePointerType!=='touch'){if(event.detail===0)hoverRegion(Number(button.dataset.index),true);}else preview(Number(button.dataset.index));}});
   E.timeline.addEventListener('click',event=>{const rect=event.target.closest('[data-event]');if(!rect)return;const e=view().events.find(e=>e.id===rect.dataset.event),index=view().regions.findIndex(r=>r.id===e.sources[0]?.regionId);if(index>=0)preview(index);});
-  E.tone.addEventListener('change',generate);E.backing.addEventListener('change',generate);E.mappingStyle.addEventListener('change',generate);
+  E.tone.addEventListener('change',generate);E.backing.addEventListener('change',generate);E.mappingStyle.addEventListener('change',generate);E.emotionToggle.addEventListener('change',()=>{controls();generate();});
   E.sample.innerHTML=entries.map(e=>`<option value="${e.id}">${e.name}</option>`).join('');E.sample.addEventListener('change',()=>sample(E.sample.value));
   E.file.addEventListener('change',()=>upload(E.file.files[0]));
   E.export.addEventListener('click',async()=>{try{

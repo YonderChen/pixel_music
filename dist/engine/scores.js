@@ -23,14 +23,19 @@
   }
   const allowedNotes = (f, info) => C.buildScaleNotes(rootNote(f), C.SCALES[info.scale_name], rootNote(f) + 10, rootNote(f) + 31);
 
-  function originalComposition(result, options = {}) {
+  // `emotion` (PM.mood.estimate) replaces the automatic scale, tempo rule and instruments.
+  function originalComposition(result, options = {}, emotion = null) {
     const f = result.features;
     let bars = Math.trunc(options.bars || C.computeBarSettings(f)[2]);
     bars = Math.max(4, Math.min(16, bars));
     if ((options.synth || 'Simple') !== 'Simple') throw new Error('未知音源');
     const mapping = options.mapping || 'Scientific';
     if (!['Scientific', 'Balanced', 'Musical'].includes(mapping)) throw new Error('未知映射模式');
-    return C.generateComposition(result, bars, f.auto_complexity, f.auto_variation_strength, 'Automatic', 'Automatic', mapping, null);
+    if (!emotion) return C.generateComposition(result, bars, f.auto_complexity, f.auto_variation_strength, 'Automatic', 'Automatic', mapping, null);
+    const [events, info] = C.generateComposition(result, bars, PM.mood.complexity(emotion, f.auto_complexity), f.auto_variation_strength,
+      emotion.scale, 'Automatic', 'Manual', emotion.tempo, emotion.instruments);
+    info.emotion = PM.mood.describe(emotion);
+    return [events, info];
   }
 
   // Colour, brightness, contrast and texture of an image rectangle (_local_features).
@@ -341,7 +346,8 @@
   // prepare_scores on decoded RGB bytes: the payload (without the preview image) and the render context.
   function prepareScores(pixels, width, height, options = {}) {
     const result = A.analyzeImage(pixels, width, height), F = result.features;
-    const [original, info] = originalComposition(result, options);
+    const emotion = options.emotion ? PM.mood.estimate(F) : null;
+    const [original, info] = originalComposition(result, options, emotion);
     const [reference, referenceRegions] = serializeReference(original, result, info);
     const [featureMain, featureRegions, cols, rows] = fullFeatureMelody(result, info, options);
     const feature = np.sortBy([...reference.filter(r => r.layer !== 'main'), ...featureMain], e => [e.start, e.layer, e.midi]);
@@ -360,6 +366,11 @@
       if (segmented && segmented.pedal && segmented.pedal.length) backingEvents = np.sortBy([...backingEvents, ...segmented.pedal], e => [e.start, e.midi]);
     }
     if (segmented) delete segmented.pedal;
+    if (emotion) {
+      // The derived pad follows the mood's pad colour; dynamics and touch shape every voice.
+      for (const e of backingEvents || []) if (e.instrument === 'warm_pad') e.instrument = info.pad_instrument;
+      PM.mood.shape([reference, featureMain, rowEvents, backingEvents || []], emotion);
+    }
     const parallel = np.sortBy([...rowEvents, ...(backingOn ? backingEvents : [])], e => [e.start, e.layer, e.midi]);
     const duration = np.round((info.duration + .8) * 44100) / 44100, variants = {};
     for (const [key, records, regions, w, h] of [['reference', reference, referenceRegions, info.bars * 8, 1], ['features', feature, featureRegions, cols, rows],
@@ -376,7 +387,7 @@
     if (segmented) variants.parallel.segmentation = segmented;
     if (['contour', 'transition'].includes(options.featureMethod)) Object.assign(variants.features, featurePitchMetadata(options));
     const payload = {version: VERSION, upstream: UPSTREAM_SHA, info, features: F,
-      settings: {synth: options.synth || 'Simple', mapping: options.mapping || 'Scientific', backing: backingOn, randomFactor: 0},
+      settings: {synth: options.synth || 'Simple', mapping: options.mapping || 'Scientific', backing: backingOn, randomFactor: 0, ...(emotion ? {emotion: true} : {})},
       image: {width: result.maps.width, height: result.maps.height}, variants};
     const context = {info, synth: options.synth || 'Simple', rowEvents, reference, voices, backing: backingOn};
     if (arranged || harmony) Object.assign(context, {backingEvents, fixedMidi: true});

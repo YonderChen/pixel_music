@@ -6,7 +6,7 @@
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm'), cp = require('node:child_process');
 const root = path.resolve(__dirname, '../..');
 const ORACLE_COMMIT = '976de6f';
-const ENGINE_FILES = ['core.js', 'libm.js', 'fft.js', 'image.js', 'jpeg.js', 'png.js', 'analysis.js', 'composition.js', 'segmentation.js', 'arranger.js',
+const ENGINE_FILES = ['core.js', 'libm.js', 'fft.js', 'image.js', 'jpeg.js', 'png.js', 'analysis.js', 'composition.js', 'mood.js', 'segmentation.js', 'arranger.js',
   'synth.js', 'soft-mixer.js', 'region-music.js', 'scores.js', 'render.js', 'hover.js', 'handler.js'];
 
 function loadEngine(files = ENGINE_FILES) {
