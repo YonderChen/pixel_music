@@ -1,8 +1,9 @@
 /* Image mood (this project's own rule, not part of the upstream engine): valence (gloomy to
  * pleasant) and arousal (calm to energetic) from the whole-image features, after the
  * colour-emotion findings of Valdez & Mehrabian (1994): brightness and saturation raise
- * pleasure, saturation, contrast and detail raise arousal. When the page turns it on, the mood
- * chooses the scale, tempo, note density, instruments and dynamics; when off nothing here runs. */
+ * pleasure, saturation, contrast and detail raise arousal. The page always asks for it, and the mood
+ * chooses the scale, tempo, note density, instruments and dynamics; without options.emotion (the
+ * parity tests) nothing here runs. */
 (self.PixelMusicEngineModules = self.PixelMusicEngineModules || []).push(function (PM) {
   'use strict';
   const {np} = PM;
