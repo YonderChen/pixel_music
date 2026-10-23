@@ -1,0 +1,49 @@
+<view class="page">
+  <view class="eyebrow">PIXELMUSIC / 图鸣</view>
+  <view class="title">让图片成为音乐</view>
+  <view class="hint">从颜色、明暗与轮廓生成旋律。图片与声音均在本机处理。</view>
+  <view class="actions"><button class="primary" bindtap="chooseImage" disabled="{{busy}}">选图 / 拍照</button><button bindtap="openArt">乐曲成画 →</button></view>
+  <picker range="{{samples}}" range-key="name" value="{{sampleIndex}}" bindchange="changeSample" disabled="{{busy}}"><view class="picker">样图 · {{samples[sampleIndex].name}} ▾</view></picker>
+  <view class="card">
+    <view class="heading">{{name}}</view>
+    <view class="stage" style="height:{{stageHeight}}px"><canvas type="2d" id="picture" bindtouchstart="touchStart" catchtouchmove="touchMove" bindtouchend="touchEnd" bindtouchcancel="touchEnd"/></view>
+    <view class="small">{{credit}}</view>
+    <view class="row"><text class="small">按住滑动试听</text><switch checked="{{touchPreview}}" bindchange="changePreview" color="#547c75" disabled="{{!ready || busy}}"/></view>
+    <view class="hint selection">{{selection}}</view>
+  </view>
+  <view class="card" wx:if="{{mood}}">
+    <view class="heading">图片情绪 · {{mood.name}}</view>
+    <view class="row"><text>愉悦度</text><text>{{valence}} / 100</text></view><view class="meter"><view style="width:{{valence}}%"/></view>
+    <view class="row"><text>能量</text><text>{{arousal}} / 100</text></view><view class="meter"><view style="width:{{arousal}}%"/></view>
+    <view class="hint">{{moodReason}}</view>
+  </view>
+  <view class="card">
+    <view class="heading">演奏设置</view>
+    <view class="label">演奏组合</view><picker range="{{recipes}}" range-key="name" value="{{recipeIndex}}" data-key="recipeIndex" bindchange="changeSetting" disabled="{{busy}}"><view class="picker">{{recipes[recipeIndex].name}} ▾</view></picker>
+    <view class="label">声部数量</view><picker range="{{rowCounts}}" value="{{rowIndex}}" data-key="rowIndex" bindchange="changeSetting" disabled="{{busy}}"><view class="picker">{{rowCounts[rowIndex]}} 声部 ▾</view></picker>
+    <block wx:if="{{recipeIndex === 0}}">
+      <view class="label">分割方式</view><picker range="{{segments}}" range-key="name" value="{{segmentIndex}}" data-key="segmentIndex" bindchange="changeSetting" disabled="{{busy}}"><view class="picker">{{segments[segmentIndex].name}} ▾</view></picker>
+      <view class="label">演奏顺序</view><picker range="{{orders}}" range-key="name" value="{{orderIndex}}" data-key="orderIndex" bindchange="changeSetting" disabled="{{busy}}"><view class="picker">{{orders[orderIndex].name}} ▾</view></picker>
+      <view class="row"><text>轮廓参与</text><switch checked="{{contour}}" data-key="contour" bindchange="changeSwitch" color="#547c75" disabled="{{busy}}"/></view>
+      <view class="label" wx:if="{{contour}}">轮廓演奏方式</view><picker wx:if="{{contour}}" range="{{contours}}" range-key="name" value="{{contourIndex}}" data-key="contourIndex" bindchange="changeSetting" disabled="{{busy}}"><view class="picker">{{contours[contourIndex].name}} ▾</view></picker>
+      <view class="row"><text>柔化轮廓</text><switch checked="{{soft}}" data-key="soft" bindchange="changeSwitch" color="#547c75" disabled="{{busy}}"/></view>
+    </block>
+    <view class="row"><text>伴奏</text><switch checked="{{backing}}" data-key="backing" bindchange="changeSwitch" color="#547c75" disabled="{{busy}}"/></view>
+    <view class="row"><text>参考原谱</text><switch checked="{{reference}}" bindchange="changeMode" color="#547c75" disabled="{{busy || !ready}}"/></view>
+    <view wx:if="{{!reference}}" class="track row" wx:for="{{tracks}}" wx:key="id">
+      <label><checkbox checked="{{item.enabled}}" color="#547c75" data-index="{{index}}" bindtap="toggleTrack" disabled="{{busy}}"/>{{item.name}}</label><button data-index="{{index}}" bindtap="soloTrack" disabled="{{busy}}">{{solo === index ? '全部' : '独听'}}</button>
+    </view>
+  </view>
+  <view class="card">
+    <view class="summary"><text>{{tempo}} BPM</text><text>{{noteCount}} 个音符</text><text>{{scale}}</text></view>
+    <slider value="{{time}}" max="{{duration || 1}}" step="0.1" bindchanging="seek" bindchange="seek" activeColor="#547c75" disabled="{{!ready || busy}}"/>
+    <view class="clock">{{clock}}</view>
+    <view class="actions"><button class="primary" bindtap="play" disabled="{{!ready || busy && !loading}}">{{loading ? '取消声音生成' : playing ? '暂停演奏' : '开始演奏'}}</button><button bindtap="restart" disabled="{{!ready || busy}}">从头播放</button></view>
+    <view class="row"><text>循环播放</text><switch checked="{{loop}}" bindchange="changeLoop" color="#547c75"/></view>
+    <view class="actions"><button data-mode="parallel" bindtap="compare" disabled="{{!ready || busy}}">组合 · 12 秒</button><button data-mode="reference" bindtap="compare" disabled="{{!ready || busy}}">原谱 · 12 秒</button></view>
+    <view class="actions"><button bindtap="exportWav" disabled="{{!ready || busy}}">导出 WAV</button><button bindtap="openArt" disabled="{{!ready || busy}}">把这首乐曲画出来</button></view>
+    <view class="status">{{status}}</view><view wx:if="{{error}}" class="status error">{{error}}</view>
+    <view class="actions"><button wx:if="{{busy}}" bindtap="cancel">取消计算</button><button wx:else bindtap="generate">重新生成</button></view>
+  </view>
+  <canvas type="2d" id="decode" class="decode"/>
+</view>

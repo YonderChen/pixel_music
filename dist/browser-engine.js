@@ -27,7 +27,12 @@
       queue = queue.then(async () => {
         try {
           const result = await PM.handler.handle(message.path, message.data);
-          if (result.bytes) self.postMessage({id: message.id, bytes: result.bytes.buffer, metrics: result.metrics}, [result.bytes.buffer]);
+          if (result.bytes) {
+            // The handler caches WAVs (including hover banks). Transfer a copy so
+            // another playback/export never sees a detached cached ArrayBuffer.
+            const bytes = result.bytes.slice();
+            self.postMessage({id: message.id, bytes: bytes.buffer, metrics: result.metrics}, [bytes.buffer]);
+          }
           else self.postMessage({id: message.id, data: result.data, preview: result.preview, needsPixels: result.needsPixels}, result.preview ? [result.preview.bytes.buffer] : []);
         } catch (error) {self.postMessage({id: message.id, error: String(error && error.message || error)});}
       });

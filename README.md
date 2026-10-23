@@ -1,6 +1,12 @@
 # 图鸣 · PixelMusic
 
-一个将图片特征映射为音乐、将乐谱生成抽象画的浏览器实验。图片分析与声音生成都在浏览器里完成，不上传图片。
+一个将图片特征映射为音乐、将乐谱生成抽象画的实验，支持浏览器与微信小程序。图片分析与声音生成均在本机完成，不上传图片。
+
+## HTML / 微信小程序构建
+
+安装 Node.js 20+ 后运行 `npm run build`，同时生成 `build/html/`（静态网站）与 `build/miniprogram/`（可导入微信开发者工具的原生小程序工程）。可分别运行 `npm run build:html`、`npm run build:miniprogram`；小程序 AppID 可通过 `WECHAT_APPID` 环境变量传入。无需安装 npm 依赖或部署计算服务器。
+
+两端共用现有 JavaScript 图片/音乐引擎。小程序包含图片演奏、乐曲成画、MIDI/JSON 导入与作品导出。构建用法、两端差异、账号配置和验证见 [双端构建说明](./docs/BUILD_TARGETS.md)，构建测试用 `npm run test:build`。
 
 ## 现在怎么用
 

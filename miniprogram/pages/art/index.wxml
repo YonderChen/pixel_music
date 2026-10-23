@@ -1,0 +1,33 @@
+<view class="page">
+  <view class="eyebrow">PIXELMUSIC / 音乐的另一面</view><view class="title">让乐曲成为画作</view>
+  <view class="hint">用音高、节奏、力度与声部绘画，边听边看。</view>
+  <picker range="{{library}}" range-key="title" value="{{scoreIndex}}" bindchange="changeScore"><view class="picker">{{library[scoreIndex].title}} ▾</view></picker>
+  <view class="actions"><button bindtap="importScore">导入 MIDI / JSON</button><button bindtap="backToImage">图片演奏</button></view>
+  <view class="art"><canvas type="2d" id="art"/></view>
+  <view class="filename">{{title}}</view><view class="hint">{{source}}</view>
+  <view><view class="family" wx:for="{{families}}" wx:key="id"><text class="dot" style="background:{{item.color}}"/>{{item.name}}</view></view>
+  <view class="card">
+    <view class="heading">画面</view>
+    <view class="label">画风</view><picker range="{{styles}}" range-key="name" value="{{styleIndex}}" data-key="styleIndex" bindchange="changeVisual"><view class="picker">{{styles[styleIndex].name}} ▾</view></picker>
+    <view class="label">配色</view><picker range="{{palettes}}" range-key="name" value="{{paletteIndex}}" data-key="paletteIndex" bindchange="changeVisual"><view class="picker">{{palettes[paletteIndex].name}} ▾</view></picker>
+    <view class="row"><text>细节</text><text>{{detail}}%</text></view><slider value="{{detail}}" min="25" max="100" bindchange="changeDetail" activeColor="#547c75"/>
+    <button bindtap="rearrange">换个构图</button><view class="small">音乐指纹 {{fingerprint}} · {{noteCount}} 音符 · {{voiceCount}} 声部</view>
+  </view>
+  <view class="card">
+    <view class="heading">聆听</view>
+    <picker wx:if="{{hasOriginal}}" range="{{audioModes}}" value="{{audioMode}}" bindchange="changeAudio"><view class="picker">{{audioModes[audioMode]}} ▾</view></picker>
+    <slider value="{{time}}" max="{{duration || 1}}" step="0.1" bindchanging="seek" bindchange="seek" activeColor="#547c75"/>
+    <view class="clock">{{clock}}</view>
+    <view class="actions"><button class="primary" bindtap="play">{{loading ? '取消声音生成' : playing ? '暂停聆听' : '聆听这首乐曲'}}</button><button bindtap="restart">从头播放</button></view>
+    <view class="row"><text>循环播放</text><switch checked="{{loop}}" bindchange="changeLoop" color="#547c75"/></view>
+    <view class="status">{{status}}</view><view class="status error" wx:if="{{error}}">{{error}}</view>
+  </view>
+  <view class="card">
+    <view class="heading">保存作品</view>
+    <view class="actions"><button bindtap="savePng" disabled="{{exporting}}">{{exporting ? '正在绘制…' : '保存 PNG 到相册'}}</button><button bindtap="exportSvg">导出 SVG</button></view>
+    <view class="actions"><button bindtap="exportScore">导出乐谱 JSON</button><button bindtap="exportWav" disabled="{{loading}}">导出 WAV</button></view>
+    <button wx:if="{{hasMidi}}" bindtap="exportMidi">导出原始 MIDI</button>
+    <view class="hint">PNG 为 2400 × 1800，不包含播放光点。文件通过微信文件分享窗口导出。</view>
+  </view>
+  <canvas type="2d" id="export" class="export-canvas"/>
+</view>

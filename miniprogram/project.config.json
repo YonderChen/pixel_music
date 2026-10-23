@@ -1,0 +1,10 @@
+{
+  "description": "图鸣 · 图片演奏与乐曲成画",
+  "projectname": "pixel-music",
+  "appid": "touristappid",
+  "compileType": "miniprogram",
+  "miniprogramRoot": "./",
+  "libVersion": "3.7.0",
+  "setting": {"es6": true, "enhance": true, "minified": true, "urlCheck": true, "postcss": true},
+  "packOptions": {"ignore": []}
+}

@@ -13,6 +13,7 @@
   const isPng = bytes => SIGNATURE.every((v, i) => bytes[i] === v);
 
   async function inflate(data) {
+    if (PM.inflate) return PM.inflate(data); // Portable host (e.g. WeChat Worker).
     if (typeof DecompressionStream !== 'function') fail('no DecompressionStream');
     const stream = new Blob([data]).stream().pipeThrough(new DecompressionStream('deflate'));
     return new Uint8Array(await new Response(stream).arrayBuffer());

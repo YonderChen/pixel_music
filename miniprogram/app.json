@@ -1,0 +1,8 @@
+{
+  "pages": ["pages/studio/index", "pages/art/index"],
+  "window": {"navigationBarTitleText": "图鸣 · PixelMusic", "navigationBarBackgroundColor": "#f4efe3", "navigationBarTextStyle": "black", "backgroundColor": "#f4efe3"},
+  "workers": "workers",
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "__usePrivacyCheck__": true
+}
