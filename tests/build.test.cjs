@@ -9,7 +9,11 @@ test('HTML delivery copies existing assets and both active pages resolve package
 });
 test('mini program output is self-contained, below the package cap and has working assets',()=>{
   const config=JSON.parse(fs.readFileSync(path.join(mini,'project.config.json'))),app=JSON.parse(fs.readFileSync(path.join(mini,'app.json')));
-  assert.equal(config.compileType,'miniprogram');assert.equal(config.appid,process.env.WECHAT_APPID||JSON.parse(fs.readFileSync(path.join(root,'miniprogram/project.config.json'))).appid);assert.equal(app.workers,'workers');
+  const source=JSON.parse(fs.readFileSync(path.join(root,'miniprogram/project.config.json')));
+  assert.equal(config.compileType,'miniprogram');
+  if(process.env.WECHAT_APPID||source.appid!=='touristappid')assert.equal(config.appid,process.env.WECHAT_APPID||source.appid);
+  else assert.match(config.appid,/^(touristappid|wx[0-9a-f]{16})$/i);
+  assert.equal(app.workers,'workers');
   const all=files(mini);assert.ok(all.reduce((n,p)=>n+fs.statSync(p).size,0)<2*1024*1024);
   for(const page of app.pages)for(const ext of ['js','json','wxml','wxss'])assert.ok(fs.existsSync(path.join(mini,page+'.'+ext)));
   for(const file of all.filter(p=>p.endsWith('.js'))){new vm.Script(fs.readFileSync(file,'utf8'),{filename:file});for(const m of fs.readFileSync(file,'utf8').matchAll(/require\(['"]([^'"]+)['"]\)/g)){assert.ok(m[1].startsWith('.'),'runtime has no npm dependency');assert.ok(fs.existsSync(path.resolve(path.dirname(file),m[1]+(path.extname(m[1])?'':'.js'))),file+' → '+m[1]);}}
@@ -28,6 +32,23 @@ test('invalid targets and AppIDs fail without replacing a working delivery',()=>
   assert.throws(()=>execFileSync(process.execPath,['scripts/build.cjs','invalid'],{cwd:root,stdio:'pipe'}),/Command failed/);
   assert.throws(()=>execFileSync(process.execPath,['scripts/build.cjs','miniprogram'],{cwd:root,env:{...process.env,WECHAT_APPID:'bad'},stdio:'pipe'}),/Command failed/);
   assert.equal(fs.readFileSync(path.join(mini,'project.config.json'),'utf8'),before);
+});
+test('rebuilding preserves the IDE AppID and private settings; explicit AppIDs take precedence',()=>{
+  // Use a separate project so the test never changes the real local AppID or races
+  // the Page/Worker tests which load the main build directory.
+  const tmp=fs.mkdtempSync(path.join(os.tmpdir(),'pixel-wx-rebuild-')),env={...process.env};delete env.WECHAT_APPID;
+  try{
+    for(const dir of ['scripts','dist','shared','miniprogram'])fs.cpSync(path.join(root,dir),path.join(tmp,dir),{recursive:true});
+    const dest=path.join(tmp,'build/miniprogram');fs.mkdirSync(dest,{recursive:true});
+    fs.writeFileSync(path.join(dest,'project.config.json'),JSON.stringify({appid:'wx1111111111111111'}));
+    const local='{"libVersion":"3.17.5","setting":{"compileHotReLoad":true}}\n';fs.writeFileSync(path.join(dest,'project.private.config.json'),local);
+    const build=customEnv=>execFileSync(process.execPath,['scripts/build.cjs','miniprogram'],{cwd:tmp,env:customEnv||env,stdio:'pipe'});
+    const current=()=>JSON.parse(fs.readFileSync(path.join(dest,'project.config.json'))).appid;
+    build();assert.equal(current(),'wx1111111111111111');assert.equal(fs.readFileSync(path.join(dest,'project.private.config.json'),'utf8'),local);
+    build({...env,WECHAT_APPID:'wx2222222222222222'});assert.equal(current(),'wx2222222222222222');
+    const source=JSON.parse(fs.readFileSync(path.join(tmp,'miniprogram/project.config.json')));source.appid='wx3333333333333333';fs.writeFileSync(path.join(tmp,'miniprogram/project.config.json'),JSON.stringify(source));
+    build();assert.equal(current(),'wx3333333333333333');assert.equal(fs.readFileSync(path.join(dest,'project.private.config.json'),'utf8'),local);
+  }finally{fs.rmSync(tmp,{recursive:true,force:true});}
 });
 test('browser Worker transfers keep cached WAVs intact for a later export',async()=>{
   const blobs=new Map();let sequence=0;

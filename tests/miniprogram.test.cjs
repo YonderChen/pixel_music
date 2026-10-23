@@ -46,6 +46,26 @@ test('studio runs image → score → WAV, tracks, comparison, preview and art t
     assert.ok(h.surfaces.get('#picture').getContext().ops.some(o=>o[0]==='drawImage'));
   }finally{page.onUnload();h.clean();}
 });
+test('undeclared photo privacy scope does not block any built-in sample',async()=>{
+  const h=host(),page=h.load('studio');let choices=0;
+  h.wx.chooseMedia=options=>{choices++;assert.deepEqual(options.mediaType,['image']);assert.deepEqual(options.sourceType,['album','camera']);options.fail({errMsg:'chooseMedia:fail api scope is not declared in the privacy agreement'});};
+  h.wx.authorize=()=>assert.fail('built-in samples must not request device permission');
+  h.wx.requirePrivacyAuthorize=()=>assert.fail('built-in samples must not require privacy authorization');
+  try{
+    await page.onReady();assert.equal(choices,0);assert.equal(page.data.ready,true);
+    const payload=page.payload,pathBefore=page.path;
+    await page.chooseImage();assert.equal(choices,1);assert.equal(page.payload,payload);assert.equal(page.path,pathBefore);assert.equal(page.data.ready,true);
+    assert.equal(page.data.status,'相册/拍照暂不可用');assert.match(page.data.error,/隐私声明/);assert.match(page.data.error,/内置样图/);
+    for(let i=0;i<page.data.samples.length;i++){
+      await page.changeSample({detail:{value:String(i)}});
+      assert.equal(page.data.ready,true,page.data.samples[i].name);assert.equal(page.data.error,'');assert.equal(page.path,page.data.samples[i].path);assert.equal(page.data.name,page.data.samples[i].name);assert.ok(page.preview.bytes.byteLength>0);
+    }
+    assert.equal(choices,1,'sample changes never open the album/camera');
+    const before={status:page.data.status,error:page.data.error,path:page.path};
+    h.wx.chooseMedia=o=>o.fail({errMsg:'chooseMedia:fail cancel'});await page.chooseImage();assert.deepEqual({status:page.data.status,error:page.data.error,path:page.path},before);
+    h.wx.chooseMedia=o=>o.success({tempFiles:[{tempFilePath:page.data.samples[0].path}]});await page.chooseImage();assert.equal(page.data.name,'我的图片');assert.equal(page.data.ready,true);assert.equal(page.data.error,'');
+  }finally{page.onUnload();h.clean();}
+});
 test('art page handles current original audio, all styles, exports and imported MIDI',async()=>{
   const h=host();
   const image=await mini.handler.handle('/api/generate',{file:starry(),key:'art',options:{rowMethod:'regions',bars:4,emotion:true}});

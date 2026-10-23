@@ -1,6 +1,7 @@
 'use strict';
 const Engine = require('../../lib/engine'), Files = require('../../lib/files'), Canvas = require('../../lib/canvas'), Player = require('../../lib/player');
 const Catalog = require('../../lib/catalog'), samples = require('../../lib/samples'), Core = require('../../lib/music-art-core'), {decode} = require('../../lib/base64');
+const Errors = require('../../lib/errors');
 const colors = ['#ba5841','#547c75','#7c849e','#ac914f'];
 const format = t => Math.floor(t/60).toString().padStart(2,'0') + ':' + Math.floor(t%60).toString().padStart(2,'0');
 const note = n => n === null || n === undefined ? '休止' : ['C','C♯','D','E♭','E','F','F♯','G','A♭','A','B♭','B'][n%12] + (Math.floor(n/12)-1);
@@ -14,7 +15,7 @@ Page({
   onUnload() { this.job++; clearInterval(this.timer); this.player.destroy(); this.stopPreview(); if(this.previewContext)this.previewContext.close(); Engine.cancel(); },
   onPageScroll(event) { this.scrollTop=event.scrollTop; },
   onShareAppMessage() { return {title:'图鸣 · 让图片成为音乐',path:'/pages/studio/index'}; },
-  fail(error) { this.setData({error:error.message || error.errMsg || String(error),status:'操作未完成，可以重试'}); },
+  fail(error) { this.setData(Errors.describe(error)); },
   mode() {return this.data.reference?'reference':'parallel';},
   profile() {return this.data.reference?'original':Catalog.recipes[this.data.recipeIndex].profile;},
   view() {return this.payload && this.payload.variants[this.mode()];},
@@ -24,7 +25,7 @@ Page({
     try {const result=await new Promise((resolve,reject)=>wx.chooseMedia({count:1,mediaType:['image'],sourceType:['album','camera'],sizeType:['original'],success:resolve,fail:reject})); this.path=result.tempFiles[0].tempFilePath; this.setData({name:'我的图片',credit:'你的图片 · 本机处理，不上传'}); await this.generate();}
     catch(error) {if(!/cancel/.test(error.errMsg || ''))this.fail(error);}
   },
-  changeSample(event) {const index=Number(event.detail.value), sample=samples[index]; this.path=sample.path; this.setData({sampleIndex:index,name:sample.name,credit:sample.credit}); this.generate();},
+  changeSample(event) {const index=Number(event.detail.value), sample=samples[index]; this.path=sample.path; this.setData({sampleIndex:index,name:sample.name,credit:sample.credit}); return this.generate();},
   changeSetting(event) {this.setData({[event.currentTarget.dataset.key]:Number(event.detail.value)}); this.generate();},
   changeSwitch(event) {this.setData({[event.currentTarget.dataset.key]:event.detail.value}); this.generate();},
   changeMode(event) {this.stop(); this.setData({reference:event.detail.value,time:0}); this.time=0; this.audioKey=null; this.prepareView();},

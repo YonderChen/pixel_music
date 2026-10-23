@@ -23,12 +23,18 @@ for (const target of selected) {
       fs.cpSync(path.join(root, 'dist'), staging, {recursive: true, filter: file => !file.endsWith('.DS_Store')});
       write(staging, 'index.html', read('dist/feature-music.html'));
     } else {
+      // The IDE writes the user's real AppID and local settings into the generated
+      // project. Keep them on rebuild unless an explicit source/env AppID replaces it.
+      const previousConfigPath = path.join(dest, 'project.config.json');
+      const previous = fs.existsSync(previousConfigPath) ? JSON.parse(fs.readFileSync(previousConfigPath, 'utf8')) : {};
+      const privatePath = path.join(dest, 'project.private.config.json');
       fs.cpSync(path.join(root, 'miniprogram'), staging, {recursive: true});
       const config = JSON.parse(read('miniprogram/project.config.json'));
-      const appid = process.env.WECHAT_APPID || config.appid;
+      const appid = process.env.WECHAT_APPID || (config.appid !== 'touristappid' ? config.appid : previous.appid || config.appid);
       if (appid !== 'touristappid' && !/^wx[0-9a-f]{16}$/i.test(appid)) throw new Error('WECHAT_APPID 必须是 wx 开头的 18 位 AppID');
       config.appid = appid;
       write(staging, 'project.config.json', JSON.stringify(config, null, 2) + '\n');
+      if (fs.existsSync(privatePath)) fs.copyFileSync(privatePath, path.join(staging, 'project.private.config.json'));
       for (const name of ['music-art-core', 'music-art-midi']) write(staging, 'lib/' + name + '.js', read('dist/' + name + '.js'));
       // Convert classic browser globals at build time. No eval, dynamic scripts or
       // Blob workers are used at runtime in the mini program.

@@ -1,6 +1,7 @@
 'use strict';
 const Core=require('../../lib/music-art-core'), Midi=require('../../lib/music-art-midi'), Classics=require('../../lib/classics'), Score=require('../../lib/score');
 const Canvas=require('../../lib/canvas'), Svg=require('../../lib/svg-canvas'), Engine=require('../../lib/engine'), Files=require('../../lib/files'), Player=require('../../lib/player');
+const Errors=require('../../lib/errors');
 const styles=[{name:'曲线色层',value:'ribbons'},{name:'几何色块',value:'geometry'},{name:'扫描长卷',value:'scroll'}],palettes=[{name:'自动配色',value:'auto'},{name:'陶土与青绿',value:'clay'},{name:'靛蓝与雾紫',value:'blue'},{name:'苔绿与麦金',value:'moss'}];
 const fmt=t=>Math.floor(t/60).toString().padStart(2,'0')+':'+Math.floor(t%60).toString().padStart(2,'0');
 Page({
@@ -10,7 +11,7 @@ Page({
   onHide(){this.stop();if(this.data.loading)this.cancel();},
   onUnload(){this.job++;clearInterval(this.timer);this.player.destroy();Engine.cancel();},
   onShareAppMessage(){return {title:'图鸣 · 让乐曲成为画作',path:'/pages/art/index'};},
-  fail(error){this.setData({error:error.message||error.errMsg||String(error),status:'操作未完成，可以重试'});},
+  fail(error){this.setData(Errors.describe(error));},
   stop(){clearInterval(this.timer);this.player.pause();this.setData({playing:false});this.draw();},
   cancel(){this.job++;Engine.cancel();this.stop();this.setData({loading:false,status:'已取消，可以重新播放'});},
   select(index){this.job++;Engine.cancel();this.stop();this.score=Score.read(this.scores[index]);this.layout=0;this.audioKey=null;this.time=0;const s=this.scores[index],source=s.source;this.score.source=source;

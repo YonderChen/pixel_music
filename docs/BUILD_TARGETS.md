@@ -41,7 +41,9 @@ python3 -m http.server 4174 --directory build/html --bind 127.0.0.1
 WECHAT_APPID=wx0123456789abcdef npm run build:miniprogram
 ```
 
-示例 AppID 需要替换成真实值。也可以修改 `miniprogram/project.config.json` 中的 `appid` 作为项目默认值。构建后的 `project.config.json` 直接位于导入目录根部。工程默认基础库为 3.7.0；如开发者工具提示下载基础库，可使用工具中已安装的更新稳定版本。
+示例 AppID 需要替换成真实值。也可以修改 `miniprogram/project.config.json` 中的 `appid` 作为项目默认值。构建后的 `project.config.json` 直接位于导入目录根部。后续重建会保留已在开发者工具中填写的 AppID，以及生成目录中的 `project.private.config.json`（例如本地基础库版本），避免重新变回测试账号。AppID 优先级为：`WECHAT_APPID` → 源配置中的真实 AppID → 已生成工程的 AppID → `touristappid`。本地配置仍只在忽略的 `build/` 中，不会随源码提交。
+
+工程默认基础库为 3.7.0；如开发者工具提示下载基础库，可使用工具中已安装的更新稳定版本。
 
 小程序是 WXML / WXSS / JavaScript 原生页面，没有用 `web-view` 包网站。图片与乐谱均在本机处理，声音由本机 Worker 生成。构建检查主包体积，超过 2 MiB 会失败并保留上次成功输出。
 
@@ -62,6 +64,25 @@ WECHAT_APPID=wx0123456789abcdef npm run build:miniprogram
 - 计算可取消；应用进入后台会停止播放并取消计算。重新播放时如 Worker 已被释放，会先恢复当前图片数据。仅保留当前页面的一个整曲 WAV 文件和至多八个短试听缓冲，避免按混音组合累积长音频缓存。Worker 仍需要当前图片的分轨，长曲和复杂轮廓的性能需要真机核验。
 
 小程序账号的类目、备案、隐私指引、相册/选图相关权限及上传审核在微信后台处理。请在后台如实配置隐私指引；使用拍照、选图和保存相册时遵循平台授权流程。构建本身不会替你注册、备案或发布。
+
+### 相册选图报 `api scope is not declared in the privacy agreement`
+
+这表示当前 AppID 的《小程序用户隐私保护指引》尚未声明接口涉及的信息类型，属于微信后台配置，不是图片解码失败。页面的“相册选图 / 拍照”调用 `wx.chooseMedia`；下面的“内置样图”下拉列表只读包内文件，不调用该接口，不需要相册或摄像头权限。
+
+1. 登录 [微信公众平台](https://mp.weixin.qq.com/)，选择与开发者工具当前 AppID 相同的小程序账号。
+2. 在“设置 / 账号设置”中找到“用户隐私保护指引”（部分后台在“服务内容声明”中），更新指引。按实际功能声明下表中的信息类型和用途。
+3. 按后台提示完成提交并确认配置已生效；体验版也需使用对应生效的指引。随后重新编译或重新进入小程序，在微信官方隐私弹窗中同意后，再测试相册选图和拍照。
+
+| 功能 / 接口 | 需要核对的隐私声明 | 本项目的实际用途 |
+| --- | --- | --- |
+| 选图 / `wx.chooseMedia` | 选中的照片或视频信息 | 读取用户主动选择的图片，在本机分析颜色和轮廓，生成音乐，不上传图片 |
+| 拍照 / `wx.chooseMedia` 的 camera 来源 | 摄像头 | 用户主动拍照后，在本机生成图片音乐 |
+| MIDI/JSON 导入 / `wx.chooseMessageFile` | 选中的文件 | 读取用户主动选择的乐谱文件，在本机生成画作与试听 |
+| 保存 PNG / `wx.saveImageToPhotosAlbum` | 相册（仅写入）权限 | 将用户生成的画作保存到手机相册 |
+
+此项目没有录音功能，不需要为合成播放添加麦克风声明。未配置选图声明时仍可先用“内置样图”体验。`app.json` 的 `__usePrivacyCheck__` 不替代后台声明；关闭该字段、添加 `scope.camera` 或切换到旧选图接口均不能完成上述后台配置。本项目保留微信官方隐私授权弹窗，不会自动同意或绕过授权。
+
+依据：[腾讯官方隐私指引适配说明](https://cloud.tencent.cn/document/product/1301/97930)、[微信隐私协议开发指南](https://developers.weixin.qq.com/miniprogram/dev/framework/user-privacy/PrivacyAuthorize.html)。
 
 ## 验证
 

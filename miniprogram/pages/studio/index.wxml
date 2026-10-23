@@ -2,8 +2,9 @@
   <view class="eyebrow">PIXELMUSIC / 图鸣</view>
   <view class="title">让图片成为音乐</view>
   <view class="hint">从颜色、明暗与轮廓生成旋律。图片与声音均在本机处理。</view>
-  <view class="actions"><button class="primary" bindtap="chooseImage" disabled="{{busy}}">选图 / 拍照</button><button bindtap="openArt">乐曲成画 →</button></view>
-  <picker range="{{samples}}" range-key="name" value="{{sampleIndex}}" bindchange="changeSample" disabled="{{busy}}"><view class="picker">样图 · {{samples[sampleIndex].name}} ▾</view></picker>
+  <view class="actions"><button class="primary" bindtap="chooseImage" disabled="{{busy}}">相册选图 / 拍照</button><button bindtap="openArt">乐曲成画 →</button></view>
+  <picker range="{{samples}}" range-key="name" value="{{sampleIndex}}" bindchange="changeSample" disabled="{{busy}}"><view class="picker">内置样图 · {{samples[sampleIndex].name}} ▾</view></picker>
+  <view class="hint">内置样图可直接使用，无需相册授权。</view>
   <view class="card">
     <view class="heading">{{name}}</view>
     <view class="stage" style="height:{{stageHeight}}px"><canvas type="2d" id="picture" bindtouchstart="touchStart" catchtouchmove="touchMove" bindtouchend="touchEnd" bindtouchcancel="touchEnd"/></view>
