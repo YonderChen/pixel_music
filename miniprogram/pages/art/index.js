@@ -2,7 +2,7 @@
 const Core=require('../../lib/music-art-core'), Midi=require('../../lib/music-art-midi'), Classics=require('../../lib/classics'), Score=require('../../lib/score');
 const Canvas=require('../../lib/canvas'), Svg=require('../../lib/svg-canvas'), Engine=require('../../lib/engine'), Files=require('../../lib/files'), Player=require('../../lib/player');
 const Errors=require('../../lib/errors');
-const styles=[{name:'曲线色层',value:'ribbons'},{name:'几何色块',value:'geometry'},{name:'扫描长卷',value:'scroll'}],palettes=[{name:'自动配色',value:'auto'},{name:'陶土与青绿',value:'clay'},{name:'靛蓝与雾紫',value:'blue'},{name:'苔绿与麦金',value:'moss'}];
+const styles=['garden','landscape','tides','weave','constellation','ribbons','geometry','scroll'].map(value=>({name:Core.STYLES[value],value})),palettes=[{name:'自动配色',value:'auto'},...Object.keys(Core.palettes).map(value=>({name:Core.palettes[value].name,value}))];
 const fmt=t=>Math.floor(t/60).toString().padStart(2,'0')+':'+Math.floor(t%60).toString().padStart(2,'0');
 Page({
   data:{library:[],scoreIndex:0,styles,palettes,styleIndex:0,paletteIndex:0,detail:60,title:'',source:'',fingerprint:'',noteCount:0,voiceCount:0,families:[],time:0,duration:1,clock:'00:00 / 00:00',playing:false,loading:false,loop:false,hasOriginal:false,audioMode:0,audioModes:['原组合音色','乐谱合成试听'],hasMidi:false,exporting:false,status:'准备画作…',error:''},
@@ -25,7 +25,7 @@ Page({
   changeLoop(event){this.setData({loop:event.detail.value});this.player.audio.loop=event.detail.value;},
   render(){if(!this.score||!this.surface)return;try{this.model=Core.scene(this.score,{style:styles[this.data.styleIndex].value,palette:palettes[this.data.paletteIndex].value,detail:this.data.detail/100,layout:this.layout});
     this.base=wx.createOffscreenCanvas({type:'2d',width:1200,height:900});Svg.draw(this.base.getContext('2d'),this.model.svg,1200,900);
-    this.setData({fingerprint:this.model.fingerprint,noteCount:this.score.events.length,voiceCount:this.model.stats.voices.length,families:this.model.families});this.onTime(this.time);
+    this.setData({styleHint:Core.STYLE_INFO[this.model.style],fingerprint:this.model.fingerprint,noteCount:this.score.events.length,voiceCount:this.model.stats.voices.length,families:this.model.families});this.onTime(this.time);
     }catch(error){this.fail(error);}},
   draw(){
     if(!this.surface||!this.base||!this.model)return;const c=this.surface.context,w=this.surface.canvas.width,h=this.surface.canvas.height,model=this.model,t=this.time;c.clearRect(0,0,w,h);c.drawImage(this.base,0,0,w,h);c.save();c.scale(w/1200,h/900);

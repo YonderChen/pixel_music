@@ -9,7 +9,12 @@
   const palettes={
     clay:{name:'陶土与青绿',paper:'#f4efe3',ink:'#334d49',colors:['#ba5841','#dd9c59','#547c75','#a5b5a0']},
     blue:{name:'靛蓝与雾紫',paper:'#f0eee7',ink:'#233d59',colors:['#365b7e','#7c849e','#b59c98','#c6b899']},
-    moss:{name:'苔绿与麦金',paper:'#f2efe1',ink:'#3c5147',colors:['#637b5b','#ac914f','#b76a4b','#9aaca0']}
+    moss:{name:'苔绿与麦金',paper:'#f2efe1',ink:'#3c5147',colors:['#637b5b','#ac914f','#b76a4b','#9aaca0']},
+    mist:{name:'远山与朱砂',paper:'#f3eee4',ink:'#233e43',colors:['#315e68','#668d8b','#a9b9a8','#ca7351']},
+    vivid:{name:'珊瑚与群青',paper:'#f8f0e4',ink:'#252e4b',colors:['#e16c50','#344c83','#d6ae4f','#6f9691']},
+    night:{name:'午夜与星金',paper:'#111e30',ink:'#e5e9e1',colors:['#e7bc72','#8dbeb9','#c18ca7','#849cce']},
+    botanical:{name:'鼠尾草与蔷薇',paper:'#f3eee1',ink:'#3b5146',colors:['#456859','#88a58b','#c1b58c','#c77d79']},
+    sea:{name:'海盐与落日',paper:'#f4ecdc',ink:'#244e59',colors:['#2d6570','#659b9c','#aec5b5','#db9671']}
   };
   // Timbre families mirror the image side's sweep mode, where region colour chose the voice
   // (warm→暖键, yellow→圆木琴, green→柔拨弦, blue→轻铃, low→柔低音); here the voice chooses the colour.
@@ -91,7 +96,15 @@
     const radius=168+voiceIndex*38+pitch*100+timbre(n.instrument)*18;
     return compose({x:600+Math.cos(angle)*radius*1.24,y:450+Math.sin(angle)*radius*.95,angle});
   }
-  const STYLES={ribbons:'曲线色层',geometry:'几何色块',scroll:'扫描长卷'};
+  const STYLES={ribbons:'曲线色层',geometry:'几何色块',scroll:'扫描长卷',landscape:'层峦山水',weave:'节奏织锦',constellation:'星轨共鸣',garden:'植物花园',tides:'潮汐水墨'};
+  const STYLE_INFO={
+    ribbons:'音高牵引曲线，声部交织成色层。',geometry:'时值决定形状大小，力度决定色块面积。',scroll:'横向是时间，纵向是音高，颜色区分音色。',
+    landscape:'旋律化作远山，声部铺开前后景，长音留下云雾，强音刻出山石。',
+    weave:'时间织成经线，声部排成纬线，音高决定纹样，强拍与和弦留下色块。',
+    constellation:'乐句散成星群，同刻发声的音彼此相连，力度决定星芒，长音留下光晕。',
+    garden:'乐句长成枝干，音符舒展为叶片，高音开花，力度改变花瓣与叶脉。',
+    tides:'旋律推起浪脊，长音晕染成水色，密集音符留下细碎浪花。'
+  };
   // Scan-scroll: the image side's sweep read backwards. Time runs left to right, pitch bottom to top,
   // each voice's melody becomes a boundary line with its colour field below, and every note is drawn
   // where the playback scan line will cross it.
@@ -101,7 +114,7 @@
     return '#'+a.map((v,i)=>Math.round(v+(b[i]-v)*f).toString(16).padStart(2,'0')).join('');
   }
   function scroll(model,paletteId){
-    const {score,stats,palette}=model,colors=familyColors[paletteId],D=score.duration;
+    const {score,stats,palette}=model,colors=familyColors[paletteId]??{keys:palette.colors[0],marimba:palette.colors[2],pluck:palette.colors[1],bell:palette.colors[3],pad:shade(palette.colors[3],.25,palette),bass:palette.ink},D=score.duration;
     const lo0=stats.range[0]-2,hi0=stats.range[1]+2,pad=Math.max(0,24-(hi0-lo0))/2,lo=lo0-pad,hi=hi0+pad;
     const x=t=>round(SCROLL.x0+t/D*(SCROLL.x1-SCROLL.x0)),y=m=>round(SCROLL.bottom-(m-lo)/(hi-lo)*(SCROLL.bottom-SCROLL.top));
     model.scroll={...SCROLL,duration:D,lo,hi};
@@ -145,15 +158,177 @@
       p+=` C${round(b.x+(c.x-a.x)/6)},${round(b.y+(c.y-a.y)/6)} ${round(c.x-(d.x-b.x)/6)},${round(c.y-(d.y-b.y)/6)} ${round(c.x)},${round(c.y)}`;
     }return p;
   }
+  // New compositions use musical rests and phrase activity rather than the shared ellipse.
+  // Aggregation limits drawing complexity; playback retains the exact score timing.
+  function phraseGroups(voice,score,detail){
+    const count=Math.round(64+detail*96),notes=groupNotes(voice,score.duration,count),phrases=[];
+    const lengths=voice.events.map(e=>e.duration).sort((a,b)=>a-b),rest=Math.max(.18,lengths[Math.floor(lengths.length/2)]*.7);
+    for(const n of notes){let phrase=phrases.at(-1);if(!phrase||n.start-phrase.at(-1).end>rest){phrase=[];phrases.push(phrase);}phrase.push(n);}
+    return {count,notes,phrases};
+  }
+  function natureComposition(model){
+    const {score,stats,palette,detail,layout,style}=model,D=score.duration,voices=stats.voices.slice(0,8),R=round;
+    const range=Math.max(18,stats.range[1]-stats.range[0]),pitch=m=>clamp((m-stats.pitch)/range*.8+(m-60)/110,-1,1),pace=clamp(score.tempo/120,.3,2);
+    const path=(d,fill,opacity=1,stroke='none',width=1)=>`<path d="${d}" fill="${fill}" fill-opacity="${R(opacity)}" stroke="${stroke}" stroke-opacity="${R(opacity)}" stroke-width="${R(width)}" stroke-linecap="round" stroke-linejoin="round"/>`;
+    const trace=(pts,color,width,opacity)=>path(smooth(pts),'none',opacity,color,width);
+    const leaf=(base,tip,width,color,opacity)=>{
+      const dx=tip.x-base.x,dy=tip.y-base.y,len=Math.max(1,Math.hypot(dx,dy)),nx=-dy/len*width,ny=dx/len*width;
+      const d=`M${R(base.x)} ${R(base.y)} C${R(base.x+dx*.2+nx)} ${R(base.y+dy*.2+ny)} ${R(tip.x+nx*.55)} ${R(tip.y+ny*.55)} ${R(tip.x)} ${R(tip.y)} C${R(tip.x-nx*.5)} ${R(tip.y-ny*.5)} ${R(base.x+dx*.3-nx*.65)} ${R(base.y+dy*.3-ny*.65)} ${R(base.x)} ${R(base.y)} Z`;
+      return path(d,color,opacity)+trace([base,{x:base.x+dx*.52+nx*.08,y:base.y+dy*.52+ny*.08},tip],palette.paper,.65,opacity*.55);
+    };
+    let sky='',fields='',texture='',foreground='';model.phraseCount=0;
+    if(score.events.length&&style!=='garden'){
+      // The light and atmosphere are compositional conventions; their placement follows the score.
+      const sun={x:[880,292,835,430][layout]-pitch(stats.pitch)*90,y:[245,270,220,260][layout]},radius=37+stats.velocity*34;
+      for(let k=3;k>=0;k--)sky+=`<circle cx="${R(sun.x)}" cy="${R(sun.y)}" r="${R(radius+k*7)}" fill="${palette.colors[3]}" fill-opacity="${k===0?'.35':'.025'}"/>`;
+    }
+    for(let vi=voices.length-1;vi>=0;vi--){
+      const voice=voices[vi],{count,notes,phrases}=phraseGroups(voice,score,detail),positions=new Map(),color=palette.colors[vi%3],quiet=voice.main?1:.65;
+      model.phraseCount+=phrases.length;
+      if(style==='garden'){
+        const plants=[];for(const phrase of phrases){const step=Math.max(3,Math.ceil(phrase.length/(3+Math.round(detail*3))));for(let i=0;i<phrase.length;i+=step)plants.push(phrase.slice(i,i+step));}
+        for(const plant of plants){
+          const first=plant[0],last=plant.at(-1),mean=plant.reduce((s,n)=>s+n.midi,0)/plant.length,energy=plant.reduce((s,n)=>s+n.velocity,0)/plant.length;
+          const t=(first.start+last.start)/2/D,spread=layout===1?.55:1,root={x:clamp(600+(t-.5)*900*spread+(vi-1)*18,140,1060),y:786-vi*7};
+          const height=clamp(300+pitch(mean)*170+energy*190+(voice.main?65:0),250,600),lean=(last.midi-first.midi)/range*100+(layout===2?-125:layout===3?120:40)*(t-.5);
+          const stem=u=>({x:root.x+lean*u+Math.sin(u*Math.PI)*(32+vi*5)*(t>.5?-1:1),y:root.y-height*u});
+          const spine=Array.from({length:9},(_,i)=>stem(i/8));
+          fields+=trace(spine,shade(color,.15+vi*.04,palette),1.8+energy*2.6,.65*quiet);
+          for(let i=0;i<plant.length;i++){
+            const n=plant[i],u=.14+.78*(i+1)/(plant.length+1),base=stem(u),side=i%2?1:-1;
+            const length=(34+n.velocity*48+Math.min(3,n.duration*pace)*9)*(.8+detail*.35),angle=side*(.55+(n.midi%7)*.06),tip={x:base.x+Math.sin(angle)*length,y:base.y-Math.cos(angle)*length*.67};
+            positions.set(n.bin,tip);
+            const c=shade(color,(n.midi%5)*.065,palette),width=length*(.18+timbre(n.instrument)*.12);
+            foreground+=leaf(base,tip,width,c,(.58+n.velocity*.35)*quiet);
+            if(detail>.45){const other={x:base.x-(tip.x-base.x)*.72,y:base.y-(base.y-tip.y)*.65};foreground+=leaf(base,other,width*.65,shade(color,.25,palette),.43*quiet);}
+          }
+          const end=stem(.99),n=last,petals=5+(Math.round(mean)%4),bloom=(13+energy*23+pitch(n.midi)*8)*(.75+detail*.4);
+          const flowerColor=palette.colors[3];positions.set(last.bin,end);
+          for(let k=0;k<petals;k++){
+            const angle=k/petals*Math.PI*2+(n.midi%12)*.14,reach=bloom*(.85+.15*Math.cos(k*2.3+mean)),tip={x:end.x+Math.cos(angle)*reach,y:end.y+Math.sin(angle)*reach};
+            foreground+=leaf(end,tip,reach*.55,shade(flowerColor,k%2?.14:0,palette),(.45+energy*.3)*quiet);
+          }
+          for(let k=0;k<5;k++){const a=k/5*Math.PI*2,seed={x:end.x+Math.cos(a)*3,y:end.y+Math.sin(a)*3};foreground+=trace([end,seed],palette.ink,1.5,.6);}
+        }
+      }else{
+        const baseline=style==='tides'?[540,615,480,580][layout]:[635,565,675,610][layout];
+        for(const n of notes){const t=n.start/D,wave=style==='tides'?Math.sin(t*Math.PI*(2.2+pace)+vi*.8)*55:0;
+          positions.set(n.bin,{x:105+t*985,y:clamp(baseline-vi*Math.min(70,350/Math.max(1,voices.length-1))-pitch(n.midi)*(150+pace*23)-n.velocity*55-timbre(n.instrument)*16+wave+([0,1,-1,.4][layout])*(t-.5)*110,170,730)});}
+        for(const phrase of phrases){
+          const pts=phrase.map(n=>positions.get(n.bin));if(pts.length===1)pts.push({x:Math.min(1095,pts[0].x+Math.max(8,phrase[0].duration/D*985)),y:pts[0].y+2});
+          const first=pts[0],last=pts.at(-1),floor=795-vi*7;
+          const lower=style==='tides'?pts.map((p,i)=>({x:p.x,y:Math.min(806,p.y+70+phrase[Math.min(i,phrase.length-1)].velocity*100)})).reverse():[{x:last.x,y:floor},{x:first.x,y:floor}];
+          const shape=smooth(pts)+' L'+R(lower[0].x)+' '+R(lower[0].y)+(style==='tides'?smooth(lower).replace(/^M/,'L'):` L${R(first.x)} ${floor}`)+' Z';
+          // Successive dilute washes give soft depth without filters, preserving native Canvas export.
+          for(let wash=2;wash>=0;wash--){const offset=wash*7;fields+=`<g transform="translate(0 ${offset})">${path(shape,shade(color,.17+wash*.08,palette),(.19-wash*.045)*quiet)}</g>`;}
+          fields+=path(shape,color,(style==='tides'?.2:.23)*quiet);
+          texture+=trace(pts,color,1+detail*.8,.66*quiet);
+          const contours=Math.round(4+detail*9);for(let k=1;k<=contours;k++){
+            const f=k/(contours+1),contour=pts.map((p,i)=>({x:p.x,y:style==='tides'?p.y+f*(60+phrase[Math.min(i,phrase.length-1)].velocity*100):p.y+(floor-p.y)*f}));
+            texture+=trace(contour,k%3===0?palette.paper:color,k%3===0?1.8:.65,k%3===0?.17:.11);
+          }
+        }
+        for(let i=0;i<notes.length;i++){
+          const n=notes[i],p=positions.get(n.bin),length=8+n.velocity*20+detail*12;
+          if(style==='tides'){
+            const curl=length*(.6+timbre(n.instrument)*.4),d=`M${R(p.x-length)} ${R(p.y+10)} C${R(p.x-length*.2)} ${R(p.y-2)} ${R(p.x+curl)} ${R(p.y-16)} ${R(p.x+curl*.7)} ${R(p.y-4)} C${R(p.x+curl*.35)} ${R(p.y+5)} ${R(p.x-2)} ${R(p.y-3)} ${R(p.x+5)} ${R(p.y-6)}`;
+            foreground+=path(d,'none',(.2+n.velocity*.36)*quiet,palette.paper,1+detail);
+            for(let k=1;k<=Math.round(1+detail*3);k++)foreground+=trace([{x:p.x-length*.5,y:p.y+12+k*6},{x:p.x+length*.3,y:p.y+10+k*6},{x:p.x+length,y:p.y+12+k*6}],color,.65,.18);
+          }else{
+            const depth=15+n.velocity*40;for(let k=0;k<Math.round(2+detail*4);k++)texture+=trace([{x:p.x-5+k*2,y:p.y+4},{x:p.x-12+k*3,y:p.y+depth*.55},{x:p.x-8+k*3,y:p.y+depth}],color,.6,.14*quiet);
+            if(i%Math.max(1,Math.ceil(notes.length/8))===0&&vi===0){
+              const trunk={x:p.x,y:Math.min(786,p.y+95)},tip={x:p.x+3,y:trunk.y-18-n.velocity*28};foreground+=trace([trunk,tip],palette.ink,1,.5);
+              for(let k=1;k<=4;k++){const y=tip.y+k*7,w=k*3;foreground+=trace([{x:tip.x-w,y:y+5},{x:tip.x,y:y-3},{x:tip.x+w,y:y+5}],palette.ink,1.1,.4);}
+            }
+          }
+        }
+      }
+      for(const n of notes){const p=positions.get(n.bin);model.marks.push({...p,start:n.start,end:n.end,voice:voice.id,color});}
+      for(const e of voice.events){const bin=Math.min(count-1,Math.floor(e.start/D*count)),p=positions.get(bin);model.notes.push({...p,start:e.start,end:e.start+e.duration,midi:e.midi,velocity:e.velocity,envelope:envelope(e.instrument),main:e.layer==='main',color,voice:vi});}
+    }
+    model.mapping=STYLE_INFO[style];return sky+fields+texture+foreground;
+  }
+  function abstractComposition(model){
+    const {score,stats,palette,detail,layout,style}=model,voices=stats.voices.slice(0,8),D=score.duration;
+    const range=Math.max(18,stats.range[1]-stats.range[0]),pitch=m=>clamp((m-stats.pitch)/range*.75+(m-60)/96,-1,1),pace=clamp(score.tempo/120,.3,2);
+    let fields='',lines='',accents='';
+    const dot=(p,r,color,alpha=1)=>`<circle cx="${round(p.x)}" cy="${round(p.y)}" r="${round(r)}" fill="${color}" fill-opacity="${round(alpha)}"/>`;
+    const stroke=(pts,color,width,alpha)=>`<path d="${smooth(pts)}" fill="none" stroke="${color}" stroke-width="${round(width)}" stroke-opacity="${round(alpha)}" stroke-linecap="round" stroke-linejoin="round"/>`;
+    const prepared=voices.map(v=>phraseGroups(v,score,detail));
+    const clusters=[];
+    if(style==='constellation'){
+      const lead=prepared[0]?.phrases||[],target=clamp(Math.round(Math.sqrt(score.events.length)/2),3,9);
+      // Long unbroken passages are split at their actual onsets into several star groups.
+      for(const phrase of lead){const step=Math.max(1,Math.ceil(phrase.length/target));for(let i=0;i<phrase.length;i+=step){const group=phrase.slice(i,i+step);clusters.push({start:group[0].start,end:group.at(-1).end,notes:group});}}
+      if(clusters.length>12){const step=Math.ceil(clusters.length/12),merged=[];for(let i=0;i<clusters.length;i+=step){const a=clusters.slice(i,i+step);merged.push({start:a[0].start,end:a.at(-1).end,notes:a.flatMap(c=>c.notes)});}clusters.splice(0,clusters.length,...merged);}
+    }
+    const stellar=(n,vi)=>{
+      let ci=clusters.findIndex(c=>n.start<c.end);if(ci<0)ci=Math.max(0,clusters.length-1);
+      const c=clusters[ci]||{start:0,end:D},t=clamp((n.start-c.start)/Math.max(.1,c.end-c.start),0,1),u=(ci+.5)/Math.max(1,clusters.length);
+      const interval=(n.midi%12)/12,angle=t*Math.PI*2.15+interval*1.8+vi*.55;
+      const radius=24+Math.sqrt(t)*76+vi*7+n.velocity*22+timbre(n.instrument)*12;
+      const cx=layout===1?230+740*(ci%3)/2:160+880*u;
+      const cy=layout===1?235+Math.floor(ci/3)*Math.min(185,420/Math.max(1,Math.ceil(clusters.length/3)-1)):layout===2?470+160*Math.cos(u*Math.PI*2):layout===3?680-u*440:440+155*Math.sin(u*Math.PI*2-.8);
+      return {x:clamp(cx+Math.cos(angle)*radius+pitch(n.midi)*35,104,1096),y:clamp(cy+Math.sin(angle)*radius*.75-pitch(n.midi)*110,110,790),angle};
+    };
+    for(let vi=voices.length-1;vi>=0;vi--){
+      const voice=voices[vi],{count,notes,phrases}=prepared[vi],color=palette.colors[vi%4],secondary=palette.colors[(vi+1)%4],quiet=voice.main?1:.68;
+      const positions=new Map();
+      const pos=n=>{
+        const t=n.start/D,p=pitch(n.midi);
+        if(style==='weave'){
+          const register=(n.midi-stats.range[0])/Math.max(12,stats.range[1]-stats.range[0]),x=116+t*965;
+          const y=layout===1?180+register*490:710-register*490;
+          return {x,y:clamp(y+vi*8-(stats.pitch-60)*1.6+(layout===2?(t-.5)*200:layout===3?Math.sin(t*Math.PI*2)*75:0),130,755),angle:0};
+        }
+        return stellar(n,vi);
+      };
+      notes.forEach(n=>positions.set(n.bin,pos(n)));
+      if(style==='weave'){
+        // Connecting thread breaks at audible rests.
+        for(const phrase of phrases)if(phrase.length>1)lines+=stroke(phrase.map(n=>positions.get(n.bin)),color,1.2,.3*quiet);
+        for(const n of notes){const p=positions.get(n.bin),reach=40+n.velocity*90;lines+=`<path d="M${round(p.x)} ${round(Math.max(115,p.y-reach))}V${round(Math.min(785,p.y+reach))}" stroke="${color}" stroke-width=".7" stroke-opacity=".16"/>`;}
+      }
+      if(style==='constellation'){
+        for(const phrase of phrases)if(phrase.length>1)lines+=stroke(phrase.map(n=>positions.get(n.bin)),color,.7,.24*quiet);
+      }
+      for(const n of notes){
+        const p=positions.get(n.bin),sustain=clamp(n.duration/(60/score.tempo),.05,5),size=3+n.velocity*7;
+        if(style==='weave'){
+          const w=clamp(n.duration/D*965,5,108),h=clamp(18+n.velocity*62+Math.sqrt(n.count)*3+timbre(n.instrument)*8,20,90),tilt=((Math.round(n.midi)%3)-1)*3;
+          accents+=`<rect x="${round(p.x)}" y="${round(p.y-h/2)}" width="${round(w)}" height="${round(h)}" rx="${round(clamp(4/pace,.8,6))}" fill="${color}" fill-opacity="${round((.45+.5*n.velocity)*quiet)}"/>`;
+          if(n.count>1)accents+=`<path d="M${round(p.x+2)} ${round(p.y-h/2-4)} L${round(p.x+w*.6)} ${round(p.y-h/2-10-tilt)} L${round(p.x+w)} ${round(p.y-h/2-4)}" fill="none" stroke="${secondary}" stroke-width="2" stroke-opacity=".8"/>`;
+          for(let k=0;k<Math.round(detail*4);k++)accents+=`<path d="M${round(p.x+2)} ${round(p.y-h/2+4+k*5)}h${round(Math.max(1,w-4))}" stroke="${palette.paper}" stroke-width=".8" stroke-opacity=".5"/>`;
+          if(n.velocity>.7)accents+=dot({x:p.x+Math.min(w/2,8),y:p.y+h/2+7},2,secondary,.85);
+        }else{
+          fields+=dot(p,size*(1+sustain*.5)*(.8+detail*.4),color,.035+n.velocity*.035);
+          accents+=dot(p,1.5+n.velocity*3.6,color,.55+.4*n.velocity);
+          if(sustain>1)accents+=`<circle cx="${round(p.x)}" cy="${round(p.y)}" r="${round(6+sustain*3)}" fill="none" stroke="${color}" stroke-width=".65" stroke-opacity=".28"/>`;
+          if(n.velocity>.72){const ray=5+n.velocity*8;accents+=`<path d="M${round(p.x-ray)} ${round(p.y)}h${round(ray*2)}M${round(p.x)} ${round(p.y-ray)}v${round(ray*2)}" stroke="${color}" stroke-opacity=".65" stroke-width=".8"/>`;}
+        }
+        model.marks.push({...p,start:n.start,end:n.end,voice:voice.id,color});
+      }
+      for(const e of voice.events){const bin=Math.min(count-1,Math.floor(e.start/D*count)),p=positions.get(bin);model.notes.push({...p,start:e.start,end:e.start+e.duration,midi:e.midi,velocity:e.velocity,envelope:envelope(e.instrument),main:e.layer==='main',color,voice:vi});}
+    }
+    // Harmonic links join actual simultaneous onsets across voices; there is no invented starfield.
+    if(style==='constellation'){
+      const chords=new Map();for(const n of model.notes){const key=Math.round(n.start*20);if(!chords.has(key))chords.set(key,[]);const group=chords.get(key);if(!group.some(p=>p.voice===n.voice))group.push(n);}
+      for(const group of chords.values())for(let i=1;i<group.length;i++){const a=group[i-1],b=group[i];if(Math.hypot(a.x-b.x,a.y-b.y)<330)lines+=stroke([a,b],palette.colors[1],.75,.2);}
+    }
+    model.mapping=STYLE_INFO[style];
+    return fields+lines+accents;
+  }
   function scene(input,options={}){
-    const score=normalize(input),stats=describe(score),style=STYLES[options.style]?options.style:'ribbons';
-    const auto=stats.pitch>72?'blue':stats.dominant%3===0?'moss':'clay';
-    const palette=palettes[options.palette]??palettes[auto],detail=clamp(num(options.detail,.6),.25,1),layout=((Math.floor(num(options.layout))%4)+4)%4;
+    const score=normalize(input),stats=describe(score),style=Object.prototype.hasOwnProperty.call(STYLES,options.style)?options.style:'ribbons';
+    const auto=style==='garden'?'botanical':style==='tides'?'sea':style==='landscape'?'mist':style==='weave'?'vivid':style==='constellation'?'night':stats.pitch>72?'blue':stats.dominant%3===0?'moss':'clay';
+    const palette=Object.prototype.hasOwnProperty.call(palettes,options.palette)?palettes[options.palette]:palettes[auto],detail=clamp(num(options.detail,.6),.25,1),layout=((Math.floor(num(options.layout))%4)+4)%4;
     const model={score,stats,style,palette,detail,layout,fingerprint:fingerprint(score),width:W,height:H,marks:[],notes:[],families:[]};
     const voices=stats.voices.slice(0,8),counts=style==='ribbons'?Math.round(56+detail*72):Math.round(14+detail*26);
     let body=`<rect width="1200" height="900" fill="${palette.paper}"/><defs><pattern id="paper" width="9" height="9" patternUnits="userSpaceOnUse"><path d="M1 2h.7M6 6h.6" stroke="${palette.ink}" stroke-opacity=".055" stroke-width=".6"/></pattern><clipPath id="artBounds"><rect x="76" y="70" width="1048" height="760" rx="2"/></clipPath></defs><rect width="1200" height="900" fill="url(#paper)"/><g clip-path="url(#artBounds)">`;
     const phraseSpan=score.duration/8;
-    if(style==='scroll')body+=scroll(model,options.palette&&palettes[options.palette]?options.palette:auto);
+    if(['landscape','garden','tides'].includes(style))body+=natureComposition(model);
+    else if(['weave','constellation'].includes(style))body+=abstractComposition(model);
+    else if(style==='scroll')body+=scroll(model,options.palette&&palettes[options.palette]?options.palette:auto);
     else for(let vi=voices.length-1;vi>=0;vi--){
       const voice=voices[vi],color=palette.colors[vi%4],color2=palette.colors[(vi+1)%4];
       const notes=groupNotes(voice,score.duration,counts),quiet=voice.main?1:.48;
@@ -192,7 +367,7 @@
         });
       }
     }
-    if(style!=='scroll')voices.forEach((voice,vi)=>{const color=palette.colors[vi%4];for(const e of voice.events)model.notes.push({...point(model,e,vi),start:e.start,end:e.start+e.duration,midi:e.midi,velocity:e.velocity,envelope:envelope(e.instrument),main:e.layer==='main',color,voice:vi});});
+    if(style==='ribbons'||style==='geometry')voices.forEach((voice,vi)=>{const color=palette.colors[vi%4];for(const e of voice.events)model.notes.push({...point(model,e,vi),start:e.start,end:e.start+e.duration,midi:e.midi,velocity:e.velocity,envelope:envelope(e.instrument),main:e.layer==='main',color,voice:vi});});
     if(!score.events.length)body+=`<circle cx="600" cy="450" r="100" fill="none" stroke="${palette.ink}" stroke-opacity=".16" stroke-width=".8"/>`;
     body+='</g>';
     model.svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="${escape(score.title)}的${STYLES[style]}画作"><title>${escape(score.title)}</title><desc>音乐决定形态、疏密和层次。${score.events.length}个音符，${stats.voices.length}个声部。</desc>${body}</svg>`;
@@ -214,5 +389,5 @@
     }
     return [make('slow','缓慢的回声',72,slow),make('fast','轻快的步伐',132,fast),make('woven','交织的声部',100,woven)];
   }
-  return {VERSION,STORAGE_KEY,STYLES,normalize,fingerprint,fromPerformance,describe,scene,point,samples,palettes,family};
+  return {VERSION,STORAGE_KEY,STYLES,STYLE_INFO,normalize,fingerprint,fromPerformance,describe,scene,point,samples,palettes,family};
 });

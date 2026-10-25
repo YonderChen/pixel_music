@@ -1,10 +1,10 @@
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),os=require('node:os');
-test('native art renderer produces the same three compositions as SVG rasterization',async t=>{
+test('native art renderer matches SVG rasterization for every composition',async t=>{
   let canvas;
   try{canvas=require(process.env.CANVAS_MODULE||path.join(os.homedir(),'.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/@napi-rs/canvas'));}
   catch(_){t.skip('Set CANVAS_MODULE to @napi-rs/canvas for pixel comparison');return;}
   const Core=require('../dist/music-art-core'),Svg=require('../build/miniprogram/lib/svg-canvas'),out=path.resolve(__dirname,'../build/verification');fs.mkdirSync(out,{recursive:true});
-  for(const style of ['ribbons','geometry','scroll']){
+  for(const style of Object.keys(Core.STYLES)){
     const model=Core.scene(Core.samples()[2],{style,palette:'blue'}),native=canvas.createCanvas(1200,900),reference=canvas.createCanvas(1200,900);
     Svg.draw(native.getContext('2d'),model.svg,1200,900);const img=await canvas.loadImage(Buffer.from(model.svg));reference.getContext('2d').drawImage(img,0,0);
     const a=native.getContext('2d').getImageData(0,0,1200,900).data,b=reference.getContext('2d').getImageData(0,0,1200,900).data;let total=0,pixels=0;

@@ -37,6 +37,10 @@ const choose=id=>{get('score').value=id;get('score').handlers.change();};
  await click('play');assert.equal(state().playing,true);assert.equal(requests.length,1);
  click('saveScore');const saved=await(await globalThis.fetch(downloadUrls.at(-1))).json();assert.equal(saved.audioRef.kind,'browser-score','saved JSON keeps portable original audio settings');
  createdContext.currentTime=.8;const source=sources.at(-1),fingerprint=state().fingerprint;click('geometry');assert.equal(state().playing,true);assert.equal(sources.at(-1),source);assert.equal(state().fingerprint,fingerprint);
+ for(const [button,style] of [['previewGarden','garden'],['previewLandscape','landscape'],['previewTides','tides']]){
+   click(button);assert.equal(state().style,style);assert.equal(state().playing,true);assert.equal(sources.at(-1),source);assert.equal(state().fingerprint,fingerprint);assert.ok(get('styleHint').textContent);
+ }
+ click('geometry');
  get('loop').checked=true;get('loop').handlers.change();assert.equal(source.loop,true);
  createdContext.currentTime+=source.buffer.duration+1;assert.ok(state().time<2);
  const beforeOff=state().time;get('loop').checked=false;get('loop').handlers.change();assert.equal(source.loop,false);assert.ok(Math.abs(state().time-beforeOff)<1e-8,'disabling after wrap retains current position');

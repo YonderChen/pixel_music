@@ -12,7 +12,7 @@
 | [IMAGE_MOOD.md](./IMAGE_MOOD.md) | 图片情绪：愉悦度与能量的计算、九种情绪，以及它们如何决定调式、速度、乐器与力度 |
 | [REGION_DEMO.md](./REGION_DEMO.md) | 区域分割（默认演奏组合）：三种分割、五种演奏顺序、轮廓参与、四种轮廓演奏方式、柔化轮廓 |
 | [CONTOUR_MUSIC.md](./CONTOUR_MUSIC.md) | “轮廓参与”默认方式（起伏动机）按代码逐步说明 |
-| [MUSIC_ART_DEMO.md](./MUSIC_ART_DEMO.md) | 乐曲成画：曲线色层、几何色块、扫描长卷，古典 MIDI 与导入导出 |
+| [MUSIC_ART_DEMO.md](./MUSIC_ART_DEMO.md) | 乐曲成画：植物花园、层峦山水、潮汐水墨与同曲预览，原版画风、古典 MIDI 和导入导出 |
 | [ARRANGED_DEMO.md](./ARRANGED_DEMO.md) | 编曲版与参考条带优化版（0.8.1） |
 | [RETAINED_COMBINATIONS.md](./RETAINED_COMBINATIONS.md) | 仍保留的三种多行组合与参考原谱，移动试听与循环播放 |
 

@@ -9,6 +9,7 @@
   <view class="card">
     <view class="heading">画面</view>
     <view class="label">画风</view><picker range="{{styles}}" range-key="name" value="{{styleIndex}}" data-key="styleIndex" bindchange="changeVisual"><view class="picker">{{styles[styleIndex].name}} ▾</view></picker>
+    <view class="hint">{{styleHint}}</view>
     <view class="label">配色</view><picker range="{{palettes}}" range-key="name" value="{{paletteIndex}}" data-key="paletteIndex" bindchange="changeVisual"><view class="picker">{{palettes[paletteIndex].name}} ▾</view></picker>
     <view class="row"><text>细节</text><text>{{detail}}%</text></view><slider value="{{detail}}" min="25" max="100" bindchange="changeDetail" activeColor="#547c75"/>
     <button bindtap="rearrange">换个构图</button><view class="small">音乐指纹 {{fingerprint}} · {{noteCount}} 音符 · {{voiceCount}} 声部</view>
