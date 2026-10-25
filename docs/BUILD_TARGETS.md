@@ -51,7 +51,7 @@ WECHAT_APPID=wx0123456789abcdef npm run build:miniprogram
 
 - 图片演奏：相册/拍照、七幅名画、六种演奏组合、参考原谱、图片情绪、2/3/4 声部、三种区域分割、五种演奏顺序、四种轮廓演奏方式、轮廓柔化、伴奏、静音/独听。
 - 聆听：播放/暂停、进度拖动、循环、按住滑动试听、12 秒响度匹配对照、WAV 导出。
-- 乐曲成画：接收当前组合、六首古典 MIDI、三首原创样曲、从微信会话导入 MIDI/JSON、三种画风、配色/细节/构图、音画同步。
+- 乐曲成画：接收当前组合、六首古典 MIDI、三首原创样曲、从微信会话导入 MIDI/JSON、八种画风（含植物、山水、潮汐）、配色/细节/构图、音画同步。
 - 导出：2400 × 1800 PNG 保存相册，SVG、JSON、WAV 与内置原始 MIDI 通过系统文件分享窗口导出。导出文件不自动发送给任何人。
 
 ### 两端共用与差异
@@ -94,4 +94,4 @@ npm run test:build
 
 若本机安装了 macOS 微信开发者工具，还会调用其官方 WXML / WXSS 编译器检查页面；其他系统可用 `WECHAT_COMPILER_DIR` 指向含有 `wcc` 与 `wcsc` 的目录。未安装时会明确跳过该项。测试宿主不代表微信真机环境，手机的生成速度、音画同步、权限弹窗与文件分享需要在开发者工具/真机继续验收。
 
-装有 `@napi-rs/canvas` 时（可通过 `CANVAS_MODULE` 指定），还会将三种画风的 Canvas 输出与原 SVG 栅格化结果做像素比较，并在 `build/verification/` 保存预览。可选的 `npm run test:web-build` 会使用 Playwright 与本地 Chrome 检查 HTML 产物的真实 Worker、播放、跨页传谱与 WAV/PNG 下载；通过 `PLAYWRIGHT_MODULE` 和 `BROWSER_EXECUTABLE` 指定工具位置。构建命令本身不依赖这些测试工具。
+装有 `@napi-rs/canvas` 时（可通过 `CANVAS_MODULE` 指定），还会将全部画风的 Canvas 输出与原 SVG 栅格化结果做像素比较，并在 `build/verification/` 保存预览。可选的 `npm run test:web-build` 会使用 Playwright 与本地 Chrome 检查 HTML 产物的真实 Worker、播放、跨页传谱与 WAV/PNG 下载；通过 `PLAYWRIGHT_MODULE` 和 `BROWSER_EXECUTABLE` 指定工具位置。构建命令本身不依赖这些测试工具。

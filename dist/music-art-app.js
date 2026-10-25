@@ -2,8 +2,9 @@
   'use strict';
   const Core=window.MusicArtCore,$=id=>document.getElementById(id);
   const E=Object.fromEntries(['score','sourceHint','ribbons','geometry','scroll','palette','detail','arrange','artwork','artTitle','artEdition','paletteName','musicSignature','noteCount','voiceCount','tempo','pitchRange','play','playIcon','playText','restart','loop','clock','seek','playStatus','listeningOverlay','png','svg','saveScore','midi','json','toast','audioChoice','audioMode'].map(id=>[id,$(id)]));
-  for(const id of ['legend','exportResult','pngFile','exportPreview','classicalSource','midiSource','midiOriginal','midiCredit','midiLicense'])E[id]=$(id);
-  const S={library:new Map(),score:null,model:null,style:'ribbons',layout:0,context:null,playing:false,loading:false,time:0,operation:0,importOperation:0,buffers:new Map(),exporting:false};
+  for(const id of ['legend','exportResult','pngFile','exportPreview','classicalSource','midiSource','midiOriginal','midiCredit','midiLicense','landscape','weave','constellation','garden','tides','previewGarden','previewLandscape','previewTides','styleHint'])E[id]=$(id);
+  const S={library:new Map(),score:null,model:null,style:Object.prototype.hasOwnProperty.call(Core.STYLES,location.hash.slice(1))?location.hash.slice(1):'garden',layout:0,context:null,playing:false,loading:false,time:0,operation:0,importOperation:0,buffers:new Map(),exporting:false};
+  const previews=[['garden','previewGarden','A'],['landscape','previewLandscape','B'],['tides','previewTides','C']];
   const SYNTH_WINDOW=2,RELEASE=.3,MAX_LIT=48,MAX_LABELS=6,TRAIL=2.5;
   const round=v=>Math.round(v*10)/10;
   const fmt=t=>`${String(Math.floor(t/60)).padStart(2,'0')}:${String(Math.floor(t%60)).padStart(2,'0')}`;
@@ -66,9 +67,16 @@
     if(S.svgUrl)URL.revokeObjectURL(S.svgUrl);S.svgUrl=URL.createObjectURL(new Blob([S.model.svg],{type:'image/svg+xml'}));E.svg.href=S.svgUrl;E.svg.download=filename(S.score.title,S.style,'svg');
     E.exportResult.hidden=true;
     for(const id of Object.keys(Core.STYLES))E[id]?.setAttribute('aria-pressed',S.style===id);E.arrange.disabled=S.style==='scroll';
+    if(E.styleHint)E.styleHint.textContent=Core.STYLE_INFO[S.style];
+    const previewKey=JSON.stringify([S.model.fingerprint,E.palette.value,E.detail.value,S.layout]);
+    for(const [id,button,letter] of previews){
+      if(!E[button])continue;E[button].setAttribute('aria-pressed',S.style===id);
+      if(S.previewKey!==previewKey){const preview=id===S.style?S.model:Core.scene(S.score,{style:id,palette:E.palette.value,detail:Number(E.detail.value),layout:S.layout});E[button].innerHTML=`<img src="data:image/svg+xml,${encodeURIComponent(preview.svg)}" alt="" width="1200" height="900"><span>${letter} · ${Core.STYLES[id]}</span>`;}
+    }
+    S.previewKey=previewKey;
     if(E.legend){E.legend.hidden=!S.model.families.length;E.legend.innerHTML=S.model.families.map(f=>`<span><i style="background:${f.color}"></i>${f.name}</span>`).join('')+(S.model.families.length?'<span class="legend-note">颜色 = 音色 · 越高音越高 · 横向是时间</span>':'');}
     E.paletteName.textContent=S.model.palette.name;E.musicSignature.textContent='音乐指纹 '+S.model.fingerprint;
-    E.noteCount.textContent=S.score.events.length;E.voiceCount.textContent=S.model.stats.voices.length+(S.model.stats.voices.length>8?' · 绘出主要 8 部':'');
+    E.noteCount.textContent=S.score.events.length;E.voiceCount.textContent=S.model.stats.voices.length+(S.model.stats.voices.length>8&&S.style!=='scroll'?' · 绘出主要 8 部':'');
     E.tempo.textContent=Math.round(S.score.tempo)+' BPM';E.pitchRange.textContent=S.score.events.length?S.model.stats.range.map(pitch).join('–'):'休止';paint();
   }
   function paint(){
@@ -195,6 +203,7 @@
   E.score.addEventListener('change',()=>select(E.score.value));
   function style(value){S.style=value;draw();if(innerWidth<=740)document.querySelector('.gallery').scrollIntoView({behavior:'smooth',block:'start'});}
   for(const id of Object.keys(Core.STYLES))E[id]?.addEventListener('click',()=>style(id));
+  for(const [id,button] of previews)E[button]?.addEventListener('click',()=>style(id));
   E.palette.addEventListener('change',draw);E.detail.addEventListener('change',draw);E.arrange.addEventListener('click',()=>{S.layout=(S.layout+1)%4;draw();});
   E.audioMode.addEventListener('change',()=>{const playing=S.playing;stop();S.audio=null;if(playing)play();});
   E.play.addEventListener('click',()=>S.playing||S.loading?stop():play());E.restart.addEventListener('click',()=>{stop(true);play();});

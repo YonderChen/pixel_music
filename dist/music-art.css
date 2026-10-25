@@ -17,6 +17,16 @@
 .legend i{width:10px;height:10px;border-radius:50%}
 .legend .legend-note{margin-left:auto;font:11px var(--mono);color:var(--muted)}
 .work-caption{margin:14px 0 24px;font:12px var(--mono);color:var(--muted)}
+.comparisons{margin-top:26px;padding-top:20px;border-top:1px solid var(--line)}
+.comparison-heading{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.comparison-heading h3{margin:0;font-size:14px;font-weight:600}
+.comparison-heading>span{font-size:11px;color:var(--muted)}
+.preview-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.preview-grid button{padding:5px;min-width:0;background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius-sm);text-align:left;overflow:hidden}
+.preview-grid button:hover{border-color:var(--ink-2)}
+.preview-grid button[aria-pressed=true]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.preview-grid img{display:block;width:100%;height:auto;aspect-ratio:4/3;border-radius:3px}
+.preview-grid span{display:block;padding:7px 3px 3px;font-size:11px;color:var(--ink-2)}
 
 /* Player */
 .player{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
@@ -48,6 +58,11 @@ legend{margin-bottom:8px;padding:0;font-size:12px;color:var(--muted)}
 .style-tabs button:hover:not(:disabled){border-color:var(--ink-2)}
 .style-tabs button[aria-pressed=true]{border-color:var(--ink);background:var(--bg);box-shadow:inset 0 0 0 1px var(--ink)}
 .style-tabs small{display:block;margin-top:4px;font-size:11px;font-weight:400;color:var(--muted)}
+.edition-tag{display:block;margin-bottom:9px;font:10px var(--mono);color:var(--accent-ink)}
+.style-hint{min-height:42px;margin:10px 0 0}
+.more-styles{margin-top:12px;border-top:1px solid var(--line);padding-top:12px}
+.more-styles summary{cursor:pointer;font-size:12px;color:var(--muted)}
+.more-styles .style-tabs{margin-top:10px}
 .style-icon{display:block;width:40px;height:24px;margin-bottom:10px;color:var(--accent)}
 .style-tabs button[aria-pressed=true] .style-icon{color:var(--accent-ink)}
 .fields{display:grid;grid-template-columns:1.2fr 1fr;gap:12px}
