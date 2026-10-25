@@ -25,7 +25,7 @@ class Image{set src(v){if(holdImage)pendingImages.push(()=>this.onload());else q
 const audioRef={kind:'browser-score',variant:'parallel',profile:'soft',synth:'Simple',info:{duration:19,tempo:88},events:Core.samples()[2].events,rows:['row-0'],voices:[{id:'row-0'}]};
 const imported={...Core.samples()[2],audioRef};
 const fetch=async(url,options)=>{requests.push(url);if(holdAudio)return new Promise((resolve,reject)=>{pendingAudio.push(()=>resolve({ok:true,arrayBuffer:async()=>new ArrayBuffer(4)}));options.signal.addEventListener('abort',()=>reject(new Error('cancelled')));});return {ok:true,arrayBuffer:async()=>new ArrayBuffer(4)};};
-const window={MusicArtCore:Core,MusicArtClassics:Classics,PixelMusicBrowser:{request:fetch},AudioContext,OfflineAudioContext,addEventListener:(k,fn)=>windows[k]=fn};
+const window={MusicArtPlayback:require('../dist/music-art-playback'),MusicArtCore:Core,MusicArtClassics:Classics,PixelMusicBrowser:{request:fetch},AudioContext,OfflineAudioContext,addEventListener:(k,fn)=>windows[k]=fn};
 const context=vm.createContext({window,document:{getElementById:get,querySelector:()=>new Element(),createElement:()=>new Element(),body:new Element()},localStorage:{getItem:()=>JSON.stringify(imported)},location:{protocol:'file:',hash:'#current'},innerWidth:1000,Image,fetch,AbortController,Float32Array,Blob,URL,performance,setTimeout,clearTimeout,requestAnimationFrame:fn=>setTimeout(fn,1),cancelAnimationFrame:clearTimeout,console});
 vm.runInContext(fs.readFileSync(path.join(__dirname,'../dist/music-art-app.js'),'utf8'),context);
 const state=()=>window.PixelMusicArtDemo.snapshot(),click=id=>get(id).handlers.click();

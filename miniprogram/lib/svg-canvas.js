@@ -38,8 +38,8 @@ function paint(c, a, inherited) {
   if (style.stroke && style.stroke !== 'none') { c.strokeStyle = style.stroke; c.globalAlpha = Number(style['stroke-opacity'] || 1); c.stroke(); }
   c.globalAlpha = 1;
 }
-function draw(c, svg, width, height) {
-  c.save(); c.scale(width / 1200, height / 900);
+function draw(c, svg, width, height, viewWidth = 1200, viewHeight = 900) {
+  c.save(); c.scale(width / viewWidth, height / viewHeight);
   const paperInk = (svg.match(/<pattern[^>]*id="paper"[\s\S]*?stroke="([^"]+)"/) || [,'#334d49'])[1];
   const clean = svg.replace(/<defs>[\s\S]*?<\/defs>/g, '').replace(/<(title|desc)\b[^>]*>[\s\S]*?<\/\1>/g, '');
   const tokens = clean.match(/<[^>]+>|[^<]+/g) || [], stack = [{}];

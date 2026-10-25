@@ -143,7 +143,7 @@
         const xs=x(e.start),w=Math.max(3,x(e.start+e.duration)-xs),h=round(3+e.velocity*6),yy=y(e.midi);
         notes+=`<rect x="${xs}" y="${round(yy-h/2)}" width="${round(w)}" height="${h}" rx="${round(h/2)}" fill="${c}" fill-opacity="${round((.42+.4*e.velocity)*quiet)}"/>`;
         if(w>8)notes+=`<circle cx="${xs}" cy="${yy}" r="${round(1.2+e.velocity*1.4)}" fill="${palette.ink}" fill-opacity="${round(.32*quiet)}"/>`;
-        model.notes.push({x:xs,y:yy,x1:round(xs+w),start:e.start,end:e.start+e.duration,midi:e.midi,velocity:e.velocity,envelope:envelope(e.instrument),main:e.layer==='main',color:c});
+        model.notes.push({x:xs,y:yy,x1:round(xs+w),start:e.start,end:e.start+e.duration,midi:e.midi,velocity:e.velocity,envelope:envelope(e.instrument),main:e.layer==='main',color:c,voice:vi});
         model.marks.push({x:xs,y:yy,start:e.start,end:e.start+e.duration,voice:voice.id,color:c});
       }
     });

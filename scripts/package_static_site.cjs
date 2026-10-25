@@ -7,7 +7,7 @@ fs.copyFileSync(path.join(dist, 'feature-music.html'), path.join(dist, 'index.ht
 
 if (process.argv.includes('--archive')) {
   const names = ['index.html', 'feature-music.html', 'feature-music-app.js', 'browser-engine.js', 'sonification.css', 'sonification-samples.js',
-    'sonification-assets/photos.js', 'sonification-assets/paintings.js', 'music-art.html', 'music-art-app.js', 'music-art-core.js',
+    'sonification-assets/photos.js', 'sonification-assets/paintings.js', 'music-art.html', 'music-art-app.js', 'music-art-core.js', 'music-art-playback.js',
     'music-art-midi.js', 'music-art-classics.js', 'music-art.css', 'ui.css', 'studio.css', 'favicon.svg', 'icon-192.png', 'icon-512.png',
     'icon-maskable-512.png', 'apple-touch-icon.png', 'site.webmanifest'];
   const listed = folder => fs.readdirSync(path.join(dist, folder)).sort().map(n => folder + '/' + n);

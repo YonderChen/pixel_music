@@ -16,7 +16,14 @@ const server=http.createServer((req,res)=>{const file=path.resolve(root,'.'+deco
     await page.click('#play');await page.waitForFunction(()=>window.PixelMusicFeaturesDemo.snapshot().playing,{},{timeout:60000});await page.click('#play');checks.push('generated audio decodes and plays');
     const downloadPromise=page.waitForEvent('download');await page.click('#export');const download=await downloadPromise;await download.saveAs(path.join(output,'html-export.wav'));assert.equal(fs.readFileSync(path.join(output,'html-export.wav')).toString('ascii',0,4),'RIFF');checks.push('WAV download');
     const popupPromise=page.waitForEvent('popup');await page.click('#musicArt');const art=await popupPromise;art.on('pageerror',e=>errors.push(e.message));await art.waitForFunction(()=>window.PixelMusicArtDemo?.snapshot().score==='current'&&!document.getElementById('audioChoice').hidden);
-    assert.equal(await art.locator('#audioMode').inputValue(),'original');await art.click('#play');await art.waitForFunction(()=>window.PixelMusicArtDemo.snapshot().playing,{},{timeout:60000});await art.click('#play');
+    assert.equal(await art.locator('#audioMode').inputValue(),'original');await art.click('#play');await art.waitForFunction(()=>window.PixelMusicArtDemo.snapshot().playing&&window.PixelMusicArtDemo.snapshot().time>.3,{},{timeout:60000});
+    const rhythm=await art.locator('#rhythmTrack').innerHTML(),at=await art.evaluate(()=>window.PixelMusicArtDemo.snapshot().time);
+    await art.waitForFunction(t=>window.PixelMusicArtDemo.snapshot().time>t+.3,at);assert.notEqual(await art.locator('#rhythmTrack').innerHTML(),rhythm);
+    await art.setViewportSize({width:390,height:844});await art.locator('.frame').scrollIntoViewIfNeeded();
+    await art.screenshot({path:path.join(output,'html-art-rhythm-mobile.png')});
+    assert.equal(await art.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'rhythm strip fits a phone viewport');
+    await art.click('#play');assert.equal(await art.locator('#listeningOverlay').innerHTML(),'','pause clears voice cursors');
+    checks.push('rhythm strip advances with real audio and fits a phone viewport; pause clears cursors');await art.setViewportSize({width:1280,height:900});
     const pngPromise=art.waitForEvent('download');await art.click('#png');const png=await pngPromise;await png.saveAs(path.join(output,'html-art.png'));const bytes=fs.readFileSync(path.join(output,'html-art.png'));assert.equal(bytes.readUInt32BE(16),2400);assert.equal(bytes.readUInt32BE(20),1800);checks.push('current score transfer, art playback and 2400×1800 PNG export');
     await page.screenshot({path:path.join(output,'html-studio.png'),fullPage:true});await art.screenshot({path:path.join(output,'html-art-page.png'),fullPage:true});
     assert.deepEqual(errors,[]);fs.writeFileSync(path.join(output,'html-browser.json'),JSON.stringify({status:'passed',checks,errors},null,2)+'\n');console.log(checks.join('\n'));

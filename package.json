@@ -8,7 +8,7 @@
     "build": "node scripts/build.cjs",
     "build:html": "node scripts/build.cjs html",
     "build:miniprogram": "node scripts/build.cjs miniprogram",
-    "test:build": "npm run build && node --test tests/build.test.cjs tests/miniprogram.test.cjs tests/miniprogram-canvas.test.cjs tests/art-canvas-render.test.cjs",
+    "test:build": "npm run build && node --test tests/build.test.cjs tests/miniprogram.test.cjs tests/miniprogram-canvas.test.cjs tests/art-canvas-render.test.cjs tests/music-art-playback.test.cjs",
     "test:web-build": "npm run build:html && node tests/web-build-browser.cjs"
   }
 }

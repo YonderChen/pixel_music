@@ -35,7 +35,7 @@ for (const target of selected) {
       config.appid = appid;
       write(staging, 'project.config.json', JSON.stringify(config, null, 2) + '\n');
       if (fs.existsSync(privatePath)) fs.copyFileSync(privatePath, path.join(staging, 'project.private.config.json'));
-      for (const name of ['music-art-core', 'music-art-midi']) write(staging, 'lib/' + name + '.js', read('dist/' + name + '.js'));
+      for (const name of ['music-art-core', 'music-art-midi', 'music-art-playback']) write(staging, 'lib/' + name + '.js', read('dist/' + name + '.js'));
       // Convert classic browser globals at build time. No eval, dynamic scripts or
       // Blob workers are used at runtime in the mini program.
       const scope = {window: {}};

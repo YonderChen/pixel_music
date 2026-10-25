@@ -31,6 +31,7 @@
       <div class="gallery">
         <div class="work-heading"><span id="artTitle">缓慢的回声</span><span id="artEdition">植物花园 / 01</span></div>
         <div class="frame"><div id="artwork"></div><svg id="listeningOverlay" viewBox="0 0 1200 900" aria-hidden="true"></svg></div>
+        <div class="rhythm-track"><svg id="rhythmTrack" viewBox="0 0 1200 180" role="img" aria-label="声部节奏带：音符从右向左经过现在竖线，长条表示延音"></svg><p>跟随画中光标 · 音符经过竖线时发声，长条表示延音</p></div>
         <div id="legend" class="legend" hidden></div><div class="work-caption"><span id="paletteName">鼠尾草与蔷薇</span><span id="musicSignature">—</span></div>
         <div class="player"><button id="play" class="primary" type="button"><span id="playIcon" class="play-icon" aria-hidden="true">▶</span><span id="playText">聆听这首乐曲</span></button><button id="restart" class="quiet" type="button" aria-label="从头播放" title="从头播放"><svg class="icon" aria-hidden="true"><use href="#i-restart"/></svg></button><label class="switch-label"><input id="loop" type="checkbox">循环</label><output id="clock">00:00 / 00:20</output></div>
         <label class="sr-only" for="seek">播放进度</label><input id="seek" class="seek" type="range" min="0" max="20" step="0.01" value="0">
@@ -56,6 +57,6 @@
     <footer><span class="footer-brand"><img src="./favicon.svg" alt="" width="18" height="18">图鸣 · 乐曲与画作仅在本机处理</span><a href="./feature-music.html#parallel">回到图片演奏 ↗</a></footer>
   </main>
   <div id="toast" class="toast" role="status" hidden></div>
-  <script src="./music-art-core.js"></script><script src="./music-art-midi.js"></script><script src="./music-art-classics.js"></script><script src="./browser-engine.js"></script><script src="./music-art-app.js"></script>
+  <script src="./music-art-core.js"></script><script src="./music-art-midi.js"></script><script src="./music-art-classics.js"></script><script src="./browser-engine.js"></script><script src="./music-art-playback.js"></script><script src="./music-art-app.js"></script>
 </body>
 </html>

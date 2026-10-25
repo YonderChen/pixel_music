@@ -4,6 +4,8 @@
   <picker range="{{library}}" range-key="title" value="{{scoreIndex}}" bindchange="changeScore"><view class="picker">{{library[scoreIndex].title}} ▾</view></picker>
   <view class="actions"><button bindtap="importScore">导入 MIDI / JSON</button><button bindtap="backToImage">图片演奏</button></view>
   <view class="art"><canvas type="2d" id="art"/></view>
+  <view class="rhythm"><canvas type="2d" id="rhythm"/></view>
+  <view class="small">跟随画中光标 · 音符经过竖线时发声，长条表示延音</view>
   <view class="filename">{{title}}</view><view class="hint">{{source}}</view>
   <view><view class="family" wx:for="{{families}}" wx:key="id"><text class="dot" style="background:{{item.color}}"/>{{item.name}}</view></view>
   <view class="card">
