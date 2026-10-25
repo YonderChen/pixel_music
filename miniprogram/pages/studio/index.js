@@ -10,7 +10,7 @@ Page({
     recipeIndex:0, segmentIndex:0, orderIndex:0, contourIndex:0, rowCounts:[2,3,4], rowIndex:2, contour:true, soft:true, backing:true, reference:false, loop:false, touchPreview:false,
     stageHeight:230, ready:false, busy:false, loading:false, playing:false, tracks:[], solo:-1, time:0, duration:1, tempo:'—', scale:'—', noteCount:0, clock:'00:00 / 00:00', status:'准备读取样图', selection:'轻触图片，试听对应区域。', error:''},
   onLoad() { this.job=0; this.scrollTop=0; this.path=samples[0].path; this.time=0; this.previewBuffers=new Map(); this.player=new Player(t=>this.onTime(t),playing=>this.setData({playing}),error=>this.fail(error)); },
-  async onReady() { try { this.decodeSurface=await Canvas.get(this,'#decode'); this.decodeSurface.canvas.width=this.decodeSurface.canvas.height=512; await this.generate(); } catch(error) {this.fail(error);} },
+  onReady() { return this.generate(); },
   onHide() { this.stop(); this.stopPreview(); if(this.data.busy)this.cancel(); },
   onUnload() { this.job++; clearInterval(this.timer); this.player.destroy(); this.stopPreview(); if(this.previewContext)this.previewContext.close(); Engine.cancel(); },
   onPageScroll(event) { this.scrollTop=event.scrollTop; },
@@ -32,10 +32,14 @@ Page({
   changeLoop(event) {this.setData({loop:event.detail.value}); this.player.audio.loop=event.detail.value;},
   changePreview(event) {this.stop(); this.stopPreview(); this.setData({touchPreview:event.detail.value});},
   async generate() {
-    if(!this.decodeSurface || !this.path)return;
+    if(!this.path)return;
     this.stop(); this.stopPreview(); Engine.cancel(); const job=++this.job; this.audioKey=null; this.previewBuffers.clear();
     this.setData({busy:true,ready:false,loading:false,error:'',status:'正在读取图片与生成乐谱…'});
     try {
+      if(!this.decodeSurface){
+        const surface=await Canvas.get(this,'#decode');if(job!==this.job)return;
+        surface.canvas.width=surface.canvas.height=512;this.decodeSurface=surface;
+      }
       const d=this.data, options={synth:'Simple',emotion:true,backing:d.backing,rowCount:d.rowCounts[d.rowIndex],rowMethod:Catalog.recipes[d.recipeIndex].method,
         segmentMethod:Catalog.segments[d.segmentIndex].value,segmentOrder:Catalog.orders[d.orderIndex].value,contourMusic:d.contour,contourStyle:Catalog.contours[d.contourIndex].value,segmentSoft:d.soft,pitchTransition:'scale',featureMethod:'features'};
       const info=await new Promise((resolve,reject)=>wx.getImageInfo({src:this.path,success:resolve,fail:reject}));
@@ -55,7 +59,7 @@ Page({
         mood:m,valence:Math.round(m.valence*100),arousal:Math.round(m.arousal*100),moodReason:m.valenceReasons.concat(m.arousalReasons).join('、'),tempo:Math.round(this.payload.info.tempo),scale:this.payload.info.scale_name,
         duration:this.payload.info.duration,status:'可以演奏 · 轻触图片试听区域'});
       await this.prepareCanvas(); if(job!==this.job)return; this.prepareView();
-    } catch(error) {if(job===this.job){this.setData({busy:false,loading:false});this.fail(error);}}
+    } catch(error) {if(job===this.job){this.setData({busy:false,loading:false,ready:false});this.fail(error);}}
   },
   async prepareCanvas() {
     const info=wx.getWindowInfo?wx.getWindowInfo():wx.getSystemInfoSync(), width=info.windowWidth-58;

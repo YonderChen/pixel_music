@@ -66,6 +66,32 @@ test('undeclared photo privacy scope does not block any built-in sample',async()
     h.wx.chooseMedia=o=>o.success({tempFiles:[{tempFilePath:page.data.samples[0].path}]});await page.chooseImage();assert.equal(page.data.name,'我的图片');assert.equal(page.data.ready,true);assert.equal(page.data.error,'');
   }finally{page.onUnload();h.clean();}
 });
+test('regenerate retries a failed startup canvas query and then loads the preset',async()=>{
+  const h=host(),page=h.load('studio'),createQuery=page.createSelectorQuery;let attempts=0;
+  page.createSelectorQuery=function(){if(attempts++===0)throw new Error('画布暂不可用');return createQuery.call(this);};
+  try{
+    await page.onReady();assert.equal(page.data.ready,false);assert.equal(page.data.busy,false);assert.match(page.data.error,/画布暂不可用/);assert.equal(page.decodeSurface,undefined);
+    await page.generate();assert.equal(page.data.ready,true);assert.equal(page.data.error,'');assert.ok(page.preview.bytes.byteLength>0);assert.ok(page.surface);assert.equal(page.data.mood.name,'紧张');
+  }finally{page.onUnload();h.clean();}
+});
+test('preset files and Canvas fallback pixels survive native Worker binary serialization',async()=>{
+  // A JSON-style bridge loses TypedArray methods and length. ArrayBuffer remains
+  // binary; testing only structuredClone would miss this native compatibility bug.
+  function nativeClone(value){
+    if(value instanceof ArrayBuffer)return value.slice(0);
+    if(ArrayBuffer.isView(value))return Object.fromEntries(Object.entries(value));
+    if(Array.isArray(value))return value.map(nativeClone);
+    if(value&&typeof value==='object')return Object.fromEntries(Object.entries(value).map(([k,v])=>[k,nativeClone(v)]));
+    return value;
+  }
+  const h=host({workerClone:nativeClone}),page=h.load('studio');
+  try{
+    await page.onReady();assert.equal(page.data.ready,true);assert.equal(page.data.error,'');assert.equal(page.data.mood.name,'紧张');
+    assert.ok(h.requests.find(r=>r.path==='/api/generate').data.file instanceof ArrayBuffer);assert.ok(page.preview.bytes.byteLength>0);
+    h.wx.getImageInfo=o=>o.success({width:5000,height:4000});await page.generate();
+    assert.equal(page.data.ready,true);assert.equal(page.data.error,'');assert.ok(h.requests.filter(r=>r.path==='/api/generate').at(-1).data.pixels instanceof ArrayBuffer);assert.ok(page.preview.bytes.byteLength>0);
+  }finally{page.onUnload();h.clean();}
+});
 test('art page handles current original audio, all styles, exports and imported MIDI',async()=>{
   const h=host();
   const image=await mini.handler.handle('/api/generate',{file:starry(),key:'art',options:{rowMethod:'regions',bars:4,emotion:true}});
@@ -85,4 +111,11 @@ test('art page handles current original audio, all styles, exports and imported 
 });
 test('worker cancellation rejects pending operations and permits regeneration',async()=>{
   const h=host();try{const e=require('../build/miniprogram/lib/engine');const request=e.request('/api/generate',{file:starry(),key:'cancel',options:{rowMethod:'regions',bars:4}});e.cancel();await assert.rejects(request,/取消/);const next=await e.request('/api/generate',{file:starry(),key:'next',options:{rowMethod:'regions',bars:4}});assert.equal(next.data.key,'next');}finally{h.clean();}
+});
+test('worker failures preserve the computation stack for native debugging',async()=>{
+  const h=host();try{
+    const e=require('../build/miniprogram/lib/engine');await assert.rejects(e.request('/unknown'),error=>{
+      assert.match(error.message,/未知浏览器计算操作/);assert.match(error.stack,/handle/);return true;
+    });
+  }finally{h.clean();}
 });

@@ -1,11 +1,28 @@
 'use strict';
 function get(page, selector) {
-  return new Promise((resolve, reject) => wx.createSelectorQuery().in(page).select(selector).fields({node: true, size: true, rect: true}).exec(results => {
-    const result = results[0]; if (!result || !result.node) return reject(new Error('画布尚未就绪'));
-    const ratio = wx.getWindowInfo ? wx.getWindowInfo().pixelRatio : wx.getSystemInfoSync().pixelRatio;
-    const canvas = result.node; canvas.width = Math.max(1, Math.round(result.width * ratio)); canvas.height = Math.max(1, Math.round(result.height * ratio));
-    resolve({canvas, context: canvas.getContext('2d'), width: result.width, height: result.height, left: result.left, top: result.top, ratio});
-  }));
+  return new Promise((resolve, reject) => {
+    let finished = false;
+    const finish = (error, value) => { if (finished) return; finished = true; clearTimeout(timer); if (error) reject(error); else resolve(value); };
+    const timer = setTimeout(() => finish(new Error('画布初始化超时，请点击“重新生成”重试。')), 5000);
+    try {
+      // This helper runs outside the Page's own module. A global query can lose
+      // its page context and be silently ignored, even with .in(page). Use the
+      // instance's query, which already carries the native webview/component ID.
+      page.createSelectorQuery().select(selector).fields({node: true, size: true, rect: true}).exec(results => {
+        if (finished) return;
+        try {
+          const result = results && results[0];
+          if (!result || !result.node || !(result.width > 0 && result.height > 0)) throw new Error('画布尚未就绪，请点击“重新生成”重试。');
+          const ratio = (wx.getWindowInfo ? wx.getWindowInfo() : wx.getSystemInfoSync()).pixelRatio || 1;
+          const canvas = result.node;
+          canvas.width = Math.max(1, Math.round(result.width * ratio)); canvas.height = Math.max(1, Math.round(result.height * ratio));
+          const context = canvas.getContext('2d');
+          if (!context) throw new Error('无法初始化图片画布，请重新进入页面。');
+          finish(null, {canvas, context, width: result.width, height: result.height, left: result.left, top: result.top, ratio});
+        } catch (error) { finish(error); }
+      });
+    } catch (error) { finish(error); }
+  });
 }
 async function pixels(surface, path, maxSide = 512) {
   const image = surface.canvas.createImage();

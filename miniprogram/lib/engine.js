@@ -12,7 +12,11 @@ function start(path) {
   instance.onMessage(message => {
     const job = pending.get(message.id); if (!job) return;
     pending.delete(message.id); clearTimeout(job.timer);
-    if (message.error) job.reject(new Error(message.error)); else job.resolve(message.result);
+    if (message.error) {
+      const error = new Error(message.error);
+      if (message.stack) error.stack = message.stack;
+      job.reject(error);
+    } else job.resolve(message.result);
   });
   if (instance.onError) instance.onError(() => cancel());
   if (/^\/api\/(audio\/|rowmix|hover-bank|hover-audio\/|preview)/.test(path) && latestGenerate) instance.postMessage({id: 0, path: '/api/generate', data: latestGenerate});
@@ -20,10 +24,17 @@ function start(path) {
 function request(path, data = {}) {
   return new Promise((resolve, reject) => {
     try {
-      if (path === '/api/generate') latestGenerate = data;
+      // Use the binary type explicitly supported by WeChat's Worker bridge.
+      // Passing Uint8Array directly can turn it into a plain numeric-key object,
+      // losing .length/.subarray and corrupting image analysis on native runtimes.
+      const wire = Object.assign({}, data);
+      for (const key of ['file', 'pixels']) if (ArrayBuffer.isView(wire[key])) {
+        const bytes = wire[key]; wire[key] = bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength);
+      }
+      if (path === '/api/generate') latestGenerate = wire;
       start(path); const id = ++sequence;
       const timer = setTimeout(() => cancel(), 180000);
-      pending.set(id, {resolve, reject, timer}); instance.postMessage({id, path, data});
+      pending.set(id, {resolve, reject, timer}); instance.postMessage({id, path, data: wire});
     } catch (error) { cancel(); reject(error); }
   });
 }
